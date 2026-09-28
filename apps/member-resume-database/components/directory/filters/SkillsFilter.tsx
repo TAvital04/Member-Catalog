@@ -23,7 +23,7 @@ export default function SkillsFilter({
   );
 
   return (
-    <div className="flex flex-col gap-3 w-full">
+    <div className="flex flex-col gap-3 w-full overflow-x-hidden">
       <div className="relative">
         <Search size={12} className="absolute left-2.5 top-2.5 text-zinc-550" />
         <input
@@ -35,8 +35,8 @@ export default function SkillsFilter({
         />
       </div>
 
-      {/* Flat Skill Tag Chips View */}
-      <div className="flex flex-wrap gap-1.5 max-h-44 overflow-y-auto pr-1 py-1">
+      {/* Flat Skill Tag Chips View - Vertical Scrolling Only */}
+      <div className="flex flex-wrap gap-1.5 max-h-44 overflow-y-auto overflow-x-hidden pr-1 py-1 w-full">
         {filteredSkills.map((skill) => {
           const isSelected = selectedSkills.includes(skill);
           return (
@@ -45,14 +45,16 @@ export default function SkillsFilter({
               type="button"
               title={skill}
               onClick={() => onSkillToggle(skill)}
-              className={`relative group/tooltip hover:z-50 px-2 py-1 rounded-lg text-[11px] font-medium transition-all flex items-center gap-1.5 select-none cursor-pointer ${
+              className={`relative group/tooltip hover:z-50 px-2 py-1 rounded-lg text-[11px] font-medium transition-all flex items-center gap-1.5 select-none cursor-pointer max-w-full ${
                 isSelected
                   ? "bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-sm"
                   : "bg-zinc-900/90 text-zinc-400 border border-zinc-800 hover:text-zinc-200 hover:border-zinc-700"
               }`}
             >
-              <CustomCheckbox checked={isSelected} />
-              <span>{skill}</span>
+              <div className="shrink-0">
+                <CustomCheckbox checked={isSelected} />
+              </div>
+              <span className="truncate max-w-full">{skill}</span>
               <Tooltip content={`Filter: ${skill}`} position="top" />
             </button>
           );

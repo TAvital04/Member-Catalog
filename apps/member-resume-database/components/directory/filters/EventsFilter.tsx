@@ -38,7 +38,7 @@ export default function EventsFilter({
         </div>
       )}
 
-      <div className="flex flex-col gap-2 max-h-48 overflow-y-auto no-scrollbar pr-1">
+      <div className="flex flex-col gap-2 max-h-48 overflow-y-auto overflow-x-hidden no-scrollbar pr-1">
         {filteredEvents.map((evtTitle) => (
           <label
             key={evtTitle}
