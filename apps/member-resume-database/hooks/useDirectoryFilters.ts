@@ -8,7 +8,6 @@ export interface DirectoryFilterState {
   selectedMajors: string[];
   selectedSkills: string[];
   selectedGradDates: string[];
-  selectedBadges: string[];
   skillFilterMode: "AND" | "OR";
   adminFilterFlagged: boolean | null;
   sortBy: "name" | "gradDate" | "gpa";
@@ -33,10 +32,6 @@ export function useDirectoryFilters() {
 
   const selectedGradDates = searchParams.get("grad")
     ? searchParams.get("grad")!.split(",").filter(Boolean)
-    : [];
-
-  const selectedBadges = searchParams.get("badges")
-    ? searchParams.get("badges")!.split(",").filter(Boolean)
     : [];
 
   const skillFilterMode: "AND" | "OR" =
@@ -101,13 +96,6 @@ export function useDirectoryFilters() {
     [updateQueryParams]
   );
 
-  const setSelectedBadges = useCallback(
-    (badges: string[]) => {
-      updateQueryParams({ badges: badges.length > 0 ? badges.join(",") : null });
-    },
-    [updateQueryParams]
-  );
-
   const setSkillFilterMode = useCallback(
     (mode: "AND" | "OR") => {
       updateQueryParams({ skillMode: mode === "AND" ? "AND" : null });
@@ -146,8 +134,6 @@ export function useDirectoryFilters() {
     setSelectedSkills,
     selectedGradDates,
     setSelectedGradDates,
-    selectedBadges,
-    setSelectedBadges,
     skillFilterMode,
     setSkillFilterMode,
     adminFilterFlagged,
@@ -158,3 +144,4 @@ export function useDirectoryFilters() {
     isPending,
   };
 }
+

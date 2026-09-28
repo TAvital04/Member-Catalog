@@ -1,9 +1,8 @@
 "use client";
 
 import React from "react";
-import { Student, getStudentBadges, getPrimaryEducation } from "../../data/students";
+import { Student, getPrimaryEducation } from "../../data/students";
 import Avatar from "../common/Avatar";
-import Tooltip from "../common/Tooltip";
 import { Calendar, Award, User, AlertTriangle } from "lucide-react";
 
 interface StudentUpperInfoProps {
@@ -12,8 +11,6 @@ interface StudentUpperInfoProps {
 }
 
 export default function StudentUpperInfo({ student, adminMode }: StudentUpperInfoProps) {
-  const badges = getStudentBadges(student);
-
   const primaryEdu = getPrimaryEducation(student);
   const primaryDegree = primaryEdu?.degreeType || student.degree || "Bachelor of Science";
   const primaryMajor = primaryEdu?.major || student.major || "Computer Science";
@@ -79,32 +76,7 @@ export default function StudentUpperInfo({ student, adminMode }: StudentUpperInf
           {student.bio}
         </p>
       </div>
-
-      {/* Badges Section */}
-      {badges.length > 0 && (
-        <div className="flex flex-col gap-2 relative z-30 pb-4">
-          <span className="text-[9px] font-bold text-zinc-555 uppercase tracking-wider">Verified Badges</span>
-          <div className="flex flex-wrap gap-2 w-full max-w-full badges-stack overflow-visible">
-            {badges.map((badge, idx) => (
-              <div
-                key={idx}
-                className="flex items-center gap-2 p-2 rounded-2xl border border-zinc-800 bg-zinc-850 transition-all hover:scale-102 cursor-default group/tooltip group-hover/tooltip:z-[9999] relative shadow-sm backdrop-blur-sm grow min-w-[110px] max-w-full"
-              >
-                <div className="w-7 h-7 rounded-lg bg-zinc-955/40 border border-zinc-800 flex items-center justify-center shrink-0 shadow-inner group-hover:scale-105 transition-transform overflow-hidden p-0.5">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={badge.iconPath} alt={badge.label} className="w-full h-full object-contain" />
-                </div>
-
-                <div className="min-w-0">
-                  <span className="block text-[9px] font-extrabold uppercase tracking-wider leading-tight whitespace-normal break-words">{badge.label}</span>
-                </div>
-
-                <Tooltip content={badge.description} position={idx % 2 === 1 ? "bottom-right" : "bottom-left"} />
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }
+

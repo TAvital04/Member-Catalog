@@ -40,8 +40,6 @@ function StudentDirectoryContent() {
     setSelectedSkills,
     selectedGradDates,
     setSelectedGradDates,
-    selectedBadges,
-    setSelectedBadges,
     skillFilterMode,
     setSkillFilterMode,
     adminFilterFlagged,
@@ -119,7 +117,6 @@ function StudentDirectoryContent() {
     selectedMajors,
     selectedSkills,
     selectedGradDates,
-    selectedBadges,
     skillFilterMode,
     adminMode,
     adminFilterFlagged,
@@ -182,7 +179,6 @@ function StudentDirectoryContent() {
   const removeMajorFilter = (major: string) => setSelectedMajors(selectedMajors.filter((m) => m !== major));
   const removeSkillFilter = (skill: string) => setSelectedSkills(selectedSkills.filter((s) => s !== skill));
   const removeGradFilter = (date: string) => setSelectedGradDates(selectedGradDates.filter((d) => d !== date));
-  const removeBadgeFilter = (badge: string) => setSelectedBadges(selectedBadges.filter((b) => b !== badge));
 
   return (
     <div className="flex flex-col min-h-screen bg-zinc-950 text-zinc-200 relative pb-16 overflow-x-hidden">
@@ -245,8 +241,6 @@ function StudentDirectoryContent() {
             setSelectedSkills={setSelectedSkills}
             selectedGradDates={selectedGradDates}
             setSelectedGradDates={setSelectedGradDates}
-            selectedBadges={selectedBadges}
-            setSelectedBadges={setSelectedBadges}
             skillFilterMode={skillFilterMode}
             setSkillFilterMode={setSkillFilterMode}
             adminMode={adminMode}
@@ -270,10 +264,9 @@ function StudentDirectoryContent() {
             removeGradFilter={removeGradFilter}
             selectedSkills={selectedSkills}
             removeSkillFilter={removeSkillFilter}
-            selectedBadges={selectedBadges}
-            removeBadgeFilter={removeBadgeFilter}
             onClearAll={resetAllFilters}
           />
+
 
           <StudentDirectoryResults
             isLoading={isLoading}

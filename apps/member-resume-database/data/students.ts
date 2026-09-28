@@ -73,33 +73,6 @@ export interface Student {
   email: string;
 }
 
-export interface StudentBadge {
-  id: string;
-  label: string;
-  description: string;
-  iconPath: string;
-}
-
-export const ALL_BADGES: StudentBadge[] = [
-  {
-    id: "avid-learner",
-    label: "Avid Learner",
-    description: "Possesses 5+ technical skills",
-    iconPath: "/badges/avid-learner.svg",
-  },
-  {
-    id: "professional-socialite",
-    label: "Professional Socialite",
-    description: "Connected across multiple professional platforms",
-    iconPath: "/badges/professional-socialite.svg",
-  },
-  {
-    id: "committed-worker",
-    label: "Committed Worker",
-    description: "Has industry work experience",
-    iconPath: "/badges/committed-worker.svg",
-  },
-];
 
 /**
  * Helper to retrieve primary education record (first education entry or fallback)
@@ -109,37 +82,6 @@ export function getPrimaryEducation(student: Student): EducationEntry | null {
     return student.education[0];
   }
   return null;
-}
-
-/**
- * Dynamically computes badge badges for a candidate based on their live profile data
- */
-export function getStudentBadges(student: Student): StudentBadge[] {
-  const badges: StudentBadge[] = [];
-
-  if (student.skills && student.skills.length >= 5) {
-    const b = ALL_BADGES.find((badge) => badge.id === "avid-learner");
-    if (b) badges.push(b);
-  }
-
-  if (student.links && student.links.length >= 2) {
-    const b = ALL_BADGES.find((badge) => badge.id === "professional-socialite");
-    if (b) badges.push(b);
-  }
-
-  if (student.workExperiences && student.workExperiences.length >= 1) {
-    const b = ALL_BADGES.find((badge) => badge.id === "committed-worker");
-    if (b) badges.push(b);
-  }
-
-  return badges;
-}
-
-/**
- * Returns array of badge label strings for filtering
- */
-export function getStudentBadgeLabels(student: Student): string[] {
-  return getStudentBadges(student).map((b) => b.label);
 }
 
 /**

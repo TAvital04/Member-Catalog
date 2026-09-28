@@ -6,7 +6,6 @@ import FilterDropdown from "./FilterDropdown";
 import MajorsFilter from "./filters/MajorsFilter";
 import SkillsFilter, { SkillModeSelector } from "./filters/SkillsFilter";
 import GradDatesFilter from "./filters/GradDatesFilter";
-import BadgesFilter from "./filters/BadgesFilter";
 import AdminFilters from "./filters/AdminFilters";
 import SponsorLockPanel from "./filters/SponsorLockPanel";
 
@@ -17,8 +16,6 @@ interface FilterSidebarProps {
   setSelectedSkills: (skills: string[]) => void;
   selectedGradDates: string[];
   setSelectedGradDates: (dates: string[]) => void;
-  selectedBadges: string[];
-  setSelectedBadges: (badges: string[]) => void;
   skillFilterMode: "AND" | "OR";
   setSkillFilterMode: (mode: "AND" | "OR") => void;
   
@@ -45,8 +42,6 @@ export default function FilterSidebar({
   setSelectedSkills,
   selectedGradDates,
   setSelectedGradDates,
-  selectedBadges,
-  setSelectedBadges,
   skillFilterMode,
   setSkillFilterMode,
   adminMode,
@@ -59,13 +54,12 @@ export default function FilterSidebar({
   role = "admin",
   onResetAll,
 }: FilterSidebarProps) {
-  const [activeDropdown, setActiveDropdown] = useState<"major" | "skill" | "grad" | "badge" | "admin" | null>(null);
+  const [activeDropdown, setActiveDropdown] = useState<"major" | "skill" | "grad" | "admin" | null>(null);
   
   const activeFiltersCount =
     selectedMajors.length +
     selectedSkills.length +
     selectedGradDates.length +
-    selectedBadges.length +
     (adminFilterFlagged !== null ? 1 : 0);
 
   const handleMajorToggle = (major: string) => {
@@ -92,14 +86,6 @@ export default function FilterSidebar({
     }
   };
 
-  const handleBadgeToggle = (badgeLabel: string) => {
-    if (selectedBadges.includes(badgeLabel)) {
-      setSelectedBadges(selectedBadges.filter((b) => b !== badgeLabel));
-    } else {
-      setSelectedBadges([...selectedBadges, badgeLabel]);
-    }
-  };
-
   const resetAllFilters = () => {
     if (onResetAll) {
       onResetAll();
@@ -107,7 +93,6 @@ export default function FilterSidebar({
       setSelectedMajors([]);
       setSelectedSkills([]);
       setSelectedGradDates([]);
-      setSelectedBadges([]);
       setSkillFilterMode("OR");
       setAdminFilterFlagged(null);
     }
@@ -187,21 +172,6 @@ export default function FilterSidebar({
               availableGradDates={availableGradDates}
               selectedGradDates={selectedGradDates}
               onGradToggle={handleGradToggle}
-            />
-          </FilterDropdown>
-
-          <FilterDropdown
-            title={`Badges ${selectedBadges.length > 0 ? `(${selectedBadges.length})` : ""}`}
-            isOpen={activeDropdown === "badge"}
-            onToggle={() => setActiveDropdown(activeDropdown === "badge" ? null : "badge")}
-            isActive={selectedBadges.length > 0}
-            layout="top"
-            widthClass="w-[calc(100vw-2.5rem)] max-w-[280px] md:w-60"
-          >
-            <BadgesFilter
-              selectedBadges={selectedBadges}
-              onBadgeToggle={handleBadgeToggle}
-              layout="top"
             />
           </FilterDropdown>
 
@@ -319,7 +289,7 @@ export default function FilterSidebar({
           </FilterDropdown>
         </div>
 
-        <div className="border-b border-zinc-850/40 pb-5">
+        <div>
           <FilterDropdown
             title="Graduation Date"
             isOpen={true}
@@ -334,23 +304,8 @@ export default function FilterSidebar({
             />
           </FilterDropdown>
         </div>
-
-        <div>
-          <FilterDropdown
-            title="Badges & Honors"
-            isOpen={true}
-            onToggle={() => {}}
-            isActive={selectedBadges.length > 0}
-            layout="side"
-          >
-            <BadgesFilter
-              selectedBadges={selectedBadges}
-              onBadgeToggle={handleBadgeToggle}
-              layout="side"
-            />
-          </FilterDropdown>
-        </div>
       </aside>
     </>
   );
 }
+

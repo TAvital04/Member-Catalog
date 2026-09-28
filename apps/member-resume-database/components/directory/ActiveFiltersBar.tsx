@@ -11,8 +11,6 @@ interface ActiveFiltersBarProps {
   removeGradFilter: (date: string) => void;
   selectedSkills: string[];
   removeSkillFilter: (skill: string) => void;
-  selectedBadges: string[];
-  removeBadgeFilter: (badge: string) => void;
   onClearAll?: () => void;
 }
 
@@ -23,15 +21,12 @@ export default function ActiveFiltersBar({
   removeGradFilter,
   selectedSkills,
   removeSkillFilter,
-  selectedBadges,
-  removeBadgeFilter,
   onClearAll,
 }: ActiveFiltersBarProps) {
   const hasActiveFilters =
     selectedMajors.length > 0 ||
     selectedGradDates.length > 0 ||
-    selectedSkills.length > 0 ||
-    selectedBadges.length > 0;
+    selectedSkills.length > 0;
 
   if (!hasActiveFilters) return null;
 
@@ -85,22 +80,6 @@ export default function ActiveFiltersBar({
         </span>
       ))}
 
-      {selectedBadges.map((badge) => (
-        <span
-          key={badge}
-          className="relative group/tooltip hover:z-50 flex items-center gap-1 bg-zinc-900 border border-zinc-800 text-purple-400/90 font-medium px-2 py-0.5 rounded-md animate-fade-in cursor-help"
-        >
-          <span>{badge}</span>
-          <button
-            onClick={() => removeBadgeFilter(badge)}
-            className="text-zinc-555 hover:text-red-400 font-bold text-[10px] cursor-pointer ml-1"
-          >
-            ×
-          </button>
-          <Tooltip content={`Badge: ${badge}`} position="top" />
-        </span>
-      ))}
-
       {onClearAll && (
         <button
           onClick={onClearAll}
@@ -112,3 +91,4 @@ export default function ActiveFiltersBar({
     </div>
   );
 }
+

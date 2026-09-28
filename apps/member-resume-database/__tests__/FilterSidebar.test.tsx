@@ -10,8 +10,6 @@ describe("FilterSidebar Role Access & Locks", () => {
     setSelectedSkills: jest.fn(),
     selectedGradDates: [],
     setSelectedGradDates: jest.fn(),
-    selectedBadges: [],
-    setSelectedBadges: jest.fn(),
     skillFilterMode: "OR" as const,
     setSkillFilterMode: jest.fn(),
     adminMode: false,

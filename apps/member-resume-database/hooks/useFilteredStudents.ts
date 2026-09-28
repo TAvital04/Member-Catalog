@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Student, getStudentBadgeLabels, getPrimaryEducation } from "../data/students";
+import { Student, getPrimaryEducation } from "../data/students";
 import { getGradValue } from "../lib/gradDate";
 
 interface UseFilteredStudentsProps {
@@ -8,7 +8,6 @@ interface UseFilteredStudentsProps {
   selectedMajors: string[];
   selectedSkills: string[];
   selectedGradDates: string[];
-  selectedBadges: string[];
   skillFilterMode: "AND" | "OR";
   adminMode: boolean;
   adminFilterFlagged: boolean | null;
@@ -21,7 +20,6 @@ export function useFilteredStudents({
   selectedMajors,
   selectedSkills,
   selectedGradDates,
-  selectedBadges,
   skillFilterMode,
   adminMode,
   adminFilterFlagged,
@@ -89,12 +87,6 @@ export function useFilteredStudents({
           }
         }
 
-        if (selectedBadges.length > 0) {
-          const studentBadgeLabels = getStudentBadgeLabels(student);
-          const hasAny = selectedBadges.some((b) => studentBadgeLabels.includes(b));
-          if (!hasAny) return false;
-        }
-
         if (adminMode) {
           if (adminFilterFlagged !== null) {
             if (adminFilterFlagged && !student.flagged) return false;
@@ -124,12 +116,12 @@ export function useFilteredStudents({
     selectedMajors,
     selectedSkills,
     selectedGradDates,
-    selectedBadges,
     skillFilterMode,
     adminMode,
     adminFilterFlagged,
     sortBy,
   ]);
+
 
   // Calculate summary stats
   const { totalResumes, majorCount, totalSkillsCount } = useMemo(() => {
