@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { UserRole } from "../../app/page";
 import Tooltip from "../common/Tooltip";
-import { Shield, Sun, Moon } from "lucide-react";
+import { Shield, Sun, Moon, FolderGit2, Users, Briefcase, ShieldCheck, GraduationCap } from "lucide-react";
 
 interface DirectoryNavbarProps {
   role: UserRole;
@@ -22,15 +23,49 @@ export default function DirectoryNavbar({
   toggleTheme,
   handleRoleChange,
 }: DirectoryNavbarProps) {
+  const pathname = usePathname();
+
+  const navLinks = [
+    { href: "/", label: "Directory", icon: Users, color: "text-amber-400" },
+    { href: "/projects", label: "Projects Hub", icon: FolderGit2, color: "text-cyan-400" },
+    { href: "/where-knights-work", label: "Where Knights Work", icon: Briefcase, color: "text-emerald-400" },
+    { href: "/staff", label: "Officers & Staff", icon: ShieldCheck, color: "text-purple-400" },
+    { href: "/alumni", label: "Alumni Showcase", icon: GraduationCap, color: "text-yellow-400" },
+  ];
+
   return (
-    <nav className="border-b border-zinc-900 bg-zinc-955/80 backdrop-blur-md sticky top-0 z-40 px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div className="flex items-center gap-2.5">
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-yellow-600 flex items-center justify-center font-black text-zinc-950 shadow-lg shadow-amber-500/15">
-          UCF
-        </div>
-        <div>
-          <h1 className="text-base font-black text-zinc-50 tracking-tight">IEEE UCF</h1>
-          <p className="text-[10px] text-zinc-550 font-bold uppercase tracking-wider -mt-0.5">Resume Database</p>
+    <nav className="border-b border-zinc-900 bg-zinc-955/80 backdrop-blur-md sticky top-0 z-40 px-6 py-4 flex flex-col lg:flex-row items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full lg:w-auto">
+        <Link href="/" className="flex items-center gap-2.5 group cursor-pointer shrink-0">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-yellow-600 flex items-center justify-center font-black text-zinc-950 shadow-lg shadow-amber-500/15 group-hover:scale-105 transition-transform">
+            UCF
+          </div>
+          <div>
+            <h1 className="text-base font-black text-zinc-50 tracking-tight group-hover:text-amber-400 transition-colors">IEEE UCF</h1>
+            <p className="text-[10px] text-zinc-550 font-bold uppercase tracking-wider -mt-0.5">Resume Database</p>
+          </div>
+        </Link>
+
+        {/* Navigation Hub Links */}
+        <div className="flex flex-wrap items-center gap-1.5 bg-zinc-900/90 border border-zinc-800/80 p-1 rounded-xl text-xs font-bold overflow-x-auto max-w-full">
+          {navLinks.map((item) => {
+            const Icon = item.icon;
+            const isActive = pathname === item.href;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all cursor-pointer whitespace-nowrap ${
+                  isActive
+                    ? "bg-zinc-800 text-zinc-100 font-extrabold shadow-sm border border-zinc-700/60"
+                    : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-850"
+                }`}
+              >
+                <Icon size={14} className={item.color} />
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
         </div>
       </div>
 

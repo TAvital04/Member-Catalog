@@ -19,6 +19,8 @@ interface FilterSidebarProps {
   setSelectedGradDates: (dates: string[]) => void;
   selectedEvents: string[];
   setSelectedEvents: (events: string[]) => void;
+  selectedCompanies?: string[];
+  setSelectedCompanies?: (companies: string[]) => void;
   skillFilterMode: "AND" | "OR";
   setSkillFilterMode: (mode: "AND" | "OR") => void;
   
@@ -32,6 +34,7 @@ interface FilterSidebarProps {
   availableSkills: string[];
   availableGradDates: string[];
   availableEvents: string[];
+  availableCompanies?: string[];
 
   // Layout choice
   layout?: "side" | "top";
@@ -48,6 +51,8 @@ export default function FilterSidebar({
   setSelectedGradDates,
   selectedEvents,
   setSelectedEvents,
+  selectedCompanies = [],
+  setSelectedCompanies,
   skillFilterMode,
   setSkillFilterMode,
   adminMode,
@@ -57,17 +62,19 @@ export default function FilterSidebar({
   availableSkills,
   availableGradDates,
   availableEvents,
+  availableCompanies = [],
   layout = "side",
   role = "admin",
   onResetAll,
 }: FilterSidebarProps) {
-  const [activeDropdown, setActiveDropdown] = useState<"major" | "skill" | "grad" | "event" | "admin" | null>(null);
+  const [activeDropdown, setActiveDropdown] = useState<"major" | "skill" | "grad" | "event" | "company" | "admin" | null>(null);
   
   const activeFiltersCount =
     selectedMajors.length +
     selectedSkills.length +
     selectedGradDates.length +
     selectedEvents.length +
+    selectedCompanies.length +
     (adminFilterFlagged !== null ? 1 : 0);
 
   const handleMajorToggle = (major: string) => {

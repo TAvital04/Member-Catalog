@@ -69,6 +69,7 @@ export interface MemberResumeFormData {
   projects: ProjectInput[];
   clubMemberships: ClubMembershipInput[];
   certifications: CertificationInput[];
+  mainProjectName?: string;
 }
 
 const URL_REGEX = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/i;

@@ -69,5 +69,6 @@ export interface StudentCandidate {
   status: 'Seeking Internship' | 'Seeking Full-time' | 'Employed';
   flagged: boolean;
   flagReason?: string;
+  mainProjectName?: string;
   email: string;
 }

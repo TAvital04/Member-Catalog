@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { Student, getPrimaryEducation } from "../../data/students";
-import { Calendar, Award, Flag } from "lucide-react";
+import { Student, getPrimaryEducation, getIeeeLeadershipRole } from "../../data/students";
+import { Calendar, Award, Flag, FolderGit2 } from "lucide-react";
 import Avatar from "../common/Avatar";
 import StatusBadge from "../common/StatusBadge";
 import TruncatedText from "../common/TruncatedText";
@@ -23,6 +23,8 @@ function StudentCard({
   adminMode,
   onToggleFlag,
 }: StudentCardProps) {
+  const leadershipRole = getIeeeLeadershipRole(student);
+
   return (
     <div
       onClick={() => onClick(student)}
@@ -63,9 +65,21 @@ function StudentCard({
         </p>
       </div>
 
-      {/* Middle Section (Status Badge) */}
-      <div className="flex items-center">
+      {/* Middle Section (Status Badge, IEEE Leadership Badge & Main IEEE Project Badge) */}
+      <div className="flex flex-wrap items-center gap-1.5">
         <StatusBadge status={student.status} />
+        {leadershipRole && (
+          <span className="bg-amber-500/10 text-amber-300 border border-amber-500/30 text-[10px] font-extrabold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-sm shrink-0 max-w-[160px]">
+            <Award size={10} className="text-amber-400 shrink-0" />
+            <TruncatedText text={leadershipRole} maxLength={20} />
+          </span>
+        )}
+        {student.mainProjectName && (
+          <span className="bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 text-[10px] font-extrabold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-sm shrink-0 max-w-[160px]">
+            <FolderGit2 size={10} className="text-cyan-400 shrink-0" />
+            <TruncatedText text={student.mainProjectName} maxLength={20} />
+          </span>
+        )}
       </div>
 
       {/* Bottom Section */}

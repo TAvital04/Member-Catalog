@@ -45,6 +45,7 @@ const DEFAULT_FORM_DATA: MemberResumeFormData = {
 		},
 	],
 	certifications: [],
+	mainProjectName: '',
 };
 
 export default function MemberResumeForm({ memberId = 'current-member', initialData }: MemberResumeFormProps) {
@@ -270,6 +271,25 @@ export default function MemberResumeForm({ memberId = 'current-member', initialD
 								{validationErrors.resumePdfUrl && (
 									<p className="text-xs text-red-400 mt-1 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {validationErrors.resumePdfUrl}</p>
 								)}
+							</div>
+
+							<div className="md:col-span-2">
+								<label className="block text-xs font-bold uppercase mb-1 text-white/80">Primary IEEE Project Affiliation (Optional)</label>
+								<select
+									value={formData.mainProjectName || ''}
+									onChange={(e) => handleTextChange('mainProjectName', e.target.value)}
+									className="w-full bg-black/80 border border-white/20 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-[var(--ieee-dark-yellow)]"
+								>
+									<option value="">None / Not Affiliated with Official IEEE Project</option>
+									<option value="IEEE Micromouse Autonomous Maze Solver">IEEE Micromouse Autonomous Maze Solver</option>
+									<option value="IEEE Solar Knight Racing ESC">IEEE Solar Knight Racing ESC</option>
+									<option value="IEEE Quadcopter Swarm">IEEE Quadcopter Swarm</option>
+									<option value="IEEE Smart Campus IoT Beacon Network">IEEE Smart Campus IoT Beacon Network</option>
+									<option value="IEEE PCB Design & Surface Mount Workshop Series">IEEE PCB Design & Surface Mount Workshop Series</option>
+								</select>
+								<p className="text-[11px] text-white/60 mt-1">
+									Select the official IEEE project team you are actively contributing to.
+								</p>
 							</div>
 						</div>
 

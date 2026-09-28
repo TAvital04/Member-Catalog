@@ -50,6 +50,7 @@ export async function POST(request: NextRequest) {
 				projects: body.projects || [],
 				clubMemberships: body.clubMemberships || [],
 				certifications: body.certifications || [],
+				mainProjectName: body.mainProjectName || null,
 				updatedAt: new Date(),
 			})
 			.onConflictDoUpdate({
@@ -67,6 +68,7 @@ export async function POST(request: NextRequest) {
 					projects: body.projects || [],
 					clubMemberships: body.clubMemberships || [],
 					certifications: body.certifications || [],
+					mainProjectName: body.mainProjectName || null,
 					updatedAt: new Date(),
 				},
 			});

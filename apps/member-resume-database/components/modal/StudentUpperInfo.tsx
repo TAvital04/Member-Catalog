@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import { Student, getPrimaryEducation } from "../../data/students";
+import { Student, getPrimaryEducation, getIeeeLeadershipRole } from "../../data/students";
 import Avatar from "../common/Avatar";
-import { Calendar, Award, User, AlertTriangle } from "lucide-react";
+import { Calendar, Award, User, AlertTriangle, ShieldCheck, FolderGit2 } from "lucide-react";
 
 interface StudentUpperInfoProps {
   student: Student;
@@ -14,6 +14,7 @@ export default function StudentUpperInfo({ student, adminMode }: StudentUpperInf
   const primaryEdu = getPrimaryEducation(student);
   const primaryDegree = primaryEdu?.degreeType || student.degree || "Bachelor of Science";
   const primaryMajor = primaryEdu?.major || student.major || "Computer Science";
+  const leadershipRole = getIeeeLeadershipRole(student);
 
   const minorEdu = student.education?.find(
     (edu) =>
@@ -34,6 +35,7 @@ export default function StudentUpperInfo({ student, adminMode }: StudentUpperInf
           </div>
         </div>
       )}
+
       {/* Header info */}
       <div className="flex items-center gap-4 w-full min-w-0">
         <Avatar name={student.name} size="lg" className="shrink-0" />
@@ -50,6 +52,28 @@ export default function StudentUpperInfo({ student, adminMode }: StudentUpperInf
             </div>
           )}
         </div>
+      </div>
+
+      {/* IEEE Leadership Officer Badge & Primary Project Badge */}
+      <div className="flex flex-col gap-2.5">
+        {leadershipRole && (
+          <div className="bg-gradient-to-r from-amber-500/15 via-amber-500/10 to-zinc-900 border border-amber-500/30 rounded-xl px-3.5 py-2 text-xs font-extrabold text-amber-300 flex items-center gap-2.5 shadow-sm animate-fade-in">
+            <ShieldCheck size={16} className="text-amber-400 shrink-0" />
+            <div>
+              <span className="text-[9.5px] font-extrabold text-amber-500 uppercase tracking-wider block leading-none mb-0.5">IEEE UCF Chapter Leadership</span>
+              <span className="leading-tight">{leadershipRole}</span>
+            </div>
+          </div>
+        )}
+        {student.mainProjectName && (
+          <div className="bg-gradient-to-r from-cyan-500/15 via-cyan-500/10 to-zinc-900 border border-cyan-500/30 rounded-xl px-3.5 py-2 text-xs font-extrabold text-cyan-300 flex items-center gap-2.5 shadow-sm animate-fade-in">
+            <FolderGit2 size={16} className="text-cyan-400 shrink-0" />
+            <div>
+              <span className="text-[9.5px] font-extrabold text-cyan-500 uppercase tracking-wider block leading-none mb-0.5">Primary IEEE Project Affiliation</span>
+              <span className="leading-tight">{student.mainProjectName}</span>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* High-level status bar */}

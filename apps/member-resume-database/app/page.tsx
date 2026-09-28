@@ -42,6 +42,8 @@ function StudentDirectoryContent() {
     setSelectedGradDates,
     selectedEvents,
     setSelectedEvents,
+    selectedCompanies,
+    setSelectedCompanies,
     skillFilterMode,
     setSkillFilterMode,
     adminFilterFlagged,
@@ -58,6 +60,7 @@ function StudentDirectoryContent() {
   const [role, setRole] = useState<UserRole>("admin");
   const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [onlyLeadersFilter, setOnlyLeadersFilter] = useState(false);
 
   // Custom confirm dialog state
   const [confirmDialog, setConfirmDialog] = useState<{
@@ -89,6 +92,7 @@ function StudentDirectoryContent() {
     }
     if (newRole === "standard") {
       resetAllFilters();
+      setOnlyLeadersFilter(false);
     }
   };
 
@@ -110,6 +114,7 @@ function StudentDirectoryContent() {
     availableSkills,
     availableGradDates,
     availableEvents,
+    availableCompanies,
     filteredStudents,
     totalResumes,
     majorCount,
@@ -121,6 +126,8 @@ function StudentDirectoryContent() {
     selectedSkills,
     selectedGradDates,
     selectedEvents,
+    selectedCompanies,
+    onlyLeaders: onlyLeadersFilter,
     skillFilterMode,
     adminMode,
     adminFilterFlagged,
@@ -184,6 +191,15 @@ function StudentDirectoryContent() {
   const removeSkillFilter = (skill: string) => setSelectedSkills(selectedSkills.filter((s) => s !== skill));
   const removeGradFilter = (date: string) => setSelectedGradDates(selectedGradDates.filter((d) => d !== date));
   const removeEventFilter = (evtTitle: string) => setSelectedEvents(selectedEvents.filter((e) => e !== evtTitle));
+  const removeCompanyFilter = (company: string) => setSelectedCompanies(selectedCompanies.filter((c) => c !== company));
+
+  const handleCompanyToggle = (company: string) => {
+    if (selectedCompanies.includes(company)) {
+      setSelectedCompanies(selectedCompanies.filter((c) => c !== company));
+    } else {
+      setSelectedCompanies([...selectedCompanies, company]);
+    }
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-zinc-955 text-zinc-200 relative pb-16 overflow-x-hidden">
@@ -248,6 +264,8 @@ function StudentDirectoryContent() {
             setSelectedGradDates={setSelectedGradDates}
             selectedEvents={selectedEvents}
             setSelectedEvents={setSelectedEvents}
+            selectedCompanies={selectedCompanies}
+            setSelectedCompanies={setSelectedCompanies}
             skillFilterMode={skillFilterMode}
             setSkillFilterMode={setSkillFilterMode}
             adminMode={adminMode}
@@ -257,6 +275,7 @@ function StudentDirectoryContent() {
             availableSkills={availableSkills}
             availableGradDates={availableGradDates}
             availableEvents={availableEvents}
+            availableCompanies={availableCompanies}
             layout={filterLayout}
             role={role}
             onResetAll={resetAllFilters}
@@ -274,6 +293,8 @@ function StudentDirectoryContent() {
             removeSkillFilter={removeSkillFilter}
             selectedEvents={selectedEvents}
             removeEventFilter={removeEventFilter}
+            selectedCompanies={selectedCompanies}
+            removeCompanyFilter={removeCompanyFilter}
             onClearAll={resetAllFilters}
           />
 

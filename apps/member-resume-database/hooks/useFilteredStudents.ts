@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Student, getPrimaryEducation } from "../data/students";
+import { Student, getPrimaryEducation, getIeeeLeadershipRole } from "../data/students";
 import { getGradValue } from "../lib/gradDate";
 
 interface UseFilteredStudentsProps {
@@ -8,7 +8,9 @@ interface UseFilteredStudentsProps {
   selectedMajors: string[];
   selectedSkills: string[];
   selectedGradDates: string[];
-  selectedEvents: string[];
+  selectedEvents?: string[];
+  selectedCompanies?: string[];
+  onlyLeaders?: boolean;
   skillFilterMode: "AND" | "OR";
   adminMode: boolean;
   adminFilterFlagged: boolean | null;
@@ -21,24 +23,30 @@ export function useFilteredStudents({
   selectedMajors,
   selectedSkills,
   selectedGradDates,
-  selectedEvents,
+  selectedEvents = [],
+  selectedCompanies = [],
+  onlyLeaders = false,
   skillFilterMode,
   adminMode,
   adminFilterFlagged,
   sortBy,
 }: UseFilteredStudentsProps) {
   // Memoize unique metadata for filter selection options
-  const { availableMajors, availableSkills, availableGradDates, availableEvents } = useMemo(() => {
+  const { availableMajors, availableSkills, availableGradDates, availableEvents, availableCompanies } = useMemo(() => {
     const majors = new Set<string>();
     const skills = new Set<string>();
     const gradDates = new Set<string>();
     const eventsSet = new Set<string>();
+    const companiesSet = new Set<string>();
 
     students.forEach((s) => {
       majors.add(s.major);
       s.skills.forEach((sk) => skills.add(sk));
       gradDates.add(s.gradDate);
       (s.events || []).forEach((e) => eventsSet.add(e.title));
+      (s.workExperiences || []).forEach((w) => {
+        if (w.name) companiesSet.add(w.name);
+      });
     });
 
     return {
@@ -50,6 +58,7 @@ export function useFilteredStudents({
         return yearA - yearB;
       }),
       availableEvents: Array.from(eventsSet).sort(),
+      availableCompanies: Array.from(companiesSet).sort(),
     };
   }, [students]);
 
@@ -68,8 +77,11 @@ export function useFilteredStudents({
           const matchesMajor = student.major.toLowerCase().includes(query);
           const matchesBio = student.bio.toLowerCase().includes(query);
           const matchesSkills = student.skills.some((s) => s.toLowerCase().includes(query));
+          const matchesCompany = (student.workExperiences || []).some((w) =>
+            w.name.toLowerCase().includes(query) || w.title.toLowerCase().includes(query)
+          );
 
-          if (!matchesName && !matchesMajor && !matchesBio && !matchesSkills) {
+          if (!matchesName && !matchesMajor && !matchesBio && !matchesSkills && !matchesCompany) {
             return false;
           }
         }
@@ -96,6 +108,16 @@ export function useFilteredStudents({
           const studentEventTitles = (student.events || []).map((e) => e.title);
           const hasAnyEvent = selectedEvents.some((evtTitle) => studentEventTitles.includes(evtTitle));
           if (!hasAnyEvent) return false;
+        }
+
+        if (selectedCompanies.length > 0) {
+          const studentCompanies = (student.workExperiences || []).map((w) => w.name);
+          const hasAnyCompany = selectedCompanies.some((comp) => studentCompanies.includes(comp));
+          if (!hasAnyCompany) return false;
+        }
+
+        if (onlyLeaders && !getIeeeLeadershipRole(student)) {
+          return false;
         }
 
         if (adminMode) {
@@ -128,6 +150,7 @@ export function useFilteredStudents({
     selectedSkills,
     selectedGradDates,
     selectedEvents,
+    selectedCompanies,
     skillFilterMode,
     adminMode,
     adminFilterFlagged,
@@ -148,6 +171,7 @@ export function useFilteredStudents({
     availableSkills,
     availableGradDates,
     availableEvents,
+    availableCompanies,
     filteredStudents,
     totalResumes,
     majorCount,

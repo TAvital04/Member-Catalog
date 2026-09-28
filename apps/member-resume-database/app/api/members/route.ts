@@ -26,6 +26,7 @@ export async function GET() {
           certifications: memberResumes.certifications,
           flagged: memberResumes.flagged,
           flagReason: memberResumes.flagReason,
+          mainProjectName: memberResumes.mainProjectName,
           memberMajor: members.major,
           memberGradYear: members.graduationYear,
         })
@@ -167,6 +168,7 @@ export async function GET() {
         status: (row.status as any) || "Seeking Internship",
         flagged: Boolean(row.flagged),
         flagReason: row.flagReason || undefined,
+        mainProjectName: row.mainProjectName || undefined,
       };
     });
 

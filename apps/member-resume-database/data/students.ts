@@ -81,6 +81,7 @@ export interface Student {
   flagged: boolean;
   flagReason?: string;
   duplicateGroup?: string;
+  mainProjectName?: string;
   email: string;
 }
 
@@ -94,6 +95,15 @@ export function getPrimaryEducation(student: Student): EducationEntry | null {
     return student.education[0];
   }
   return null;
+}
+
+/**
+ * Helper to retrieve IEEE leadership role if student is an officer or committee chair
+ */
+export function getIeeeLeadershipRole(student: Student): string | null {
+  if (!student.clubs || student.clubs.length === 0) return null;
+  const ieeeClub = student.clubs.find((c) => /ieee|institute of electrical/i.test(c.name));
+  return ieeeClub ? ieeeClub.title : null;
 }
 
 /**

@@ -103,6 +103,7 @@ export const memberResumes = pgTable('member_resumes', {
 
   flagged: boolean('flagged').default(false).notNull(),
   flagReason: varchar('flag_reason', { length: 300 }),
+  mainProjectName: varchar('main_project_name', { length: 255 }),
 
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
@@ -136,5 +137,33 @@ export const eventAttendees = pgTable('event_attendees', {
   id: uuid('id').defaultRandom().primaryKey(),
   eventId: uuid('event_id').notNull().references(() => events.id, { onDelete: 'cascade' }),
   memberId: uuid('member_id').notNull().references(() => members.id, { onDelete: 'cascade' }),
+  timestamp: timestamp('timestamp', { withTimezone: true }).defaultNow().notNull(),
+});
+
+/**
+ * IEEE Projects Table - Chapter Build Projects & Initiatives
+ */
+export const ieeeProjects = pgTable('ieee_projects', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  title: varchar('title', { length: 255 }).notNull(),
+  slug: varchar('slug', { length: 64 }).notNull().unique(),
+  description: text('description').notNull(),
+  category: varchar('category', { length: 100 }).notNull(), // 'Robotics' | 'Embedded Systems' | 'Software' | 'Power' | 'AI'
+  status: varchar('status', { length: 50 }).notNull().default('Active'), // 'Active' | 'Completed' | 'In Development'
+  repositoryUrl: varchar('repository_url', { length: 500 }),
+  demoUrl: varchar('demo_url', { length: 500 }),
+  active: boolean('active').default(true).notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+/**
+ * Project Participants Table - Links Members to IEEE Projects
+ */
+export const projectParticipants = pgTable('project_participants', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  projectId: uuid('project_id').notNull().references(() => ieeeProjects.id, { onDelete: 'cascade' }),
+  memberId: uuid('member_id').notNull().references(() => members.id, { onDelete: 'cascade' }),
+  roleTitle: varchar('role_title', { length: 100 }).default('Team Member').notNull(),
   timestamp: timestamp('timestamp', { withTimezone: true }).defaultNow().notNull(),
 });
