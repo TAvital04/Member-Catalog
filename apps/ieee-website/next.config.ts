@@ -1,6 +1,8 @@
 import type { NextConfig } from 'next';
+import path from 'path';
 
 const nextConfig: NextConfig = {
+	outputFileTracingRoot: path.join(__dirname, '../../'),
 	images: {
 		remotePatterns: [
 			{
@@ -30,6 +32,18 @@ const nextConfig: NextConfig = {
 				pathname: '/**',
 			},
 		],
+	},
+	async rewrites() {
+		return [
+			{
+				source: '/resumes',
+				destination: process.env.RESUME_DB_URL || 'http://localhost:3000',
+			},
+			{
+				source: '/resumes/:path*',
+				destination: `${process.env.RESUME_DB_URL || 'http://localhost:3000'}/:path*`,
+			},
+		];
 	},
 };
 

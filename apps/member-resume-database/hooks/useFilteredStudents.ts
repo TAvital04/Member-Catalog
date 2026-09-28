@@ -90,7 +90,7 @@ export function useFilteredStudents({
         }
 
         if (selectedBadges.length > 0) {
-          const studentBadgeLabels = getStudentBadgeLabels(student.id);
+          const studentBadgeLabels = getStudentBadgeLabels(student);
           const hasAny = selectedBadges.some((b) => studentBadgeLabels.includes(b));
           if (!hasAny) return false;
         }

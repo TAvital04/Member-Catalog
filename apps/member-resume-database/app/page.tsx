@@ -169,7 +169,6 @@ function StudentDirectoryContent() {
     handleResolveRemoveSelection,
     handleResolveUnflag,
     handleResolveDelete,
-    handleResolveDeleteAndEmail,
   } = useResolveDialogManager({
     students,
     setStudents,

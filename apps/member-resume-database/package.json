@@ -1,5 +1,5 @@
 {
-  "name": "member-resume-database",
+  "name": "@ieee/member-resume-database",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,6 +10,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "@ieee/db": "workspace:*",
+    "@ieee/shared": "workspace:*",
     "@neondatabase/serverless": "^1.1.0",
     "drizzle-orm": "^0.45.2",
     "lucide-react": "^1.21.0",

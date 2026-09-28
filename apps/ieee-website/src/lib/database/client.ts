@@ -4,12 +4,8 @@ import { drizzle as drizzlePostgres } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import * as schema from './schema';
 
-if (!process.env.DATABASE_URL) {
-	throw new Error('DATABASE_URL must be set');
-}
-
-const connectionString = process.env.DATABASE_URL;
-const provider = process.env.DB_PROVIDER ?? 'neon'; // 'neon' | 'local'
+const connectionString = process.env.DATABASE_URL || 'postgres://postgres:postgres@127.0.0.1:5432/ieee-website';
+const provider = process.env.DB_PROVIDER ?? 'local'; // Default to local fallback if DB_PROVIDER not set
 
 function createNeonDb() {
 	const sql = neon(connectionString);
@@ -21,4 +17,6 @@ function createLocalDb() {
 	return drizzlePostgres(client, { schema });
 }
 
-export const db = provider === 'local' ? createLocalDb() : createNeonDb();
+export const db = provider === 'neon' || connectionString.includes('neon.tech')
+	? createNeonDb()
+	: createLocalDb();

@@ -1,80 +1,132 @@
-import { db } from "@/lib/db";
-import { Student, INITIAL_STUDENTS } from "@/data/students";
+import { db, members, memberResumes } from "@ieee/db";
+import { Student } from "@/data/students";
+import { eq } from "drizzle-orm";
 
 export async function GET() {
   try {
-    // Attempt to query live member records from PostgreSQL database
-    let memberRows: any[] = [];
-    
+    let candidateRows: any[] = [];
+
     try {
-      // Execute query using Drizzle or raw SQL fallback
-      const result = await db.execute("SELECT * FROM members WHERE active = true LIMIT 100");
-      memberRows = Array.isArray(result) ? result : (result?.rows || []);
+      // Query 1-to-1 joined member resumes from the shared Drizzle database
+      candidateRows = await db
+        .select({
+          id: memberResumes.id,
+          memberId: memberResumes.memberId,
+          fullName: memberResumes.fullName,
+          email: memberResumes.email,
+          status: memberResumes.status,
+          bio: memberResumes.bio,
+          resumePdfUrl: memberResumes.resumePdfUrl,
+          socialLinks: memberResumes.socialLinks,
+          education: memberResumes.education,
+          skills: memberResumes.skills,
+          workExperience: memberResumes.workExperience,
+          projects: memberResumes.projects,
+          clubMemberships: memberResumes.clubMemberships,
+          certifications: memberResumes.certifications,
+          flagged: memberResumes.flagged,
+          flagReason: memberResumes.flagReason,
+          memberMajor: members.major,
+          memberGradYear: members.graduationYear,
+        })
+        .from(memberResumes)
+        .leftJoin(members, eq(memberResumes.memberId, members.id));
     } catch (dbError) {
-      console.warn("[API Warning] Database query failed or database offline. Falling back to local seed data:", dbError);
+      console.warn("[API Warning] Database query encountered error, returning empty list:", dbError);
       return Response.json({
         success: true,
-        source: "seed_fallback",
-        count: INITIAL_STUDENTS.length,
-        data: INITIAL_STUDENTS,
+        source: "database",
+        count: 0,
+        data: [],
       });
     }
 
-    if (!memberRows || memberRows.length === 0) {
+    if (!candidateRows || candidateRows.length === 0) {
       return Response.json({
         success: true,
-        source: "seed_fallback",
-        count: INITIAL_STUDENTS.length,
-        data: INITIAL_STUDENTS,
+        source: "database",
+        count: 0,
+        data: [],
       });
     }
 
-    // Safely transform database rows to Student interface
-    const transformedStudents: Student[] = memberRows.map((row: any) => {
-      const fullName = [row.first_name || row.firstName, row.middle_name || row.middleName, row.last_name || row.lastName]
-        .filter(Boolean)
-        .join(" ");
+    // Safely transform Drizzle database rows into Student domain models
+    const transformedStudents: Student[] = candidateRows.map((row: any) => {
+      const socialLinks = Array.isArray(row.socialLinks)
+        ? row.socialLinks.map((l: any) => ({ name: l.platformName || "Link", text: l.profileUrl || "" }))
+        : [];
 
-      const links = [];
-      const linkedin = row.linkedin_url || row.linkedinURL;
-      const github = row.github_url || row.githubURL;
-      const website = row.website_url || row.websiteURL;
-      const resume = row.resume_url || row.resumeURL;
+      const education = Array.isArray(row.education)
+        ? row.education.map((e: any) => ({
+            schoolName: e.schoolName || "University of Central Florida",
+            degreeType: e.degreeType || "Bachelor of Science",
+            major: e.major || "Computer Science",
+            gpa: e.gpa,
+            gpaScale: e.gpaScale,
+            startDate: e.startDate || "2022-08-20",
+            endDate: e.endDate,
+            current: Boolean(e.isCurrent),
+            description: e.description,
+          }))
+        : [];
 
-      if (linkedin) links.push({ name: "LinkedIn", text: linkedin });
-      if (github) links.push({ name: "GitHub", text: github });
-      if (website) links.push({ name: "Portfolio", text: website });
-      if (resume) links.push({ name: "Resume", text: resume });
-
-      const gradYear = row.graduation_year || row.graduationYear || 2026;
+      const primaryEdu = education[0] || {};
 
       return {
-        id: row.id || `student-${Math.random().toString(36).substr(2, 9)}`,
-        name: fullName || "UCF Engineering Student",
-        email: row.ucf_email || row.ucfEmail || row.personal_email || row.personalEmail || "student@ucf.edu",
-        bio: row.biography || "UCF Engineering member.",
-        skills: ["React", "TypeScript", "Python"], // Default skill tags
-        links,
-        education: [
-          {
-            schoolName: "University of Central Florida",
-            degreeType: "Bachelor of Science",
-            major: row.major || "Computer Science",
-            startDate: "August 2022",
-            endDate: `May ${gradYear}`,
-            current: true,
-          },
-        ],
-        projects: [],
-        workExperiences: [],
-        clubs: [],
-        certifications: [],
-        resumeLink: resume || undefined,
-        major: row.major || "Computer Science",
-        degree: "Bachelor of Science",
-        gradDate: `May ${gradYear}`,
-        status: "Seeking Internship",
-        flagged: false,
+        id: row.id,
+        name: row.fullName || "UCF Member",
+        email: row.email || "student@knights.ucf.edu",
+        bio: row.bio || "",
+        skills: Array.isArray(row.skills) ? row.skills : [],
+        links: socialLinks,
+        education: education,
+        projects: Array.isArray(row.projects)
+          ? row.projects.map((p: any) => ({
+              name: p.projectName || "",
+              description: p.description || "",
+              startDate: p.startDate || "",
+              endDate: p.endDate,
+              current: Boolean(p.isOngoing),
+              projectLinks: p.projectLinks || [],
+            }))
+          : [],
+        workExperiences: Array.isArray(row.workExperience)
+          ? row.workExperience.map((w: any) => ({
+              name: w.companyName || "",
+              title: w.jobTitle || "",
+              description: w.description || "",
+              startDate: w.startDate || "",
+              endDate: w.endDate,
+              currentJob: Boolean(w.isCurrentJob),
+            }))
+          : [],
+        clubs: Array.isArray(row.clubMemberships)
+          ? row.clubMemberships.map((c: any) => ({
+              name: c.clubName || "",
+              title: c.roleTitle || "",
+              description: c.description || "",
+              startDate: c.startDate || "",
+              endDate: c.endDate,
+              current: Boolean(c.isActive),
+            }))
+          : [],
+        certifications: Array.isArray(row.certifications)
+          ? row.certifications.map((cert: any) => ({
+              name: cert.certificationName || "",
+              issuer: cert.issuer || "",
+              issueDate: cert.issueDate || "",
+              expirationDate: cert.expirationDate,
+              credentialId: cert.credentialId,
+              credentialUrl: cert.credentialUrl,
+            }))
+          : [],
+        resumeLink: row.resumePdfUrl || undefined,
+        major: primaryEdu.major || row.memberMajor || "Computer Science",
+        degree: primaryEdu.degreeType || "Bachelor of Science",
+        gradDate: primaryEdu.endDate ? primaryEdu.endDate : (row.memberGradYear ? `May ${row.memberGradYear}` : "May 2026"),
+        status: (row.status as any) || "Seeking Internship",
+        flagged: Boolean(row.flagged),
+        flagReason: row.flagReason || undefined,
       };
     });
 
@@ -85,12 +137,13 @@ export async function GET() {
       data: transformedStudents,
     });
   } catch (error: any) {
-    console.error("[API Error] Failed to fetch member records:", error);
+    console.error("[API Error] Failed to query database member records:", error);
     return Response.json(
       {
         success: false,
         error: "Failed to retrieve database member records.",
         message: error?.message || "Internal Server Error",
+        data: [],
       },
       { status: 500 }
     );

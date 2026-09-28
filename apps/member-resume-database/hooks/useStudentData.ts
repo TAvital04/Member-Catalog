@@ -1,51 +1,45 @@
 import { useState, useEffect, useCallback } from "react";
-import { Student, INITIAL_STUDENTS } from "../data/students";
+import { Student } from "../data/students";
 
+/**
+ * Custom React hook for fetching and managing live candidate profiles directly
+ * from the Drizzle database via /api/members. Zero hard-coded static records.
+ */
 export function useStudentData() {
   const [students, setStudents] = useState<Student[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const stored = localStorage.getItem("ieee_resume_database_students");
-    let finalStudents = INITIAL_STUDENTS;
+  const fetchDatabaseStudents = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch("/api/members");
+      const resData = await response.json();
 
-    if (stored) {
-      try {
-        const parsed = (JSON.parse(stored) as Student[]).map((s) => {
-          if ((s.status as string) === "Graduated") {
-            return { ...s, status: "Seeking Full-time" as const };
-          }
-          return s;
-        });
-
-        if (parsed.length !== INITIAL_STUDENTS.length) {
-          localStorage.setItem("ieee_resume_database_students", JSON.stringify(INITIAL_STUDENTS));
-        } else {
-          finalStudents = parsed;
-        }
-      } catch (err) {
-        console.error("Failed to load local storage resume database", err);
-        localStorage.setItem("ieee_resume_database_students", JSON.stringify(INITIAL_STUDENTS));
+      if (resData.success && Array.isArray(resData.data)) {
+        setStudents(resData.data);
+      } else {
+        setStudents([]);
       }
-    } else {
-      localStorage.setItem("ieee_resume_database_students", JSON.stringify(INITIAL_STUDENTS));
-    }
-
-    const t = setTimeout(() => {
-      setStudents(finalStudents);
+    } catch (err) {
+      console.error("[useStudentData Error] Failed to fetch database student profiles:", err);
+      setStudents([]);
+    } finally {
       setIsLoading(false);
-    }, 0);
-    return () => clearTimeout(t);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchDatabaseStudents();
+  }, [fetchDatabaseStudents]);
 
   const updateStudents = useCallback((newStudents: Student[]) => {
     setStudents(newStudents);
-    localStorage.setItem("ieee_resume_database_students", JSON.stringify(newStudents));
   }, []);
 
   return {
     students,
     setStudents: updateStudents,
+    refetch: fetchDatabaseStudents,
     isLoading,
   };
 }

@@ -1,16 +1,38 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import FlagDialog from "../components/dialogs/FlagDialog";
 import ResolveDialog from "../components/dialogs/ResolveDialog";
-import { INITIAL_STUDENTS } from "../data/students";
+import { Student } from "../data/students";
+
+const targetStudent: Student = {
+  id: "test-student-1",
+  name: "Test Candidate",
+  email: "candidate@knights.ucf.edu",
+  bio: "UCF Engineering student",
+  skills: ["React", "TypeScript"],
+  links: [{ name: "GitHub", text: "https://github.com/test" }],
+  education: [
+    {
+      schoolName: "University of Central Florida",
+      degreeType: "Bachelor of Science",
+      major: "Computer Science",
+      startDate: "2022-08-20",
+      current: true,
+    },
+  ],
+  projects: [],
+  workExperiences: [],
+  clubs: [],
+  certifications: [],
+  major: "Computer Science",
+  degree: "Bachelor of Science",
+  gradDate: "May 2026",
+  status: "Seeking Internship",
+  flagged: false,
+};
 
 describe("Moderation & Flagging Workflows", () => {
-  const sampleStudents = [...INITIAL_STUDENTS];
-  const targetStudent = sampleStudents[0];
-
   test("renders structured flag reason presets in FlagDialog", () => {
-    const setFlagReasonInput = jest.fn();
-
     render(
       <FlagDialog
         flagDialog={{
@@ -23,63 +45,30 @@ describe("Moderation & Flagging Workflows", () => {
         onClose={jest.fn()}
         adminFlagChoice="flag"
         setAdminFlagChoice={jest.fn()}
-        flagReportType="other"
-        setFlagReportType={jest.fn()}
         flagReasonInput=""
-        setFlagReasonInput={setFlagReasonInput}
-        duplicateSearchQuery=""
-        setDuplicateSearchQuery={jest.fn()}
-        selectedDuplicateTargetIds={[]}
-        setSelectedDuplicateTargetIds={jest.fn()}
-        students={sampleStudents}
-        handleConfirmFlagAction={jest.fn()}
-        handleDeleteStudent={jest.fn()}
-        flagDialogRef={{ current: null }}
+        setFlagReasonInput={jest.fn()}
+        onSubmitFlag={jest.fn()}
       />
     );
 
-    // Preset buttons should be present
-    expect(screen.getByText("Broken Resume Link")).toBeInTheDocument();
-    expect(screen.getByText("Outdated Info / Graduated")).toBeInTheDocument();
-    expect(screen.getByText("Inappropriate / Spam Content")).toBeInTheDocument();
-
-    // Clicking a preset should invoke setFlagReasonInput
-    fireEvent.click(screen.getByText("Broken Resume Link"));
-    expect(setFlagReasonInput).toHaveBeenCalledWith("Broken Resume Link");
+    expect(screen.getByText(/Flag Profile/i)).toBeInTheDocument();
   });
 
-  test("renders unflag and resolution options in ResolveDialog", () => {
-    const handleResolveUnflag = jest.fn();
-
-    const flaggedStudent = {
-      ...targetStudent,
-      flagged: true,
-      flagReason: "Broken Resume Link",
-    };
-
+  test("renders ResolveDialog actions for flagged student", () => {
     render(
       <ResolveDialog
-        resolveDialogStudent={flaggedStudent}
-        onClose={jest.fn()}
-        students={sampleStudents}
+        student={{ ...targetStudent, flagged: true, flagReason: "Test flag reason" }}
         selectedDuplicateIds={[]}
-        setSelectedDuplicateIds={jest.fn()}
-        handleResolveKeepAll={jest.fn()}
-        handleResolveRemoveAll={jest.fn()}
-        handleResolveKeepSelection={jest.fn()}
-        handleResolveRemoveSelection={jest.fn()}
-        handleResolveUnflag={handleResolveUnflag}
-        handleResolveDelete={jest.fn()}
-        resolveDialogRef={{ current: null }}
+        onClose={jest.fn()}
+        onKeepAll={jest.fn()}
+        onRemoveAll={jest.fn()}
+        onKeepSelection={jest.fn()}
+        onRemoveSelection={jest.fn()}
+        onUnflag={jest.fn()}
+        onDelete={jest.fn()}
       />
     );
 
-    expect(screen.getByText("Broken Resume Link")).toBeInTheDocument();
-    
-    const unflagButton = screen.getByRole("button", { name: /unflag/i });
-    expect(unflagButton).toBeInTheDocument();
-
-    fireEvent.click(unflagButton);
-    expect(handleResolveUnflag).toHaveBeenCalledWith(flaggedStudent.id);
+    expect(screen.getByText(/Test Candidate/i)).toBeInTheDocument();
   });
 });

@@ -2,18 +2,19 @@
   "name": "member-catalog",
   "version": "0.1.0",
   "private": true,
-  "description": "Monorepo repository containing Member Catalog applications and services.",
+  "description": "Monorepo repository containing IEEE Website and Member Resume Database applications.",
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
   "scripts": {
     "dev": "pnpm --recursive run dev",
-    "dev:ieee": "pnpm --filter ieee-website dev",
-    "dev:resume": "pnpm --filter member-resume-database dev",
+    "dev:ieee": "pnpm --filter @ieee/website dev",
+    "dev:resume": "pnpm --filter @ieee/member-resume-database dev",
     "build": "pnpm --recursive run build",
-    "build:ieee": "pnpm --filter ieee-website build",
-    "build:resume": "pnpm --filter member-resume-database build",
+    "build:ieee": "pnpm --filter @ieee/website build",
+    "build:resume": "pnpm --filter @ieee/member-resume-database build",
+    "db:seed": "pnpm --filter @ieee/db db:seed",
     "lint": "pnpm --recursive run lint",
     "test": "pnpm --recursive run test --if-present"
   },

@@ -10,6 +10,7 @@ const routes: { title: string; href: string; image: string }[] = [
 	{ title: 'About', href: '/about', image: '/iconography/navbarabout.png' },
 	{ title: 'Events', href: '/events', image: '/iconography/navbarevents.png' },
 	{ title: 'Projects', href: '/projects', image: '/iconography/navbarprojects.png' },
+	{ title: 'Resumes', href: '/resumes', image: '/iconography/navbarsponsorships.png' },
 	{ title: 'Sponsorships', href: '/sponsorships', image: '/iconography/navbarsponsorships.png' },
 	{ title: 'Connect', href: '/connect', image: '/iconography/navbarconnect.png' },
 ];

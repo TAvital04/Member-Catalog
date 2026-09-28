@@ -31,7 +31,7 @@ export default function BadgesFilter({
           />
           <CustomCheckbox checked={selectedBadges.includes(badge.label)} />
           <span>{badge.label}</span>
-          <Tooltip content={badge.desc} position={layout === "top" ? "top-wide" : "top-right"} />
+          <Tooltip content={badge.description} position={layout === "top" ? "top-wide" : "top-right"} />
         </label>
       ))}
     </>

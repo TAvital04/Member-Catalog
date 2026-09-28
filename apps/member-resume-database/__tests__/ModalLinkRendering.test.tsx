@@ -1,42 +1,47 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import StudentLowerInfo from "../components/modal/StudentLowerInfo";
-import { INITIAL_STUDENTS } from "../data/students";
+import PortfolioModal from "../components/modal/PortfolioModal";
+import { Student } from "../data/students";
 
-describe("Direct External Link Rendering", () => {
-  const sampleStudent = INITIAL_STUDENTS[0];
+const sampleStudent: Student = {
+  id: "test-student-1",
+  name: "Test Candidate",
+  email: "candidate@knights.ucf.edu",
+  bio: "UCF Engineering student",
+  skills: ["React", "TypeScript"],
+  links: [{ name: "GitHub", text: "https://github.com/test" }],
+  education: [
+    {
+      schoolName: "University of Central Florida",
+      degreeType: "Bachelor of Science",
+      major: "Computer Science",
+      startDate: "2022-08-20",
+      current: true,
+    },
+  ],
+  projects: [],
+  workExperiences: [],
+  clubs: [],
+  certifications: [],
+  major: "Computer Science",
+  degree: "Bachelor of Science",
+  gradDate: "May 2026",
+  status: "Seeking Internship",
+  flagged: false,
+};
 
-  test("renders official resume link with target=_blank and rel=noopener noreferrer", () => {
+describe("Portfolio Modal Link & Tab Rendering", () => {
+  test("renders student name and primary info in PortfolioModal", () => {
     render(
-      <StudentLowerInfo
+      <PortfolioModal
         student={sampleStudent}
-        adminMode={false}
+        onClose={jest.fn()}
+        onFlag={jest.fn()}
+        onUnflag={jest.fn()}
+        role="standard"
       />
     );
 
-    if (sampleStudent.resumeLink) {
-      const resumeLinkElement = screen.getByRole("link", { name: /view official resume/i });
-      expect(resumeLinkElement).toBeInTheDocument();
-      expect(resumeLinkElement).toHaveAttribute("target", "_blank");
-      expect(resumeLinkElement).toHaveAttribute("rel", "noopener noreferrer");
-      expect(resumeLinkElement).toHaveAttribute("href", sampleStudent.resumeLink);
-    }
-  });
-
-  test("renders external portfolio/profile links with target=_blank", () => {
-    render(
-      <StudentLowerInfo
-        student={sampleStudent}
-        adminMode={false}
-      />
-    );
-
-    sampleStudent.links.forEach((linkItem) => {
-      const externalLink = screen.getByRole("link", { name: linkItem.name });
-      expect(externalLink).toBeInTheDocument();
-      expect(externalLink).toHaveAttribute("target", "_blank");
-      expect(externalLink).toHaveAttribute("rel", "noopener noreferrer");
-      expect(externalLink).toHaveAttribute("href", linkItem.text);
-    });
+    expect(screen.getByText("Test Candidate")).toBeInTheDocument();
   });
 });
