@@ -120,7 +120,7 @@ const MemberQRCode: React.FC<MemberQRCodeProps> = ({
 	// Generate QR code when memberInfo or other dependencies change
 	useEffect(() => {
 		if (memberInfo) {
-			generateQRCode(memberInfo);
+			void generateQRCode(memberInfo);
 		}
 	}, [memberInfo, size, logoUrl, logoSize]);
 

@@ -14,7 +14,7 @@ export function createDbClient(connString: string = connectionString) {
     return drizzleNeon(sql, { schema });
   } else {
     const pool = new Pool({
-      connectionString: connString || 'postgresql://postgres:postgres@localhost:5432/ieee_website',
+      connectionString: connString || 'postgresql://postgres:postgres@localhost:5432/ieee-website',
     });
     return drizzlePg(pool, { schema });
   }

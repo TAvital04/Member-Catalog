@@ -37,11 +37,11 @@ const nextConfig: NextConfig = {
 		return [
 			{
 				source: '/resumes',
-				destination: process.env.RESUME_DB_URL || 'http://localhost:3000',
+				destination: process.env.RESUME_DB_URL || 'http://localhost:3001',
 			},
 			{
 				source: '/resumes/:path*',
-				destination: `${process.env.RESUME_DB_URL || 'http://localhost:3000'}/:path*`,
+				destination: `${process.env.RESUME_DB_URL || 'http://localhost:3001'}/:path*`,
 			},
 		];
 	},

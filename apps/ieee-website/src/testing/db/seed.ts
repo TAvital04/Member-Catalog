@@ -104,6 +104,6 @@ if (require.main === module) {
 		})
 		.catch((err) => {
 			console.error('DB connection error:', err);
-			client.end();
+			void client.end();
 		});
 }

@@ -11,6 +11,7 @@ import { trpc } from "@/lib/trpc/client";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { ResumeUpload } from "@/components/settings/ResumeUpload";
+import MemberResumeForm from "@/components/settings/MemberResumeForm";
 
 // Middleware at /settings guarantees a valid session — no useEffect redirect needed.
 
@@ -238,6 +239,17 @@ export default function SettingsPage() {
 
 									{/* Résumé (rendered only when the audience gate allows it) */}
 									<ResumeUpload />
+
+									{/* Member Resume Candidate Profile Section */}
+									<MemberResumeForm
+										memberId={memberProfile.id}
+										initialData={{
+											fullName: `${memberProfile.firstName} ${memberProfile.lastName}`,
+											email: memberProfile.ucfEmail || memberProfile.personalEmail || "",
+											bio: memberProfile.biography || "",
+											resumePdfUrl: memberProfile.resumeURL || "",
+										}}
+									/>
 
 									{/* Save / Cancel */}
 									<div className="flex gap-4 mt-8 w-full md:w-1/2 self-center">

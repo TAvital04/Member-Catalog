@@ -2,7 +2,7 @@ import { Pool } from 'pg';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { members, memberResumes } from './schema';
 
-const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/ieee_website';
+const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/ieee-website';
 
 const DENSE_CANDIDATES = [
   {
@@ -369,6 +369,41 @@ export async function seedDatabase() {
   const db = drizzle(pool);
 
   try {
+    console.log('Ensuring schema tables exist...');
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS members (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        email VARCHAR(255) NOT NULL UNIQUE,
+        name VARCHAR(100),
+        major VARCHAR(100),
+        graduation_year VARCHAR(10),
+        active BOOLEAN NOT NULL DEFAULT true,
+        created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+      );
+
+      CREATE TABLE IF NOT EXISTS member_resumes (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        member_id UUID NOT NULL UNIQUE REFERENCES members(id) ON DELETE CASCADE,
+        full_name VARCHAR(50) NOT NULL,
+        email VARCHAR(255) NOT NULL,
+        status VARCHAR(50) NOT NULL,
+        bio TEXT NOT NULL,
+        resume_pdf_url VARCHAR(200) NOT NULL,
+        social_links JSONB NOT NULL DEFAULT '[]'::jsonb,
+        education JSONB NOT NULL,
+        skills JSONB NOT NULL DEFAULT '[]'::jsonb,
+        work_experience JSONB NOT NULL DEFAULT '[]'::jsonb,
+        projects JSONB NOT NULL DEFAULT '[]'::jsonb,
+        club_memberships JSONB NOT NULL DEFAULT '[]'::jsonb,
+        certifications JSONB NOT NULL DEFAULT '[]'::jsonb,
+        flagged BOOLEAN NOT NULL DEFAULT false,
+        flag_reason VARCHAR(300),
+        created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+      );
+    `);
+
     console.log('Clearing existing member records...');
     await pool.query('TRUNCATE TABLE member_resumes, members CASCADE;');
 

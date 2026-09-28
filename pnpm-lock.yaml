@@ -34,6 +34,12 @@ importers:
       '@heroicons/react':
         specifier: ^2.2.0
         version: 2.2.0(react@19.2.4)
+      '@ieee/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@ieee/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
       '@mui/icons-material':
         specifier: ^7.3.7
         version: 7.3.11(@mui/material@7.3.11(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.2.4)(supports-color@8.1.1))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.2.4)(supports-color@8.1.1))(@types/react@19.3.0)(react@19.2.4)(supports-color@8.1.1))(@types/react@19.3.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(@types/react@19.3.0)(react@19.2.4)

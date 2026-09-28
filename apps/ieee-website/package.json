@@ -16,6 +16,8 @@
 		"db:seed": "pnpm dlx tsx src/testing/db/seed.ts"
 	},
 	"dependencies": {
+		"@ieee/db": "workspace:*",
+		"@ieee/shared": "workspace:*",
 		"@auth/drizzle-adapter": "^1.11.1",
 		"@auth/pg-adapter": "^1.11.1",
 		"@aws-sdk/client-s3": "^3.1124.0",
