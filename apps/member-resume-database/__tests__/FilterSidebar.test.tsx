@@ -10,6 +10,8 @@ describe("FilterSidebar Role Access & Locks", () => {
     setSelectedSkills: jest.fn(),
     selectedGradDates: [],
     setSelectedGradDates: jest.fn(),
+    selectedEvents: [],
+    setSelectedEvents: jest.fn(),
     skillFilterMode: "OR" as const,
     setSkillFilterMode: jest.fn(),
     adminMode: false,
@@ -18,6 +20,7 @@ describe("FilterSidebar Role Access & Locks", () => {
     availableMajors: ["Computer Science", "Information Technology"],
     availableSkills: ["React", "TypeScript", "Node.js"],
     availableGradDates: ["May 2026", "Dec 2027"],
+    availableEvents: ["PCB Workshop", "GBM 1"],
     layout: "side" as const,
     role: "admin" as const,
   };

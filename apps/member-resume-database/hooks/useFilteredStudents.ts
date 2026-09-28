@@ -8,6 +8,7 @@ interface UseFilteredStudentsProps {
   selectedMajors: string[];
   selectedSkills: string[];
   selectedGradDates: string[];
+  selectedEvents: string[];
   skillFilterMode: "AND" | "OR";
   adminMode: boolean;
   adminFilterFlagged: boolean | null;
@@ -20,21 +21,24 @@ export function useFilteredStudents({
   selectedMajors,
   selectedSkills,
   selectedGradDates,
+  selectedEvents,
   skillFilterMode,
   adminMode,
   adminFilterFlagged,
   sortBy,
 }: UseFilteredStudentsProps) {
   // Memoize unique metadata for filter selection options
-  const { availableMajors, availableSkills, availableGradDates } = useMemo(() => {
+  const { availableMajors, availableSkills, availableGradDates, availableEvents } = useMemo(() => {
     const majors = new Set<string>();
     const skills = new Set<string>();
     const gradDates = new Set<string>();
+    const eventsSet = new Set<string>();
 
     students.forEach((s) => {
       majors.add(s.major);
       s.skills.forEach((sk) => skills.add(sk));
       gradDates.add(s.gradDate);
+      (s.events || []).forEach((e) => eventsSet.add(e.title));
     });
 
     return {
@@ -45,6 +49,7 @@ export function useFilteredStudents({
         const yearB = parseInt(b.slice(-4));
         return yearA - yearB;
       }),
+      availableEvents: Array.from(eventsSet).sort(),
     };
   }, [students]);
 
@@ -87,6 +92,12 @@ export function useFilteredStudents({
           }
         }
 
+        if (selectedEvents.length > 0) {
+          const studentEventTitles = (student.events || []).map((e) => e.title);
+          const hasAnyEvent = selectedEvents.some((evtTitle) => studentEventTitles.includes(evtTitle));
+          if (!hasAnyEvent) return false;
+        }
+
         if (adminMode) {
           if (adminFilterFlagged !== null) {
             if (adminFilterFlagged && !student.flagged) return false;
@@ -116,12 +127,12 @@ export function useFilteredStudents({
     selectedMajors,
     selectedSkills,
     selectedGradDates,
+    selectedEvents,
     skillFilterMode,
     adminMode,
     adminFilterFlagged,
     sortBy,
   ]);
-
 
   // Calculate summary stats
   const { totalResumes, majorCount, totalSkillsCount } = useMemo(() => {
@@ -136,9 +147,11 @@ export function useFilteredStudents({
     availableMajors,
     availableSkills,
     availableGradDates,
+    availableEvents,
     filteredStudents,
     totalResumes,
     majorCount,
     totalSkillsCount,
   };
 }
+

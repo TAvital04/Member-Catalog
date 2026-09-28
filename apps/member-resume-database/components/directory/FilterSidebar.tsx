@@ -6,6 +6,7 @@ import FilterDropdown from "./FilterDropdown";
 import MajorsFilter from "./filters/MajorsFilter";
 import SkillsFilter, { SkillModeSelector } from "./filters/SkillsFilter";
 import GradDatesFilter from "./filters/GradDatesFilter";
+import EventsFilter from "./filters/EventsFilter";
 import AdminFilters from "./filters/AdminFilters";
 import SponsorLockPanel from "./filters/SponsorLockPanel";
 
@@ -16,6 +17,8 @@ interface FilterSidebarProps {
   setSelectedSkills: (skills: string[]) => void;
   selectedGradDates: string[];
   setSelectedGradDates: (dates: string[]) => void;
+  selectedEvents: string[];
+  setSelectedEvents: (events: string[]) => void;
   skillFilterMode: "AND" | "OR";
   setSkillFilterMode: (mode: "AND" | "OR") => void;
   
@@ -28,6 +31,7 @@ interface FilterSidebarProps {
   availableMajors: string[];
   availableSkills: string[];
   availableGradDates: string[];
+  availableEvents: string[];
 
   // Layout choice
   layout?: "side" | "top";
@@ -42,6 +46,8 @@ export default function FilterSidebar({
   setSelectedSkills,
   selectedGradDates,
   setSelectedGradDates,
+  selectedEvents,
+  setSelectedEvents,
   skillFilterMode,
   setSkillFilterMode,
   adminMode,
@@ -50,16 +56,18 @@ export default function FilterSidebar({
   availableMajors,
   availableSkills,
   availableGradDates,
+  availableEvents,
   layout = "side",
   role = "admin",
   onResetAll,
 }: FilterSidebarProps) {
-  const [activeDropdown, setActiveDropdown] = useState<"major" | "skill" | "grad" | "admin" | null>(null);
+  const [activeDropdown, setActiveDropdown] = useState<"major" | "skill" | "grad" | "event" | "admin" | null>(null);
   
   const activeFiltersCount =
     selectedMajors.length +
     selectedSkills.length +
     selectedGradDates.length +
+    selectedEvents.length +
     (adminFilterFlagged !== null ? 1 : 0);
 
   const handleMajorToggle = (major: string) => {
@@ -86,6 +94,14 @@ export default function FilterSidebar({
     }
   };
 
+  const handleEventToggle = (evtTitle: string) => {
+    if (selectedEvents.includes(evtTitle)) {
+      setSelectedEvents(selectedEvents.filter((e) => e !== evtTitle));
+    } else {
+      setSelectedEvents([...selectedEvents, evtTitle]);
+    }
+  };
+
   const resetAllFilters = () => {
     if (onResetAll) {
       onResetAll();
@@ -93,6 +109,7 @@ export default function FilterSidebar({
       setSelectedMajors([]);
       setSelectedSkills([]);
       setSelectedGradDates([]);
+      setSelectedEvents([]);
       setSkillFilterMode("OR");
       setAdminFilterFlagged(null);
     }
@@ -172,6 +189,22 @@ export default function FilterSidebar({
               availableGradDates={availableGradDates}
               selectedGradDates={selectedGradDates}
               onGradToggle={handleGradToggle}
+            />
+          </FilterDropdown>
+
+          <FilterDropdown
+            title={`Events ${selectedEvents.length > 0 ? `(${selectedEvents.length})` : ""}`}
+            isOpen={activeDropdown === "event"}
+            onToggle={() => setActiveDropdown(activeDropdown === "event" ? null : "event")}
+            isActive={selectedEvents.length > 0}
+            layout="top"
+            widthClass="w-[calc(100vw-2.5rem)] max-w-[280px] md:w-64"
+          >
+            <EventsFilter
+              availableEvents={availableEvents}
+              selectedEvents={selectedEvents}
+              onEventToggle={handleEventToggle}
+              layout="top"
             />
           </FilterDropdown>
 
@@ -289,7 +322,7 @@ export default function FilterSidebar({
           </FilterDropdown>
         </div>
 
-        <div>
+        <div className="border-b border-zinc-850/40 pb-5">
           <FilterDropdown
             title="Graduation Date"
             isOpen={true}
@@ -304,8 +337,26 @@ export default function FilterSidebar({
             />
           </FilterDropdown>
         </div>
+
+        <div>
+          <FilterDropdown
+            title="Events Attended"
+            isOpen={true}
+            onToggle={() => {}}
+            isActive={selectedEvents.length > 0}
+            layout="side"
+          >
+            <EventsFilter
+              availableEvents={availableEvents}
+              selectedEvents={selectedEvents}
+              onEventToggle={handleEventToggle}
+              layout="side"
+            />
+          </FilterDropdown>
+        </div>
       </aside>
     </>
   );
 }
+
 

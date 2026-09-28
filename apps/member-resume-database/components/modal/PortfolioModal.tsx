@@ -10,6 +10,7 @@ import TimelineSection from "../timeline/TimelineSection";
 import ModalTabNavigation, { TabType } from "./tabs/ModalTabNavigation";
 import ProjectsTab from "./tabs/ProjectsTab";
 import SkillsTab from "./tabs/SkillsTab";
+import EventsTab from "./tabs/EventsTab";
 import ContactTab from "./tabs/ContactTab";
 import { X, Flag, FlagOff } from "lucide-react";
 
@@ -132,10 +133,16 @@ export default function PortfolioModal({
                 <SkillsTab student={student} formatDateStr={formatDateStr} />
               )}
 
+              {/* Events Panel */}
+              {activeTab === "events" && (
+                <EventsTab events={student.events} formatDateStr={formatDateStr} />
+              )}
+
               {/* Recruiter Contact Panel */}
               {activeTab === "contact" && (
                 <ContactTab student={student} role={role} />
               )}
+
             </div>
           </div>
         </div>

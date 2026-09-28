@@ -35,9 +35,9 @@ describe("Directory Filtering & Component Rendering", () => {
     render(
       <StudentCard
         student={sampleStudent}
-        onSelect={jest.fn()}
-        onFlag={jest.fn()}
-        role="standard"
+        onClick={jest.fn()}
+        adminMode={false}
+        onToggleFlag={jest.fn()}
       />
     );
 

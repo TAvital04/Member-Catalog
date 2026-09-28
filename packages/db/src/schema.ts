@@ -107,3 +107,34 @@ export const memberResumes = pgTable('member_resumes', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
+
+/**
+ * Events Table - IEEE UCF Events & Activities
+ */
+export const events = pgTable('events', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  title: varchar('title', { length: 255 }).notNull(),
+  location: varchar('location', { length: 255 }).notNull(),
+  committeeId: uuid('committee_id'),
+  description: text('description').notNull(),
+  flyerUrl: varchar('flyer_url', { length: 500 }),
+  rsvpLink: varchar('rsvp_link', { length: 500 }),
+  photoUrls: text('photo_urls'),
+  slug: varchar('slug', { length: 64 }).unique(),
+  startTime: timestamp('start_time', { withTimezone: true }).notNull(),
+  endTime: timestamp('end_time', { withTimezone: true }),
+  requiresDues: boolean('requires_dues').default(false).notNull(),
+  active: boolean('active').default(true).notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+/**
+ * Event Attendees Table - Join table linking Members to Events they attended
+ */
+export const eventAttendees = pgTable('event_attendees', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  eventId: uuid('event_id').notNull().references(() => events.id, { onDelete: 'cascade' }),
+  memberId: uuid('member_id').notNull().references(() => members.id, { onDelete: 'cascade' }),
+  timestamp: timestamp('timestamp', { withTimezone: true }).defaultNow().notNull(),
+});

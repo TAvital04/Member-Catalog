@@ -2,7 +2,7 @@
 
 import React from "react";
 
-export type TabType = "about" | "experience" | "projects" | "skills" | "contact";
+export type TabType = "about" | "experience" | "projects" | "skills" | "events" | "contact";
 
 interface ModalTabNavigationProps {
   activeTab: TabType;
@@ -14,7 +14,8 @@ export default function ModalTabNavigation({
   activeTab,
   setActiveTab,
 }: ModalTabNavigationProps) {
-  const tabsList = ["experience", "projects", "skills", "contact"] as const;
+  const tabsList = ["experience", "projects", "skills", "events", "contact"] as const;
+
 
   return (
     <div className="flex border-b border-zinc-800 mb-5 pb-1 text-xs md:text-sm gap-1 md:gap-2 overflow-x-auto no-scrollbar md:overflow-visible pr-12 md:pr-16 shrink-0">

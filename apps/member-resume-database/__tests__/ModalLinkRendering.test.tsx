@@ -36,12 +36,12 @@ describe("Portfolio Modal Link & Tab Rendering", () => {
       <PortfolioModal
         student={sampleStudent}
         onClose={jest.fn()}
-        onFlag={jest.fn()}
-        onUnflag={jest.fn()}
+        onToggleFlag={jest.fn()}
+        adminMode={false}
         role="standard"
       />
     );
 
-    expect(screen.getByText("Test Candidate")).toBeInTheDocument();
+    expect(screen.getAllByText("Test Candidate")[0]).toBeInTheDocument();
   });
 });

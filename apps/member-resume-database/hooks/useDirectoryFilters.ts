@@ -8,6 +8,7 @@ export interface DirectoryFilterState {
   selectedMajors: string[];
   selectedSkills: string[];
   selectedGradDates: string[];
+  selectedEvents: string[];
   skillFilterMode: "AND" | "OR";
   adminFilterFlagged: boolean | null;
   sortBy: "name" | "gradDate" | "gpa";
@@ -32,6 +33,10 @@ export function useDirectoryFilters() {
 
   const selectedGradDates = searchParams.get("grad")
     ? searchParams.get("grad")!.split(",").filter(Boolean)
+    : [];
+
+  const selectedEvents = searchParams.get("events")
+    ? searchParams.get("events")!.split(",").filter(Boolean)
     : [];
 
   const skillFilterMode: "AND" | "OR" =
@@ -96,6 +101,13 @@ export function useDirectoryFilters() {
     [updateQueryParams]
   );
 
+  const setSelectedEvents = useCallback(
+    (events: string[]) => {
+      updateQueryParams({ events: events.length > 0 ? events.join(",") : null });
+    },
+    [updateQueryParams]
+  );
+
   const setSkillFilterMode = useCallback(
     (mode: "AND" | "OR") => {
       updateQueryParams({ skillMode: mode === "AND" ? "AND" : null });
@@ -134,6 +146,8 @@ export function useDirectoryFilters() {
     setSelectedSkills,
     selectedGradDates,
     setSelectedGradDates,
+    selectedEvents,
+    setSelectedEvents,
     skillFilterMode,
     setSkillFilterMode,
     adminFilterFlagged,
@@ -144,4 +158,5 @@ export function useDirectoryFilters() {
     isPending,
   };
 }
+
 

@@ -40,6 +40,8 @@ function StudentDirectoryContent() {
     setSelectedSkills,
     selectedGradDates,
     setSelectedGradDates,
+    selectedEvents,
+    setSelectedEvents,
     skillFilterMode,
     setSkillFilterMode,
     adminFilterFlagged,
@@ -107,6 +109,7 @@ function StudentDirectoryContent() {
     availableMajors,
     availableSkills,
     availableGradDates,
+    availableEvents,
     filteredStudents,
     totalResumes,
     majorCount,
@@ -117,6 +120,7 @@ function StudentDirectoryContent() {
     selectedMajors,
     selectedSkills,
     selectedGradDates,
+    selectedEvents,
     skillFilterMode,
     adminMode,
     adminFilterFlagged,
@@ -179,9 +183,10 @@ function StudentDirectoryContent() {
   const removeMajorFilter = (major: string) => setSelectedMajors(selectedMajors.filter((m) => m !== major));
   const removeSkillFilter = (skill: string) => setSelectedSkills(selectedSkills.filter((s) => s !== skill));
   const removeGradFilter = (date: string) => setSelectedGradDates(selectedGradDates.filter((d) => d !== date));
+  const removeEventFilter = (evtTitle: string) => setSelectedEvents(selectedEvents.filter((e) => e !== evtTitle));
 
   return (
-    <div className="flex flex-col min-h-screen bg-zinc-950 text-zinc-200 relative pb-16 overflow-x-hidden">
+    <div className="flex flex-col min-h-screen bg-zinc-955 text-zinc-200 relative pb-16 overflow-x-hidden">
       {/* Decorative Tech Overlay Background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="circuit-overlay"></div>
@@ -241,6 +246,8 @@ function StudentDirectoryContent() {
             setSelectedSkills={setSelectedSkills}
             selectedGradDates={selectedGradDates}
             setSelectedGradDates={setSelectedGradDates}
+            selectedEvents={selectedEvents}
+            setSelectedEvents={setSelectedEvents}
             skillFilterMode={skillFilterMode}
             setSkillFilterMode={setSkillFilterMode}
             adminMode={adminMode}
@@ -249,6 +256,7 @@ function StudentDirectoryContent() {
             availableMajors={availableMajors}
             availableSkills={availableSkills}
             availableGradDates={availableGradDates}
+            availableEvents={availableEvents}
             layout={filterLayout}
             role={role}
             onResetAll={resetAllFilters}
@@ -264,6 +272,8 @@ function StudentDirectoryContent() {
             removeGradFilter={removeGradFilter}
             selectedSkills={selectedSkills}
             removeSkillFilter={removeSkillFilter}
+            selectedEvents={selectedEvents}
+            removeEventFilter={removeEventFilter}
             onClearAll={resetAllFilters}
           />
 

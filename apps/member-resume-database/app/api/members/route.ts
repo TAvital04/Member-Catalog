@@ -1,6 +1,6 @@
-import { db, members, memberResumes } from "@ieee/db";
+import { db, members, memberResumes, events, eventAttendees } from "@ieee/db";
 import { Student } from "@/data/students";
-import { eq } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 
 export async function GET() {
   try {
@@ -48,6 +48,45 @@ export async function GET() {
         count: 0,
         data: [],
       });
+    }
+
+    // Fetch attended IEEE events for all candidates
+    const memberIds = candidateRows.map((r) => r.memberId).filter(Boolean);
+    const attendedEventsMap = new Map<string, any[]>();
+
+    if (memberIds.length > 0) {
+      try {
+        const attendedRows = await db
+          .select({
+            memberId: eventAttendees.memberId,
+            id: events.id,
+            title: events.title,
+            location: events.location,
+            description: events.description,
+            startTime: events.startTime,
+            endTime: events.endTime,
+            slug: events.slug,
+          })
+          .from(eventAttendees)
+          .innerJoin(events, eq(eventAttendees.eventId, events.id))
+          .where(inArray(eventAttendees.memberId, memberIds));
+
+        for (const row of attendedRows) {
+          const list = attendedEventsMap.get(row.memberId) || [];
+          list.push({
+            id: row.id,
+            title: row.title,
+            location: row.location,
+            description: row.description,
+            startTime: typeof row.startTime === "object" && row.startTime ? row.startTime.toISOString() : String(row.startTime),
+            endTime: row.endTime ? (typeof row.endTime === "object" ? row.endTime.toISOString() : String(row.endTime)) : undefined,
+            slug: row.slug || undefined,
+          });
+          attendedEventsMap.set(row.memberId, list);
+        }
+      } catch (evtError) {
+        console.warn("[API Warning] Could not fetch attended events:", evtError);
+      }
     }
 
     // Safely transform Drizzle database rows into Student domain models
@@ -120,6 +159,7 @@ export async function GET() {
               credentialUrl: cert.credentialUrl,
             }))
           : [],
+        events: attendedEventsMap.get(row.memberId) || [],
         resumeLink: row.resumePdfUrl || undefined,
         major: primaryEdu.major || row.memberMajor || "Computer Science",
         degree: primaryEdu.degreeType || "Bachelor of Science",
@@ -129,6 +169,7 @@ export async function GET() {
         flagReason: row.flagReason || undefined,
       };
     });
+
 
     return Response.json({
       success: true,

@@ -51,6 +51,16 @@ export interface CertificationEntry {
   credentialUrl?: string;
 }
 
+export interface EventEntry {
+  id: string;
+  title: string;
+  location: string;
+  startTime: string;
+  endTime?: string;
+  description: string;
+  slug?: string;
+}
+
 export interface Student {
   id: string;
   name: string;
@@ -62,6 +72,7 @@ export interface Student {
   workExperiences: WorkExperienceEntry[];
   clubs: ClubEntry[];
   certifications: CertificationEntry[];
+  events?: EventEntry[];
   resumeLink?: string;
   major: string;
   degree: string;
@@ -72,6 +83,7 @@ export interface Student {
   duplicateGroup?: string;
   email: string;
 }
+
 
 
 /**

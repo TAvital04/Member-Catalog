@@ -363,6 +363,73 @@ const DENSE_CANDIDATES = [
   }
 ];
 
+const SEED_EVENTS = [
+  {
+    title: "IEEE Fall Kickoff General Body Meeting (GBM 1)",
+    location: "Harris Engineering Center (HEC 101)",
+    description: "Overview of semester technical build projects, committee workshops, free pizza, and networking with IEEE student officers.",
+    startTime: "2024-09-04T18:00:00Z",
+    endTime: "2024-09-04T20:00:00Z",
+    slug: "fall-kickoff-gbm-1",
+  },
+  {
+    title: "Hands-On PCB Design & Altium Workshop",
+    location: "IEEE Innovation Lab (ENG2 135)",
+    description: "Practical workshop covering schematic entry, PCB layout guidelines, trace routing, component selection, and surface-mount soldering techniques.",
+    startTime: "2024-09-18T17:30:00Z",
+    endTime: "2024-09-18T19:30:00Z",
+    slug: "pcb-design-altium-workshop",
+  },
+  {
+    title: "Embedded Linux & FreeRTOS Microcontroller Night",
+    location: "Harris Engineering Center (HEC 118)",
+    description: "Deep dive into real-time kernel task scheduling, IPC queues, hardware interrupts, and flashing custom C firmware on STM32 microcontrollers.",
+    startTime: "2024-10-09T18:00:00Z",
+    endTime: "2024-10-09T20:30:00Z",
+    slug: "embedded-linux-freertos-night",
+  },
+  {
+    title: "IEEE UCF Technical Resume & Recruiter Showcase",
+    location: "Student Union Pegasus Ballroom",
+    description: "Exclusive member networking session with defense, cloud, and semiconductor industry recruiters ahead of UCF STEM Career Fair.",
+    startTime: "2024-10-23T16:00:00Z",
+    endTime: "2024-10-23T19:00:00Z",
+    slug: "resume-recruiter-showcase-2024",
+  },
+  {
+    title: "Region 3 SoutheastCon Hardware Competition Build Sprint",
+    location: "IEEE Innovation Lab (ENG2 135)",
+    description: "Collaborative hackathon & build session programming autonomous rovers and testing sensor arrays for IEEE Region 3 competition.",
+    startTime: "2024-11-06T17:00:00Z",
+    endTime: "2024-11-06T21:00:00Z",
+    slug: "southeastcon-hardware-build-sprint",
+  },
+  {
+    title: "PyTorch & Edge AI Computer Vision Bootcamp",
+    location: "Harris Engineering Center (HEC 101)",
+    description: "Hands-on workshop building zero-shot object detection models and deploying quantization pipelines on Raspberry Pi and Edge TPU devices.",
+    startTime: "2024-11-20T18:00:00Z",
+    endTime: "2024-11-20T20:00:00Z",
+    slug: "pytorch-edge-ai-bootcamp",
+  },
+  {
+    title: "IEEE Spring General Body Meeting & Project Showcase",
+    location: "Harris Engineering Center (HEC 101)",
+    description: "Unveiling 2025 student projects, announcing officer elections, and connecting with corporate sponsors.",
+    startTime: "2025-01-22T18:00:00Z",
+    endTime: "2025-01-22T20:00:00Z",
+    slug: "spring-gbm-project-showcase-2025",
+  },
+  {
+    title: "IEEE UCF Industry Dinner & End-of-Year Banquet",
+    location: "UCF Alumni Center",
+    description: "Annual celebration honoring graduating seniors, outstanding committee chairs, and student competition winners.",
+    startTime: "2025-04-18T18:30:00Z",
+    endTime: "2025-04-18T21:30:00Z",
+    slug: "industry-dinner-banquet-2025",
+  },
+];
+
 export async function seedDatabase() {
   console.log(`Connecting to database at ${connectionString}...`);
   const pool = new Pool({ connectionString });
@@ -402,12 +469,34 @@ export async function seedDatabase() {
         created_at TIMESTAMP NOT NULL DEFAULT NOW(),
         updated_at TIMESTAMP NOT NULL DEFAULT NOW()
       );
+
+      CREATE TABLE IF NOT EXISTS events (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        title VARCHAR(255) NOT NULL,
+        location VARCHAR(255) NOT NULL,
+        description TEXT NOT NULL,
+        slug VARCHAR(64) UNIQUE,
+        start_time TIMESTAMPTZ NOT NULL,
+        end_time TIMESTAMPTZ,
+        active BOOLEAN NOT NULL DEFAULT true,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      );
+
+      CREATE TABLE IF NOT EXISTS event_attendees (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        event_id UUID NOT NULL REFERENCES events(id) ON DELETE CASCADE,
+        member_id UUID NOT NULL REFERENCES members(id) ON DELETE CASCADE,
+        timestamp TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        CONSTRAINT event_attendee_unique UNIQUE (event_id, member_id)
+      );
     `);
 
-    console.log('Clearing existing member records...');
-    await pool.query('TRUNCATE TABLE member_resumes, members CASCADE;');
+    console.log('Clearing existing records...');
+    await pool.query('TRUNCATE TABLE event_attendees, events, member_resumes, members CASCADE;');
 
     console.log(`Seeding ${DENSE_CANDIDATES.length} dense candidate profiles...`);
+    const createdMemberIds: string[] = [];
 
     for (const candidate of DENSE_CANDIDATES) {
       // 1. Insert into core members table
@@ -423,6 +512,7 @@ export async function seedDatabase() {
         candidate.graduationYear,
       ]);
       const memberId = memberRes.rows[0].id;
+      createdMemberIds.push(memberId);
 
       // 2. Insert into member_resumes table (1-to-1 relationship with member_id)
       const resumeInsertQuery = `
@@ -454,7 +544,46 @@ export async function seedDatabase() {
       console.log(`  ✓ Successfully seeded candidate: ${candidate.name} (${candidate.email}) [ID: ${memberId}]`);
     }
 
-    console.log('\n🎉 Monorepo Database seeding complete!');
+    console.log(`Seeding ${SEED_EVENTS.length} IEEE UCF events...`);
+    const createdEventIds: string[] = [];
+
+    for (const evt of SEED_EVENTS) {
+      const eventInsertQuery = `
+        INSERT INTO events (title, location, description, slug, start_time, end_time, active, created_at, updated_at)
+        VALUES ($1, $2, $3, $4, $5, $6, true, NOW(), NOW())
+        RETURNING id;
+      `;
+      const evtRes = await pool.query(eventInsertQuery, [
+        evt.title,
+        evt.location,
+        evt.description,
+        evt.slug,
+        evt.startTime,
+        evt.endTime,
+      ]);
+      const eventId = evtRes.rows[0].id;
+      createdEventIds.push(eventId);
+      console.log(`  ✓ Seeded event: ${evt.title} [ID: ${eventId}]`);
+    }
+
+    console.log('Connecting members to events via event_attendees...');
+    // Link each member to a subset of events
+    for (let mIdx = 0; mIdx < createdMemberIds.length; mIdx++) {
+      const memberId = createdMemberIds[mIdx];
+      // Select 3 to 6 events for each member
+      const eventsForMember = createdEventIds.filter((_, eIdx) => (mIdx + eIdx) % 2 === 0 || (mIdx * 2 + eIdx) % 3 === 0);
+
+      for (const eventId of eventsForMember) {
+        await pool.query(`
+          INSERT INTO event_attendees (event_id, member_id, timestamp)
+          VALUES ($1, $2, NOW())
+          ON CONFLICT (event_id, member_id) DO NOTHING;
+        `, [eventId, memberId]);
+      }
+      console.log(`  ✓ Linked member ID ${memberId} to ${eventsForMember.length} events`);
+    }
+
+    console.log('\n🎉 Monorepo Database & Event Seeding complete!');
   } catch (error) {
     console.error('❌ Database seeding failed:', error);
     process.exit(1);
@@ -466,3 +595,4 @@ export async function seedDatabase() {
 if (require.main === module) {
   seedDatabase();
 }
+

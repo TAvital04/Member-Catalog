@@ -45,30 +45,42 @@ describe("Moderation & Flagging Workflows", () => {
         onClose={jest.fn()}
         adminFlagChoice="flag"
         setAdminFlagChoice={jest.fn()}
+        flagReportType="other"
+        setFlagReportType={jest.fn()}
         flagReasonInput=""
         setFlagReasonInput={jest.fn()}
-        onSubmitFlag={jest.fn()}
+        duplicateSearchQuery=""
+        setDuplicateSearchQuery={jest.fn()}
+        selectedDuplicateTargetIds={[]}
+        setSelectedDuplicateTargetIds={jest.fn()}
+        students={[targetStudent]}
+        handleConfirmFlagAction={jest.fn()}
+        handleDeleteStudent={jest.fn()}
+        flagDialogRef={{ current: null }}
       />
     );
 
-    expect(screen.getByText(/Flag Profile/i)).toBeInTheDocument();
+    expect(screen.getByText(/Flag & Report Profile/i)).toBeInTheDocument();
   });
 
   test("renders ResolveDialog actions for flagged student", () => {
     render(
       <ResolveDialog
-        student={{ ...targetStudent, flagged: true, flagReason: "Test flag reason" }}
-        selectedDuplicateIds={[]}
+        resolveDialogStudent={{ ...targetStudent, flagged: true, flagReason: "Test flag reason" }}
         onClose={jest.fn()}
-        onKeepAll={jest.fn()}
-        onRemoveAll={jest.fn()}
-        onKeepSelection={jest.fn()}
-        onRemoveSelection={jest.fn()}
-        onUnflag={jest.fn()}
-        onDelete={jest.fn()}
+        students={[targetStudent]}
+        selectedDuplicateIds={[]}
+        setSelectedDuplicateIds={jest.fn()}
+        handleResolveKeepAll={jest.fn()}
+        handleResolveRemoveAll={jest.fn()}
+        handleResolveKeepSelection={jest.fn()}
+        handleResolveRemoveSelection={jest.fn()}
+        handleResolveUnflag={jest.fn()}
+        handleResolveDelete={jest.fn()}
+        resolveDialogRef={{ current: null }}
       />
     );
 
-    expect(screen.getByText(/Test Candidate/i)).toBeInTheDocument();
+    expect(screen.getByText(/Test flag reason/i)).toBeInTheDocument();
   });
 });
