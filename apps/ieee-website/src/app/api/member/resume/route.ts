@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server';
-import { db, members, memberResumes, eq } from '@ieee/db';
+import { db, members, memberResumes } from '@ieee/db';
 import { validateMemberResumeForm, MemberResumeFormData } from '@ieee/shared';
+import { eq } from 'drizzle-orm';
 
 export async function POST(request: NextRequest) {
 	try {
