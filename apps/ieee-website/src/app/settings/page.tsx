@@ -237,7 +237,7 @@ export default function SettingsPage() {
 										</FieldGroup>
 									</div>
 
-									{/* Résumé (rendered only when the audience gate allows it) */}
+									{/* Resume (rendered only when the audience gate allows it) */}
 									<ResumeUpload />
 
 									{/* Save / Cancel */}

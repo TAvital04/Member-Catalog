@@ -46,11 +46,11 @@ export default function Dashboard() {
 						<div>
 							<CardHeader className="px-0 pt-0">
 								<CardTitle className="mb-2 text-lg font-semibold text-gray-100 lg:text-xl flex items-center gap-2">
-									<span>📄</span> Member Résumé Database
+									<span>📄</span> Member Resume Database
 								</CardTitle>
 							</CardHeader>
 							<p className="text-sm text-gray-300 mb-6 leading-relaxed">
-								Submit and manage your student candidate profile, technical skills, project links, and résumé PDF for sponsors and recruiters.
+								Submit and manage your student candidate profile, technical skills, project links, and resume PDF for sponsors and recruiters.
 							</p>
 						</div>
 						<div className="flex flex-col gap-3 mt-4">
@@ -58,7 +58,7 @@ export default function Dashboard() {
 								href="/settings#resume-form"
 								className="px-5 py-2.5 bg-[var(--ieee-dark-yellow)] text-white font-[heading-font] text-sm rounded-lg hover:bg-[var(--ieee-bright-yellow)] transition duration-200 text-center flex items-center justify-center gap-2"
 							>
-								Update Résumé Profile →
+								Update Resume Profile →
 							</Link>
 							<a
 								href="http://localhost:3001"

@@ -148,7 +148,7 @@ export const memberRouter = createTRPCRouter({
 
 	/**
 	 * Rich member list for the members-management screen:
-	 * status flags, résumé indicator, committees, and linked Discord account.
+	 * status flags, resume indicator, committees, and linked Discord account.
 	 * Officers may view it (they can only act on delegated capabilities — see setPermission).
 	 */
 	listForAdmin: officerProcedure.query(async () => {

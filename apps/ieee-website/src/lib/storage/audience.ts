@@ -1,4 +1,4 @@
-// Résumé-upload audience gate.
+// Resume-upload audience gate.
 //
 //   Phase 2 (now):  RESUME_UPLOAD_AUDIENCE=officers, plus per-member `upload_resume`
 //                   grants for a pilot cohort (managed on /admin/members).

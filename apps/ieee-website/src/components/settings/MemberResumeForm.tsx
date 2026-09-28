@@ -160,7 +160,7 @@ export default function MemberResumeForm({ memberId = 'current-member', initialD
 				<div>
 					<h2 className="text-2xl font-[heading-font] text-[var(--ieee-dark-yellow)] flex items-center gap-2">
 						<User className="w-6 h-6" />
-            Member Résumé Database Profile
+            Member Resume Database Profile
 					</h2>
 					<p className="text-xs text-white/70 mt-1">
             Comprehensive profile submission form matching IEEE UCF Member Catalog specification (Data.md).
