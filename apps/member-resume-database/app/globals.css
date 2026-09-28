@@ -1,0 +1,164 @@
+@import "tailwindcss";
+@import "./colors.css";
+
+@theme inline {
+  --color-zinc-955: var(--zinc-955);
+  --color-zinc-950: var(--zinc-950);
+  --color-zinc-900: var(--zinc-900);
+  --color-zinc-855: var(--zinc-855);
+  --color-zinc-850: var(--zinc-850);
+  --color-zinc-800: var(--zinc-800);
+  --color-zinc-700: var(--zinc-700);
+  --color-zinc-650: var(--zinc-650);
+  --color-zinc-600: var(--zinc-600);
+  --color-zinc-550: var(--zinc-550);
+  --color-zinc-500: var(--zinc-500);
+  --color-zinc-450: var(--zinc-450);
+  --color-zinc-400: var(--zinc-400);
+  --color-zinc-350: var(--zinc-350);
+  --color-zinc-300: var(--zinc-300);
+  --color-zinc-200: var(--zinc-200);
+  --color-zinc-150: var(--zinc-150);
+  --color-zinc-100: var(--zinc-100);
+  --color-zinc-50: var(--zinc-50);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary-gold: var(--primary);
+
+  /* Centralized Theme Overrides for Tailwind Utility Classes */
+  --color-amber-400: var(--primary-light);
+  --color-amber-500: var(--primary);
+  --color-amber-600: var(--primary-dark);
+  --color-yellow-400: var(--yellow-light);
+  --color-yellow-600: var(--yellow-dark);
+
+  --color-purple-400: var(--purple-light);
+  --color-purple-500: var(--purple-medium);
+  --color-blue-400: var(--blue-light);
+  --color-blue-500: var(--blue-medium);
+  --color-emerald-400: var(--emerald-light);
+  --color-emerald-500: var(--emerald-medium);
+  --color-red-400: var(--red-light);
+  --color-red-500: var(--red-medium);
+
+  /* Modal translucent panel backgrounds */
+  --color-modal-left: var(--modal-left-bg);
+  --color-modal-right: var(--modal-right-bg);
+  --color-modal-overlay: var(--modal-overlay-bg);
+
+  --font-sans: var(--font-geist-sans), Arial, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.04) 0%, transparent 40%),
+    linear-gradient(var(--grid-line-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line-color) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+}
+
+/* Glassmorphism Styles */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+}
+
+.glass-panel-hover:hover {
+  background: var(--glass-bg);
+  border-color: rgba(212, 175, 55, 0.3);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15), 0 0 15px rgba(212, 175, 55, 0.05);
+  transform: translateY(-2px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Shimmer Loading Animations */
+@keyframes shimmerWave {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--shimmer-bg);
+}
+
+.animate-shimmer::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--shimmer-highlight) 50%,
+    transparent 100%
+  );
+  animation: shimmerWave 1.8s infinite;
+  content: "";
+}
+
+/* Custom Scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+
+/* Circuit pattern background decoration */
+.circuit-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(circle, rgba(212, 175, 55, 0.15) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+  pointer-events: none;
+  opacity: 0.2;
+}
+
+@media (max-width: 1055px) {
+
+  /* Tablet Mode Styles */
+  .tablet-bio-stretch {
+    min-height: 200px;
+  }
+
+  .tablet-col {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+}

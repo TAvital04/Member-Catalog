@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <defs>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6" />
+      <stop offset="100%" stop-color="#6d28d9" />
+    </linearGradient>
+  </defs>
+  <circle cx="24" cy="24" r="22" fill="url(#purpleGrad)" />
+  <circle cx="24" cy="24" r="19" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-opacity="0.3" />
+  <!-- Graduation Cap Icon -->
+  <path d="M24 13L37 19L24 25L11 19L24 13Z" fill="#ffffff" />
+  <path d="M16 22.5V29C16 32 20 34 24 34C28 34 32 32 32 29V22.5L24 26.5L16 22.5Z" fill="#ffffff" />
+  <path d="M34 20V26.5C34 27.5 34.5 28 35 28C35.5 28 36 27.5 36 26.5V20.5L34 20Z" fill="#ffffff" />
+</svg>

@@ -1,0 +1,198 @@
+:root {
+  /* ==========================================================================
+     QUICK COLOR CONFIGURATION: EDIT THESE TO CHANGE THE GLOBAL SCHEME
+     ========================================================================== */
+  
+  /* The Base Theme (Warm Charcoal / Soft Cream) */
+  --hue-base: 36;          /* Base hue (30-50 for warm gold/cream, 200-240 for cool blue/slate, etc.) */
+  --sat-base-dark: 9%;     /* Saturation of neutral shades in dark mode */
+  --sat-base-light: 24%;   /* Saturation of neutral shades in light mode */
+
+  /* The Accent/Primary Color (Gold / Amber) */
+  --hue-primary: 45;       /* Accent color hue */
+  --sat-primary: 65%;      /* Accent color saturation */
+  --light-primary-dark: 53%;  /* Accent lightness in dark mode */
+  --light-primary-light: 41%; /* Accent lightness in light mode */
+
+  /* Additional Semantic Accent Hues (purple, blue, emerald, red) */
+  --hue-purple: 258;
+  --hue-blue: 213;
+  --hue-emerald: 156;
+  --hue-red: 0;
+
+  /* ========================================================================== */
+  /* INTERNAL MAPPINGS - DO NOT EDIT BELOW THIS LINE FOR GENERAL THEMING        */
+  /* ========================================================================== */
+
+  /* Saturation helper variable active for dark mode */
+  --sat-base: var(--sat-base-dark);
+  --light-primary: var(--light-primary-dark);
+
+  /* ==========================================
+     DEFAULT DARK MODE (Warm Charcoal / Gold Theme)
+     ========================================== */
+  --bg-app: hsl(var(--hue-base), var(--sat-base), 8%);
+  --bg-card: hsl(var(--hue-base), var(--sat-base), 13%);
+  --bg-card-inner: hsl(var(--hue-base), var(--sat-base), 17%);
+  --border-subtle: hsl(var(--hue-base), var(--sat-base), 20%);
+  --border-strong: hsl(var(--hue-base), var(--sat-base), 27%);
+
+  --text-primary: hsl(var(--hue-base), 18%, 86%);
+  --text-muted: hsl(var(--hue-base), 10%, 63%);
+  --text-dark: hsl(var(--hue-base), var(--sat-base), 8%);
+
+  --accent-gold: hsl(var(--hue-primary), var(--sat-primary), var(--light-primary));
+  --accent-gold-glow: hsla(var(--hue-primary), var(--sat-primary), var(--light-primary), 0.2);
+  --shimmer-bg: hsla(var(--hue-base), var(--sat-base), 18%, 0.6);
+  --shimmer-highlight: hsla(var(--hue-primary), var(--sat-primary), var(--light-primary), 0.15);
+
+  /* Tailwind CSS Utility class integrations */
+  --primary-light: hsl(var(--hue-primary) var(--sat-primary) calc(var(--light-primary) + 8%));
+  --primary-dark: hsl(var(--hue-primary) var(--sat-primary) calc(var(--light-primary) - 8%));
+  --yellow-light: hsl(var(--hue-primary) var(--sat-primary) calc(var(--light-primary) + 12%));
+  --yellow-dark: hsl(var(--hue-primary) var(--sat-primary) calc(var(--light-primary) - 12%));
+
+  --purple-light: hsl(var(--hue-purple), 90%, 77%);
+  --purple-medium: hsl(var(--hue-purple), 85%, 68%);
+  --blue-light: hsl(var(--hue-blue), 94%, 68%);
+  --blue-medium: hsl(var(--hue-blue), 90%, 60%);
+  --emerald-light: hsl(var(--hue-emerald), 72%, 57%);
+  --emerald-medium: hsl(var(--hue-emerald), 65%, 48%);
+  --red-light: hsl(0, 95%, 55%);
+  --red-medium: hsl(0, 95%, 45%);
+
+  --accent-purple: var(--purple-light);
+  --accent-purple-bg: hsla(var(--hue-purple), 90%, 77%, 0.10);
+  --accent-blue: var(--blue-light);
+  --accent-blue-bg: hsla(var(--hue-blue), 94%, 68%, 0.10);
+  --accent-emerald: var(--emerald-light);
+  --accent-emerald-bg: hsla(var(--hue-emerald), 72%, 57%, 0.10);
+  --accent-red: var(--red-light);
+  --accent-red-bg: hsla(0, 95%, 55%, 0.12);
+
+  /* Semantic UI Mappings */
+  --background: var(--bg-app);
+  --foreground: var(--text-primary);
+  --primary: var(--accent-gold);
+  --primary-glow: var(--accent-gold-glow);
+  --card-bg: hsla(var(--hue-base), var(--sat-base), 13%, 0.7);
+  --border-color: hsla(var(--hue-base), var(--sat-base), 27%, 0.4);
+
+  --grid-line-color: hsla(var(--hue-primary), var(--sat-primary), var(--light-primary), 0.006);
+  --circuit-color: hsla(var(--hue-primary), var(--sat-primary), var(--light-primary), 0.12);
+  --glass-bg: hsl(var(--hue-base), var(--sat-base), 13%);
+  --glass-border: hsla(0, 0%, 100%, 0.08);
+
+  --modal-left-bg: hsl(var(--hue-base), var(--sat-base), 9%);
+  --modal-right-bg: hsl(var(--hue-base), var(--sat-base), 12%);
+  --modal-overlay-bg: hsla(var(--hue-base), var(--sat-base), 5%, 0.8);
+
+  --scrollbar-track: transparent;
+  --scrollbar-thumb: hsla(var(--hue-primary), var(--sat-primary), var(--light-primary), 0.6);
+  --scrollbar-thumb-hover: hsla(var(--hue-primary), var(--sat-primary), var(--light-primary), 0.95);
+
+  /* Dynamic Zinc scale mapping to core variables (Dark Mode) */
+  --zinc-955: hsl(var(--hue-base), var(--sat-base), 5%);
+  --zinc-950: var(--bg-app);
+  --zinc-900: var(--bg-card);
+  --zinc-855: hsl(var(--hue-base), var(--sat-base), 13%);
+  --zinc-850: var(--bg-card-inner);
+  --zinc-800: var(--border-subtle);
+  --zinc-700: var(--border-strong);
+  --zinc-650: hsl(var(--hue-base), var(--sat-base), 29%);
+  --zinc-600: hsl(var(--hue-base), var(--sat-base), 33%);
+  --zinc-550: hsl(var(--hue-base), var(--sat-base), 43%);
+  --zinc-500: var(--text-muted);
+  --zinc-450: hsl(var(--hue-base), var(--sat-base), 56%);
+  --zinc-400: hsl(var(--hue-base), 10%, 63%);
+  --zinc-350: hsl(var(--hue-base), var(--sat-base), 71%);
+  --zinc-300: hsl(var(--hue-base), var(--sat-base), 79%);
+  --zinc-200: var(--text-primary);
+  --zinc-150: hsl(var(--hue-base), var(--sat-base), 91%);
+  --zinc-100: hsl(var(--hue-base), var(--sat-base), 95%);
+  --zinc-50: hsl(var(--hue-base), var(--sat-base), 98%);
+}
+
+[data-theme="light"] {
+  /* Saturation and lightness override for light mode */
+  --sat-base: var(--sat-base-light);
+  --light-primary: var(--light-primary-light);
+
+  /* ==========================================
+     LIGHT MODE (Soft Cream / Warm Paper Theme)
+     ========================================== */
+  --bg-app: hsl(var(--hue-base), var(--sat-base), 92%);
+  --bg-card: hsl(var(--hue-base), var(--sat-base), 96%);
+  --bg-card-inner: #ffffff;
+  --border-subtle: hsl(var(--hue-base), var(--sat-base), 83%);
+  --border-strong: hsl(var(--hue-base), var(--sat-base), 78%);
+
+  --text-primary: hsl(var(--hue-base), var(--sat-base), 8%);
+  --text-muted: hsl(var(--hue-base), 8%, 37%);
+  --text-dark: hsl(var(--hue-base), var(--sat-base), 8%);
+
+  --accent-gold: hsl(var(--hue-primary), var(--sat-primary), var(--light-primary));
+  --accent-gold-glow: hsla(var(--hue-primary), var(--sat-primary), var(--light-primary), 0.12);
+  --shimmer-bg: hsla(var(--hue-base), var(--sat-base), 88%, 0.7);
+  --shimmer-highlight: hsla(var(--hue-primary), var(--sat-primary), var(--light-primary), 0.25);
+
+  --purple-light: hsl(var(--hue-purple), 83%, 35%);
+  --purple-medium: hsl(var(--hue-purple), 83%, 28%);
+  --blue-light: hsl(var(--hue-blue), 85%, 34%);
+  --blue-medium: hsl(var(--hue-blue), 85%, 26%);
+  --emerald-light: hsl(var(--hue-emerald), 90%, 22%);
+  --emerald-medium: hsl(var(--hue-emerald), 90%, 16%);
+  --red-light: hsl(0, 85%, 42%);
+  --red-medium: hsl(0, 85%, 34%);
+
+  --accent-purple: var(--purple-light);
+  --accent-purple-bg: hsla(var(--hue-purple), 83%, 35%, 0.08);
+  --accent-blue: var(--blue-light);
+  --accent-blue-bg: hsla(var(--hue-blue), 85%, 34%, 0.08);
+  --accent-emerald: var(--emerald-light);
+  --accent-emerald-bg: hsla(var(--hue-emerald), 90%, 22%, 0.08);
+  --accent-red: var(--red-light);
+  --accent-red-bg: hsla(0, 85%, 42%, 0.10);
+
+  /* Semantic UI Mappings */
+  --background: var(--bg-app);
+  --foreground: var(--text-primary);
+  --primary: var(--accent-gold);
+  --primary-glow: var(--accent-gold-glow);
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --border-color: hsla(var(--hue-base), var(--sat-base), 8%, 0.07);
+
+  --grid-line-color: hsla(var(--hue-primary), var(--sat-primary), var(--light-primary), 0.015);
+  --circuit-color: hsla(var(--hue-primary), var(--sat-primary), var(--light-primary), 0.05);
+  --glass-bg: hsl(0, 0%, 100%);
+  --glass-border: hsla(var(--hue-base), var(--sat-base), 8%, 0.08);
+
+  --modal-left-bg: hsl(var(--hue-base), var(--sat-base), 94%);
+  --modal-right-bg: hsl(var(--hue-base), var(--sat-base), 98%);
+  --modal-overlay-bg: hsla(var(--hue-base), var(--sat-base), 8%, 0.18);
+
+  --scrollbar-track: transparent;
+  --scrollbar-thumb: hsla(var(--hue-primary), var(--sat-primary), calc(var(--light-primary) - 10%), 0.6);
+  --scrollbar-thumb-hover: hsla(var(--hue-primary), var(--sat-primary), calc(var(--light-primary) - 10%), 0.9);
+
+  /* Dynamic Zinc scale mapping to core variables (Light Mode) */
+  --zinc-955: hsl(var(--hue-base), var(--sat-base), 84%);
+  --zinc-950: var(--bg-app);
+  --zinc-900: var(--bg-card);
+  --zinc-855: var(--bg-card-inner);
+  --zinc-850: var(--bg-card-inner);
+  --zinc-800: var(--border-subtle);
+  --zinc-700: var(--border-strong);
+  --zinc-650: var(--text-muted);
+  --zinc-600: hsl(var(--hue-base), 8%, 28%);
+  --zinc-550: var(--text-muted);
+  --zinc-500: var(--text-muted);
+  --zinc-450: hsl(var(--hue-base), 8%, 28%);
+  --zinc-400: hsl(var(--hue-base), 10%, 21%);
+  --zinc-350: hsl(var(--hue-base), 10%, 15%);
+  --zinc-300: hsl(var(--hue-base), 10%, 15%);
+  --zinc-200: var(--text-primary);
+  --zinc-150: var(--text-primary);
+  --zinc-100: #020617;
+  --zinc-50: #020617;
+}

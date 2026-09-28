@@ -1,0 +1,23 @@
+{
+  "name": "member-catalog",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Monorepo repository containing Member Catalog applications and services.",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "pnpm --recursive run dev",
+    "dev:ieee": "pnpm --filter ieee-website dev",
+    "dev:resume": "pnpm --filter member-resume-database dev",
+    "build": "pnpm --recursive run build",
+    "build:ieee": "pnpm --filter ieee-website build",
+    "build:resume": "pnpm --filter member-resume-database build",
+    "lint": "pnpm --recursive run lint",
+    "test": "pnpm --recursive run test --if-present"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
