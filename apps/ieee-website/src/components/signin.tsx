@@ -19,6 +19,15 @@ export default function Signinblock() {
 					SIGN IN WITH DISCORD
 				</button>
 
+				{process.env.NODE_ENV === 'development' && (
+					<button
+						onClick={() => { window.location.href = '/api/auth/dev-login'; }}
+						className="w-full px-6 py-3 bg-neutral-800 text-yellow-400 border border-yellow-500/50 rounded-lg font-[heading-font] flex items-center justify-center gap-2 hover:bg-neutral-700 transition duration-300 cursor-pointer"
+					>
+						⚡ DEV ADMIN SIGN IN (LOCAL ONLY)
+					</button>
+				)}
+
 				<span className="flex flex-row gap-2 items-center">
 					<div className="text-white font-[subheading-font] text-md">
 						Don&apos;t have an account?

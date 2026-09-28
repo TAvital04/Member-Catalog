@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { MemberResumeFormData, validateMemberResumeForm } from '@ieee/shared';
-import { User, Link as LinkIcon, GraduationCap, Code, Briefcase, FolderGit2, Users, Award, Save, AlertCircle } from 'lucide-react';
+import { User, Link as LinkIcon, GraduationCap, Code, Briefcase, FolderGit2, Users, Award, Save, AlertCircle, Plus, Trash2 } from 'lucide-react';
 
 interface MemberResumeFormProps {
   memberId?: string;
@@ -15,7 +15,10 @@ const DEFAULT_FORM_DATA: MemberResumeFormData = {
 	status: 'Seeking Internship',
 	bio: '',
 	resumePdfUrl: '',
-	socialLinks: [{ platformName: 'LinkedIn', profileUrl: '' }],
+	socialLinks: [
+		{ platformName: 'LinkedIn', profileUrl: '' },
+		{ platformName: 'GitHub', profileUrl: '' },
+	],
 	education: [
 		{
 			schoolName: 'University of Central Florida',
@@ -23,16 +26,24 @@ const DEFAULT_FORM_DATA: MemberResumeFormData = {
 			major: 'Computer Science',
 			gpa: 3.8,
 			gpaScale: 4.0,
-			startDate: '2022-08-20',
+			startDate: '2022-08-22',
 			endDate: '2026-05-02',
 			isCurrent: true,
-			description: 'UCF Engineering member',
+			description: 'Dean\'s List. Coursework: Operating Systems, Data Structures, Database Systems.',
 		},
 	],
-	skills: ['React', 'TypeScript', 'Python'],
+	skills: ['TypeScript', 'React', 'Python', 'Git', 'PostgreSQL'],
 	workExperience: [],
 	projects: [],
-	clubMemberships: [],
+	clubMemberships: [
+		{
+			clubName: 'IEEE UCF Student Chapter',
+			roleTitle: 'Active Member',
+			startDate: '2023-08-20',
+			isActive: true,
+			description: 'Participating in technical workshops and project build nights.',
+		},
+	],
 	certifications: [],
 };
 
@@ -42,6 +53,7 @@ export default function MemberResumeForm({ memberId = 'current-member', initialD
 	const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 	const [skillInput, setSkillInput] = useState<string>('');
+	const [projectLinkInput, setProjectLinkInput] = useState<Record<number, string>>({});
 	const [statusMessage, setStatusMessage] = useState<{ text: string; isError: boolean } | null>(null);
 
 	useEffect(() => {
@@ -143,14 +155,15 @@ export default function MemberResumeForm({ memberId = 'current-member', initialD
 
 	return (
 		<div className="w-full bg-black/40 border border-white/15 rounded-xl p-6 text-white my-6 backdrop-blur-md shadow-2xl">
+			{/* Form Header */}
 			<div className="flex flex-col md:flex-row justify-between items-start md:items-center pb-6 border-b border-white/10 gap-4">
 				<div>
 					<h2 className="text-2xl font-[heading-font] text-[var(--ieee-dark-yellow)] flex items-center gap-2">
 						<User className="w-6 h-6" />
-            Candidate Resume Database Profile
+            Member Résumé Database Profile
 					</h2>
 					<p className="text-xs text-white/70 mt-1">
-            Fill out your profile details to showcase your portfolio in the IEEE Member Resume Database.
+            Comprehensive profile submission form matching IEEE UCF Member Catalog specification (Data.md).
 					</p>
 				</div>
 
@@ -267,6 +280,7 @@ export default function MemberResumeForm({ memberId = 'current-member', initialD
 							</div>
 							<textarea
 								rows={3}
+								maxLength={300}
 								value={formData.bio}
 								onChange={(e) => handleTextChange('bio', e.target.value)}
 								placeholder="Brief elevator pitch or summary of your engineering interests..."
@@ -313,9 +327,9 @@ export default function MemberResumeForm({ memberId = 'current-member', initialD
 										const updated = formData.socialLinks.filter((_, i) => i !== idx);
 										handleTextChange('socialLinks', updated);
 									}}
-									className="text-xs text-red-400 hover:text-red-300 font-bold px-2"
+									className="text-xs text-red-400 hover:text-red-300 font-bold px-2 flex items-center gap-1 cursor-pointer"
 								>
-                  Remove
+									<Trash2 className="w-4 h-4" /> Remove
 								</button>
 							</div>
 						))}
@@ -323,11 +337,11 @@ export default function MemberResumeForm({ memberId = 'current-member', initialD
 							<button
 								type="button"
 								onClick={() =>
-									handleTextChange('socialLinks', [...formData.socialLinks, { platformName: 'GitHub', profileUrl: '' }])
+									handleTextChange('socialLinks', [...formData.socialLinks, { platformName: 'Portfolio', profileUrl: '' }])
 								}
-								className="text-xs bg-white/10 hover:bg-white/20 text-[var(--ieee-dark-yellow)] font-bold px-3 py-1.5 rounded"
+								className="text-xs bg-white/10 hover:bg-white/20 text-[var(--ieee-dark-yellow)] font-bold px-3 py-2 rounded flex items-center gap-1 cursor-pointer"
 							>
-                + Add Social Link
+								<Plus className="w-4 h-4" /> Add Social Link
 							</button>
 						)}
 					</div>
@@ -339,22 +353,42 @@ export default function MemberResumeForm({ memberId = 'current-member', initialD
 						<h3 className="text-sm font-bold text-[var(--ieee-dark-yellow)] uppercase tracking-wider">3. Education Entries</h3>
 						{formData.education.map((edu, idx) => (
 							<div key={idx} className="bg-white/5 p-4 rounded border border-white/10 space-y-3">
+								<div className="flex justify-between items-center pb-2 border-b border-white/10">
+									<span className="text-xs font-bold text-[var(--ieee-dark-yellow)]">Education Entry #{idx + 1}</span>
+									{formData.education.length > 1 && (
+										<button
+											type="button"
+											onClick={() => {
+												const updated = formData.education.filter((_, i) => i !== idx);
+												handleTextChange('education', updated);
+											}}
+											className="text-xs text-red-400 hover:text-red-300 font-bold flex items-center gap-1 cursor-pointer"
+										>
+											<Trash2 className="w-3.5 h-3.5" /> Remove
+										</button>
+									)}
+								</div>
+
 								<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
 									<div>
-										<label className="text-xs text-white/60">School Name</label>
+										<label className="text-xs text-white/60">
+											School Name * {idx === 0 && <span className="text-[var(--ieee-dark-yellow)] font-bold">(Primary Profile Degree)</span>}
+										</label>
 										<input
 											type="text"
-											value={edu.schoolName}
+											value={idx === 0 ? 'University of Central Florida' : edu.schoolName}
+											disabled={idx === 0}
 											onChange={(e) => {
 												const updated = [...formData.education];
 												updated[idx].schoolName = e.target.value;
 												handleTextChange('education', updated);
 											}}
-											className="w-full bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white"
+											placeholder="University of Central Florida"
+											className="w-full bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white disabled:opacity-80"
 										/>
 									</div>
 									<div>
-										<label className="text-xs text-white/60">Degree</label>
+										<label className="text-xs text-white/60">Degree Type</label>
 										<input
 											type="text"
 											value={edu.degreeType}
@@ -363,11 +397,12 @@ export default function MemberResumeForm({ memberId = 'current-member', initialD
 												updated[idx].degreeType = e.target.value;
 												handleTextChange('education', updated);
 											}}
+											placeholder="Bachelor of Science"
 											className="w-full bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white"
 										/>
 									</div>
 									<div>
-										<label className="text-xs text-white/60">Major</label>
+										<label className="text-xs text-white/60">Major *</label>
 										<input
 											type="text"
 											value={edu.major}
@@ -380,8 +415,125 @@ export default function MemberResumeForm({ memberId = 'current-member', initialD
 										/>
 									</div>
 								</div>
+
+								<div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+									<div>
+										<label className="text-xs text-white/60">GPA</label>
+										<input
+											type="number"
+											step="0.01"
+											min="0"
+											max={edu.gpaScale ?? 4.0}
+											value={edu.gpa ?? ''}
+											onChange={(e) => {
+												const updated = [...formData.education];
+												updated[idx].gpa = e.target.value ? parseFloat(e.target.value) : undefined;
+												handleTextChange('education', updated);
+											}}
+											placeholder="3.85"
+											className="w-full bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white"
+										/>
+									</div>
+									<div>
+										<label className="text-xs text-white/60">GPA Scale *</label>
+										{idx === 0 ? (
+											<input
+												type="text"
+												value="4.0 (UCF Standard)"
+												disabled
+												className="w-full bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white/70 disabled:opacity-80"
+											/>
+										) : (
+											<select
+												value={edu.gpaScale ?? 4.0}
+												onChange={(e) => {
+													const updated = [...formData.education];
+													updated[idx].gpaScale = parseFloat(e.target.value);
+													handleTextChange('education', updated);
+												}}
+												className="w-full bg-black/80 border border-white/20 rounded px-3 py-1.5 text-sm text-white focus:outline-none focus:border-[var(--ieee-dark-yellow)]"
+											>
+												<option value={4.0}>4.0 Scale</option>
+												<option value={5.0}>5.0 Scale</option>
+												<option value={6.0}>6.0 Scale</option>
+											</select>
+										)}
+									</div>
+									<div>
+										<label className="text-xs text-white/60">Start Date *</label>
+										<input
+											type="date"
+											value={edu.startDate}
+											onChange={(e) => {
+												const updated = [...formData.education];
+												updated[idx].startDate = e.target.value;
+												handleTextChange('education', updated);
+											}}
+											className="w-full bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white"
+										/>
+									</div>
+									<div>
+										<label className="text-xs text-white/60">End Date</label>
+										<input
+											type="date"
+											disabled={edu.isCurrent}
+											value={edu.endDate ?? ''}
+											onChange={(e) => {
+												const updated = [...formData.education];
+												updated[idx].endDate = e.target.value;
+												handleTextChange('education', updated);
+											}}
+											className="w-full bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white disabled:opacity-40"
+										/>
+									</div>
+								</div>
+
+								<div className="flex items-center gap-2 pt-1">
+									<input
+										type="checkbox"
+										id={`edu-current-${idx}`}
+										checked={edu.isCurrent}
+										onChange={(e) => {
+											const updated = [...formData.education];
+											updated[idx].isCurrent = e.target.checked;
+											if (e.target.checked) updated[idx].endDate = undefined;
+											handleTextChange('education', updated);
+										}}
+										className="rounded text-[var(--ieee-dark-yellow)] focus:ring-0"
+									/>
+									<label htmlFor={`edu-current-${idx}`} className="text-xs text-white/80 cursor-pointer">Currently enrolled here</label>
+								</div>
+
+								<div>
+									<label className="text-xs text-white/60">Description / Coursework / Honors (Max 500 chars)</label>
+									<textarea
+										rows={2}
+										maxLength={500}
+										value={edu.description ?? ''}
+										onChange={(e) => {
+											const updated = [...formData.education];
+											updated[idx].description = e.target.value;
+											handleTextChange('education', updated);
+										}}
+										placeholder="Honors, coursework, or special designations..."
+										className="w-full bg-black/60 border border-white/20 rounded p-2 text-xs text-white"
+									/>
+								</div>
 							</div>
 						))}
+
+						<button
+							type="button"
+							onClick={() =>
+								handleTextChange('education', [
+									...formData.education,
+									{ schoolName: '', degreeType: 'Bachelor of Science', major: '', startDate: '2024-01-01', isCurrent: true },
+								])
+							}
+							className="text-xs bg-white/10 hover:bg-white/20 text-[var(--ieee-dark-yellow)] font-bold px-3 py-2 rounded flex items-center gap-1 cursor-pointer"
+						>
+							<Plus className="w-4 h-4" /> Add Education Entry
+						</button>
 					</div>
 				)}
 
@@ -395,13 +547,13 @@ export default function MemberResumeForm({ memberId = 'current-member', initialD
 								value={skillInput}
 								onChange={(e) => setSkillInput(e.target.value)}
 								onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddSkill())}
-								placeholder="Type a skill and press Add..."
+								placeholder="Type a skill tag (e.g. React, Altium, Python) and press Add..."
 								className="flex-1 bg-white/5 border border-white/20 rounded px-3.5 py-2 text-sm text-white focus:outline-none focus:border-[var(--ieee-dark-yellow)]"
 							/>
 							<button
 								type="button"
 								onClick={handleAddSkill}
-								className="bg-[var(--ieee-dark-yellow)] hover:bg-[var(--ieee-bright-yellow)] text-black font-bold px-4 py-2 rounded text-xs uppercase"
+								className="bg-[var(--ieee-dark-yellow)] hover:bg-[var(--ieee-bright-yellow)] text-black font-bold px-4 py-2 rounded text-xs uppercase cursor-pointer"
 							>
                 Add Skill
 							</button>
@@ -416,7 +568,7 @@ export default function MemberResumeForm({ memberId = 'current-member', initialD
 									<button
 										type="button"
 										onClick={() => handleRemoveSkill(skill)}
-										className="hover:text-red-400 font-bold ml-1"
+										className="hover:text-red-400 font-bold ml-1 cursor-pointer"
 									>
                     ×
 									</button>
@@ -429,91 +581,279 @@ export default function MemberResumeForm({ memberId = 'current-member', initialD
 				{/* TAB 4: Work Experience */}
 				{activeTab === 4 && (
 					<div className="space-y-4">
-						<h3 className="text-sm font-bold text-[var(--ieee-dark-yellow)] uppercase tracking-wider">5. Work Experience</h3>
+						<h3 className="text-sm font-bold text-[var(--ieee-dark-yellow)] uppercase tracking-wider">5. Work Experience (Up to 10 entries)</h3>
 						{formData.workExperience.map((exp, idx) => (
-							<div key={idx} className="bg-white/5 p-4 rounded border border-white/10 space-y-2">
+							<div key={idx} className="bg-white/5 p-4 rounded border border-white/10 space-y-3">
+								<div className="flex justify-between items-center pb-2 border-b border-white/10">
+									<span className="text-xs font-bold text-[var(--ieee-dark-yellow)]">Experience #{idx + 1}</span>
+									<button
+										type="button"
+										onClick={() => {
+											const updated = formData.workExperience.filter((_, i) => i !== idx);
+											handleTextChange('workExperience', updated);
+										}}
+										className="text-xs text-red-400 hover:text-red-300 font-bold flex items-center gap-1 cursor-pointer"
+									>
+										<Trash2 className="w-3.5 h-3.5" /> Remove
+									</button>
+								</div>
+
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+									<div>
+										<label className="text-xs text-white/60">Company Name *</label>
+										<input
+											type="text"
+											value={exp.companyName}
+											onChange={(e) => {
+												const updated = [...formData.workExperience];
+												updated[idx].companyName = e.target.value;
+												handleTextChange('workExperience', updated);
+											}}
+											placeholder="Lockheed Martin"
+											className="w-full bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white"
+										/>
+									</div>
+									<div>
+										<label className="text-xs text-white/60">Job Title *</label>
+										<input
+											type="text"
+											value={exp.jobTitle}
+											onChange={(e) => {
+												const updated = [...formData.workExperience];
+												updated[idx].jobTitle = e.target.value;
+												handleTextChange('workExperience', updated);
+											}}
+											placeholder="Software Engineering Intern"
+											className="w-full bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white"
+										/>
+									</div>
+								</div>
+
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+									<div>
+										<label className="text-xs text-white/60">Start Date *</label>
+										<input
+											type="date"
+											value={exp.startDate}
+											onChange={(e) => {
+												const updated = [...formData.workExperience];
+												updated[idx].startDate = e.target.value;
+												handleTextChange('workExperience', updated);
+											}}
+											className="w-full bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white"
+										/>
+									</div>
+									<div>
+										<label className="text-xs text-white/60">End Date</label>
+										<input
+											type="date"
+											disabled={exp.isCurrentJob}
+											value={exp.endDate ?? ''}
+											onChange={(e) => {
+												const updated = [...formData.workExperience];
+												updated[idx].endDate = e.target.value;
+												handleTextChange('workExperience', updated);
+											}}
+											className="w-full bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white disabled:opacity-40"
+										/>
+									</div>
+								</div>
+
+								<div className="flex items-center gap-2">
 									<input
-										type="text"
-										value={exp.companyName}
+										type="checkbox"
+										id={`exp-current-${idx}`}
+										checked={exp.isCurrentJob}
 										onChange={(e) => {
 											const updated = [...formData.workExperience];
-											updated[idx].companyName = e.target.value;
+											updated[idx].isCurrentJob = e.target.checked;
+											if (e.target.checked) updated[idx].endDate = undefined;
 											handleTextChange('workExperience', updated);
 										}}
-										placeholder="Company Name"
-										className="bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white"
+										className="rounded text-[var(--ieee-dark-yellow)] focus:ring-0"
 									/>
-									<input
-										type="text"
-										value={exp.jobTitle}
+									<label htmlFor={`exp-current-${idx}`} className="text-xs text-white/80 cursor-pointer">I currently work here</label>
+								</div>
+
+								<div>
+									<label className="text-xs text-white/60">Description (Max 1000 chars)</label>
+									<textarea
+										rows={3}
+										maxLength={1000}
+										value={exp.description}
 										onChange={(e) => {
 											const updated = [...formData.workExperience];
-											updated[idx].jobTitle = e.target.value;
+											updated[idx].description = e.target.value;
 											handleTextChange('workExperience', updated);
 										}}
-										placeholder="Job Title"
-										className="bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white"
+										placeholder="Bullet points summarizing accomplishments, technologies used, and impact..."
+										className="w-full bg-black/60 border border-white/20 rounded p-2 text-xs text-white"
 									/>
 								</div>
-								<textarea
-									rows={2}
-									value={exp.description}
-									onChange={(e) => {
-										const updated = [...formData.workExperience];
-										updated[idx].description = e.target.value;
-										handleTextChange('workExperience', updated);
-									}}
-									placeholder="Key responsibilities and accomplishments..."
-									className="w-full bg-black/60 border border-white/20 rounded p-2 text-xs text-white"
-								/>
 							</div>
 						))}
-						<button
-							type="button"
-							onClick={() =>
-								handleTextChange('workExperience', [
-									...formData.workExperience,
-									{ companyName: '', jobTitle: '', startDate: '2024-01-01', isCurrentJob: true, description: '' },
-								])
-							}
-							className="text-xs bg-white/10 hover:bg-white/20 text-[var(--ieee-dark-yellow)] font-bold px-3 py-1.5 rounded"
-						>
-              + Add Experience Entry
-						</button>
+
+						{formData.workExperience.length < 10 && (
+							<button
+								type="button"
+								onClick={() =>
+									handleTextChange('workExperience', [
+										...formData.workExperience,
+										{ companyName: '', jobTitle: '', startDate: '2024-01-01', isCurrentJob: true, description: '' },
+									])
+								}
+								className="text-xs bg-white/10 hover:bg-white/20 text-[var(--ieee-dark-yellow)] font-bold px-3 py-2 rounded flex items-center gap-1 cursor-pointer"
+							>
+								<Plus className="w-4 h-4" /> Add Experience Entry
+							</button>
+						)}
 					</div>
 				)}
 
 				{/* TAB 5: Projects */}
 				{activeTab === 5 && (
 					<div className="space-y-4">
-						<h3 className="text-sm font-bold text-[var(--ieee-dark-yellow)] uppercase tracking-wider">6. Projects</h3>
+						<h3 className="text-sm font-bold text-[var(--ieee-dark-yellow)] uppercase tracking-wider">6. Key Engineering Projects</h3>
 						{formData.projects.map((proj, idx) => (
-							<div key={idx} className="bg-white/5 p-4 rounded border border-white/10 space-y-2">
-								<input
-									type="text"
-									value={proj.projectName}
-									onChange={(e) => {
-										const updated = [...formData.projects];
-										updated[idx].projectName = e.target.value;
-										handleTextChange('projects', updated);
-									}}
-									placeholder="Project Name"
-									className="w-full bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white"
-								/>
-								<textarea
-									rows={2}
-									value={proj.description}
-									onChange={(e) => {
-										const updated = [...formData.projects];
-										updated[idx].description = e.target.value;
-										handleTextChange('projects', updated);
-									}}
-									placeholder="Project description..."
-									className="w-full bg-black/60 border border-white/20 rounded p-2 text-xs text-white"
-								/>
+							<div key={idx} className="bg-white/5 p-4 rounded border border-white/10 space-y-3">
+								<div className="flex justify-between items-center pb-2 border-b border-white/10">
+									<span className="text-xs font-bold text-[var(--ieee-dark-yellow)]">Project #{idx + 1}</span>
+									<button
+										type="button"
+										onClick={() => {
+											const updated = formData.projects.filter((_, i) => i !== idx);
+											handleTextChange('projects', updated);
+										}}
+										className="text-xs text-red-400 hover:text-red-300 font-bold flex items-center gap-1 cursor-pointer"
+									>
+										<Trash2 className="w-3.5 h-3.5" /> Remove
+									</button>
+								</div>
+
+								<div>
+									<label className="text-xs text-white/60">Project Name *</label>
+									<input
+										type="text"
+										value={proj.projectName}
+										onChange={(e) => {
+											const updated = [...formData.projects];
+											updated[idx].projectName = e.target.value;
+											handleTextChange('projects', updated);
+										}}
+										placeholder="e.g. Distributed Key-Value Store with Raft"
+										className="w-full bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white"
+									/>
+								</div>
+
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+									<div>
+										<label className="text-xs text-white/60">Start Date *</label>
+										<input
+											type="date"
+											value={proj.startDate}
+											onChange={(e) => {
+												const updated = [...formData.projects];
+												updated[idx].startDate = e.target.value;
+												handleTextChange('projects', updated);
+											}}
+											className="w-full bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white"
+										/>
+									</div>
+									<div>
+										<label className="text-xs text-white/60">End Date</label>
+										<input
+											type="date"
+											disabled={proj.isOngoing}
+											value={proj.endDate ?? ''}
+											onChange={(e) => {
+												const updated = [...formData.projects];
+												updated[idx].endDate = e.target.value;
+												handleTextChange('projects', updated);
+											}}
+											className="w-full bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white disabled:opacity-40"
+										/>
+									</div>
+								</div>
+
+								<div className="flex items-center gap-2">
+									<input
+										type="checkbox"
+										id={`proj-ongoing-${idx}`}
+										checked={proj.isOngoing}
+										onChange={(e) => {
+											const updated = [...formData.projects];
+											updated[idx].isOngoing = e.target.checked;
+											if (e.target.checked) updated[idx].endDate = undefined;
+											handleTextChange('projects', updated);
+										}}
+										className="rounded text-[var(--ieee-dark-yellow)] focus:ring-0"
+									/>
+									<label htmlFor={`proj-ongoing-${idx}`} className="text-xs text-white/80 cursor-pointer">Project is ongoing</label>
+								</div>
+
+								<div>
+									<label className="text-xs text-white/60">Project Description (Max 1000 chars)</label>
+									<textarea
+										rows={3}
+										maxLength={1000}
+										value={proj.description}
+										onChange={(e) => {
+											const updated = [...formData.projects];
+											updated[idx].description = e.target.value;
+											handleTextChange('projects', updated);
+										}}
+										placeholder="Detailed summary of architecture, tools, and technical outcomes..."
+										className="w-full bg-black/60 border border-white/20 rounded p-2 text-xs text-white"
+									/>
+								</div>
+
+								<div>
+									<label className="text-xs text-white/60 block mb-1">Project URLs (GitHub repos, demos)</label>
+									<div className="flex gap-2 mb-2">
+										<input
+											type="url"
+											value={projectLinkInput[idx] || ''}
+											onChange={(e) => setProjectLinkInput({ ...projectLinkInput, [idx]: e.target.value })}
+											placeholder="https://github.com/username/project"
+											className="flex-1 bg-black/60 border border-white/20 rounded px-3 py-1 text-xs text-white"
+										/>
+										<button
+											type="button"
+											onClick={() => {
+												const linkVal = (projectLinkInput[idx] || '').trim();
+												if (!linkVal) return;
+												const updated = [...formData.projects];
+												updated[idx].projectLinks = [...(updated[idx].projectLinks || []), linkVal];
+												handleTextChange('projects', updated);
+												setProjectLinkInput({ ...projectLinkInput, [idx]: '' });
+											}}
+											className="bg-white/10 hover:bg-white/20 text-[var(--ieee-dark-yellow)] font-bold px-3 py-1 rounded text-xs cursor-pointer"
+										>
+                      + Add URL
+										</button>
+									</div>
+									<div className="flex flex-wrap gap-2">
+										{proj.projectLinks?.map((plink, pidx) => (
+											<span key={pidx} className="inline-flex items-center gap-1.5 bg-black/70 text-gray-300 text-xs px-2.5 py-1 rounded border border-gray-700">
+												{plink}
+												<button
+													type="button"
+													onClick={() => {
+														const updated = [...formData.projects];
+														updated[idx].projectLinks = updated[idx].projectLinks.filter((_, i) => i !== pidx);
+														handleTextChange('projects', updated);
+													}}
+													className="text-red-400 font-bold hover:text-red-300 cursor-pointer ml-1"
+												>
+                          ×
+												</button>
+											</span>
+										))}
+									</div>
+								</div>
 							</div>
 						))}
+
 						<button
 							type="button"
 							onClick={() =>
@@ -522,9 +862,9 @@ export default function MemberResumeForm({ memberId = 'current-member', initialD
 									{ projectName: '', description: '', startDate: '2024-01-01', isOngoing: true, projectLinks: [] },
 								])
 							}
-							className="text-xs bg-white/10 hover:bg-white/20 text-[var(--ieee-dark-yellow)] font-bold px-3 py-1.5 rounded"
+							className="text-xs bg-white/10 hover:bg-white/20 text-[var(--ieee-dark-yellow)] font-bold px-3 py-2 rounded flex items-center gap-1 cursor-pointer"
 						>
-              + Add Project
+							<Plus className="w-4 h-4" /> Add Project
 						</button>
 					</div>
 				)}
@@ -532,35 +872,118 @@ export default function MemberResumeForm({ memberId = 'current-member', initialD
 				{/* TAB 6: Clubs */}
 				{activeTab === 6 && (
 					<div className="space-y-4">
-						<h3 className="text-sm font-bold text-[var(--ieee-dark-yellow)] uppercase tracking-wider">7. Club Memberships & Activities</h3>
+						<h3 className="text-sm font-bold text-[var(--ieee-dark-yellow)] uppercase tracking-wider">7. Club Memberships & Student Chapters</h3>
 						{formData.clubMemberships.map((club, idx) => (
-							<div key={idx} className="bg-white/5 p-4 rounded border border-white/10 space-y-2">
-								<div className="grid grid-cols-2 gap-3">
-									<input
-										type="text"
-										value={club.clubName}
-										onChange={(e) => {
-											const updated = [...formData.clubMemberships];
-											updated[idx].clubName = e.target.value;
+							<div key={idx} className="bg-white/5 p-4 rounded border border-white/10 space-y-3">
+								<div className="flex justify-between items-center pb-2 border-b border-white/10">
+									<span className="text-xs font-bold text-[var(--ieee-dark-yellow)]">Club Entry #{idx + 1}</span>
+									<button
+										type="button"
+										onClick={() => {
+											const updated = formData.clubMemberships.filter((_, i) => i !== idx);
 											handleTextChange('clubMemberships', updated);
 										}}
-										placeholder="Club Name"
-										className="bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white"
+										className="text-xs text-red-400 hover:text-red-300 font-bold flex items-center gap-1 cursor-pointer"
+									>
+										<Trash2 className="w-3.5 h-3.5" /> Remove
+									</button>
+								</div>
+
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+									<div>
+										<label className="text-xs text-white/60">Club / Organization Name *</label>
+										<input
+											type="text"
+											value={club.clubName}
+											onChange={(e) => {
+												const updated = [...formData.clubMemberships];
+												updated[idx].clubName = e.target.value;
+												handleTextChange('clubMemberships', updated);
+											}}
+											placeholder="IEEE UCF Student Chapter"
+											className="w-full bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white"
+										/>
+									</div>
+									<div>
+										<label className="text-xs text-white/60">Role / Title *</label>
+										<input
+											type="text"
+											value={club.roleTitle}
+											onChange={(e) => {
+												const updated = [...formData.clubMemberships];
+												updated[idx].roleTitle = e.target.value;
+												handleTextChange('clubMemberships', updated);
+											}}
+											placeholder="Active Member / Hardware Chair"
+											className="w-full bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white"
+										/>
+									</div>
+								</div>
+
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+									<div>
+										<label className="text-xs text-white/60">Start Date *</label>
+										<input
+											type="date"
+											value={club.startDate}
+											onChange={(e) => {
+												const updated = [...formData.clubMemberships];
+												updated[idx].startDate = e.target.value;
+												handleTextChange('clubMemberships', updated);
+											}}
+											className="w-full bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white"
+										/>
+									</div>
+									<div>
+										<label className="text-xs text-white/60">End Date</label>
+										<input
+											type="date"
+											disabled={club.isActive}
+											value={club.endDate ?? ''}
+											onChange={(e) => {
+												const updated = [...formData.clubMemberships];
+												updated[idx].endDate = e.target.value;
+												handleTextChange('clubMemberships', updated);
+											}}
+											className="w-full bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white disabled:opacity-40"
+										/>
+									</div>
+								</div>
+
+								<div className="flex items-center gap-2">
+									<input
+										type="checkbox"
+										id={`club-active-${idx}`}
+										checked={club.isActive}
+										onChange={(e) => {
+											const updated = [...formData.clubMemberships];
+											updated[idx].isActive = e.target.checked;
+											if (e.target.checked) updated[idx].endDate = undefined;
+											handleTextChange('clubMemberships', updated);
+										}}
+										className="rounded text-[var(--ieee-dark-yellow)] focus:ring-0"
 									/>
-									<input
-										type="text"
-										value={club.roleTitle}
+									<label htmlFor={`club-active-${idx}`} className="text-xs text-white/80 cursor-pointer">Currently active member</label>
+								</div>
+
+								<div>
+									<label className="text-xs text-white/60">Description (Max 500 chars)</label>
+									<textarea
+										rows={2}
+										maxLength={500}
+										value={club.description ?? ''}
 										onChange={(e) => {
 											const updated = [...formData.clubMemberships];
-											updated[idx].roleTitle = e.target.value;
+											updated[idx].description = e.target.value;
 											handleTextChange('clubMemberships', updated);
 										}}
-										placeholder="Role Title"
-										className="bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white"
+										placeholder="Responsibilities, events organized, or contributions..."
+										className="w-full bg-black/60 border border-white/20 rounded p-2 text-xs text-white"
 									/>
 								</div>
 							</div>
 						))}
+
 						<button
 							type="button"
 							onClick={() =>
@@ -569,9 +992,9 @@ export default function MemberResumeForm({ memberId = 'current-member', initialD
 									{ clubName: 'IEEE UCF Student Chapter', roleTitle: 'Active Member', startDate: '2023-08-20', isActive: true },
 								])
 							}
-							className="text-xs bg-white/10 hover:bg-white/20 text-[var(--ieee-dark-yellow)] font-bold px-3 py-1.5 rounded"
+							className="text-xs bg-white/10 hover:bg-white/20 text-[var(--ieee-dark-yellow)] font-bold px-3 py-2 rounded flex items-center gap-1 cursor-pointer"
 						>
-              + Add Club Membership
+							<Plus className="w-4 h-4" /> Add Club Membership
 						</button>
 					</div>
 				)}
@@ -581,33 +1004,114 @@ export default function MemberResumeForm({ memberId = 'current-member', initialD
 					<div className="space-y-4">
 						<h3 className="text-sm font-bold text-[var(--ieee-dark-yellow)] uppercase tracking-wider">8. Certifications & Credentials</h3>
 						{formData.certifications.map((cert, idx) => (
-							<div key={idx} className="bg-white/5 p-4 rounded border border-white/10 space-y-2">
-								<div className="grid grid-cols-2 gap-3">
-									<input
-										type="text"
-										value={cert.certificationName}
-										onChange={(e) => {
-											const updated = [...formData.certifications];
-											updated[idx].certificationName = e.target.value;
+							<div key={idx} className="bg-white/5 p-4 rounded border border-white/10 space-y-3">
+								<div className="flex justify-between items-center pb-2 border-b border-white/10">
+									<span className="text-xs font-bold text-[var(--ieee-dark-yellow)]">Certification #{idx + 1}</span>
+									<button
+										type="button"
+										onClick={() => {
+											const updated = formData.certifications.filter((_, i) => i !== idx);
 											handleTextChange('certifications', updated);
 										}}
-										placeholder="Certification Name"
-										className="bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white"
-									/>
-									<input
-										type="text"
-										value={cert.issuer}
-										onChange={(e) => {
-											const updated = [...formData.certifications];
-											updated[idx].issuer = e.target.value;
-											handleTextChange('certifications', updated);
-										}}
-										placeholder="Issuer"
-										className="bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white"
-									/>
+										className="text-xs text-red-400 hover:text-red-300 font-bold flex items-center gap-1 cursor-pointer"
+									>
+										<Trash2 className="w-3.5 h-3.5" /> Remove
+									</button>
+								</div>
+
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+									<div>
+										<label className="text-xs text-white/60">Certification Name *</label>
+										<input
+											type="text"
+											value={cert.certificationName}
+											onChange={(e) => {
+												const updated = [...formData.certifications];
+												updated[idx].certificationName = e.target.value;
+												handleTextChange('certifications', updated);
+											}}
+											placeholder="e.g. AWS Certified Solutions Architect"
+											className="w-full bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white"
+										/>
+									</div>
+									<div>
+										<label className="text-xs text-white/60">Issuer *</label>
+										<input
+											type="text"
+											value={cert.issuer}
+											onChange={(e) => {
+												const updated = [...formData.certifications];
+												updated[idx].issuer = e.target.value;
+												handleTextChange('certifications', updated);
+											}}
+											placeholder="Amazon Web Services"
+											className="w-full bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white"
+										/>
+									</div>
+								</div>
+
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+									<div>
+										<label className="text-xs text-white/60">Issue Date *</label>
+										<input
+											type="date"
+											value={cert.issueDate}
+											onChange={(e) => {
+												const updated = [...formData.certifications];
+												updated[idx].issueDate = e.target.value;
+												handleTextChange('certifications', updated);
+											}}
+											className="w-full bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white"
+										/>
+									</div>
+									<div>
+										<label className="text-xs text-white/60">Expiration Date (Optional)</label>
+										<input
+											type="date"
+											value={cert.expirationDate ?? ''}
+											onChange={(e) => {
+												const updated = [...formData.certifications];
+												updated[idx].expirationDate = e.target.value || undefined;
+												handleTextChange('certifications', updated);
+											}}
+											className="w-full bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white"
+										/>
+									</div>
+								</div>
+
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+									<div>
+										<label className="text-xs text-white/60">Credential ID (Optional)</label>
+										<input
+											type="text"
+											value={cert.credentialId ?? ''}
+											onChange={(e) => {
+												const updated = [...formData.certifications];
+												updated[idx].credentialId = e.target.value || undefined;
+												handleTextChange('certifications', updated);
+											}}
+											placeholder="e.g. AWS-ASA-99401"
+											className="w-full bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white"
+										/>
+									</div>
+									<div>
+										<label className="text-xs text-white/60">Credential Verification URL (Optional)</label>
+										<input
+											type="url"
+											value={cert.credentialUrl ?? ''}
+											onChange={(e) => {
+												const updated = [...formData.certifications];
+												updated[idx].credentialUrl = e.target.value || undefined;
+												handleTextChange('certifications', updated);
+											}}
+											placeholder="https://www.credly.com/badges/..."
+											className="w-full bg-black/60 border border-white/20 rounded px-3 py-1.5 text-sm text-white"
+										/>
+									</div>
 								</div>
 							</div>
 						))}
+
 						<button
 							type="button"
 							onClick={() =>
@@ -616,9 +1120,9 @@ export default function MemberResumeForm({ memberId = 'current-member', initialD
 									{ certificationName: '', issuer: '', issueDate: '2024-01-01' },
 								])
 							}
-							className="text-xs bg-white/10 hover:bg-white/20 text-[var(--ieee-dark-yellow)] font-bold px-3 py-1.5 rounded"
+							className="text-xs bg-white/10 hover:bg-white/20 text-[var(--ieee-dark-yellow)] font-bold px-3 py-2 rounded flex items-center gap-1 cursor-pointer"
 						>
-              + Add Certification
+							<Plus className="w-4 h-4" /> Add Certification
 						</button>
 					</div>
 				)}

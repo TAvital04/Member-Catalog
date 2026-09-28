@@ -240,17 +240,6 @@ export default function SettingsPage() {
 									{/* Résumé (rendered only when the audience gate allows it) */}
 									<ResumeUpload />
 
-									{/* Member Resume Candidate Profile Section */}
-									<MemberResumeForm
-										memberId={memberProfile.id}
-										initialData={{
-											fullName: `${memberProfile.firstName} ${memberProfile.lastName}`,
-											email: memberProfile.ucfEmail || memberProfile.personalEmail || "",
-											bio: memberProfile.biography || "",
-											resumePdfUrl: memberProfile.resumeURL || "",
-										}}
-									/>
-
 									{/* Save / Cancel */}
 									<div className="flex gap-4 mt-8 w-full md:w-1/2 self-center">
 										<Button
@@ -283,6 +272,19 @@ export default function SettingsPage() {
 								</FieldSet>
 							</FieldGroup>
 						</form>
+
+						{/* Member Resume Candidate Profile Section (Outside parent form to prevent nested form submissions) */}
+						<div id="resume-form" className="mt-12">
+							<MemberResumeForm
+								memberId={memberProfile.id}
+								initialData={{
+									fullName: `${memberProfile.firstName} ${memberProfile.lastName}`,
+									email: memberProfile.ucfEmail || memberProfile.personalEmail || "",
+									bio: memberProfile.biography || "",
+									resumePdfUrl: memberProfile.resumeURL || "",
+								}}
+							/>
+						</div>
 					</div>
 				</div>
 			</div>
