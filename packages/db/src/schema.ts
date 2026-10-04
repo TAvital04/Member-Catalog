@@ -147,11 +147,33 @@ export const ieeeProjects = pgTable('ieee_projects', {
   id: uuid('id').defaultRandom().primaryKey(),
   title: varchar('title', { length: 255 }).notNull(),
   slug: varchar('slug', { length: 64 }).notNull().unique(),
+  tagline: varchar('tagline', { length: 300 }),
   description: text('description').notNull(),
   category: varchar('category', { length: 100 }).notNull(), // 'Robotics' | 'Embedded Systems' | 'Software' | 'Power' | 'AI'
   status: varchar('status', { length: 50 }).notNull().default('Active'), // 'Active' | 'Completed' | 'In Development'
   repositoryUrl: varchar('repository_url', { length: 500 }),
   demoUrl: varchar('demo_url', { length: 500 }),
+  bannerUrl: varchar('banner_url', { length: 500 }),
+  tools: jsonb('tools')
+    .$type<Array<{ name: string; category?: string; icon?: string }>>()
+    .default([])
+    .notNull(),
+  timeline: jsonb('timeline')
+    .$type<Array<{ date: string; title: string; description: string; status: 'completed' | 'in_progress' | 'upcoming' }>>()
+    .default([])
+    .notNull(),
+  skillsTaught: jsonb('skills_taught')
+    .$type<string[]>()
+    .default([])
+    .notNull(),
+  sponsorshipInfo: jsonb('sponsorship_info')
+    .$type<{
+      fundingGoal: number;
+      currentFunding: number;
+      needsDescription?: string;
+      tiers?: Array<{ name: string; amount: number; description: string; perks: string[] }>;
+      budgetBreakdown?: Array<{ item: string; cost: number }>;
+    }>(),
   active: boolean('active').default(true).notNull(),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
