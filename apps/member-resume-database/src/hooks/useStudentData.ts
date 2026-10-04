@@ -1,10 +1,13 @@
-import { useState, useEffect, useCallback } from "react";
-import { Student } from "../data/students";
-
 /**
- * Custom React hook for fetching and managing live candidate profiles directly
- * from the Drizzle database via /api/members. Zero hard-coded static records.
+ * @file useStudentData.ts
+ * @description Data synchronization hook for fetching live candidate profiles from the backend REST API (/api/members).
+ * Manages loading states, error fallbacks, and local state updates for client-side optimistic mutations (e.g. unflagging/removal).
+ *
+ * @returns {{ students: Student[], setStudents: React.Dispatch<React.SetStateAction<Student[]>>, isLoading: boolean, refetch: () => Promise<void> }}
  */
+
+import { useState, useEffect, useCallback } from "react";
+import { Student } from "@/data/students";
 export function useStudentData() {
   const [students, setStudents] = useState<Student[]>([]);
   const [isLoading, setIsLoading] = useState(true);

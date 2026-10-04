@@ -1,7 +1,17 @@
+/**
+ * @file useFlagDialogManager.ts
+ * @description Hook managing candidate moderation flagging workflows across user roles.
+ * Supports public member reports (with structured categories like AI Slop, Duplicate, Inappropriate Content)
+ * as well as admin instant flags/toggles with automatic student notification and administrative alerts.
+ *
+ * @param {UseFlagDialogManagerProps} props - Current student collection, selected modal candidate, and toast dispatchers
+ * @returns {FlagDialogManagerReturn} State, modal refs, and trigger actions for profile reporting
+ */
+
 import { useState, useCallback } from "react";
-import { Student } from "../data/students";
-import { useFocusTrap } from "../components/common/useFocusTrap";
-import { sendDirectEmail } from "../lib/email";
+import { Student } from "@/data/students";
+import { useFocusTrap } from "@/components/common/useFocusTrap";
+import { sendDirectEmail } from "@/lib/email";
 
 type UserRole = "standard" | "sponsor" | "admin";
 

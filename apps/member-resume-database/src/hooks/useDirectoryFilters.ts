@@ -1,5 +1,15 @@
 "use client";
 
+/**
+ * @file useDirectoryFilters.ts
+ * @description URL-synchronized state management hook for member directory filters.
+ * Synchronizes multi-select facets (majors, skills, graduation dates, event attendance, employers),
+ * search queries, boolean matching modes, and sorting preferences with URL search parameters to enable
+ * shareable filtered URLs and browser back/forward navigation.
+ *
+ * @returns Filter state values and memoized updater callbacks for directory facets
+ */
+
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useCallback, useTransition } from "react";
 

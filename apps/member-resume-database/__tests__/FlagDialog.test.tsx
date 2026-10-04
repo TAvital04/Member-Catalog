@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import FlagDialog from "../components/dialogs/FlagDialog";
-import { Student } from "../data/students";
+import FlagDialog from "@/components/dialogs/FlagDialog";
+import { Student } from "@/data/students";
 
 describe("FlagDialog AI Slop Report Type", () => {
   const mockStudent: Student = {

@@ -1,27 +1,33 @@
 "use client";
 
-import React, { useState, useRef, Suspense } from "react";
-import { Student } from "../data/students";
-import { useDirectoryFilters } from "../hooks/useDirectoryFilters";
-import { useThemeManager } from "../hooks/useThemeManager";
-import { useStudentData } from "../hooks/useStudentData";
-import { useFilteredStudents } from "../hooks/useFilteredStudents";
-import { useFlagDialogManager } from "../hooks/useFlagDialogManager";
-import { useResolveDialogManager } from "../hooks/useResolveDialogManager";
+/**
+ * @file page.tsx — Main Student Directory Page
+ * @description Primary entry point for the IEEE UCF Member Resume Database candidate directory.
+ * Orchestrates multi-parametric filtering, layout toggling, moderation dialogs, and real-time student profile modals.
+ */
 
-import FilterSidebar from "../components/directory/FilterSidebar";
-import FilterSidebarSkeleton from "../components/directory/FilterSidebarSkeleton";
-import StudentCardSkeleton from "../components/directory/StudentCardSkeleton";
-import StudentDirectoryResults from "../components/directory/StudentDirectoryResults";
-import PortfolioModal from "../components/modal/PortfolioModal";
-import DirectoryNavbar from "../components/directory/DirectoryNavbar";
-import DirectoryStatsHeader from "../components/directory/DirectoryStatsHeader";
-import DirectoryControlBar from "../components/directory/DirectoryControlBar";
-import ActiveFiltersBar from "../components/directory/ActiveFiltersBar";
-import ConfirmDialog from "../components/dialogs/ConfirmDialog";
-import ResolveDialog from "../components/dialogs/ResolveDialog";
-import FlagDialog from "../components/dialogs/FlagDialog";
-import ToastNotification from "../components/dialogs/ToastNotification";
+import React, { useState, useRef, Suspense } from "react";
+import { Student } from "@/data/students";
+import { useDirectoryFilters } from "@/hooks/useDirectoryFilters";
+import { useThemeManager } from "@/hooks/useThemeManager";
+import { useStudentData } from "@/hooks/useStudentData";
+import { useFilteredStudents } from "@/hooks/useFilteredStudents";
+import { useFlagDialogManager } from "@/hooks/useFlagDialogManager";
+import { useResolveDialogManager } from "@/hooks/useResolveDialogManager";
+
+import FilterSidebar from "@/components/directory/FilterSidebar";
+import FilterSidebarSkeleton from "@/components/directory/FilterSidebarSkeleton";
+import StudentCardSkeleton from "@/components/directory/StudentCardSkeleton";
+import StudentDirectoryResults from "@/components/directory/StudentDirectoryResults";
+import PortfolioModal from "@/components/modal/PortfolioModal";
+import DirectoryNavbar from "@/components/directory/DirectoryNavbar";
+import DirectoryStatsHeader from "@/components/directory/DirectoryStatsHeader";
+import DirectoryControlBar from "@/components/directory/DirectoryControlBar";
+import ActiveFiltersBar from "@/components/directory/ActiveFiltersBar";
+import ConfirmDialog from "@/components/dialogs/ConfirmDialog";
+import ResolveDialog from "@/components/dialogs/ResolveDialog";
+import FlagDialog from "@/components/dialogs/FlagDialog";
+import ToastNotification from "@/components/dialogs/ToastNotification";
 import { Shield } from "lucide-react";
 
 export type UserRole = "standard" | "sponsor" | "admin";

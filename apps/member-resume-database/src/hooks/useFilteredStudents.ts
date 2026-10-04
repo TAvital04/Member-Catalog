@@ -1,6 +1,16 @@
+/**
+ * @file useFilteredStudents.ts
+ * @description Pure calculation hook providing multi-dimensional search, faceted filtering, and sorting
+ * across student candidate profiles. Implements boolean skill evaluation (AND vs OR conjunctions),
+ * text search across names/bios/skills, attendance event filtering, graduation date matching, and role-based moderation views.
+ *
+ * @param {UseFilteredStudentsProps} props - Students array, selected filter predicates, and sort preferences
+ * @returns {Student[]} Filtered, ranked array of matching student candidates
+ */
+
 import { useMemo } from "react";
-import { Student, getPrimaryEducation, getIeeeLeadershipRole } from "../data/students";
-import { getGradValue } from "../lib/gradDate";
+import { Student, getPrimaryEducation, getIeeeLeadershipRole } from "@/data/students";
+import { getGradValue } from "@/lib/gradDate";
 
 interface UseFilteredStudentsProps {
   students: Student[];

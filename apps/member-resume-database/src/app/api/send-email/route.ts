@@ -1,3 +1,13 @@
+/**
+ * @file route.ts — POST /api/send-email
+ * @description Outbound transactional email dispatcher leveraging the Resend SDK.
+ * Used for recruiter inquiry routing, candidate moderation flag notifications, unflag notices,
+ * and admin duplicate alerts. Gracefully falls back to simulated delivery when RESEND_API_KEY is not configured in dev.
+ *
+ * @param {Request} req - JSON body containing { to, subject, message, senderName, senderEmail, recipientType }
+ * @returns {Promise<Response>} JSON response with status, delivery id, and dispatch mode
+ */
+
 import { Resend } from "resend";
 
 export async function POST(req: Request) {

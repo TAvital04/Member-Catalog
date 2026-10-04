@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import SkillsFilter from "../components/directory/filters/SkillsFilter";
+import SkillsFilter from "@/components/directory/filters/SkillsFilter";
 
 describe("SkillsFilter Flat Tag Rendering", () => {
   const availableSkills = ["React", "Python", "TypeScript", "C++"];

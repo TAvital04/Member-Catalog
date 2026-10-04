@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { UserRole } from "../../app/page";
+import { UserRole } from "@/app/page";
 import Tooltip from "../common/Tooltip";
-import { Shield, Sun, Moon, FolderGit2, Users, Briefcase, ShieldCheck, GraduationCap } from "lucide-react";
+import { Shield, Sun, Moon, FolderGit2, Users, Briefcase, ShieldCheck, GraduationCap, ChevronDown } from "lucide-react";
 
 interface DirectoryNavbarProps {
   role: UserRole;
@@ -25,17 +25,43 @@ export default function DirectoryNavbar({
 }: DirectoryNavbarProps) {
   const pathname = usePathname();
 
-  const navLinks = [
-    { href: "/", label: "Directory", icon: Users, color: "text-amber-400" },
-    { href: "/projects", label: "Projects Hub", icon: FolderGit2, color: "text-cyan-400" },
-    { href: "/where-knights-work", label: "Where Knights Work", icon: Briefcase, color: "text-emerald-400" },
-    { href: "/staff", label: "Officers & Staff", icon: ShieldCheck, color: "text-purple-400" },
-    { href: "/alumni", label: "Alumni Showcase", icon: GraduationCap, color: "text-yellow-400" },
+  const directorySubLinks = [
+    {
+      href: "/",
+      label: "Main Candidate Directory",
+      sublabel: "Browse & filter member resumes",
+      icon: Users,
+      color: "text-amber-400",
+    },
+    {
+      href: "/where-knights-work",
+      label: "Where Knights Work",
+      sublabel: "Industry placements & corporate analytics",
+      icon: Briefcase,
+      color: "text-emerald-400",
+    },
+    {
+      href: "/staff",
+      label: "Officers & Staff",
+      sublabel: "Executive board & committee leads",
+      icon: ShieldCheck,
+      color: "text-purple-400",
+    },
+    {
+      href: "/alumni",
+      label: "Alumni Showcase",
+      sublabel: "IEEE UCF alumni & engineering graduates",
+      icon: GraduationCap,
+      color: "text-yellow-400",
+    },
   ];
 
+  const isDirectoryActive = ["/", "/where-knights-work", "/staff", "/alumni"].includes(pathname);
+  const isProjectsActive = pathname === "/projects";
+
   return (
-    <nav className="border-b border-zinc-900 bg-zinc-955/80 backdrop-blur-md sticky top-0 z-40 px-6 py-4 flex flex-col lg:flex-row items-center justify-between gap-4">
-      <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full lg:w-auto">
+    <nav className="border-b border-zinc-900 bg-zinc-955/80 backdrop-blur-md sticky top-0 z-40 px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto">
         <Link href="/" className="flex items-center gap-2.5 group cursor-pointer shrink-0">
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-yellow-600 flex items-center justify-center font-black text-zinc-950 shadow-lg shadow-amber-500/15 group-hover:scale-105 transition-transform">
             UCF
@@ -47,25 +73,66 @@ export default function DirectoryNavbar({
         </Link>
 
         {/* Navigation Hub Links */}
-        <div className="flex flex-wrap items-center gap-1.5 bg-zinc-900/90 border border-zinc-800/80 p-1 rounded-xl text-xs font-bold overflow-x-auto max-w-full">
-          {navLinks.map((item) => {
-            const Icon = item.icon;
-            const isActive = pathname === item.href;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all cursor-pointer whitespace-nowrap ${
-                  isActive
-                    ? "bg-zinc-800 text-zinc-100 font-extrabold shadow-sm border border-zinc-700/60"
-                    : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-850"
-                }`}
-              >
-                <Icon size={14} className={item.color} />
-                <span>{item.label}</span>
-              </Link>
-            );
-          })}
+        <div className="flex items-center gap-2 bg-zinc-900/90 border border-zinc-800/80 p-1 rounded-xl text-xs font-bold">
+          {/* Hoverable Directory Dropdown Menu */}
+          <div className="relative group/dir">
+            <Link
+              href="/"
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all cursor-pointer whitespace-nowrap ${
+                isDirectoryActive
+                  ? "bg-zinc-800 text-zinc-100 font-extrabold shadow-sm border border-zinc-700/60"
+                  : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-850"
+              }`}
+            >
+              <Users size={14} className="text-amber-400" />
+              <span>Directory</span>
+              <ChevronDown size={12} className="text-zinc-500 group-hover/dir:rotate-180 transition-transform" />
+            </Link>
+
+            {/* Dropdown Menu Container (Hover Triggered) */}
+            <div className="hidden group-hover/dir:flex absolute left-0 top-full pt-1.5 w-64 z-50 animate-fade-in">
+              <div className="w-full rounded-2xl border border-zinc-800 bg-zinc-950/95 backdrop-blur-xl p-2 shadow-2xl flex flex-col gap-1">
+                <div className="px-2.5 py-1 text-[9px] font-bold text-zinc-500 uppercase tracking-wider select-none border-b border-zinc-900 mb-1">
+                  Directory Views
+                </div>
+
+                {directorySubLinks.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = pathname === item.href;
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`w-full flex items-start gap-2.5 px-2.5 py-2 rounded-xl text-left transition-all cursor-pointer ${
+                        isActive
+                          ? "bg-zinc-850 text-zinc-100 font-bold border border-zinc-750"
+                          : "text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900"
+                      }`}
+                    >
+                      <Icon size={16} className={`${item.color} shrink-0 mt-0.5`} />
+                      <div className="flex flex-col min-w-0">
+                        <span className="text-xs font-bold leading-tight">{item.label}</span>
+                        <span className="text-[10px] text-zinc-550 leading-tight mt-0.5 truncate">{item.sublabel}</span>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* Standalone Projects Hub Link */}
+          <Link
+            href="/projects"
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all cursor-pointer whitespace-nowrap ${
+              isProjectsActive
+                ? "bg-zinc-800 text-zinc-100 font-extrabold shadow-sm border border-zinc-700/60"
+                : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-850"
+            }`}
+          >
+            <FolderGit2 size={14} className="text-cyan-400" />
+            <span>Projects Hub</span>
+          </Link>
         </div>
       </div>
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import PortfolioModal from "../components/modal/PortfolioModal";
-import { Student } from "../data/students";
+import PortfolioModal from "@/components/modal/PortfolioModal";
+import { Student } from "@/data/students";
 
 const sampleStudent: Student = {
   id: "test-student-1",

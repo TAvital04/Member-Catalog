@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { trpc } from '@/lib/trpc/client';
-import MemberQRCode from '@/components/pg/memberqrcodegen';
+import MemberQRCode from '@/components/pg/memberqrcode-gen';
 // import { Navbar } from '@/components/navbar';
 
 const ShowIdPage = () => {

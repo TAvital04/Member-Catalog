@@ -1,3 +1,11 @@
+/**
+ * @file route.ts — GET /api/ieee-projects
+ * @description API route handler delivering IEEE UCF chapter projects and active student team rosters.
+ * Queries ieeeProjects, joins projectParticipants with members and resumes, and aggregates participant rosters.
+ *
+ * @returns {Promise<Response>} JSON response containing IEEE project entities with participant details
+ */
+
 import { db, ieeeProjects, projectParticipants, members, memberResumes } from "@ieee/db";
 import { eq, inArray } from "drizzle-orm";
 

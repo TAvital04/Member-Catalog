@@ -1,7 +1,17 @@
+/**
+ * @file useResolveDialogManager.ts
+ * @description State and action coordinator for the Admin Moderation Resolve Dialog.
+ * Manages resolution flows for flagged candidate profiles and potential duplicate clusters,
+ * including profile reinstatement (unflagging), selective/bulk deletion, and automated email notifications.
+ *
+ * @param {UseResolveDialogManagerProps} props - Student collection and state dispatchers
+ * @returns {ResolveDialogManagerReturn} State and handlers for the resolve modal interface
+ */
+
 import { useState } from "react";
-import { Student } from "../data/students";
-import { useFocusTrap } from "../components/common/useFocusTrap";
-import { sendDirectEmail } from "../lib/email";
+import { Student } from "@/data/students";
+import { useFocusTrap } from "@/components/common/useFocusTrap";
+import { sendDirectEmail } from "@/lib/email";
 
 interface UseResolveDialogManagerProps {
   students: Student[];

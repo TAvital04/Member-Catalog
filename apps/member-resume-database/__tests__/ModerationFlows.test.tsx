@@ -1,8 +1,8 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import FlagDialog from "../components/dialogs/FlagDialog";
-import ResolveDialog from "../components/dialogs/ResolveDialog";
-import { Student } from "../data/students";
+import FlagDialog from "@/components/dialogs/FlagDialog";
+import ResolveDialog from "@/components/dialogs/ResolveDialog";
+import { Student } from "@/data/students";
 
 const targetStudent: Student = {
   id: "test-student-1",

@@ -3,9 +3,9 @@
 import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { Cpu, GitBranch, ExternalLink, Users, ArrowLeft, FolderGit2, Sparkles, CheckCircle2, Clock } from "lucide-react";
-import DirectoryNavbar from "../../components/directory/DirectoryNavbar";
-import { useThemeManager } from "../../hooks/useThemeManager";
-import Avatar from "../../components/common/Avatar";
+import DirectoryNavbar from "@/components/directory/DirectoryNavbar";
+import { useThemeManager } from "@/hooks/useThemeManager";
+import Avatar from "@/components/common/Avatar";
 
 interface ProjectParticipant {
   memberId: string;

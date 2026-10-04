@@ -1,4 +1,4 @@
-import { GET } from "../app/api/members/route";
+import { GET } from "@/app/api/members/route";
 
 describe("GET /api/members Route Handler", () => {
   test("returns HTTP 200 response with student array payload directly from database", async () => {

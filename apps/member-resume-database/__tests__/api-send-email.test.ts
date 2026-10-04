@@ -1,4 +1,4 @@
-import { POST } from "../app/api/send-email/route";
+import { POST } from "@/app/api/send-email/route";
 
 describe("POST /api/send-email Route Handler", () => {
   const originalEnv = process.env;

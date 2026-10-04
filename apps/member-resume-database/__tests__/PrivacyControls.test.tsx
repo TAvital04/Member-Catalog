@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import StudentCard from "../components/directory/StudentCard";
-import { Student } from "../data/students";
+import StudentCard from "@/components/directory/StudentCard";
+import { Student } from "@/data/students";
 
 const sampleStudent: Student = {
   id: "test-student-1",

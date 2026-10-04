@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { UserRole } from "../../app/page";
+import { UserRole } from "@/app/page";
 import Tooltip from "../common/Tooltip";
 import { Search, X, LayoutGrid, List } from "lucide-react";
 

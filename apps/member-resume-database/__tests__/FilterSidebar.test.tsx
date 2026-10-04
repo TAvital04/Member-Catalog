@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import FilterSidebar from "../components/directory/FilterSidebar";
+import FilterSidebar from "@/components/directory/FilterSidebar";
 
 describe("FilterSidebar Role Access & Locks", () => {
   const mockProps = {
