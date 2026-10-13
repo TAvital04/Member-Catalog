@@ -2225,9 +2225,13 @@ export async function seedDatabase() {
         INSERT INTO member_resumes (
           member_id, full_name, email, status, bio, resume_pdf_url,
           social_links, education, skills, work_experience, projects,
-          club_memberships, certifications, flagged, main_project_name, created_at, updated_at
+          club_memberships, certifications, flagged, main_project_name,
+          ferpa_consent_signed, ferpa_consent_at, share_gpa_with_recruiters,
+          created_at, updated_at
         ) VALUES (
-          $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, false, $14, NOW(), NOW()
+          $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, false, $14,
+          true, NOW(), true,
+          NOW(), NOW()
         );
       `;
 
@@ -2248,7 +2252,18 @@ export async function seedDatabase() {
         mainProj,
       ]);
 
-      console.log(`  ✓ Successfully seeded candidate: ${candidate.name} (${candidate.email}) [ID: ${memberId}]`);
+      // 3. Log affirmative FERPA consent record (34 CFR § 99.30 compliance)
+      await pool.query(`
+        INSERT INTO student_consents (
+          member_id, consent_scope, gpa_disclosure_authorized,
+          resume_disclosure_authorized, contact_disclosure_authorized,
+          signature_text, signed_at
+        ) VALUES (
+          $1, 'recruiter_directory', true, true, true, $2, NOW()
+        );
+      `, [memberId, candidate.name]);
+
+      console.log(`  ✓ Successfully seeded candidate with FERPA consent: ${candidate.name} (${candidate.email}) [ID: ${memberId}]`);
     }
 
     console.log(`Seeding ${SEED_IEEE_PROJECTS.length} IEEE UCF Projects...`);
