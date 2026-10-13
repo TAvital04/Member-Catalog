@@ -69,6 +69,9 @@ export default function PortfolioModal({
     >
       <div
         ref={focusTrapRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label={`${student.name} - Engineering Portfolio`}
         onClick={(e) => e.stopPropagation()}
         className="relative w-full max-w-5xl h-full md:h-[80vh] rounded-none md:rounded-3xl glass-panel border-0 md:border border-zinc-800 shadow-2xl flex flex-col max-h-screen md:max-h-[85vh] animate-scale-in cursor-default overflow-hidden"
       >
@@ -81,7 +84,8 @@ export default function PortfolioModal({
         <button
           onClick={onClose}
           type="button"
-          className="absolute top-4 right-4 z-50 p-2 rounded-full bg-zinc-850/90 border border-zinc-800 hover:bg-zinc-900 hover:border-zinc-700 text-zinc-400 hover:text-zinc-155 transition-all shadow-lg active:scale-90 group/tooltip"
+          aria-label="Close candidate portfolio modal"
+          className="absolute top-4 right-4 z-50 p-2 rounded-full bg-zinc-850/90 border border-zinc-800 hover:bg-zinc-900 hover:border-zinc-700 text-zinc-400 hover:text-zinc-155 transition-all shadow-lg active:scale-90 group/tooltip focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none"
         >
           <X size={18} />
           <Tooltip content="Close Modal" position="bottom-right" groupClass="group-hover/tooltip:opacity-100" />
