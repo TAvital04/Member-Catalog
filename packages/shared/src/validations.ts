@@ -70,11 +70,60 @@ export interface MemberResumeFormData {
   clubMemberships: ClubMembershipInput[];
   certifications: CertificationInput[];
   mainProjectName?: string;
+  ferpaConsent?: boolean;
 }
 
-const URL_REGEX = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/i;
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const NAME_REGEX = /^[a-zA-Z\s'-]+$/;
+// Linear-time safe URL validator preventing ReDoS (replaces vulnerable nested quantifier regex)
+export function isValidUrlString(urlStr: string): boolean {
+  if (!urlStr || urlStr.length > 200 || /\s/.test(urlStr)) return false;
+  try {
+    const full = urlStr.startsWith('http://') || urlStr.startsWith('https://') ? urlStr : `https://${urlStr}`;
+    const parsed = new URL(full);
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
+export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Unicode-aware name regex supporting international characters, accents, hyphens, and apostrophes
+export const NAME_REGEX = /^[\p{L}\s'.-]+$/u;
+export const PHONE_REGEX = /^\+?[0-9\s\-()]{7,20}$/;
+export const URL_REGEX = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
+
+export function validateEmail(email: string): boolean {
+  if (!email || email.length > 255) return false;
+  return EMAIL_REGEX.test(email.trim());
+}
+
+export function validateUrl(url: string): boolean {
+  return isValidUrlString(url);
+}
+
+export function validateName(name: string): boolean {
+  if (!name || name.trim().length === 0 || name.length > 100) return false;
+  return NAME_REGEX.test(name.trim());
+}
+
+export function validatePhone(phone: string): boolean {
+  return PHONE_REGEX.test(phone.trim());
+}
+
+export function validateGraduationYear(year: number): boolean {
+  return Number.isInteger(year) && year >= 2020 && year <= 2035;
+}
+
+export function validateGpa(gpa: number): boolean {
+  return typeof gpa === 'number' && !isNaN(gpa) && gpa >= 0.0 && gpa <= 4.0;
+}
+
+export function validateMemberResume(data: Partial<MemberResumeFormData>): { isValid: boolean; errors: string[] } {
+  const res = validateMemberResumeForm(data);
+  return {
+    isValid: res.isValid,
+    errors: Object.values(res.errors),
+  };
+}
 
 export function validateMemberResumeForm(data: Partial<MemberResumeFormData>): ValidationResult {
   const errors: Record<string, string> = {};
@@ -83,8 +132,8 @@ export function validateMemberResumeForm(data: Partial<MemberResumeFormData>): V
     errors.fullName = 'Full name is required.';
   } else if (data.fullName.length > 50) {
     errors.fullName = 'Full name cannot exceed 50 characters.';
-  } else if (!NAME_REGEX.test(data.fullName)) {
-    errors.fullName = 'Full name must contain letters and spaces only.';
+  } else if (!NAME_REGEX.test(data.fullName.trim())) {
+    errors.fullName = 'Full name must contain valid name characters.';
   }
 
   if (!data.email || !EMAIL_REGEX.test(data.email.trim())) {
@@ -106,8 +155,8 @@ export function validateMemberResumeForm(data: Partial<MemberResumeFormData>): V
     errors.resumePdfUrl = 'Resume PDF URL is required.';
   } else if (data.resumePdfUrl.length > 200) {
     errors.resumePdfUrl = 'Resume PDF link cannot exceed 200 characters.';
-  } else if (!URL_REGEX.test(data.resumePdfUrl.trim()) || /\s/.test(data.resumePdfUrl)) {
-    errors.resumePdfUrl = 'Must be a valid URL without spaces.';
+  } else if (!isValidUrlString(data.resumePdfUrl.trim())) {
+    errors.resumePdfUrl = 'Must be a valid web URL without spaces.';
   }
 
   if (data.socialLinks && data.socialLinks.length > 5) {
@@ -133,6 +182,11 @@ export function validateMemberResumeForm(data: Partial<MemberResumeFormData>): V
 
   if (data.workExperience && data.workExperience.length > 10) {
     errors.workExperience = 'You can list up to 10 work experiences.';
+  }
+
+  // Affirmative FERPA consent requirement for directory inclusion
+  if (data.ferpaConsent === false) {
+    errors.ferpaConsent = 'Affirmative FERPA consent is required to publish educational records to the catalog.';
   }
 
   return {
