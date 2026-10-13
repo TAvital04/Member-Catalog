@@ -1,19 +1,51 @@
 /**
  * @file route.ts — POST /api/send-email
- * @description Outbound transactional email dispatcher leveraging the Resend SDK.
- * Used for recruiter inquiry routing, candidate moderation flag notifications, unflag notices,
- * and admin duplicate alerts. Gracefully falls back to simulated delivery when RESEND_API_KEY is not configured in dev.
- *
- * @param {Request} req - JSON body containing { to, subject, message, senderName, senderEmail, recipientType }
- * @returns {Promise<Response>} JSON response with status, delivery id, and dispatch mode
+ * @description Secure outbound transactional email dispatcher leveraging Resend.
+ * Enforces rate limiting, recipient authorization, CRLF injection defenses, and configurable admin routing.
  */
 
 import { Resend } from "resend";
 
+// In-memory token bucket rate limiter for DoS / spam protection
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT_MAX = 5; // max 5 emails per minute per IP
+const RATE_LIMIT_WINDOW_MS = 60 * 1000;
+
+function checkRateLimit(clientIp: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(clientIp);
+
+  if (!entry || now > entry.resetTime) {
+    rateLimitMap.set(clientIp, { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS });
+    return true;
+  }
+
+  if (entry.count >= RATE_LIMIT_MAX) {
+    return false;
+  }
+
+  entry.count += 1;
+  return true;
+}
+
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "ieee@ucf.edu";
+
 export async function POST(req: Request) {
   try {
+    const clientIp =
+      (req.headers && typeof req.headers.get === "function"
+        ? req.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
+        : null) || "127.0.0.1";
+
+    if (!checkRateLimit(clientIp)) {
+      return Response.json(
+        { success: false, error: "Too many email requests. Please wait a minute." },
+        { status: 429 }
+      );
+    }
+
     const body = await req.json();
-    const { to, subject, message, senderName, senderEmail, recipientType } = body;
+    const { to, subject, message, senderName, senderEmail, recipientType } = body || {};
 
     if (!to || !subject || !message) {
       return Response.json(
@@ -22,64 +54,43 @@ export async function POST(req: Request) {
       );
     }
 
-    const apiKey = process.env.RESEND_API_KEY;
+    // CRLF header injection defenses
+    const cleanTo = String(to).replace(/[\r\n]/g, "").trim();
+    const cleanSubject = String(subject).replace(/[\r\n]/g, "").trim().slice(0, 200);
+    const cleanSenderEmail = senderEmail ? String(senderEmail).replace(/[\r\n]/g, "").trim() : undefined;
+    const cleanSenderName = senderName ? String(senderName).replace(/[\r\n]/g, "").trim().slice(0, 100) : "Recruiter";
 
-    // Append contact disclaimer instructing recipients not to reply to the automated Resend address
+    // Open relay prevention: Recipient must be a UCF student email or the authorized admin address
+    const isAllowedStudent = cleanTo.endsWith("@knights.ucf.edu") || cleanTo.endsWith("@ucf.edu");
+    const isAllowedAdmin = cleanTo.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+    const isSenderConfirmation = cleanSenderEmail && cleanTo.toLowerCase() === cleanSenderEmail.toLowerCase();
+
+    if (!isAllowedStudent && !isAllowedAdmin && !isSenderConfirmation) {
+      return Response.json(
+        { success: false, error: "Email destination address is not permitted by relay policy." },
+        { status: 403 }
+      );
+    }
+
     const contactDisclaimer =
       `\n\n----------------------------------------\n` +
-      `PLEASE NOTE: Do not reply directly to this automated email address as inbox replies are unmonitored.\n` +
-      `If you have questions or believe there was a mistake, please contact our administrative team directly at ta616249@ucf.edu.`;
+      `PLEASE NOTE: Do not reply directly to this automated address as inbox replies are unmonitored.\n` +
+      `For inquiries or support, please contact the IEEE UCF administrative team at ${ADMIN_EMAIL}.`;
 
-    const fullMessage = message.includes("ta616249@ucf.edu")
-      ? message + contactDisclaimer
-      : message + contactDisclaimer;
+    const fullMessage = String(message).slice(0, 5000) + contactDisclaimer;
 
+    const apiKey = process.env.RESEND_API_KEY;
     if (apiKey) {
       const resend = new Resend(apiKey);
-      const fromAddress = process.env.RESEND_FROM_EMAIL || "UCF Resume Database <onboarding@resend.dev>";
+      const fromAddress = process.env.RESEND_FROM_EMAIL || "IEEE UCF Member Database <onboarding@resend.dev>";
 
-      let emailResponse = await resend.emails.send({
+      const emailResponse = await resend.emails.send({
         from: fromAddress,
-        to: [to],
-        subject: subject,
+        to: [cleanTo],
+        subject: cleanSubject,
         text: fullMessage,
-        replyTo: senderEmail || "ta616249@ucf.edu",
+        replyTo: cleanSenderEmail || ADMIN_EMAIL,
       });
-
-      // If testing mode restricts recipients to verified account email, retry sending to owner & ta616249@ucf.edu
-      if (
-        emailResponse.error &&
-        emailResponse.error.name === "validation_error" &&
-        emailResponse.error.message.includes("testing emails")
-      ) {
-        const ownerMatch = emailResponse.error.message.match(/\(([^)]+)\)/);
-        const ownerEmail = ownerMatch ? ownerMatch[1] : "tal.avital04@gmail.com";
-
-        console.warn(
-          `[Resend Notice] Unverified domain testing mode: Redirecting test email to (${ownerEmail} / ta616249@ucf.edu).`
-        );
-
-        emailResponse = await resend.emails.send({
-          from: fromAddress,
-          to: [ownerEmail],
-          subject: `[Test Notice: Target ${to}] ${subject}`,
-          text: `[Resend Unverified Domain Notice: Intended Recipient: ${to}]\n\n` + fullMessage,
-          replyTo: senderEmail || "ta616249@ucf.edu",
-        });
-
-        // Also attempt dispatching to ta616249@ucf.edu if different from account email
-        if (ownerEmail !== "ta616249@ucf.edu") {
-          resend.emails
-            .send({
-              from: fromAddress,
-              to: ["ta616249@ucf.edu"],
-              subject: `[MRD Audit Copy: Target ${to}] ${subject}`,
-              text: `[MRD Administrative Copy - Intended Recipient: ${to}]\n\n` + fullMessage,
-              replyTo: senderEmail || "ta616249@ucf.edu",
-            })
-            .catch(() => null);
-        }
-      }
 
       if (emailResponse.error) {
         console.error("[Resend Error]", emailResponse.error);
@@ -96,17 +107,23 @@ export async function POST(req: Request) {
         success: true,
         source: "resend",
         id: emailResponse.data?.id,
-        message: `Direct email sent successfully via Resend (ID: ${emailResponse.data?.id})`,
+        message: `Email dispatched successfully via Resend`,
       });
     }
 
-    // Fallback simulation when RESEND_API_KEY is not configured
-    console.log("[Resend Simulation Mode]", { to, subject, senderName, senderEmail, recipientType });
+    // Development fallback simulation mode
+    console.log("[Resend Simulation Mode]", {
+      to: cleanTo,
+      subject: cleanSubject,
+      senderName: cleanSenderName,
+      senderEmail: cleanSenderEmail,
+      recipientType,
+    });
 
     return Response.json({
       success: true,
       source: "simulation",
-      message: `Email to ${to} queued (simulation mode)`,
+      message: `Email to ${cleanTo} queued (simulation mode)`,
     });
   } catch (error: any) {
     console.error("[Email API Error]", error);
