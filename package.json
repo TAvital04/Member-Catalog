@@ -11,12 +11,12 @@
     "dev": "pnpm --recursive run dev",
     "dev:ieee": "pnpm --filter @ieee/website dev",
     "dev:resume": "pnpm --filter @ieee/member-resume-database dev",
-    "build": "pnpm --recursive run build",
+    "build": "pnpm --recursive --if-present run build",
     "build:ieee": "pnpm --filter @ieee/website build",
     "build:resume": "pnpm --filter @ieee/member-resume-database build",
     "db:seed": "pnpm --filter @ieee/db db:seed",
-    "lint": "pnpm --recursive run lint",
-    "test": "pnpm --recursive run test --if-present"
+    "lint": "pnpm --recursive --if-present run lint",
+    "test": "pnpm --recursive --if-present run test"
   },
   "engines": {
     "node": ">=18.0.0"
