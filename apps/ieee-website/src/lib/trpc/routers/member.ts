@@ -28,7 +28,9 @@ const memberRegistrationSchema = z.object({
 	middleName: z.string().max(255).optional(),
 	lastName: z.string().min(1, "Last name is required").max(255),
 	personalEmail: z.string().email("Invalid email format").max(255),
-	ucfEmail: z.string().email("Invalid email format").refine((email) => email.endsWith("@ucf.edu")).max(255),
+	ucfEmail: z.string().email("Invalid email format").refine((email) => email.endsWith("@ucf.edu") || email.endsWith("@knights.ucf.edu"), {
+		message: "Email must be a valid UCF email (@ucf.edu or @knights.ucf.edu)",
+	}).max(255),
 	dateOfBirth: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
 	phoneNumber: z.string().max(20).optional(),
 	gender: z.enum(["M", "F", "NB", "O", "PNTS"]),
