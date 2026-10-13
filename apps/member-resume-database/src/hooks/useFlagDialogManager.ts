@@ -34,7 +34,7 @@ interface UseFlagDialogManagerProps {
   setToastMessage: (msg: string | null) => void;
 }
 
-const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL || "ta616249@ucf.edu";
+const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL || "ieee@ucf.edu";
 
 export function useFlagDialogManager({
   students,
@@ -64,6 +64,11 @@ export function useFlagDialogManager({
         "Confirm Profile Deletion",
         `Are you sure you want to permanently delete ${student.name}'s profile? This action is irreversible and will send notification emails to student and admin.`,
         async () => {
+          // Persist deletion to database
+          fetch(`/api/members?id=${encodeURIComponent(id)}`, { method: "DELETE" }).catch((err) =>
+            console.error("Failed to delete member in database:", err)
+          );
+
           const updated = students.filter((s) => s.id !== id);
           setStudents(updated);
           if (selectedStudent && selectedStudent.id === id) {
@@ -74,7 +79,7 @@ export function useFlagDialogManager({
           const subjectStudent = "[IEEE UCF Resume Database] Profile Record Deleted";
           const bodyStudent = `Hello ${student.name},\n\nYour profile has been permanently deleted from the UCF Member Resume Database by an administrator.\n\nReason / Details:\n"${
             student.flagReason || "Administrative review / Profile record deletion"
-          }"\n\nIf you believe this was performed in error or would like to re-submit your profile, please contact our administrative team directly at ta616249@ucf.edu.\n\nBest,\nUCF IEEE Admin Team`;
+          }"\n\nIf you believe this was performed in error or would like to re-submit your profile, please contact our administrative team directly at ${ADMIN_EMAIL}.\n\nBest,\nUCF IEEE Admin Team`;
 
           const subjectAdmin = `[MRD Notice] Student Profile Deleted: ${student.name}`;
           const bodyAdmin = `Hello MRD Administrator,\n\nA student profile record has been deleted from the UCF Member Resume Database.\n\nDeleted Candidate Details:\n- Name: ${student.name}\n- Email: ${student.email}\n- Major: ${student.major}\n- Graduation: ${student.gradDate}\n- Flag/Deletion Reason: "${
