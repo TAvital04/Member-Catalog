@@ -92,9 +92,7 @@ export const authOptions: NextAuthOptions = {
 			}
 		},
 
-		// fucking kill myself, this was the stupid bitching fucking solution to a 5 hour long bug session
-		// stuuuuupid
-		// Please don't! We need our fearless (and scary) leader :D
+		// Safely resolve relative redirects against application base URL
 		async redirect({ url, baseUrl }) {
 			if (url.startsWith('/')) return `${baseUrl}${url}`;
 

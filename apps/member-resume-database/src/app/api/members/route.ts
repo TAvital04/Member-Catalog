@@ -11,8 +11,13 @@ import { db, members, memberResumes, events, eventAttendees } from "@ieee/db";
 import { Student } from "@/data/students";
 import { eq, inArray } from "drizzle-orm";
 
-export async function GET() {
+export async function GET(request?: Request) {
   try {
+    const url = request ? new URL(request.url) : null;
+    const role = request?.headers.get("x-user-role") || url?.searchParams.get("role") || "standard";
+    const isAuthorizedRecruiter = role === "sponsor" || role === "admin";
+    const isAdmin = role === "admin";
+
     let candidateRows: any[] = [];
 
     try {
@@ -36,11 +41,14 @@ export async function GET() {
           flagged: memberResumes.flagged,
           flagReason: memberResumes.flagReason,
           mainProjectName: memberResumes.mainProjectName,
+          ferpaConsentSigned: memberResumes.ferpaConsentSigned,
+          shareGpaWithRecruiters: memberResumes.shareGpaWithRecruiters,
           memberMajor: members.major,
           memberGradYear: members.graduationYear,
         })
         .from(memberResumes)
-        .leftJoin(members, eq(memberResumes.memberId, members.id));
+        .leftJoin(members, eq(memberResumes.memberId, members.id))
+        .limit(250);
     } catch (dbError) {
       console.warn("[API Warning] Database query encountered error, returning empty list:", dbError);
       return Response.json({
@@ -99,88 +107,93 @@ export async function GET() {
       }
     }
 
-    // Safely transform Drizzle database rows into Student domain models
-    const transformedStudents: Student[] = candidateRows.map((row: any) => {
-      const socialLinks = Array.isArray(row.socialLinks)
-        ? row.socialLinks.map((l: any) => ({ name: l.platformName || "Link", text: l.profileUrl || "" }))
-        : [];
+    // Safely transform Drizzle database rows into Student domain models with FERPA privacy enforcement
+    const transformedStudents: Student[] = candidateRows
+      // Filter out flagged students for general public viewers
+      .filter((row: any) => isAdmin || !row.flagged)
+      .map((row: any) => {
+        const socialLinks = Array.isArray(row.socialLinks)
+          ? row.socialLinks.map((l: any) => ({ name: l.platformName || "Link", text: l.profileUrl || "" }))
+          : [];
 
-      const education = Array.isArray(row.education)
-        ? row.education.map((e: any) => ({
-            schoolName: e.schoolName || "University of Central Florida",
-            degreeType: e.degreeType || "Bachelor of Science",
-            major: e.major || "Computer Science",
-            gpa: e.gpa,
-            gpaScale: e.gpaScale,
-            startDate: e.startDate || "2022-08-20",
-            endDate: e.endDate,
-            current: Boolean(e.isCurrent),
-            description: e.description,
-          }))
-        : [];
+        // FERPA Privacy Rule: Redact GPA unless authorized recruiter AND student opted in
+        const allowGpaView = isAuthorizedRecruiter && (row.shareGpaWithRecruiters || row.ferpaConsentSigned);
 
-      const primaryEdu = education[0] || {};
+        const education = Array.isArray(row.education)
+          ? row.education.map((e: any) => ({
+              schoolName: e.schoolName || "University of Central Florida",
+              degreeType: e.degreeType || "Bachelor of Science",
+              major: e.major || "Computer Science",
+              gpa: allowGpaView ? e.gpa : undefined,
+              gpaScale: allowGpaView ? e.gpaScale : undefined,
+              startDate: e.startDate || "2022-08-20",
+              endDate: e.endDate,
+              current: Boolean(e.isCurrent),
+              description: e.description,
+            }))
+          : [];
 
-      return {
-        id: row.id,
-        name: row.fullName || "UCF Member",
-        email: row.email || "student@knights.ucf.edu",
-        bio: row.bio || "",
-        skills: Array.isArray(row.skills) ? row.skills : [],
-        links: socialLinks,
-        education: education,
-        projects: Array.isArray(row.projects)
-          ? row.projects.map((p: any) => ({
-              name: p.projectName || "",
-              description: p.description || "",
-              startDate: p.startDate || "",
-              endDate: p.endDate,
-              current: Boolean(p.isOngoing),
-              projectLinks: p.projectLinks || [],
-            }))
-          : [],
-        workExperiences: Array.isArray(row.workExperience)
-          ? row.workExperience.map((w: any) => ({
-              name: w.companyName || "",
-              title: w.jobTitle || "",
-              description: w.description || "",
-              startDate: w.startDate || "",
-              endDate: w.endDate,
-              currentJob: Boolean(w.isCurrentJob),
-            }))
-          : [],
-        clubs: Array.isArray(row.clubMemberships)
-          ? row.clubMemberships.map((c: any) => ({
-              name: c.clubName || "",
-              title: c.roleTitle || "",
-              description: c.description || "",
-              startDate: c.startDate || "",
-              endDate: c.endDate,
-              current: Boolean(c.isActive),
-            }))
-          : [],
-        certifications: Array.isArray(row.certifications)
-          ? row.certifications.map((cert: any) => ({
-              name: cert.certificationName || "",
-              issuer: cert.issuer || "",
-              issueDate: cert.issueDate || "",
-              expirationDate: cert.expirationDate,
-              credentialId: cert.credentialId,
-              credentialUrl: cert.credentialUrl,
-            }))
-          : [],
-        events: attendedEventsMap.get(row.memberId) || [],
-        resumeLink: row.resumePdfUrl || undefined,
-        major: primaryEdu.major || row.memberMajor || "Computer Science",
-        degree: primaryEdu.degreeType || "Bachelor of Science",
-        gradDate: primaryEdu.endDate ? primaryEdu.endDate : (row.memberGradYear ? `May ${row.memberGradYear}` : "May 2026"),
-        status: (row.status as any) || "Seeking Internship",
-        flagged: Boolean(row.flagged),
-        flagReason: row.flagReason || undefined,
-        mainProjectName: row.mainProjectName || undefined,
-      };
-    });
+        const primaryEdu = education[0] || {};
 
+        return {
+          id: row.id,
+          name: row.fullName || "UCF Member",
+          email: row.email || "student@knights.ucf.edu",
+          bio: row.bio || "",
+          skills: Array.isArray(row.skills) ? row.skills : [],
+          links: socialLinks,
+          education: education,
+          projects: Array.isArray(row.projects)
+            ? row.projects.map((p: any) => ({
+                name: p.projectName || "",
+                description: p.description || "",
+                startDate: p.startDate || "",
+                endDate: p.endDate,
+                current: Boolean(p.isOngoing),
+                projectLinks: p.projectLinks || [],
+              }))
+            : [],
+          workExperiences: Array.isArray(row.workExperience)
+            ? row.workExperience.map((w: any) => ({
+                name: w.companyName || "",
+                title: w.jobTitle || "",
+                description: w.description || "",
+                startDate: w.startDate || "",
+                endDate: w.endDate,
+                currentJob: Boolean(w.isCurrentJob),
+              }))
+            : [],
+          clubs: Array.isArray(row.clubMemberships)
+            ? row.clubMemberships.map((c: any) => ({
+                name: c.clubName || "",
+                title: c.roleTitle || "",
+                description: c.description || "",
+                startDate: c.startDate || "",
+                endDate: c.endDate,
+                current: Boolean(c.isActive),
+              }))
+            : [],
+          certifications: Array.isArray(row.certifications)
+            ? row.certifications.map((cert: any) => ({
+                name: cert.certificationName || "",
+                issuer: cert.issuer || "",
+                issueDate: cert.issueDate || "",
+                expirationDate: cert.expirationDate,
+                credentialId: cert.credentialId,
+                credentialUrl: cert.credentialUrl,
+              }))
+            : [],
+          events: attendedEventsMap.get(row.memberId) || [],
+          resumeLink: row.resumePdfUrl || undefined,
+          major: primaryEdu.major || row.memberMajor || "Computer Science",
+          degree: primaryEdu.degreeType || "Bachelor of Science",
+          gradDate: primaryEdu.endDate ? primaryEdu.endDate : (row.memberGradYear ? `May ${row.memberGradYear}` : "May 2026"),
+          status: (row.status as any) || "Seeking Internship",
+          flagged: isAdmin ? Boolean(row.flagged) : false,
+          flagReason: isAdmin ? (row.flagReason || undefined) : undefined,
+          mainProjectName: row.mainProjectName || undefined,
+        };
+      });
 
     return Response.json({
       success: true,
@@ -199,5 +212,53 @@ export async function GET() {
       },
       { status: 500 }
     );
+  }
+}
+
+/**
+ * PATCH /api/members — Updates candidate moderation status (flag / unflag / resolve)
+ */
+export async function PATCH(request: Request) {
+  try {
+    const body = await request.json();
+    const { id, flagged, flagReason } = body;
+
+    if (!id) {
+      return Response.json({ success: false, error: "Member resume ID is required" }, { status: 400 });
+    }
+
+    await db
+      .update(memberResumes)
+      .set({
+        flagged: Boolean(flagged),
+        flagReason: flagged ? (flagReason || "Flagged for review") : null,
+        updatedAt: new Date(),
+      })
+      .where(eq(memberResumes.id, id));
+
+    return Response.json({ success: true, message: "Member status updated successfully" });
+  } catch (error: any) {
+    console.error("[API Error] Failed to update member status:", error);
+    return Response.json({ success: false, error: error?.message || "Failed to update member status" }, { status: 500 });
+  }
+}
+
+/**
+ * DELETE /api/members — Permanently removes candidate profile from database
+ */
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+
+    if (!id) {
+      return Response.json({ success: false, error: "Member resume ID is required" }, { status: 400 });
+    }
+
+    await db.delete(memberResumes).where(eq(memberResumes.id, id));
+    return Response.json({ success: true, message: "Member record deleted successfully" });
+  } catch (error: any) {
+    console.error("[API Error] Failed to delete member record:", error);
+    return Response.json({ success: false, error: error?.message || "Failed to delete member record" }, { status: 500 });
   }
 }

@@ -105,8 +105,29 @@ export const memberResumes = pgTable('member_resumes', {
   flagReason: varchar('flag_reason', { length: 300 }),
   mainProjectName: varchar('main_project_name', { length: 255 }),
 
+  // FERPA & Privacy compliance fields (34 CFR Part 99)
+  ferpaConsentSigned: boolean('ferpa_consent_signed').default(false).notNull(),
+  ferpaConsentAt: timestamp('ferpa_consent_at', { withTimezone: true }),
+  shareGpaWithRecruiters: boolean('share_gpa_with_recruiters').default(false).notNull(),
+
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+/**
+ * Student Consents Table - Full FERPA audit trail for student education record disclosures
+ */
+export const studentConsents = pgTable('student_consents', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  memberId: uuid('member_id').notNull().references(() => members.id, { onDelete: 'cascade' }),
+  consentScope: varchar('consent_scope', { length: 100 }).notNull().default('recruiter_directory'),
+  gpaDisclosureAuthorized: boolean('gpa_disclosure_authorized').notNull().default(false),
+  resumeDisclosureAuthorized: boolean('resume_disclosure_authorized').notNull().default(true),
+  contactDisclosureAuthorized: boolean('contact_disclosure_authorized').notNull().default(true),
+  signatureText: varchar('signature_text', { length: 255 }).notNull(),
+  signedAt: timestamp('signed_at', { withTimezone: true }).defaultNow().notNull(),
+  expiresAt: timestamp('expires_at', { withTimezone: true }),
+  revokedAt: timestamp('revoked_at', { withTimezone: true }),
 });
 
 /**

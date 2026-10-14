@@ -20,4 +20,18 @@ export function createDbClient(connString: string = connectionString) {
   }
 }
 
-export const db = createDbClient();
+let _cachedDb: ReturnType<typeof createDbClient> | null = null;
+
+export function getDb() {
+  if (!_cachedDb) {
+    _cachedDb = createDbClient();
+  }
+  return _cachedDb;
+}
+
+export const db = new Proxy({} as ReturnType<typeof createDbClient>, {
+  get(_target, prop) {
+    const instance = getDb();
+    return (instance as any)[prop];
+  },
+});

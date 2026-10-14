@@ -25,11 +25,22 @@ function StudentCard({
 }: StudentCardProps) {
   const leadershipRole = getIeeeLeadershipRole(student);
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      onClick(student);
+    }
+  };
+
   return (
     <div
+      role="button"
+      tabIndex={0}
+      aria-label={`View ${student.name}'s engineering profile and portfolio`}
       onClick={() => onClick(student)}
+      onKeyDown={handleKeyDown}
       data-student-id={student.id}
-      className={`relative group hover:z-30 rounded-2xl glass-panel glass-panel-hover p-4 md:p-5 flex flex-col justify-between h-[185px] md:h-[295px] cursor-pointer transition-all duration-300 ${
+      className={`relative group hover:z-30 rounded-2xl glass-panel glass-panel-hover p-4 md:p-5 flex flex-col justify-between h-[185px] md:h-[295px] cursor-pointer transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 ${
         adminMode && student.flagged
           ? "border-red-500/40 bg-red-950/5 hover:border-red-500/60"
           : "border-zinc-800"

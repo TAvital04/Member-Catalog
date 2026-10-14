@@ -63,7 +63,7 @@ function StudentDirectoryContent() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [filterLayout, setFilterLayout] = useState<"side" | "top">("side");
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
-  const [role, setRole] = useState<UserRole>("admin");
+  const [role, setRole] = useState<UserRole>("standard");
   const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [onlyLeadersFilter, setOnlyLeadersFilter] = useState(false);

@@ -20,6 +20,9 @@ const SEED_ORDER = [
 ];
 
 async function wipeDatabase(client: Client) {
+	if (process.env.NODE_ENV === 'production' || process.env.DATABASE_URL?.includes('neon.tech')) {
+		throw new Error('SAFETY ERROR: Refusing to wipe non-local or production database.');
+	}
 	console.log('Dropping all tables...');
 	const res = await client.query(`SELECT tablename FROM pg_tables WHERE schemaname = 'public';`);
 	for (const row of res.rows) {

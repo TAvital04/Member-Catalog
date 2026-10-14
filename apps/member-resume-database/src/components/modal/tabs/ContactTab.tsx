@@ -52,7 +52,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
             `Summary of Sent Message:\n"${messageText}"\n\n` +
             `${student.name} has been provided with your contact email (${recruiterEmail}) and will be able to reply directly to you.`,
           senderName: "UCF Member Resume Database Portal",
-          senderEmail: "ta616249@ucf.edu",
+          senderEmail: "ieee@ucf.edu",
         }),
       ]);
 

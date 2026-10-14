@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { UserRole } from "@/app/page";
 import Tooltip from "../common/Tooltip";
-import { Shield, Sun, Moon, FolderGit2, Users, Briefcase, ShieldCheck, GraduationCap, ChevronDown } from "lucide-react";
+import { Shield, Sun, Moon, FolderGit2, Users, Briefcase, ShieldCheck, GraduationCap, ChevronDown, TrendingUp } from "lucide-react";
 
 interface DirectoryNavbarProps {
   role: UserRole;
@@ -54,9 +54,16 @@ export default function DirectoryNavbar({
       icon: GraduationCap,
       color: "text-yellow-400",
     },
+    {
+      href: "/sponsor-roi",
+      label: "Sponsor ROI & Analytics",
+      sublabel: "Scouting funnels & talent partner metrics",
+      icon: TrendingUp,
+      color: "text-cyan-400",
+    },
   ];
 
-  const isDirectoryActive = ["/", "/where-knights-work", "/staff", "/alumni"].includes(pathname);
+  const isDirectoryActive = ["/", "/where-knights-work", "/staff", "/alumni", "/sponsor-roi"].includes(pathname);
   const isProjectsActive = pathname === "/projects";
 
   return (
