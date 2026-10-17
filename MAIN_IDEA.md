@@ -21,6 +21,23 @@ The IEEE UCF Member Catalog provides a **unified, multi-faceted platform** with:
 2. **IEEE Projects Hub (`/projects`)**: Official showcase for chapter engineering projects (*Autonomous Micromouse*, *Solar Knight Racing ESC*, *Quadcopter Swarm*, *Smart Campus IoT*, *PCB Workshop*) with live student rosters.
 3. **Live Profile Management & Sync**: Seamless submission form on the main website (`@ieee/website`) updating the candidate database in real-time.
 4. **Sponsor Analytics Specification**: Detailed telemetry and recruitment funnel specification documented in [`ROI_PAGE.md`](./ROI_PAGE.md).
+5. **Merit-Based Contribution & Ranking Engine (`POINTS.md`)**: A transparent point valuation system putting the members who contribute the most to IEEE UCF first in recruiter discovery, elevating verified chapter builders over passive resumes.
+
+---
+
+## 🏆 The Core Philosophy: Putting Members Who Contribute the Most First
+
+A foundational pillar of the IEEE UCF Member Catalog is **meritocratic visibility**. In typical recruitment databases, candidates are sorted alphabetically or randomly, giving an inactive member the exact same spotlight as the student who dedicated 300+ hours to soldering competition PCBs or chairing workshops.
+
+This platform flips that paradigm on its head:
+- **Default Sort by Contribution Points**: By default, the catalog automatically orders candidates by their verified chapter contribution score.
+- **Rewarding Verified Chapter Impact**:
+  - **10 Points**: Serving as an IEEE Executive Board officer.
+  - **15 Points each**: Leading a university/chapter engineering build project.
+  - **5 Points each**: Active membership in a university/chapter build project (excluding solo personal hobby projects).
+  - **3 Points each**: Verified attendance at technical workshops, bootcamps, and general body meetings.
+  - **5 Points each**: Active participation as an IEEE standing committee member.
+- **A Virtuous Feedback Loop**: Active leaders get hired by premier defense and tech partners, which inspires younger students to attend workshops, build hardware, and assume leadership roles. Full specification is documented in [`POINTS.md`](./POINTS.md).
 
 ---
 

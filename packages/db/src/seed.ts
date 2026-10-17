@@ -1,6 +1,7 @@
 import { Pool } from 'pg';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { members, memberResumes } from './schema';
+import { calculateCandidatePoints } from '@ieee/shared';
 
 const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/ieee-website';
 
@@ -3296,6 +3297,8 @@ export async function seedDatabase() {
         flagged BOOLEAN NOT NULL DEFAULT false,
         flag_reason VARCHAR(300),
         main_project_name VARCHAR(255),
+        points INTEGER NOT NULL DEFAULT 0,
+        point_breakdown JSONB,
         created_at TIMESTAMP NOT NULL DEFAULT NOW(),
         updated_at TIMESTAMP NOT NULL DEFAULT NOW()
       );
@@ -3358,6 +3361,8 @@ export async function seedDatabase() {
       );
 
       ALTER TABLE member_resumes ADD COLUMN IF NOT EXISTS main_project_name VARCHAR(255);
+      ALTER TABLE member_resumes ADD COLUMN IF NOT EXISTS points INTEGER NOT NULL DEFAULT 0;
+      ALTER TABLE member_resumes ADD COLUMN IF NOT EXISTS point_breakdown JSONB;
     `);
 
     console.log('Clearing existing records...');
@@ -3412,16 +3417,27 @@ export async function seedDatabase() {
       const memberId = memberRes.rows[0].id;
       createdMemberIds.push(memberId);
 
+      // Calculate contribution points based on IEEE point system rules
+      const simulatedEvents = SEED_EVENTS.filter((_, eIdx) => (i + eIdx) % 2 === 0 || (i * 2 + eIdx) % 3 === 0);
+      const pointsData = calculateCandidatePoints({
+        clubs: candidate.clubMemberships,
+        projects: candidate.projects,
+        events: simulatedEvents,
+        mainProjectName: mainProj,
+      });
+
       // 2. Insert into member_resumes table (1-to-1 relationship with member_id)
       const resumeInsertQuery = `
         INSERT INTO member_resumes (
           member_id, full_name, email, status, bio, resume_pdf_url,
           social_links, education, skills, work_experience, projects,
           club_memberships, certifications, flagged, main_project_name,
+          points, point_breakdown,
           ferpa_consent_signed, ferpa_consent_at, share_gpa_with_recruiters,
           created_at, updated_at
         ) VALUES (
           $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, false, $14,
+          $15, $16,
           true, NOW(), true,
           NOW(), NOW()
         );
@@ -3442,6 +3458,8 @@ export async function seedDatabase() {
         JSON.stringify(candidate.clubMemberships),
         JSON.stringify(candidate.certifications),
         mainProj,
+        pointsData.points,
+        JSON.stringify(pointsData.pointBreakdown),
       ]);
 
       // 3. Log affirmative FERPA consent record (34 CFR § 99.30 compliance)

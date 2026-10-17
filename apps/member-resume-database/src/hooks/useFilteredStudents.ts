@@ -24,7 +24,7 @@ interface UseFilteredStudentsProps {
   skillFilterMode: "AND" | "OR";
   adminMode: boolean;
   adminFilterFlagged: boolean | null;
-  sortBy: "name" | "gradDate" | "gpa";
+  sortBy: "activity" | "points" | "name" | "gradDate" | "gpa";
 }
 
 export function useFilteredStudents({
@@ -140,6 +140,11 @@ export function useFilteredStudents({
         return true;
       })
       .sort((a, b) => {
+        if (sortBy === "activity" || sortBy === "points") {
+          const diff = (b.points ?? 0) - (a.points ?? 0);
+          if (diff !== 0) return diff;
+          return a.name.localeCompare(b.name);
+        }
         if (sortBy === "name") {
           return a.name.localeCompare(b.name);
         }

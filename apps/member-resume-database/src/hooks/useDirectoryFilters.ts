@@ -22,7 +22,7 @@ export interface DirectoryFilterState {
   selectedCompanies: string[];
   skillFilterMode: "AND" | "OR";
   adminFilterFlagged: boolean | null;
-  sortBy: "name" | "gradDate" | "gpa";
+  sortBy: "activity" | "name" | "gradDate" | "gpa";
 }
 
 export function useDirectoryFilters() {
@@ -62,8 +62,8 @@ export function useDirectoryFilters() {
     flaggedParam === "true" ? true : flaggedParam === "false" ? false : null;
 
   const sortParam = searchParams.get("sort");
-  const sortBy: "name" | "gradDate" | "gpa" =
-    sortParam === "gradDate" || sortParam === "gpa" ? sortParam : "name";
+  const sortBy: "activity" | "name" | "gradDate" | "gpa" =
+    sortParam === "name" || sortParam === "gradDate" || sortParam === "gpa" ? sortParam : "activity";
 
   // Helper to push updated search parameters to the URL
   const updateQueryParams = useCallback(
@@ -147,8 +147,8 @@ export function useDirectoryFilters() {
   );
 
   const setSortBy = useCallback(
-    (sort: "name" | "gradDate" | "gpa") => {
-      updateQueryParams({ sort: sort === "name" ? null : sort });
+    (sort: "activity" | "name" | "gradDate" | "gpa") => {
+      updateQueryParams({ sort: sort === "activity" ? null : sort });
     },
     [updateQueryParams]
   );

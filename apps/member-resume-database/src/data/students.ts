@@ -83,6 +83,18 @@ export interface Student {
   duplicateGroup?: string;
   mainProjectName?: string;
   email: string;
+  points?: number;
+  pointBreakdown?: PointBreakdown;
+}
+
+export interface PointBreakdown {
+  total: number;
+  boardPoints: number;
+  projectLeadPoints: number;
+  universityProjectPoints: number;
+  eventPoints: number;
+  committeePoints: number;
+  details: string[];
 }
 
 

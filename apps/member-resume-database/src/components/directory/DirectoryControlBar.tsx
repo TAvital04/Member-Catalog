@@ -10,8 +10,8 @@ interface DirectoryControlBarProps {
   setSearchQuery: (query: string) => void;
   filterLayout?: "side" | "top";
   setFilterLayout?: (layout: "side" | "top") => void;
-  sortBy: "name" | "gradDate" | "gpa";
-  setSortBy: (sort: "name" | "gradDate" | "gpa") => void;
+  sortBy: "activity" | "name" | "gradDate" | "gpa";
+  setSortBy: (sort: "activity" | "name" | "gradDate" | "gpa") => void;
   viewMode: "grid" | "list";
   setViewMode: (mode: "grid" | "list") => void;
   role: UserRole;
@@ -79,21 +79,20 @@ export default function DirectoryControlBar({
       {/* Control Actions & Utility Switchers */}
       <div className="flex flex-wrap items-center gap-2.5 shrink-0 w-full sm:w-auto justify-end">
 
-        {/* Sorting Dropdown (Sponsor and Admin) */}
-        {role !== "standard" && (
-          <div className="flex items-center gap-1.5 text-xs bg-white border border-slate-200 p-1 rounded-xl shadow-2xs">
-            <span className="text-slate-500 pl-1.5 text-[11px] font-medium select-none">Sort:</span>
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as "name" | "gradDate" | "gpa")}
-              className="bg-transparent text-slate-800 font-semibold pr-2 focus:outline-none border-none py-1 text-xs cursor-pointer"
-            >
-              <option value="name">Name (A-Z)</option>
-              <option value="gradDate">Graduation Date</option>
-              <option value="gpa">Highest GPA</option>
-            </select>
-          </div>
-        )}
+        {/* Sorting Dropdown (Surfacing Most Active Members) */}
+        <div className="flex items-center gap-1.5 text-xs bg-white border border-slate-200 p-1 rounded-xl shadow-2xs">
+          <span className="text-slate-500 pl-1.5 text-[11px] font-medium select-none">Sort:</span>
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value as "activity" | "name" | "gradDate" | "gpa")}
+            className="bg-transparent text-slate-800 font-semibold pr-2 focus:outline-none border-none py-1 text-xs cursor-pointer"
+          >
+            <option value="activity">Most Active</option>
+            <option value="name">Name (A-Z)</option>
+            <option value="gradDate">Graduation Date</option>
+            <option value="gpa">Highest GPA</option>
+          </select>
+        </div>
 
         {/* Grid vs List View (Admin only) */}
         {role === "admin" && (

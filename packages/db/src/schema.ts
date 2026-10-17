@@ -1,4 +1,4 @@
-import { pgTable, uuid, varchar, text, boolean, jsonb, timestamp } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, varchar, text, boolean, jsonb, timestamp, integer } from 'drizzle-orm/pg-core';
 
 /**
  * Members Table - Unified Core Member Entity across IEEE Monorepo
@@ -104,6 +104,18 @@ export const memberResumes = pgTable('member_resumes', {
   flagged: boolean('flagged').default(false).notNull(),
   flagReason: varchar('flag_reason', { length: 300 }),
   mainProjectName: varchar('main_project_name', { length: 255 }),
+
+  // Chapter Contribution & Point System
+  points: integer('points').default(0).notNull(),
+  pointBreakdown: jsonb('point_breakdown').$type<{
+    total: number;
+    boardPoints: number;
+    projectLeadPoints: number;
+    universityProjectPoints: number;
+    eventPoints: number;
+    committeePoints: number;
+    details: string[];
+  }>(),
 
   // FERPA & Privacy compliance fields (34 CFR Part 99)
   ferpaConsentSigned: boolean('ferpa_consent_signed').default(false).notNull(),

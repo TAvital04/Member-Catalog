@@ -9,6 +9,7 @@
 
 import { db, members, memberResumes, events, eventAttendees, DENSE_CANDIDATES } from "@ieee/db";
 import { Student } from "@/data/students";
+import { calculateCandidatePoints } from "@/lib/points";
 import { eq, inArray } from "drizzle-orm";
 
 export async function GET(request?: Request) {
@@ -156,6 +157,14 @@ export async function GET(request?: Request) {
 
         const primaryEdu = education[0] || {};
 
+        const candidateEvents = attendedEventsMap.get(row.memberId) || [];
+        const { points, pointBreakdown } = calculateCandidatePoints({
+          clubs: Array.isArray(row.clubMemberships) ? row.clubMemberships : [],
+          projects: Array.isArray(row.projects) ? row.projects : [],
+          events: candidateEvents,
+          mainProjectName: row.mainProjectName,
+        });
+
         return {
           id: row.id,
           name: row.fullName || "UCF Member",
@@ -204,7 +213,7 @@ export async function GET(request?: Request) {
                 credentialUrl: cert.credentialUrl,
               }))
             : [],
-          events: attendedEventsMap.get(row.memberId) || [],
+          events: candidateEvents,
           resumeLink: row.resumePdfUrl || undefined,
           major: primaryEdu.major || row.memberMajor || "Computer Science",
           degree: primaryEdu.degreeType || "Bachelor of Science",
@@ -213,8 +222,13 @@ export async function GET(request?: Request) {
           flagged: isAdmin ? Boolean(row.flagged) : false,
           flagReason: isAdmin ? (row.flagReason || undefined) : undefined,
           mainProjectName: row.mainProjectName || undefined,
+          points,
+          pointBreakdown,
         };
       });
+
+    // Primary ranking pillar: Put members who contribute the most first
+    transformedStudents.sort((a, b) => (b.points ?? 0) - (a.points ?? 0));
 
     return Response.json({
       success: true,
