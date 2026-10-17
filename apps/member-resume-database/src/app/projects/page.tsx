@@ -104,14 +104,14 @@ function IEEEProjectsContent() {
           <div>
             <Link
               href="/"
-              className="inline-flex items-center gap-1.5 text-xs text-amber-700 hover:text-amber-800 font-bold mb-3 transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs text-slate-600 hover:text-slate-900 font-semibold mb-3 transition-colors"
             >
-              <ArrowLeft size={14} />
+              <ArrowLeft size={14} className="text-slate-400" />
               <span>Back to Member Catalog Directory</span>
             </Link>
             <div className="flex items-center gap-3">
-              <div className="p-3 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-500 text-slate-900 shadow-md">
-                <FolderGit2 size={24} className="stroke-[2.5]" />
+              <div className="p-3 rounded-2xl bg-slate-100 border border-slate-200 text-slate-500 shadow-2xs">
+                <FolderGit2 size={24} className="stroke-[2]" />
               </div>
               <div>
                 <h1 className="text-xl md:text-3xl font-black text-slate-900 uppercase tracking-tight flex items-center gap-2">
@@ -125,9 +125,9 @@ function IEEEProjectsContent() {
           </div>
 
           <div className="flex items-center gap-3 shrink-0">
-            <div className="px-4 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center gap-3 shadow-sm">
+            <div className="px-4 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center gap-3 shadow-2xs">
               <div className="text-center">
-                <span className="block text-lg font-black text-amber-600 leading-none">{projects.length}</span>
+                <span className="block text-lg font-black text-slate-900 leading-none">{projects.length}</span>
                 <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Active Projects</span>
               </div>
             </div>
@@ -147,10 +147,10 @@ function IEEEProjectsContent() {
                 key={cat}
                 type="button"
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-xl text-xs transition-all cursor-pointer ${
                   selectedCategory === cat
-                    ? "bg-amber-500 text-slate-900 shadow-sm font-bold"
-                    : "bg-white border border-slate-200 text-slate-700 hover:text-slate-900 hover:border-slate-300"
+                    ? "bg-slate-200/80 text-slate-900 border border-slate-300 font-bold shadow-2xs"
+                    : "bg-white border border-slate-200 text-slate-600 hover:text-slate-900 hover:border-slate-300 font-medium"
                 }`}
               >
                 {cat}
@@ -166,7 +166,7 @@ function IEEEProjectsContent() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search projects, tools, skills..."
-              className="w-full pl-9 pr-3 py-2 rounded-xl bg-white border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-amber-500 transition-colors shadow-sm"
+              className="w-full pl-9 pr-3 py-2 rounded-xl bg-white border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-400 transition-colors shadow-2xs"
             />
           </div>
         </div>
@@ -187,46 +187,54 @@ function IEEEProjectsContent() {
               <div
                 key={project.id}
                 onClick={() => setActiveModalProject(project)}
-                className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-amber-400 hover:shadow-md transition-all duration-300 flex flex-col justify-between gap-5 relative group shadow-sm cursor-pointer"
+                className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-300 flex flex-col justify-between gap-5 relative group shadow-2xs cursor-pointer"
               >
                 <div className="flex flex-col gap-4">
                   {/* Header Badges */}
                   <div className="flex items-center justify-between gap-2">
-                    <span className="bg-amber-50 text-amber-700 border border-amber-200 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                    <span className="bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                       {project.category}
                     </span>
                     <span
-                      className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1 ${
+                      className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1 ${
                         project.status === "Completed"
-                          ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
-                          : "bg-cyan-50 text-cyan-700 border border-cyan-200"
+                          ? "bg-emerald-50 text-emerald-800 border border-emerald-200/70"
+                          : "bg-slate-100 text-slate-700 border border-slate-200"
                       }`}
                     >
-                      {project.status === "Completed" ? <CheckCircle2 size={10} /> : <Clock size={10} />}
+                      {project.status === "Completed" ? (
+                        <CheckCircle2 size={10} className="text-emerald-600" />
+                      ) : (
+                        <Clock size={10} className="text-slate-400" />
+                      )}
                       {project.status}
                     </span>
                   </div>
 
                   {/* Title & Tagline */}
                   <div>
-                    <h3 className="text-lg md:text-xl font-black text-slate-900 group-hover:text-amber-700 transition-colors leading-tight">
+                    <h3 className="text-lg md:text-xl font-black text-slate-900 group-hover:text-slate-700 transition-colors leading-tight">
                       {project.title}
                     </h3>
-                    {project.tagline && (
-                      <p className="text-xs text-amber-800 font-medium mt-1 leading-snug">
+                    {project.tagline ? (
+                      <p className="text-xs text-slate-800 font-medium mt-1 leading-snug">
                         {project.tagline}
+                      </p>
+                    ) : (
+                      <p className="text-xs text-slate-400 italic mt-1 leading-snug">
+                        Tagline not provided
                       </p>
                     )}
                     <p className="text-xs text-slate-600 leading-relaxed font-sans mt-2 line-clamp-2">
-                      {project.description}
+                      {project.description || "Technical description has not been provided yet."}
                     </p>
                   </div>
 
                   {/* Tools Preview Tags */}
-                  {project.tools && project.tools.length > 0 && (
+                  {project.tools && project.tools.length > 0 ? (
                     <div className="flex flex-col gap-1.5">
                       <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1">
-                        <Wrench size={11} className="text-cyan-600" />
+                        <Wrench size={11} className="text-slate-400" />
                         Key Tech Stack ({project.tools.length})
                       </span>
                       <div className="flex flex-wrap gap-1.5">
@@ -245,78 +253,108 @@ function IEEEProjectsContent() {
                         )}
                       </div>
                     </div>
+                  ) : (
+                    <div className="flex flex-col gap-1">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
+                        <Wrench size={11} className="text-slate-400" />
+                        Key Tech Stack (0)
+                      </span>
+                      <p className="text-xs text-slate-400 italic">
+                        Tools & tech stack not specified yet
+                      </p>
+                    </div>
                   )}
 
                   {/* Team Roster Preview */}
                   <div className="flex flex-col gap-2 pt-2 border-t border-slate-100">
                     <div className="flex items-center justify-between text-[11px] font-bold text-slate-500 uppercase tracking-wider">
                       <span className="flex items-center gap-1">
-                        <Users size={12} className="text-amber-600" />
-                        Team Roster ({project.participants.length})
+                        <Users size={12} className="text-slate-400" />
+                        Team Roster ({project.participants ? project.participants.length : 0})
                       </span>
                     </div>
 
-                    <div className="flex flex-wrap gap-2 pt-0.5">
-                      {project.participants.map((part) => (
-                        <div
-                          key={part.memberId}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleSelectMember(part.memberId);
-                          }}
-                          className="flex items-center gap-2 p-1.5 px-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium cursor-pointer hover:border-slate-300 transition-colors"
-                        >
-                          <Avatar name={part.name} size="sm" />
-                          <div>
-                            <span className="block font-bold text-slate-900 leading-tight text-[11px]">
-                              {part.name}
-                            </span>
-                            <span className="block text-[9px] text-amber-700 font-semibold leading-none mt-0.5">
-                              {part.roleTitle}
-                            </span>
+                    {project.participants && project.participants.length > 0 ? (
+                      <div className="flex flex-wrap gap-2 pt-0.5">
+                        {project.participants.map((part) => (
+                          <div
+                            key={part.memberId}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleSelectMember(part.memberId);
+                            }}
+                            className="flex items-center gap-2 p-1.5 px-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium cursor-pointer hover:border-slate-300 transition-colors"
+                          >
+                            <Avatar name={part.name} size="sm" />
+                            <div>
+                              <span className="block font-bold text-slate-900 leading-tight text-[11px]">
+                                {part.name}
+                              </span>
+                              <span className="block text-[9px] text-slate-500 font-medium leading-none mt-0.5">
+                                {part.roleTitle}
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                      ))}
-                    </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-xs text-slate-400 italic pt-0.5">
+                        No team members listed yet — recruitment currently active
+                      </p>
+                    )}
                   </div>
                 </div>
 
                 {/* Card Bottom Actions */}
                 <div className="flex items-center justify-between gap-3 pt-3 border-t border-slate-100">
                   <div className="flex items-center gap-2">
-                    {project.repositoryUrl && (
+                    {project.repositoryUrl ? (
                       <a
                         href={project.repositoryUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="p-2 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 text-slate-600 hover:text-slate-900 transition-colors"
+                        className="p-2 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 text-slate-500 hover:text-slate-800 transition-colors"
                         title="GitHub Repository"
                       >
-                        <GitBranch size={14} />
+                        <GitBranch size={14} className="text-slate-400" />
                       </a>
+                    ) : (
+                      <span
+                        className="p-2 rounded-xl bg-slate-50/60 border border-slate-100 text-slate-300 cursor-not-allowed"
+                        title="Repository not provided"
+                      >
+                        <GitBranch size={14} className="text-slate-300" />
+                      </span>
                     )}
-                    {project.demoUrl && (
+                    {project.demoUrl ? (
                       <a
                         href={project.demoUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="p-2 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 text-slate-600 hover:text-slate-900 transition-colors"
+                        className="p-2 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 text-slate-500 hover:text-slate-800 transition-colors"
                         title="Live Demo"
                       >
-                        <ExternalLink size={14} />
+                        <ExternalLink size={14} className="text-slate-400" />
                       </a>
+                    ) : (
+                      <span
+                        className="p-2 rounded-xl bg-slate-50/60 border border-slate-100 text-slate-300 cursor-not-allowed"
+                        title="Live demo not deployed"
+                      >
+                        <ExternalLink size={14} className="text-slate-300" />
+                      </span>
                     )}
                   </div>
 
                   <button
                     type="button"
                     onClick={() => setActiveModalProject(project)}
-                    className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-900 text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer active:scale-95"
+                    className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-900 text-xs font-bold transition-all shadow-2xs flex items-center gap-1.5 cursor-pointer active:scale-95"
                   >
                     <span>Explore Project Hub</span>
-                    <ChevronRight size={13} />
+                    <ChevronRight size={13} className="text-slate-400" />
                   </button>
                 </div>
               </div>
@@ -351,7 +389,7 @@ function IEEEProjectsContent() {
 
 export default function IEEEProjectsPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-zinc-955 p-8 animate-pulse" />}>
+    <Suspense fallback={<div className="min-h-screen bg-slate-50 p-8 animate-pulse" />}>
       <IEEEProjectsContent />
     </Suspense>
   );

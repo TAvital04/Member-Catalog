@@ -80,7 +80,7 @@ export default function ProjectModal({
         {/* Scrollable Container Wrapper */}
         <div className="w-full flex flex-col md:flex-row overflow-hidden h-full">
           {/* Left Side Panel: Hero & Quick Project Stats (Desktop) */}
-          <div className="w-full md:w-2/5 p-6 border-b md:border-b-0 md:border-r border-zinc-800/80 flex flex-col justify-between md:overflow-y-auto overflow-x-hidden relative z-10 bg-modal-left hidden md:flex">
+          <div className="w-full md:w-2/5 p-6 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col justify-between md:overflow-y-auto overflow-x-hidden relative z-10 bg-modal-left hidden md:flex">
             <ProjectUpperInfo project={project} />
           </div>
 

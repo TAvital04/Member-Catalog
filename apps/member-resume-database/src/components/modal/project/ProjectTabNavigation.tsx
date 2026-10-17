@@ -29,7 +29,7 @@ export default function ProjectTabNavigation({
   ];
 
   return (
-    <div className="border-b border-zinc-800 mb-5 relative shrink-0">
+    <div className="border-b border-slate-200 mb-5 relative shrink-0">
       <div className="flex items-center text-xs md:text-sm gap-0.5 sm:gap-1 md:gap-1.5 overflow-x-auto no-scrollbar mr-12 md:mr-14 pb-1">
         {/* Mobile Info Tab */}
         <button
@@ -37,14 +37,14 @@ export default function ProjectTabNavigation({
           onClick={() => setActiveTab("info")}
           className={`py-2 px-2.5 font-bold uppercase tracking-wider relative transition-all md:hidden shrink-0 flex items-center gap-1.5 whitespace-nowrap ${
             activeTab === "info"
-              ? "text-amber-400 font-extrabold"
-              : "text-zinc-500 hover:text-zinc-350"
+              ? "text-slate-900 font-extrabold"
+              : "text-slate-500 hover:text-slate-700 font-medium"
           }`}
         >
-          <Info size={14} />
+          <Info size={14} className={activeTab === "info" ? "text-slate-700" : "text-slate-400"} />
           <span>Info</span>
           {activeTab === "info" && (
-            <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-amber-500 rounded-full"></span>
+            <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-slate-900 rounded-full"></span>
           )}
         </button>
 
@@ -59,14 +59,14 @@ export default function ProjectTabNavigation({
               onClick={() => setActiveTab(id)}
               className={`py-2 px-2 sm:px-2.5 md:px-3 font-bold uppercase tracking-wider relative transition-all shrink-0 flex items-center justify-center gap-1.5 whitespace-nowrap text-xs md:text-xs lg:text-sm ${
                 isActive
-                  ? "text-amber-400 font-extrabold"
-                  : "text-zinc-500 hover:text-zinc-350"
+                  ? "text-slate-900 font-extrabold"
+                  : "text-slate-500 hover:text-slate-700 font-medium"
               }`}
             >
-              <Icon size={13} className={isActive ? "text-amber-400" : "opacity-70"} />
+              <Icon size={13} className={isActive ? "text-slate-700" : "text-slate-400"} />
               <span>{label}</span>
               {isActive && (
-                <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-amber-500 rounded-full"></span>
+                <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-slate-900 rounded-full"></span>
               )}
             </button>
           );

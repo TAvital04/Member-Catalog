@@ -1540,6 +1540,921 @@ export const DENSE_CANDIDATES = [
         issueDate: "2024-04-10"
       }
     ]
+  },
+  {
+    name: "Austin Miller",
+    email: "amiller@knights.ucf.edu",
+    major: "Aerospace Engineering",
+    graduationYear: "2026",
+    status: "Seeking Internship",
+    bio: "Aerospace junior focused on spacecraft guidance, navigation, and control (GNC) alongside dual-axis satellite tracking ground stations. Experienced in orbital propagation algorithms and attitude determination.",
+    resumePdfUrl: "https://drive.google.com/file/d/austin-miller-resume/view",
+    socialLinks: [
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/austin-miller-ucf" },
+      { platformName: "GitHub", profileUrl: "https://github.com/amiller-aero" }
+    ],
+    education: [
+      {
+        schoolName: "University of Central Florida",
+        degreeType: "Bachelor of Science",
+        major: "Aerospace Engineering",
+        gpa: 3.84,
+        gpaScale: 4.0,
+        startDate: "2022-08-22",
+        endDate: "2026-05-02",
+        isCurrent: true,
+        description: "Coursework: Orbital Mechanics, Space Flight Dynamics, Aerodynamics, Control Systems Engineering."
+      }
+    ],
+    skills: ["MATLAB", "Simulink", "Python", "Orbital Mechanics", "C++", "SolidWorks", "Git", "TLE Tracking"],
+    workExperience: [
+      {
+        companyName: "SEDS UCF Space Initiative",
+        jobTitle: "GNC Subsystem Specialist",
+        startDate: "2023-09-01",
+        endDate: "2024-12-15",
+        isCurrentJob: false,
+        description: "Simulated low-Earth orbit CubeSat de-tumbling maneuvers using magnetic torquers and B-dot algorithms."
+      }
+    ],
+    projects: [
+      {
+        projectName: "CubeSat UHF/VHF Ground Station Transceiver",
+        description: "Designed dual-axis antenna azimuth/elevation rotator control loop with TLE Doppler compensation in Python.",
+        startDate: "2024-09-10",
+        isOngoing: true,
+        projectLinks: ["https://github.com/ieee-ucf/cubesat-ground-station"]
+      }
+    ],
+    clubMemberships: [
+      {
+        clubName: "AIAA UCF Student Branch",
+        roleTitle: "Ground Operations Lead",
+        startDate: "2023-01-10",
+        isActive: true,
+        description: "Organizes amateur satellite pass listening sessions using SDRs."
+      }
+    ],
+    certifications: []
+  },
+  {
+    name: "Danielle Foster",
+    email: "dfoster@knights.ucf.edu",
+    major: "Optics & Photonics",
+    graduationYear: "2025",
+    status: "Seeking Full-time",
+    bio: "CREOL senior specializing in fiber-optic communications, semiconductor laser diode drivers, and free-space optical (FSO) transceivers. Passionate about photonic integrated circuits and high-speed optical testing.",
+    resumePdfUrl: "https://drive.google.com/file/d/danielle-foster-resume/view",
+    socialLinks: [
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/danielle-foster-creol" },
+      { platformName: "GitHub", profileUrl: "https://github.com/dfoster-optics" }
+    ],
+    education: [
+      {
+        schoolName: "University of Central Florida (CREOL)",
+        degreeType: "Bachelor of Science",
+        major: "Photonic Science and Engineering",
+        gpa: 3.95,
+        gpaScale: 4.0,
+        startDate: "2021-08-23",
+        endDate: "2025-05-03",
+        isCurrent: true,
+        description: "National Science Foundation CREOL Research Fellow. Coursework: Optical Fiber Communications, Semiconductor Optoelectronics, Laser Engineering."
+      }
+    ],
+    skills: ["Fiber Optics", "Laser Diode Drivers", "Optical Spectrum Analyzers", "Python", "MATLAB", "COMSOL Multiphysics", "Photodetectors"],
+    workExperience: [
+      {
+        companyName: "L3Harris Technologies",
+        jobTitle: "Optical Engineering Intern",
+        startDate: "2024-05-20",
+        endDate: "2024-08-15",
+        isCurrentJob: false,
+        description: "Characterized erbium-doped fiber amplifiers (EDFAs) and bit error rates (BER) across DWDM optical links."
+      }
+    ],
+    projects: [
+      {
+        projectName: "Free-Space Gigabit Optical Link",
+        description: "Built 1.25 Gbps free-space optical transceiver pair with 850nm VCSEL laser and transimpedance receiver.",
+        startDate: "2024-01-15",
+        isOngoing: false,
+        projectLinks: ["https://github.com/dfoster-optics/fso-transceiver"]
+      }
+    ],
+    clubMemberships: [
+      {
+        clubName: "IEEE Photonics Society UCF",
+        roleTitle: "Vice President",
+        startDate: "2023-08-15",
+        isActive: true,
+        description: "Hosts optical splicing workshops and industry lab tours for engineering students."
+      }
+    ],
+    certifications: []
+  },
+  {
+    name: "Ryan Gallagher",
+    email: "rgallagher@knights.ucf.edu",
+    major: "Materials Science",
+    graduationYear: "2026",
+    status: "Seeking Internship",
+    bio: "Materials Science and Engineering junior focusing on wide-bandgap semiconductors (GaN, SiC), microelectronic packaging, and thermal interface materials (TIMs) for extreme power density electronics.",
+    resumePdfUrl: "https://drive.google.com/file/d/ryan-gallagher-resume/view",
+    socialLinks: [
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/ryan-gallagher-ucf" }
+    ],
+    education: [
+      {
+        schoolName: "University of Central Florida",
+        degreeType: "Bachelor of Science",
+        major: "Materials Science and Engineering",
+        gpa: 3.79,
+        gpaScale: 4.0,
+        startDate: "2022-08-22",
+        endDate: "2026-05-02",
+        isCurrent: true,
+        description: "Coursework: Materials Characterization, Phase Transformations, Semiconductor Materials, Failure Analysis."
+      }
+    ],
+    skills: ["SEM Microscopy", "X-ray Diffraction (XRD)", "Thermal Analysis (TGA/DSC)", "Soldering Alloys", "Failure Analysis", "Python"],
+    workExperience: [],
+    projects: [
+      {
+        projectName: "Gallium Nitride Sintered Silver Packaging",
+        description: "Analyzed void formation and thermal conductivity of nano-silver paste for high-voltage GaN power switches.",
+        startDate: "2024-02-01",
+        isOngoing: true,
+        projectLinks: []
+      }
+    ],
+    clubMemberships: [
+      {
+        clubName: "Materials Research Society UCF",
+        roleTitle: "Treasurer",
+        startDate: "2023-09-01",
+        isActive: true,
+        description: "Manages chapter budget and lab equipment reservations."
+      }
+    ],
+    certifications: []
+  },
+  {
+    name: "Katelyn Becker",
+    email: "kbecker@knights.ucf.edu",
+    major: "Mechanical Engineering",
+    graduationYear: "2025",
+    status: "Employed",
+    bio: "Graduating senior with full-time offer at Siemens Energy. Specializes in thermal fluid simulations, turbomachinery FEA, and rapid additive manufacturing with metal alloy powders.",
+    resumePdfUrl: "https://drive.google.com/file/d/katelyn-becker-resume/view",
+    socialLinks: [
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/katelyn-becker-ucf" }
+    ],
+    education: [
+      {
+        schoolName: "University of Central Florida",
+        degreeType: "Bachelor of Science",
+        major: "Mechanical Engineering",
+        gpa: 3.91,
+        gpaScale: 4.0,
+        startDate: "2021-08-23",
+        endDate: "2025-05-03",
+        isCurrent: true,
+        description: "Magna Cum Laude candidate. Senior Design Capstone: Gas Turbine Cooling Channel Additive Optimization."
+      }
+    ],
+    skills: ["ANSYS Mechanical", "SolidWorks", "Thermal FEA", "GD&T", "MATLAB", "Additive Manufacturing", "Fluid Dynamics"],
+    workExperience: [
+      {
+        companyName: "Siemens Energy",
+        jobTitle: "Turbomachinery Design Intern",
+        startDate: "2024-05-15",
+        endDate: "2024-12-10",
+        isCurrentJob: false,
+        description: "Simulated high-temperature creep and thermal stresses in turbine shroud assemblies using ANSYS."
+      }
+    ],
+    projects: [
+      {
+        projectName: "High-Power Inverter Cold Plate Optimization",
+        description: "Designed 3D-printed aluminum liquid cooling cold plate with micro-fins for the IEEE Solar Car ESC.",
+        startDate: "2024-03-01",
+        isOngoing: false,
+        projectLinks: ["https://github.com/ieee-ucf/solar-esc-cooling"]
+      }
+    ],
+    clubMemberships: [
+      {
+        clubName: "ASME UCF Student Chapter",
+        roleTitle: "Senior Advisor",
+        startDate: "2022-09-01",
+        isActive: true,
+        description: "Mentors freshman mechanical engineering build teams."
+      }
+    ],
+    certifications: [
+      {
+        certificationName: "CSWA - Certified SolidWorks Associate",
+        issuer: "Dassault Systèmes",
+        issueDate: "2023-04-18"
+      }
+    ]
+  },
+  {
+    name: "Sean O'Reilly",
+    email: "soreilly@knights.ucf.edu",
+    major: "Computer Science",
+    graduationYear: "2027",
+    status: "Seeking Internship",
+    bio: "Sophomore software engineer obsessed with low-level systems programming in Rust and C. Developing ultra-low-latency network packet capture filters and concurrent telemetry streaming backends.",
+    resumePdfUrl: "https://drive.google.com/file/d/sean-oreilly-resume/view",
+    socialLinks: [
+      { platformName: "GitHub", profileUrl: "https://github.com/soreilly-dev" },
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/sean-oreilly-cs" }
+    ],
+    education: [
+      {
+        schoolName: "University of Central Florida",
+        degreeType: "Bachelor of Science",
+        major: "Computer Science",
+        gpa: 3.88,
+        gpaScale: 4.0,
+        startDate: "2023-08-21",
+        endDate: "2027-05-01",
+        isCurrent: true,
+        description: "Coursework: Data Structures & Algorithms, Computer Organization, Discrete Mathematics, Systems Software."
+      }
+    ],
+    skills: ["Rust", "C", "Linux eBPF", "Docker", "Python", "Git", "Networking Protocols", "PostgreSQL"],
+    workExperience: [],
+    projects: [
+      {
+        projectName: "eBPF Network Packet Profiler",
+        description: "Implemented kernel-space eBPF XDP filter inspecting TCP retransmissions with sub-microsecond overhead.",
+        startDate: "2024-06-01",
+        isOngoing: false,
+        projectLinks: ["https://github.com/soreilly-dev/ebpf-profiler"]
+      }
+    ],
+    clubMemberships: [
+      {
+        clubName: "IEEE UCF Student Chapter",
+        roleTitle: "Software Committee Member",
+        startDate: "2023-09-01",
+        isActive: true,
+        description: "Contributes to chapter open-source repositories and hackathon infrastructure."
+      }
+    ],
+    certifications: []
+  },
+  {
+    name: "Priya Sharma",
+    email: "psharma@knights.ucf.edu",
+    major: "Electrical Engineering",
+    graduationYear: "2026",
+    status: "Seeking Full-time",
+    bio: "Junior EE passionate about high-efficiency power electronics, bidirectional DC-DC converters, and wide-bandgap GaN/SiC power topologies. Experienced in Altium Designer 4-layer layout and magnetics simulation.",
+    resumePdfUrl: "https://drive.google.com/file/d/priya-sharma-resume/view",
+    socialLinks: [
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/priya-sharma-ucf" },
+      { platformName: "GitHub", profileUrl: "https://github.com/psharma-ee" }
+    ],
+    education: [
+      {
+        schoolName: "University of Central Florida",
+        degreeType: "Bachelor of Science",
+        major: "Electrical Engineering",
+        gpa: 3.94,
+        gpaScale: 4.0,
+        startDate: "2022-08-22",
+        endDate: "2026-05-02",
+        isCurrent: true,
+        description: "Honors Undergraduate Research Scholar. Coursework: Power Electronics, Electric Machinery, Analog Circuit Design, Signal Analysis."
+      }
+    ],
+    skills: ["Power Electronics", "Altium Designer", "LTspice", "GaN FETs", "Magnetics Design", "STM32", "PCB Layout", "Oscilloscopes"],
+    workExperience: [
+      {
+        companyName: "Texas Instruments",
+        jobTitle: "Power Applications Co-Op",
+        startDate: "2024-01-10",
+        endDate: "2024-08-10",
+        isCurrentJob: false,
+        description: "Designed synchronous buck converter reference boards using GaN switches achieving 97.8% efficiency at 2MHz."
+      }
+    ],
+    projects: [
+      {
+        projectName: "High-Efficiency GaN Solar MPPT Charge Controller",
+        description: "Implemented digital MPPT tracking on STM32G4 mixed-signal microcontroller switching at 500kHz.",
+        startDate: "2024-10-01",
+        isOngoing: true,
+        projectLinks: ["https://github.com/ieee-ucf/gan-solar-mppt"]
+      }
+    ],
+    clubMemberships: [
+      {
+        clubName: "IEEE Power & Energy Society (PES) UCF",
+        roleTitle: "Technical Director",
+        startDate: "2023-08-20",
+        isActive: true,
+        description: "Conducts practical switch-mode power supply (SMPS) design seminars."
+      }
+    ],
+    certifications: []
+  },
+  {
+    name: "Dominic Rossi",
+    email: "drossi@knights.ucf.edu",
+    major: "Computer Engineering",
+    graduationYear: "2025",
+    status: "Seeking Full-time",
+    bio: "Senior computer engineer with deep interest in custom RISC-V SoC microarchitecture, hardware security, and FPGA emulation. Experienced in Verilog, SystemVerilog, and Chisel HDL.",
+    resumePdfUrl: "https://drive.google.com/file/d/dominic-rossi-resume/view",
+    socialLinks: [
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/dominic-rossi-ucf" },
+      { platformName: "GitHub", profileUrl: "https://github.com/drossi-chips" }
+    ],
+    education: [
+      {
+        schoolName: "University of Central Florida",
+        degreeType: "Bachelor of Science",
+        major: "Computer Engineering",
+        gpa: 3.86,
+        gpaScale: 4.0,
+        startDate: "2021-08-23",
+        endDate: "2025-05-03",
+        isCurrent: true,
+        description: "Coursework: Computer Architecture, VLSI Design, Hardware Security, Operating Systems."
+      }
+    ],
+    skills: ["SystemVerilog", "Verilog", "RISC-V", "Xilinx Vivado", "Chisel HDL", "C", "Python", "FPGA"],
+    workExperience: [
+      {
+        companyName: "BAE Systems",
+        jobTitle: "Hardware Security Engineering Intern",
+        startDate: "2024-05-15",
+        endDate: "2024-08-20",
+        isCurrentJob: false,
+        description: "Evaluated side-channel vulnerability of AES cryptographic accelerators on Zynq-7000 FPGAs."
+      }
+    ],
+    projects: [
+      {
+        projectName: "5-Stage Pipelined RV32I Processor Core",
+        description: "Engineered single-issue in-order RISC-V core with dynamic branch prediction and UART peripheral.",
+        startDate: "2024-01-10",
+        isOngoing: false,
+        projectLinks: ["https://github.com/drossi-chips/rv32i-core"]
+      }
+    ],
+    clubMemberships: [
+      {
+        clubName: "IEEE UCF Student Chapter",
+        roleTitle: "Digital Systems Instructor",
+        startDate: "2022-09-01",
+        isActive: true,
+        description: "Teaches introductory FPGA and logic design crash courses."
+      }
+    ],
+    certifications: []
+  },
+  {
+    name: "Jessica Vance",
+    email: "jvance@knights.ucf.edu",
+    major: "Biomedical Engineering",
+    graduationYear: "2026",
+    status: "Seeking Internship",
+    bio: "Biomedical engineering junior specializing in wearable physiological telemetry, analog bio-potential front-ends (ECG/EMG), and non-invasive bio-impedance spectroscopy.",
+    resumePdfUrl: "https://drive.google.com/file/d/jessica-vance-resume/view",
+    socialLinks: [
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/jessica-vance-bme" }
+    ],
+    education: [
+      {
+        schoolName: "University of Central Florida",
+        degreeType: "Bachelor of Science",
+        major: "Biomedical Engineering",
+        gpa: 3.81,
+        gpaScale: 4.0,
+        startDate: "2022-08-22",
+        endDate: "2026-05-02",
+        isCurrent: true,
+        description: "Coursework: Bioinstrumentation, Biomechanics, Biomaterials, Medical Signal Processing."
+      }
+    ],
+    skills: ["Bioinstrumentation", "Analog Signal Conditioning", "MATLAB", "KiCad", "Python", "ECG/EMG Sensors", "Soldering"],
+    workExperience: [],
+    projects: [
+      {
+        projectName: "Bio-Impedance Wearable Health Monitor",
+        description: "Integrated Analog Devices AD5940 analog front-end with textile electrodes to record continuous hydration data.",
+        startDate: "2024-09-15",
+        isOngoing: true,
+        projectLinks: []
+      }
+    ],
+    clubMemberships: [
+      {
+        clubName: "Biomedical Engineering Society (BMES) UCF",
+        roleTitle: "Hardware Project Lead",
+        startDate: "2023-08-25",
+        isActive: true,
+        description: "Directs student teams building affordable vital signs monitors."
+      }
+    ],
+    certifications: []
+  },
+  {
+    name: "Trevor Hayes",
+    email: "thayes@knights.ucf.edu",
+    major: "Information Technology",
+    graduationYear: "2025",
+    status: "Employed",
+    bio: "Senior IT major accepting full-time role at NextEra Energy. Specialized in enterprise network architecture, Linux system administration, and infrastructure security auditing.",
+    resumePdfUrl: "https://drive.google.com/file/d/trevor-hayes-resume/view",
+    socialLinks: [
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/trevor-hayes-it" }
+    ],
+    education: [
+      {
+        schoolName: "University of Central Florida",
+        degreeType: "Bachelor of Science",
+        major: "Information Technology",
+        gpa: 3.73,
+        gpaScale: 4.0,
+        startDate: "2021-08-23",
+        endDate: "2025-05-03",
+        isCurrent: true,
+        description: "Coursework: Enterprise Network Administration, Cloud Computing, Database Systems, Cybersecurity Defense."
+      }
+    ],
+    skills: ["Cisco IOS", "Linux Administration", "Docker", "Ansible", "Python", "Wireshark", "Network Security"],
+    workExperience: [
+      {
+        companyName: "NextEra Energy",
+        jobTitle: "IT Infrastructure Intern",
+        startDate: "2024-05-20",
+        endDate: "2024-12-15",
+        isCurrentJob: false,
+        description: "Automated switch port configurations and subnet routing auditing using Ansible playbooks."
+      }
+    ],
+    projects: [],
+    clubMemberships: [
+      {
+        clubName: "Hack@UCF (Collegiate Cyber Defense Club)",
+        roleTitle: "Network Defense Member",
+        startDate: "2022-09-01",
+        isActive: true,
+        description: "Competes in Southeast Collegiate Cyber Defense Competitions (SECCDC)."
+      }
+    ],
+    certifications: [
+      {
+        certificationName: "Cisco Certified Network Associate (CCNA)",
+        issuer: "Cisco",
+        issueDate: "2023-09-12"
+      }
+    ]
+  },
+  {
+    name: "Megan Sullivan",
+    email: "msullivan@knights.ucf.edu",
+    major: "Computer Engineering",
+    graduationYear: "2027",
+    status: "Seeking Internship",
+    bio: "Sophomore computer engineer building embedded Linux root filesystems, Yocto Project recipes, and kernel device drivers for ARM Cortex-A processors.",
+    resumePdfUrl: "https://drive.google.com/file/d/megan-sullivan-resume/view",
+    socialLinks: [
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/megan-sullivan-ce" },
+      { platformName: "GitHub", profileUrl: "https://github.com/msullivan-embedded" }
+    ],
+    education: [
+      {
+        schoolName: "University of Central Florida",
+        degreeType: "Bachelor of Science",
+        major: "Computer Engineering",
+        gpa: 3.90,
+        gpaScale: 4.0,
+        startDate: "2023-08-21",
+        endDate: "2027-05-01",
+        isCurrent: true,
+        description: "Burnett Honors Scholar. Coursework: Embedded Systems, Computer Organization, Object-Oriented Programming."
+      }
+    ],
+    skills: ["C", "C++", "Linux Kernel", "Yocto Project", "Device Trees", "ARM", "Bash", "Git"],
+    workExperience: [],
+    projects: [
+      {
+        projectName: "Custom BeagleBone Yocto Linux Distribution",
+        description: "Compiled lightweight minimal bootable Linux image with custom GPIO interrupt driver and web telemetry server.",
+        startDate: "2024-05-01",
+        isOngoing: false,
+        projectLinks: ["https://github.com/msullivan-embedded/yocto-bbb"]
+      }
+    ],
+    clubMemberships: [
+      {
+        clubName: "IEEE UCF Student Chapter",
+        roleTitle: "Embedded Workshop Volunteer",
+        startDate: "2023-09-15",
+        isActive: true,
+        description: "Assists lab instructors with soldering irons and logic analyzer setups."
+      }
+    ],
+    certifications: []
+  },
+  {
+    name: "Carlos Mendoza",
+    email: "cmendoza@knights.ucf.edu",
+    major: "Electrical Engineering",
+    graduationYear: "2028",
+    status: "Seeking Internship",
+    bio: "Freshman electrical engineering student passionate about radio frequency circuits, active filters, and hands-on SMD soldering. Active participant in all IEEE technical build nights.",
+    resumePdfUrl: "https://drive.google.com/file/d/carlos-mendoza-resume/view",
+    socialLinks: [
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/carlos-mendoza-ee" }
+    ],
+    education: [
+      {
+        schoolName: "University of Central Florida",
+        degreeType: "Bachelor of Science",
+        major: "Electrical Engineering",
+        gpa: 3.75,
+        gpaScale: 4.0,
+        startDate: "2024-08-19",
+        endDate: "2028-05-06",
+        isCurrent: true,
+        description: "Coursework: Calculus, Physics with Calculus, Introduction to Electrical Engineering."
+      }
+    ],
+    skills: ["Soldering", "Circuit Prototyping", "Multimeters", "KiCad Basics", "C++", "Python Basics"],
+    workExperience: [],
+    projects: [
+      {
+        projectName: "FM Radio Receiver with LM386 Audio Amp",
+        description: "Assembled tuned LC tank oscillator with operational amplifier audio stage on copper protoboard.",
+        startDate: "2024-09-20",
+        isOngoing: false,
+        projectLinks: []
+      }
+    ],
+    clubMemberships: [
+      {
+        clubName: "IEEE UCF Student Chapter",
+        roleTitle: "General Member",
+        startDate: "2024-08-25",
+        isActive: true,
+        description: "Attends weekly workshops in the IEEE Innovation Lab."
+      }
+    ],
+    certifications: []
+  },
+  {
+    name: "Lindsey Wu",
+    email: "lwu@knights.ucf.edu",
+    major: "Computer Science",
+    graduationYear: "2026",
+    status: "Seeking Full-time",
+    bio: "Junior CS major specializing in deep learning computer vision models for resource-constrained edge computing. Experienced with PyTorch, ONNX Runtime quantization, and NVIDIA Jetson deployment.",
+    resumePdfUrl: "https://drive.google.com/file/d/lindsey-wu-resume/view",
+    socialLinks: [
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/lindsey-wu-cs" },
+      { platformName: "GitHub", profileUrl: "https://github.com/lwu-ai" }
+    ],
+    education: [
+      {
+        schoolName: "University of Central Florida",
+        degreeType: "Bachelor of Science",
+        major: "Computer Science",
+        gpa: 3.93,
+        gpaScale: 4.0,
+        startDate: "2022-08-22",
+        endDate: "2026-05-02",
+        isCurrent: true,
+        description: "Coursework: Machine Learning, Artificial Intelligence, Algorithms, Computer Vision, Linear Algebra."
+      }
+    ],
+    skills: ["PyTorch", "Python", "OpenCV", "TensorRT", "C++", "Docker", "ONNX", "Edge AI", "Git"],
+    workExperience: [
+      {
+        companyName: "Siemens Corporate Research",
+        jobTitle: "Computer Vision Intern",
+        startDate: "2024-05-15",
+        endDate: "2024-08-15",
+        isCurrentJob: false,
+        description: "Trained YOLOv8 real-time defect segmentation models achieving 45 FPS on Jetson Orin Nano."
+      }
+    ],
+    projects: [
+      {
+        projectName: "Autonomous Quadrotor Visual Odometry",
+        description: "Integrated optical flow camera and neural obstacle detector onto PX4 drone platform.",
+        startDate: "2024-01-20",
+        isOngoing: false,
+        projectLinks: ["https://github.com/lwu-ai/quadrotor-vision"]
+      }
+    ],
+    clubMemberships: [
+      {
+        clubName: "AI@UCF",
+        roleTitle: "Research Director",
+        startDate: "2023-08-20",
+        isActive: true,
+        description: "Leads weekly reading groups on diffusion models and vision transformers."
+      }
+    ],
+    certifications: []
+  },
+  {
+    name: "Brandon Cruz",
+    email: "bcruz@knights.ucf.edu",
+    major: "Mechanical Engineering",
+    graduationYear: "2026",
+    status: "Seeking Internship",
+    bio: "Mechanical engineering junior focusing on underwater vehicle hydrodynamics, O-ring sealing grooves, and CNC machining of aluminum 6061 waterproof hulls.",
+    resumePdfUrl: "https://drive.google.com/file/d/brandon-cruz-resume/view",
+    socialLinks: [
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/brandon-cruz-me" }
+    ],
+    education: [
+      {
+        schoolName: "University of Central Florida",
+        degreeType: "Bachelor of Science",
+        major: "Mechanical Engineering",
+        gpa: 3.70,
+        gpaScale: 4.0,
+        startDate: "2022-08-22",
+        endDate: "2026-05-02",
+        isCurrent: true,
+        description: "Coursework: Solid Mechanics, Manufacturing Processes, Fluid Dynamics, Machine Design."
+      }
+    ],
+    skills: ["SolidWorks", "Mastercam CNC", "Hydrodynamic Drag Simulation", "Subsea Seals", "3D Printing", "Mill & Lathe"],
+    workExperience: [],
+    projects: [
+      {
+        projectName: "Underwater AUV Thruster Hull & Potted Enclosure",
+        description: "Modeled and milled waterproof canister rated to 50 meters depth with custom gland connectors.",
+        startDate: "2024-09-01",
+        isOngoing: true,
+        projectLinks: []
+      }
+    ],
+    clubMemberships: [
+      {
+        clubName: "Marine Technology Society UCF",
+        roleTitle: "Machining Lead",
+        startDate: "2023-09-10",
+        isActive: true,
+        description: "Supervises student safety in the machine shop."
+      }
+    ],
+    certifications: []
+  },
+  {
+    name: "Natalie Gomez",
+    email: "ngomez@knights.ucf.edu",
+    major: "Electrical Engineering",
+    graduationYear: "2025",
+    status: "Seeking Full-time",
+    bio: "Senior EE with extensive experience in Battery Management Systems (BMS), active cell balancing circuits, and automotive CAN bus diagnostic communication.",
+    resumePdfUrl: "https://drive.google.com/file/d/natalie-gomez-resume/view",
+    socialLinks: [
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/natalie-gomez-ee" },
+      { platformName: "GitHub", profileUrl: "https://github.com/ngomez-circuits" }
+    ],
+    education: [
+      {
+        schoolName: "University of Central Florida",
+        degreeType: "Bachelor of Science",
+        major: "Electrical Engineering",
+        gpa: 3.87,
+        gpaScale: 4.0,
+        startDate: "2021-08-23",
+        endDate: "2025-05-03",
+        isCurrent: true,
+        description: "Coursework: Microelectronic Circuits, Power Electronics, Control Systems, Automotive Electronics."
+      }
+    ],
+    skills: ["Altium Designer", "Battery Management Systems", "CAN Bus", "C++", "Isolated Gate Drivers", "Oscilloscopes"],
+    workExperience: [
+      {
+        companyName: "Collins Aerospace",
+        jobTitle: "Electrical Systems Co-Op",
+        startDate: "2024-01-08",
+        endDate: "2024-07-28",
+        isCurrentJob: false,
+        description: "Tested avionics lithium-ion power storage units and programmed ISO 26262 diagnostic telemetry."
+      }
+    ],
+    projects: [
+      {
+        projectName: "14S LiFePO4 Battery Management Controller",
+        description: "Designed 48V BMS board with TI BQ76952 analog front end and optical isolation.",
+        startDate: "2024-02-15",
+        isOngoing: false,
+        projectLinks: ["https://github.com/ngomez-circuits/bms-48v"]
+      }
+    ],
+    clubMemberships: [
+      {
+        clubName: "IEEE UCF Student Chapter",
+        roleTitle: "Treasurer",
+        startDate: "2023-05-01",
+        isActive: true,
+        description: "Oversees $40,000 annual student chapter budget and project funding allocations."
+      }
+    ],
+    certifications: []
+  },
+  {
+    name: "Jason Patel",
+    email: "jpatel@knights.ucf.edu",
+    major: "Computer Engineering",
+    graduationYear: "2026",
+    status: "Seeking Internship",
+    bio: "Junior computer engineer passionate about high-speed digital hardware design, DDR4 memory routing, and transmission line signal integrity simulation.",
+    resumePdfUrl: "https://drive.google.com/file/d/jason-patel-resume/view",
+    socialLinks: [
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/jason-patel-hardware" },
+      { platformName: "GitHub", profileUrl: "https://github.com/jpatel-pcb" }
+    ],
+    education: [
+      {
+        schoolName: "University of Central Florida",
+        degreeType: "Bachelor of Science",
+        major: "Computer Engineering",
+        gpa: 3.82,
+        gpaScale: 4.0,
+        startDate: "2022-08-22",
+        endDate: "2026-05-02",
+        isCurrent: true,
+        description: "Coursework: Digital Systems Design, Computer Architecture, Signal Integrity, Microprocessors."
+      }
+    ],
+    skills: ["Altium Designer", "High-Speed Layout", "DDR4 Routing", "C", "Verilog", "KiCad", "TDR Measurements"],
+    workExperience: [],
+    projects: [
+      {
+        projectName: "Allwinner H616 Quad-Core SBC",
+        description: "Routed 6-layer custom single board computer with length-matched DDR3 memory bus and Gigabit Ethernet.",
+        startDate: "2024-04-10",
+        isOngoing: true,
+        projectLinks: ["https://github.com/jpatel-pcb/h616-sbc"]
+      }
+    ],
+    clubMemberships: [
+      {
+        clubName: "IEEE UCF Student Chapter",
+        roleTitle: "PCB Design Co-Lead",
+        startDate: "2023-09-01",
+        isActive: true,
+        description: "Assists students in routing impedance-controlled microstrips."
+      }
+    ],
+    certifications: []
+  },
+  {
+    name: "Courtney Hall",
+    email: "chall@knights.ucf.edu",
+    major: "Aerospace Engineering",
+    graduationYear: "2025",
+    status: "Seeking Full-time",
+    bio: "Senior aerospace engineer specializing in rocket motor data acquisition, load cell instrumentation, and high-altitude weather balloon telemetry arrays.",
+    resumePdfUrl: "https://drive.google.com/file/d/courtney-hall-resume/view",
+    socialLinks: [
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/courtney-hall-aero" }
+    ],
+    education: [
+      {
+        schoolName: "University of Central Florida",
+        degreeType: "Bachelor of Science",
+        major: "Aerospace Engineering",
+        gpa: 3.77,
+        gpaScale: 4.0,
+        startDate: "2021-08-23",
+        endDate: "2025-05-03",
+        isCurrent: true,
+        description: "Coursework: Rocket Propulsion, Aerodynamics, Flight Structures, Instrumentation & Measurements."
+      }
+    ],
+    skills: ["MATLAB", "LabVIEW", "Load Cell Calibration", "SolidWorks", "Python", "Data Acquisition (DAQ)", "C++"],
+    workExperience: [
+      {
+        companyName: "Blue Origin",
+        jobTitle: "Propulsion Test Operations Intern",
+        startDate: "2024-05-15",
+        endDate: "2024-08-15",
+        isCurrentJob: false,
+        description: "Assisted in pre-test instrument checkouts and cryogenic pressure transducer calibration."
+      }
+    ],
+    projects: [],
+    clubMemberships: [
+      {
+        clubName: "Knights Experimental Rocketry (KXR)",
+        roleTitle: "Telemetry Lead",
+        startDate: "2022-09-01",
+        isActive: true,
+        description: "Designs redundant dual-deploy altimeter avionics bays."
+      }
+    ],
+    certifications: []
+  },
+  {
+    name: "Derek Washington",
+    email: "dwashington@knights.ucf.edu",
+    major: "Computer Science",
+    graduationYear: "2027",
+    status: "Seeking Internship",
+    bio: "Sophomore computer science student specializing in WebRTC real-time video streaming, WebSocket server architectures, and interactive browser canvas visualization for telemetry data.",
+    resumePdfUrl: "https://drive.google.com/file/d/derek-washington-resume/view",
+    socialLinks: [
+      { platformName: "GitHub", profileUrl: "https://github.com/dwashington-dev" },
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/derek-washington-cs" }
+    ],
+    education: [
+      {
+        schoolName: "University of Central Florida",
+        degreeType: "Bachelor of Science",
+        major: "Computer Science",
+        gpa: 3.80,
+        gpaScale: 4.0,
+        startDate: "2023-08-21",
+        endDate: "2027-05-01",
+        isCurrent: true,
+        description: "Coursework: Data Structures, Computer Architecture, Discrete Math, Web Development."
+      }
+    ],
+    skills: ["TypeScript", "React", "Node.js", "WebRTC", "WebSockets", "Python", "Docker", "Git"],
+    workExperience: [],
+    projects: [
+      {
+        projectName: "Low-Latency Robot Teleoperation Dashboard",
+        description: "Engineered sub-80ms video streaming dashboard with gamepad control bindings using WebRTC and Node.js.",
+        startDate: "2024-07-01",
+        isOngoing: false,
+        projectLinks: ["https://github.com/dwashington-dev/teleop-web"]
+      }
+    ],
+    clubMemberships: [
+      {
+        clubName: "KnightHacks",
+        roleTitle: "Web Development Committee",
+        startDate: "2023-09-10",
+        isActive: true,
+        description: "Helps maintain chapter web portals."
+      }
+    ],
+    certifications: []
+  },
+  {
+    name: "Alyssa Chang",
+    email: "achang@knights.ucf.edu",
+    major: "Optics & Photonics",
+    graduationYear: "2026",
+    status: "Seeking Internship",
+    bio: "CREOL junior focusing on photodetector arrays, spectrometer design, optical breadboard alignment, and optical thin-film anti-reflective coatings.",
+    resumePdfUrl: "https://drive.google.com/file/d/alyssa-chang-resume/view",
+    socialLinks: [
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/alyssa-chang-creol" }
+    ],
+    education: [
+      {
+        schoolName: "University of Central Florida (CREOL)",
+        degreeType: "Bachelor of Science",
+        major: "Photonic Science and Engineering",
+        gpa: 3.89,
+        gpaScale: 4.0,
+        startDate: "2022-08-22",
+        endDate: "2026-05-02",
+        isCurrent: true,
+        description: "Dean's List every semester. Coursework: Physical Optics, Geometrical Optics, Lasers, Optoelectronics Lab."
+      }
+    ],
+    skills: ["Optical Alignment", "Spectrometry", "MATLAB", "Python", "Zemax OpticStudio Basics", "LabVIEW", "Oscilloscopes"],
+    workExperience: [],
+    projects: [
+      {
+        projectName: "Miniature Czerny-Turner Spectrometer",
+        description: "Built grating-based spectrometer measuring 400nm-750nm spectrum with linear CCD array.",
+        startDate: "2024-03-15",
+        isOngoing: false,
+        projectLinks: []
+      }
+    ],
+    clubMemberships: [
+      {
+        clubName: "SPIE UCF Student Chapter",
+        roleTitle: "Secretary",
+        startDate: "2023-08-20",
+        isActive: true,
+        description: "Coordinates industry guest speaker seminars."
+      }
+    ],
+    certifications: []
   }
 ];
 
@@ -1998,6 +2913,219 @@ const SEED_IEEE_PROJECTS = [
       ],
     },
   },
+  {
+    title: "CubeSat UHF/VHF Ground Station Transceiver",
+    slug: "cubesat-uhf-vhf-ground-station-transceiver",
+    tagline: "Automated satellite tracking antenna pedestal and software-defined radio transceiver communicating with low-Earth orbit CubeSats.",
+    category: "Autonomous Systems",
+    status: "Active",
+    description: "Developed in collaboration with Students for the Exploration and Development of Space (SEDS UCF), this automated ground station tracks amateur radio CubeSats passing overhead. Integrates an Az/El dual-axis rotator with GNU Radio DSP chains for real-time telemetry demodulation.",
+    repositoryUrl: undefined,
+    demoUrl: undefined,
+    tools: [
+      { name: "GNU Radio", category: "Software & AI" },
+      { name: "RTL-SDR / HackRF One", category: "Lab & Test Equipment" },
+      { name: "STM32F4 Rotator Controller", category: "Embedded & Firmware" },
+      { name: "Crossed Yagi UHF/VHF Antenna", category: "Hardware & PCB" },
+      { name: "Python Telemetry Demodulator", category: "Software & AI" },
+    ],
+    timeline: [
+      {
+        date: "Nov 2024",
+        title: "Dual-Axis Antenna Pedestal Assembly",
+        description: "Fabricated stepper-motor driven azimuth/elevation rotator with worm gears and counterweights.",
+        status: "completed",
+      },
+      {
+        date: "Jan 2025",
+        title: "Automated Orbit Tracking Loop",
+        description: "Implemented TLE orbit propagation software calculating real-time azimuth and elevation coordinates.",
+        status: "completed",
+      },
+      {
+        date: "Mar 2025",
+        title: "First Downlink Packet Decoded",
+        description: "Successfully received and decoded 437MHz telemetry beacons from NOAA and university CubeSat passes.",
+        status: "in_progress",
+      },
+    ],
+    skillsTaught: [
+      "RF Link Budget & Free-Space Path Loss Calculation",
+      "Software-Defined Radio DSP in GNU Radio",
+      "High-Torque Stepper Motor Microstepping",
+      "Satellite TLE Orbital Mechanics & Doppler Compensation",
+    ],
+    sponsorshipInfo: undefined,
+  },
+  {
+    title: "Bio-Impedance Wearable Health Monitor",
+    slug: "bio-impedance-wearable-health-monitor",
+    tagline: "Multi-frequency electrical bio-impedance measurement wristband for non-invasive hydration and vital sign telemetry.",
+    category: "Hardware",
+    status: "In Development",
+    description: "A battery-powered wearable monitoring physiological hydration and muscle impedance fluctuations using Analog Devices AD5940 AFE and Nordic nRF52840 BLE SoC. Form-factor optimized for athletic training and remote medical monitoring.",
+    repositoryUrl: undefined,
+    demoUrl: undefined,
+    tools: [
+      { name: "Analog Devices AD5940 AFE", category: "Hardware & PCB" },
+      { name: "Nordic nRF52840 BLE SoC", category: "Embedded & Firmware" },
+      { name: "Flexible PCB Substrate", category: "Hardware & PCB" },
+      { name: "Zephyr RTOS", category: "Embedded & Firmware" },
+    ],
+    timeline: [],
+    skillsTaught: [],
+    sponsorshipInfo: undefined,
+  },
+  {
+    title: "Autonomous Underwater Vehicle (AUV) Thruster Controller",
+    slug: "auv-thruster-controller",
+    tagline: undefined,
+    category: "Robotics",
+    status: "In Development",
+    description: "Submersible multi-thruster driver board featuring waterproof potted enclosures, current sensing, and ROS2 motor control nodes for autonomous underwater navigation and depth holding.",
+    repositoryUrl: "https://github.com/ieee-ucf/auv-thruster-control",
+    demoUrl: undefined,
+    tools: [],
+    timeline: [
+      {
+        date: "Jan 2025",
+        title: "Subsea Enclosure Pressure Testing",
+        description: "Pressure chamber validation of potted aluminum housing up to 5 atmospheres depth rating.",
+        status: "completed",
+      },
+      {
+        date: "Apr 2025",
+        title: "Closed-Loop Depth & Pitch Control",
+        description: "Integrating depth sensor feedback with 6-thruster differential vector allocation algorithms.",
+        status: "in_progress",
+      },
+    ],
+    skillsTaught: [
+      "Underwater Waterproof Enclosure Potting",
+      "Brushless DC Motor Field-Oriented Control",
+      "ROS2 Node Architecture & Micro-ROS",
+    ],
+    sponsorshipInfo: undefined,
+  },
+  {
+    title: "FPGA High-Frequency Network Packet Filter",
+    slug: "fpga-high-frequency-network-packet-filter",
+    tagline: "Sub-microsecond 10GbE network packet parser and risk validation pipeline implemented in SystemVerilog on AMD Xilinx UltraScale+.",
+    category: "Hardware",
+    status: "Active",
+    description: "A hardware-accelerated network pipeline receiving UDP/IP multicast market data, parsing FIX/FAST financial protocol packets directly in silicon logic, and executing risk check validations within 80 nanoseconds of wire arrival.",
+    repositoryUrl: "https://github.com/ieee-ucf/fpga-packet-filter",
+    demoUrl: undefined,
+    tools: [
+      { name: "Xilinx Vivado ML", category: "Hardware & PCB" },
+      { name: "SystemVerilog", category: "Software & AI" },
+      { name: "10G Ethernet MAC IP", category: "Embedded & Firmware" },
+      { name: "AMD Kintex UltraScale+ FPGA", category: "Hardware & PCB" },
+      { name: "AXI4-Stream Protocol", category: "Software & AI" },
+    ],
+    timeline: [],
+    skillsTaught: [
+      "SystemVerilog Synthesizable RTL Design",
+      "FPGA Timing Closure at 322 MHz",
+      "10 Gigabit Optical SFP+ Signal Integrity",
+      "AXI4-Stream Protocol Interfacing",
+    ],
+    sponsorshipInfo: undefined,
+  },
+  {
+    title: "KnightHacks Smart Badge NFC Firmware",
+    slug: "knighthacks-smart-badge-nfc-firmware",
+    tagline: undefined,
+    category: "Embedded & Firmware",
+    status: "Completed",
+    description: "Event badge firmware enabling 800+ hackathon attendees to exchange digital contact information, play interactive trivia games, and verify workshop check-ins via high-frequency NFC.",
+    repositoryUrl: "https://github.com/ieee-ucf/knighthacks-nfc-badge",
+    demoUrl: "https://ieee.ucf.edu/badges/knighthacks2024",
+    tools: [
+      { name: "ESP32-S3 Dual-Core", category: "Embedded & Firmware" },
+      { name: "ST25DV Dynamic NFC Tag", category: "Hardware & PCB" },
+      { name: "FreeRTOS", category: "Embedded & Firmware" },
+      { name: "PlatformIO / C++", category: "Software & AI" },
+      { name: "SSD1306 OLED Display", category: "Hardware & PCB" },
+    ],
+    timeline: [
+      {
+        date: "Jul 2024",
+        title: "NFC Tag Driver & NDEF Payload Architecture",
+        description: "Implemented low-level I2C communication driver and NDEF vCard binary serializer.",
+        status: "completed",
+      },
+      {
+        date: "Sep 2024",
+        title: "Batch Flashing & Assembly Line QC",
+        description: "Automated firmware flashing station processing 850 attendee badges with automated self-tests.",
+        status: "completed",
+      },
+      {
+        date: "Oct 2024",
+        title: "KnightHacks 2024 Event Deployment",
+        description: "Live badge operation throughout 36-hour hackathon with zero firmware panics reported.",
+        status: "completed",
+      },
+    ],
+    skillsTaught: [
+      "NFC Forum Type 5 NDEF Record Serialization",
+      "High-Volume Production Firmware Flashing Automation",
+      "Deep-Sleep Power Optimization on ESP32 Microcontrollers",
+    ],
+    sponsorshipInfo: undefined,
+  },
+  {
+    title: "Sub-GHz Long-Range Rover Telemetry Link",
+    slug: "subghz-long-range-rover-telemetry-link",
+    tagline: undefined,
+    category: "IoT & Networking",
+    status: "In Development",
+    description: "Ruggedized 915MHz frequency-hopping telemetry module providing continuous 10km line-of-sight command, control, and sensor telemetry for outdoor robotics competition trials.",
+    repositoryUrl: undefined,
+    demoUrl: undefined,
+    tools: [],
+    timeline: [],
+    skillsTaught: [],
+    sponsorshipInfo: undefined,
+  },
+  {
+    title: "High-Efficiency GaN Solar MPPT Charge Controller",
+    slug: "gan-solar-mppt-charge-controller",
+    tagline: "Synchronous buck-boost power converter leveraging Gallium Nitride (GaN) transistors switching at 500kHz with 99.1% peak efficiency.",
+    category: "Power",
+    status: "Active",
+    description: "A high-power-density solar maximum power point tracking (MPPT) regulator. Employs EPC GaN FETs, perturb-and-observe digital tracking, and integrated CAN bus voltage monitoring to extract maximum energy from solar arrays.",
+    repositoryUrl: undefined,
+    demoUrl: undefined,
+    tools: [
+      { name: "EPC GaN Power FETs", category: "Hardware & PCB" },
+      { name: "STM32G4 High-Res Mixed-Signal MCU", category: "Embedded & Firmware" },
+      { name: "Altium Designer 24", category: "Hardware & PCB" },
+      { name: "LTspice Electronic Simulator", category: "Software & AI" },
+      { name: "Rogowski Current Probe", category: "Lab & Test Equipment" },
+    ],
+    timeline: [
+      {
+        date: "Nov 2024",
+        title: "GaN Half-Bridge Simulation & Gate Loop Layout",
+        description: "Minimized parasitic loop inductance under 0.4 nH using 6-layer high-frequency PCB stackup.",
+        status: "completed",
+      },
+      {
+        date: "Feb 2025",
+        title: "Benchtop High-Voltage Switching Validation",
+        description: "Verified clean switching edges at 500kHz without overshoot or ringing up to 80V DC input.",
+        status: "in_progress",
+      },
+    ],
+    skillsTaught: [
+      "Ultra-Low Inductance PCB Layout for Wide-Bandgap GaN",
+      "High-Resolution Timer (HRTIM) PWM Generation on STM32G4",
+      "Digital MPPT Tracking Algorithms (Perturb & Observe)",
+    ],
+    sponsorshipInfo: undefined,
+  },
 ];
 
 const SEED_EVENTS = [
@@ -2056,6 +3184,70 @@ const SEED_EVENTS = [
     startTime: "2025-01-22T18:00:00Z",
     endTime: "2025-01-22T20:00:00Z",
     slug: "spring-gbm-project-showcase-2025",
+  },
+  {
+    title: "Lockheed Martin Defense Electronics & Radar Systems Tech Talk",
+    location: "Harris Engineering Center (HEC 101)",
+    description: "Technical presentation by Lockheed Martin radar systems architects on phased-array beamforming and FPGA DSP pipelines.",
+    startTime: "2025-02-05T17:30:00Z",
+    endTime: "2025-02-05T19:30:00Z",
+    slug: "lockheed-martin-radar-tech-talk",
+  },
+  {
+    title: "IPC Soldering & Surface Mount Certification Bootcamp",
+    location: "IEEE Innovation Lab (ENG2 135)",
+    description: "Full-day intensive training in lead-free solder metallurgy, fine-pitch QFN rework, and ESD workstation safety compliance.",
+    startTime: "2025-02-15T10:00:00Z",
+    endTime: "2025-02-15T16:00:00Z",
+    slug: "ipc-soldering-certification-bootcamp",
+  },
+  {
+    title: "Space Coast Industry Tour: Kennedy Space Center & Blue Origin",
+    location: "Cape Canaveral Launch Complex & KSC Visitor Complex",
+    description: "Behind-the-scenes engineering tour of launch vehicle assembly facilities and orbital integration cleanrooms.",
+    startTime: "2025-02-28T08:00:00Z",
+    endTime: "2025-02-28T17:00:00Z",
+    slug: "space-coast-industry-tour",
+  },
+  {
+    title: "Texas Instruments Analog Power Management Deep Dive",
+    location: "Engineering II (ENG2 102)",
+    description: "Guest lecture and lab demo on buck/boost topology optimization, EMI suppression, and battery charge management ICs.",
+    startTime: "2025-03-12T18:00:00Z",
+    endTime: "2025-03-12T20:00:00Z",
+    slug: "ti-analog-power-management",
+  },
+  {
+    title: "Autonomous Rover Hackathon & Line-Tracking Challenge",
+    location: "Harris Engineering Center Atrium",
+    description: "12-hour student team robotics hackathon programming autonomous navigation, line-following, and obstacle avoidance algorithms.",
+    startTime: "2025-03-29T09:00:00Z",
+    endTime: "2025-03-29T21:00:00Z",
+    slug: "autonomous-rover-hackathon",
+  },
+  {
+    title: "Northrop Grumman Cyber & Embedded Security Workshop",
+    location: "Harris Engineering Center (HEC 118)",
+    description: "Interactive security lab exploring side-channel analysis, JTAG hardware debugging, and secure boot cryptographic validation.",
+    startTime: "2025-04-02T17:30:00Z",
+    endTime: "2025-04-02T19:30:00Z",
+    slug: "northrop-grumman-cyber-embedded-security",
+  },
+  {
+    title: "IEEE UCF Senior Design Pitch & Sponsor Feedback Night",
+    location: "Engineering I Atrium",
+    description: "Graduating seniors present capstone engineering prototypes to industry sponsor judges and engineering faculty.",
+    startTime: "2025-04-09T18:00:00Z",
+    endTime: "2025-04-09T21:00:00Z",
+    slug: "senior-design-pitch-night-2025",
+  },
+  {
+    title: "L3Harris High-Frequency RF Communications Seminar",
+    location: "Harris Engineering Center (HEC 101)",
+    description: "Seminar on wideband satellite transceivers, phased-array antenna designs, and mil-spec electronic warfare communication links.",
+    startTime: "2025-04-14T17:00:00Z",
+    endTime: "2025-04-14T19:00:00Z",
+    slug: "l3harris-rf-comms-seminar",
   },
   {
     title: "IEEE UCF Industry Dinner & End-of-Year Banquet",
@@ -2285,7 +3477,7 @@ export async function seedDatabase() {
         prj.description,
         prj.category,
         prj.status,
-        prj.repositoryUrl,
+        prj.repositoryUrl || null,
         prj.demoUrl || null,
         JSON.stringify(prj.tools || []),
         JSON.stringify(prj.timeline || []),
@@ -2299,9 +3491,17 @@ export async function seedDatabase() {
 
     // Link members to IEEE projects via project_participants
     for (let pIdx = 0; pIdx < createdProjectIds.length; pIdx++) {
+      const prj = SEED_IEEE_PROJECTS[pIdx];
+      // Skip projects designed to have unfilled team rosters
+      if (prj.slug === "auv-thruster-controller" || prj.slug === "subghz-long-range-rover-telemetry-link") {
+        console.log(`  ✓ Project ${prj.title} has an unfilled team roster (recruitment active)`);
+        continue;
+      }
+
       const prjId = createdProjectIds[pIdx];
-      // Select 4-5 members per project
-      for (let mOffset = 0; mOffset < 5; mOffset++) {
+      // Select 3-5 members per project
+      const memberCount = pIdx % 2 === 0 ? 3 : 5;
+      for (let mOffset = 0; mOffset < memberCount; mOffset++) {
         const assignedMemberId = createdMemberIds[(pIdx * 5 + mOffset) % createdMemberIds.length];
         const roleTitle = mOffset === 0 ? "Project Director" : mOffset === 1 ? "Lead Engineer" : "Technical Contributor";
 

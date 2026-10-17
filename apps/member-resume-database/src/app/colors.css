@@ -15,36 +15,37 @@
   --text-muted: #64748b;       /* Slate-500 for secondary/meta text */
   --text-dark: #0f172a;
 
-  /* Accent UCF Gold / Amber (Refined for light background contrast) */
-  --accent-gold: #d97706;      /* Amber-600 */
-  --accent-gold-glow: rgba(217, 119, 6, 0.12);
+  /* Accent UCF Gold / Amber (Refined for light background contrast, subdued warmth) */
+  --accent-gold: #b45309;      /* Amber-700 */
+  --accent-gold-glow: rgba(180, 83, 9, 0.10);
   --shimmer-bg: #f1f5f9;
-  --shimmer-highlight: rgba(217, 119, 6, 0.15);
+  --shimmer-highlight: rgba(180, 83, 9, 0.10);
 
-  /* Tailwind CSS Utility class integrations */
-  --primary-light: #f59e0b;    /* Amber-500 */
-  --primary-dark: #b45309;     /* Amber-700 */
-  --yellow-light: #fbbf24;
-  --yellow-dark: #b45309;
+  /* Tailwind CSS Utility class integrations - grounded, non-glaring tones */
+  --primary-light: #c27803;    /* Calmer amber */
+  --primary: #b45309;          /* Deep rich amber-700 */
+  --primary-dark: #92400e;     /* Deep amber-800 */
+  --yellow-light: #c27803;
+  --yellow-dark: #92400e;
 
-  /* Semantic Accent Hues (Refined with accessible light mode contrast) */
-  --purple-light: #7c3aed;
-  --purple-medium: #6d28d9;
-  --blue-light: #2563eb;
-  --blue-medium: #1d4ed8;
-  --emerald-light: #059669;
-  --emerald-medium: #047857;
-  --red-light: #dc2626;
-  --red-medium: #b91c1c;
+  /* Semantic Accent Hues (Subdued, calm light mode contrast) */
+  --purple-light: #6d28d9;
+  --purple-medium: #5b21b6;
+  --blue-light: #1d4ed8;
+  --blue-medium: #1e40af;
+  --emerald-light: #047857;
+  --emerald-medium: #065f46;
+  --red-light: #b91c1c;
+  --red-medium: #991b1b;
 
-  --accent-purple: #7c3aed;
-  --accent-purple-bg: rgba(124, 58, 237, 0.08);
-  --accent-blue: #2563eb;
-  --accent-blue-bg: rgba(37, 99, 235, 0.08);
-  --accent-emerald: #059669;
-  --accent-emerald-bg: rgba(5, 150, 105, 0.08);
-  --accent-red: #dc2626;
-  --accent-red-bg: rgba(220, 38, 38, 0.08);
+  --accent-purple: #6d28d9;
+  --accent-purple-bg: rgba(109, 40, 217, 0.06);
+  --accent-blue: #1d4ed8;
+  --accent-blue-bg: rgba(29, 78, 216, 0.06);
+  --accent-emerald: #047857;
+  --accent-emerald-bg: rgba(4, 120, 87, 0.06);
+  --accent-red: #b91c1c;
+  --accent-red-bg: rgba(185, 28, 28, 0.06);
 
   /* Semantic UI Mappings */
   --background: var(--bg-app);

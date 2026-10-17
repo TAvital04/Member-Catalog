@@ -66,25 +66,20 @@ export default function Tooltip({
       setVisible(false);
     };
 
-    const handleFocus = () => {
-      calculatePosition();
-      setVisible(true);
-    };
-
-    const handleBlur = () => {
+    const handleScrollOrResize = () => {
       setVisible(false);
     };
 
     triggerEl.addEventListener("mouseenter", handleMouseEnter);
     triggerEl.addEventListener("mouseleave", handleMouseLeave);
-    triggerEl.addEventListener("focusin", handleFocus);
-    triggerEl.addEventListener("focusout", handleBlur);
+    window.addEventListener("scroll", handleScrollOrResize, true);
+    window.addEventListener("resize", handleScrollOrResize);
 
     return () => {
       triggerEl.removeEventListener("mouseenter", handleMouseEnter);
       triggerEl.removeEventListener("mouseleave", handleMouseLeave);
-      triggerEl.removeEventListener("focusin", handleFocus);
-      triggerEl.removeEventListener("focusout", handleBlur);
+      window.removeEventListener("scroll", handleScrollOrResize, true);
+      window.removeEventListener("resize", handleScrollOrResize);
     };
   }, [mounted, content, position]);
 

@@ -44,9 +44,9 @@ export default function SkillTag({
       : false;
 
   const variantClasses = {
-    card: "text-[10px] font-medium bg-slate-100 border border-slate-200/90 text-slate-700 px-2 py-0.5 rounded-md hover:border-amber-500 hover:text-amber-800 transition-colors",
-    row: "text-[10px] font-medium bg-slate-100 border border-slate-200/90 text-slate-700 px-2 py-0.5 rounded-md hover:border-amber-500 hover:text-amber-800 transition-colors",
-    modal: "text-xs font-medium bg-slate-100 border border-slate-200/90 text-slate-800 px-2.5 py-1 rounded-md hover:border-amber-500 hover:text-amber-800 transition-colors",
+    card: "text-[10px] font-medium bg-slate-100 border border-slate-200/90 text-slate-700 px-2 py-0.5 rounded-md hover:border-slate-300 hover:text-slate-900 transition-colors",
+    row: "text-[10px] font-medium bg-slate-100 border border-slate-200/90 text-slate-700 px-2 py-0.5 rounded-md hover:border-slate-300 hover:text-slate-900 transition-colors",
+    modal: "text-xs font-medium bg-slate-100 border border-slate-200/90 text-slate-800 px-2.5 py-1 rounded-md hover:border-slate-300 hover:text-slate-900 transition-colors",
   }[variant];
 
   return (

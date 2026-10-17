@@ -36,10 +36,10 @@ function StudentRow({
       <div className="flex items-center gap-3 min-w-[240px]">
         <Avatar name={student.name} size="sm" />
         <div className="flex flex-col min-w-0">
-          <h4 className="font-bold text-slate-900 text-sm group-hover:text-amber-600 transition-colors flex">
+          <h4 className="font-bold text-slate-900 text-sm group-hover:text-slate-700 transition-colors flex">
             <TruncatedText text={student.name} maxLength={28} align="left" />
           </h4>
-          <div className="text-xs text-amber-700 font-medium flex">
+          <div className="text-xs text-slate-600 font-medium flex">
             <TruncatedText text={student.major} maxLength={30} align="left" />
           </div>
         </div>

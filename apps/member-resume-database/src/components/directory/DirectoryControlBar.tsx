@@ -3,13 +3,13 @@
 import React from "react";
 import { UserRole } from "@/app/page";
 import Tooltip from "../common/Tooltip";
-import { Search, X, LayoutGrid, List, SlidersHorizontal } from "lucide-react";
+import { Search, X, LayoutGrid, List } from "lucide-react";
 
 interface DirectoryControlBarProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
-  filterLayout: "side" | "top";
-  setFilterLayout: (layout: "side" | "top") => void;
+  filterLayout?: "side" | "top";
+  setFilterLayout?: (layout: "side" | "top") => void;
   sortBy: "name" | "gradDate" | "gpa";
   setSortBy: (sort: "name" | "gradDate" | "gpa") => void;
   viewMode: "grid" | "list";
@@ -21,8 +21,6 @@ interface DirectoryControlBarProps {
 export default function DirectoryControlBar({
   searchQuery,
   setSearchQuery,
-  filterLayout,
-  setFilterLayout,
   sortBy,
   setSortBy,
   viewMode,
@@ -80,39 +78,6 @@ export default function DirectoryControlBar({
 
       {/* Control Actions & Utility Switchers */}
       <div className="flex flex-wrap items-center gap-2.5 shrink-0 w-full sm:w-auto justify-end">
-        {/* Layout Toggle */}
-        <div className="flex items-center gap-1.5 text-xs bg-white border border-slate-200 p-1 rounded-xl shadow-2xs">
-          <span className="text-slate-500 pl-1.5 text-[11px] font-medium flex items-center gap-1 select-none">
-            <SlidersHorizontal size={12} className="text-slate-400" />
-            Layout:
-          </span>
-          <div className="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-200/60">
-            <button
-              type="button"
-              onClick={() => setFilterLayout("side")}
-              className={`px-2 py-0.5 rounded text-[11px] font-bold transition-all relative group cursor-pointer ${
-                filterLayout === "side"
-                  ? "bg-white text-slate-900 shadow-2xs"
-                  : "text-slate-500 hover:text-slate-800"
-              }`}
-            >
-              Sidebar
-              <Tooltip content="Show filters on the side" />
-            </button>
-            <button
-              type="button"
-              onClick={() => setFilterLayout("top")}
-              className={`px-2 py-0.5 rounded text-[11px] font-bold transition-all relative group cursor-pointer ${
-                filterLayout === "top"
-                  ? "bg-white text-slate-900 shadow-2xs"
-                  : "text-slate-500 hover:text-slate-800"
-              }`}
-            >
-              Top Bar
-              <Tooltip content="Show filters as top dropdowns" />
-            </button>
-          </div>
-        </div>
 
         {/* Sorting Dropdown (Sponsor and Admin) */}
         {role !== "standard" && (

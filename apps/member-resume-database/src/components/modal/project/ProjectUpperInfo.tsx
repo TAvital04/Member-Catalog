@@ -15,33 +15,41 @@ export default function ProjectUpperInfo({ project }: ProjectUpperInfoProps) {
     <div className="flex flex-col gap-5">
       {/* Category & Status Badges */}
       <div className="flex items-center justify-between gap-2">
-        <span className="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+        <span className="bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
           {project.category}
         </span>
         <span
-          className={`text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1 ${
+          className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1 ${
             project.status === "Completed"
-              ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-              : "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20"
+              ? "bg-emerald-50 text-emerald-800 border border-emerald-200/70"
+              : "bg-slate-100 text-slate-700 border border-slate-200"
           }`}
         >
-          {project.status === "Completed" ? <CheckCircle2 size={10} /> : <Clock size={10} />}
+          {project.status === "Completed" ? (
+            <CheckCircle2 size={10} className="text-emerald-600" />
+          ) : (
+            <Clock size={10} className="text-slate-400" />
+          )}
           {project.status}
         </span>
       </div>
 
       {/* Project Icon & Title */}
       <div className="flex items-start gap-3.5">
-        <div className="p-3 rounded-2xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 text-zinc-955 shadow-lg shrink-0 mt-0.5">
-          <FolderGit2 size={24} className="stroke-[2.5]" />
+        <div className="p-3 rounded-2xl bg-slate-100 border border-slate-200 text-slate-500 shadow-2xs shrink-0 mt-0.5">
+          <FolderGit2 size={24} className="stroke-[2]" />
         </div>
         <div className="flex-1 min-w-0">
-          <h2 className="text-xl font-black text-zinc-50 tracking-tight leading-tight">
+          <h2 className="text-xl font-black text-slate-900 tracking-tight leading-tight">
             {project.title}
           </h2>
-          {project.tagline && (
-            <p className="text-xs text-amber-400/90 font-medium mt-1 leading-snug">
+          {project.tagline ? (
+            <p className="text-xs text-slate-800 font-medium mt-1 leading-snug">
               {project.tagline}
+            </p>
+          ) : (
+            <p className="text-xs text-slate-400 italic mt-1 leading-snug">
+              Tagline not provided
             </p>
           )}
         </div>
@@ -49,57 +57,67 @@ export default function ProjectUpperInfo({ project }: ProjectUpperInfoProps) {
 
       {/* Quick Metrics Grid */}
       <div className="grid grid-cols-3 gap-2">
-        <div className="p-2.5 rounded-xl bg-zinc-900/60 border border-zinc-800/80 text-center">
-          <span className="block text-base font-black text-amber-400 leading-none">
-            {project.participants.length}
+        <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-center">
+          <span className="block text-base font-black text-slate-900 leading-none">
+            {project.participants ? project.participants.length : 0}
           </span>
-          <span className="text-[9.5px] text-zinc-500 font-bold uppercase tracking-wider mt-1 block">
+          <span className="text-[9.5px] text-slate-500 font-bold uppercase tracking-wider mt-1 block">
             Team Size
           </span>
         </div>
-        <div className="p-2.5 rounded-xl bg-zinc-900/60 border border-zinc-800/80 text-center">
-          <span className="block text-base font-black text-cyan-400 leading-none">
-            {project.tools.length}
+        <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-center">
+          <span className="block text-base font-black text-slate-900 leading-none">
+            {project.tools ? project.tools.length : 0}
           </span>
-          <span className="text-[9.5px] text-zinc-500 font-bold uppercase tracking-wider mt-1 block">
+          <span className="text-[9.5px] text-slate-500 font-bold uppercase tracking-wider mt-1 block">
             Tools Used
           </span>
         </div>
-        <div className="p-2.5 rounded-xl bg-zinc-900/60 border border-zinc-800/80 text-center">
-          <span className="block text-base font-black text-purple-400 leading-none">
-            {completedMilestones}/{project.timeline.length}
+        <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-center">
+          <span className="block text-base font-black text-slate-900 leading-none">
+            {completedMilestones}/{(project.timeline || []).length}
           </span>
-          <span className="text-[9.5px] text-zinc-500 font-bold uppercase tracking-wider mt-1 block">
+          <span className="text-[9.5px] text-slate-500 font-bold uppercase tracking-wider mt-1 block">
             Milestones
           </span>
         </div>
       </div>
 
       {/* External Repository & Demo Links */}
-      <div className="flex flex-col gap-2 pt-2 border-t border-zinc-800/80">
-        <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Project Links</span>
+      <div className="flex flex-col gap-2 pt-2 border-t border-slate-200">
+        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Project Links</span>
         <div className="flex flex-wrap gap-2">
-          {project.repositoryUrl && (
+          {project.repositoryUrl ? (
             <a
               href={project.repositoryUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-1.5 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-xs font-semibold text-zinc-300 hover:text-zinc-100 transition-colors flex items-center gap-1.5"
+              className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 text-xs font-semibold text-slate-700 hover:text-slate-900 transition-colors flex items-center gap-1.5"
             >
-              <GitBranch size={13} className="text-zinc-400" />
+              <GitBranch size={13} className="text-slate-400" />
               <span>GitHub Repo</span>
             </a>
+          ) : (
+            <span className="px-3 py-1.5 rounded-xl bg-slate-50/60 border border-slate-200 text-xs font-medium text-slate-400 flex items-center gap-1.5 cursor-not-allowed italic">
+              <GitBranch size={13} className="text-slate-300" />
+              <span>No repo linked</span>
+            </span>
           )}
-          {project.demoUrl && (
+          {project.demoUrl ? (
             <a
               href={project.demoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs font-semibold text-amber-400 hover:text-amber-300 transition-colors flex items-center gap-1.5"
+              className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 text-xs font-semibold text-slate-700 hover:text-slate-900 transition-colors flex items-center gap-1.5"
             >
-              <ExternalLink size={13} />
+              <ExternalLink size={13} className="text-slate-400" />
               <span>Project Website</span>
             </a>
+          ) : (
+            <span className="px-3 py-1.5 rounded-xl bg-slate-50/60 border border-slate-200 text-xs font-medium text-slate-400 flex items-center gap-1.5 cursor-not-allowed italic">
+              <ExternalLink size={13} className="text-slate-300" />
+              <span>No demo deployed</span>
+            </span>
           )}
         </div>
       </div>

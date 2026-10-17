@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { Student, getPrimaryEducation, getIeeeLeadershipRole } from "../../data/students";
-import { Calendar, Award, Flag, FolderGit2 } from "lucide-react";
+import { Student, getPrimaryEducation } from "../../data/students";
+import { Calendar, Award, Flag } from "lucide-react";
 import Avatar from "../common/Avatar";
 import StatusBadge from "../common/StatusBadge";
 import TruncatedText from "../common/TruncatedText";
@@ -22,8 +22,6 @@ function StudentCard({
   adminMode,
   onToggleFlag,
 }: StudentCardProps) {
-  const leadershipRole = getIeeeLeadershipRole(student);
-
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
@@ -39,7 +37,7 @@ function StudentCard({
       onClick={() => onClick(student)}
       onKeyDown={handleKeyDown}
       data-student-id={student.id}
-      className={`relative group rounded-2xl bg-white border p-4 md:p-5 flex flex-col justify-between h-[195px] md:h-[295px] cursor-pointer transition-all duration-200 shadow-2xs hover:shadow-md hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 ${
+      className={`relative group rounded-2xl bg-white border p-4 md:p-5 flex flex-col justify-between h-[195px] md:h-[295px] cursor-pointer transition-all duration-200 shadow-2xs hover:shadow-md hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 ${
         adminMode && student.flagged
           ? "border-red-300 bg-red-50/20 hover:border-red-400"
           : "border-slate-200/90 hover:border-slate-300"
@@ -62,10 +60,10 @@ function StudentCard({
             <Avatar name={student.name} size="sm" className="md:hidden" />
             <Avatar name={student.name} size="md" className="hidden md:flex" />
             <div className="min-w-0 grow flex flex-col">
-              <h3 className="font-bold text-slate-900 text-sm md:text-base leading-tight group-hover:text-amber-600 transition-colors flex">
+              <h3 className="font-bold text-slate-900 text-sm md:text-base leading-tight group-hover:text-slate-700 transition-colors flex">
                 <TruncatedText text={student.name} maxLength={26} align="left" />
               </h3>
-              <div className="text-[11px] md:text-xs text-amber-700 font-semibold leading-none md:leading-[1.1] mt-1 flex">
+              <div className="text-[11px] md:text-xs text-slate-600 font-medium leading-none md:leading-[1.1] mt-1 flex">
                 <TruncatedText text={student.major} maxLength={28} align="left" />
               </div>
             </div>
@@ -78,21 +76,9 @@ function StudentCard({
         </p>
       </div>
 
-      {/* Middle Section (Status Badge, Leadership Badge & Main Project Badge) */}
-      <div className="flex flex-wrap items-center gap-1.5">
+      {/* Middle Section (Job Search Status Only) */}
+      <div className="flex items-center">
         <StatusBadge status={student.status} />
-        {leadershipRole && (
-          <span className="bg-amber-50 text-amber-800 border border-amber-200 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-2xs shrink-0 max-w-[160px]">
-            <Award size={10} className="text-amber-600 shrink-0" />
-            <TruncatedText text={leadershipRole} maxLength={20} />
-          </span>
-        )}
-        {student.mainProjectName && (
-          <span className="bg-sky-50 text-sky-800 border border-sky-200 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-2xs shrink-0 max-w-[160px]">
-            <FolderGit2 size={10} className="text-sky-600 shrink-0" />
-            <TruncatedText text={student.mainProjectName} maxLength={20} />
-          </span>
-        )}
       </div>
 
       {/* Bottom Section */}

@@ -9,20 +9,20 @@ interface AvatarProps {
 }
 
 export default function Avatar({ name, size = "md", className = "" }: AvatarProps) {
-  const getAvatarGradient = (nameStr: string) => {
-    const colors = [
-      "from-amber-500 to-yellow-400",
-      "from-purple-500 to-indigo-500",
-      "from-emerald-500 to-teal-400",
-      "from-pink-500 to-rose-400",
-      "from-blue-500 to-sky-400",
-      "from-orange-500 to-amber-500",
+  const getAvatarStyle = (nameStr: string) => {
+    const styles = [
+      "bg-slate-100 text-slate-800 border border-slate-200",
+      "bg-amber-50 text-slate-800 border border-amber-200/60",
+      "bg-sky-50 text-slate-800 border border-sky-200/60",
+      "bg-emerald-50 text-slate-800 border border-emerald-200/60",
+      "bg-indigo-50 text-slate-800 border border-indigo-200/60",
+      "bg-slate-50 text-slate-800 border border-slate-200",
     ];
     let sum = 0;
     for (let i = 0; i < nameStr.length; i++) {
       sum += nameStr.charCodeAt(i);
     }
-    return colors[sum % colors.length];
+    return styles[sum % styles.length];
   };
 
   const getInitials = (nameStr: string) => {
@@ -45,9 +45,9 @@ export default function Avatar({ name, size = "md", className = "" }: AvatarProp
 
   return (
     <div
-      className={`flex items-center justify-center text-zinc-950 bg-gradient-to-br ${getAvatarGradient(
+      className={`flex items-center justify-center font-bold ${getAvatarStyle(
         name
-      )} shadow-lg shrink-0 select-none ${sizeClasses[size]} ${className}`}
+      )} shadow-2xs shrink-0 select-none ${sizeClasses[size]} ${className}`}
     >
       {getInitials(name)}
     </div>

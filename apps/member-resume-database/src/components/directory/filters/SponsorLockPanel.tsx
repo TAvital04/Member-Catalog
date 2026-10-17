@@ -15,7 +15,7 @@ export default function SponsorLockPanel({ layout }: SponsorLockPanelProps) {
         layout === "side" ? "flex min-[1056px]:hidden" : "flex"
       }`}>
         <div className="flex items-center gap-3.5">
-          <div className="p-2 rounded-xl bg-amber-50 text-amber-700 border border-amber-200 shrink-0">
+          <div className="p-2 rounded-xl bg-slate-50 text-slate-400 border border-slate-200/80 shrink-0">
             <Lock size={16} />
           </div>
           <div>
@@ -29,7 +29,7 @@ export default function SponsorLockPanel({ layout }: SponsorLockPanelProps) {
           href="https://www.ieeeucf.com/sponsorships"
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full sm:w-auto shrink-0 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs rounded-xl shadow-2xs transition-all flex items-center justify-center cursor-pointer whitespace-nowrap text-center"
+          className="w-full sm:w-auto shrink-0 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 font-bold text-xs rounded-xl shadow-2xs transition-all flex items-center justify-center cursor-pointer whitespace-nowrap text-center"
         >
           Learn More About Sponsoring
         </a>
@@ -40,7 +40,7 @@ export default function SponsorLockPanel({ layout }: SponsorLockPanelProps) {
         layout === "side" ? "hidden min-[1056px]:flex" : "hidden"
       }`}>
         <div className="px-5 py-6 rounded-2xl border border-slate-200 bg-white shadow-2xs flex flex-col items-center justify-between text-center relative overflow-hidden h-[295px] w-full">
-          <div className="w-10 h-10 rounded-full bg-amber-50 text-amber-700 flex items-center justify-center border border-amber-200 shrink-0 mt-2">
+          <div className="w-10 h-10 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center border border-slate-200/80 shrink-0 mt-2">
             <Lock size={18} />
           </div>
           <div className="my-auto">
@@ -53,7 +53,7 @@ export default function SponsorLockPanel({ layout }: SponsorLockPanelProps) {
             href="https://www.ieeeucf.com/sponsorships"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs rounded-xl shadow-2xs transition-all flex items-center justify-center cursor-pointer text-center"
+            className="w-full px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 font-bold text-xs rounded-xl shadow-2xs transition-all flex items-center justify-center cursor-pointer text-center"
           >
             Learn More About Sponsoring
           </a>

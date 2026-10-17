@@ -236,9 +236,9 @@ export default function FilterSidebar({
         <button
           type="button"
           onClick={resetAllFilters}
-          className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-amber-700 transition-colors py-1.5 px-3 rounded-xl hover:bg-slate-50 justify-center shrink-0 cursor-pointer font-semibold"
+          className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-800 transition-colors py-1.5 px-3 rounded-xl hover:bg-slate-50 justify-center shrink-0 cursor-pointer font-semibold"
         >
-          <RotateCcw size={12} />
+          <RotateCcw size={12} className="text-slate-400" />
           <span>Reset</span>
         </button>
       </div>
@@ -250,7 +250,7 @@ export default function FilterSidebar({
         {/* Active Sidebar Filters Header */}
         <div className="flex items-center justify-between pb-3 border-b border-slate-100">
           <div className="flex items-center gap-2 font-bold text-slate-900 text-sm">
-            <Filter size={16} className="text-amber-600" />
+            <Filter size={16} className="text-slate-400" />
             <span>Filters</span>
             {activeFiltersCount > 0 && (
               <span className="bg-amber-50 text-amber-800 border border-amber-200 text-[10px] px-2 py-0.2 rounded-full font-bold">
@@ -261,9 +261,9 @@ export default function FilterSidebar({
           
           <button
             onClick={resetAllFilters}
-            className="flex items-center gap-1 text-xs text-slate-500 hover:text-amber-700 transition-colors cursor-pointer font-medium"
+            className="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-800 transition-colors cursor-pointer font-medium"
           >
-            <RotateCcw size={12} />
+            <RotateCcw size={12} className="text-slate-400" />
             <span>Reset All</span>
           </button>
         </div>
