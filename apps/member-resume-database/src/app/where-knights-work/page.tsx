@@ -52,12 +52,7 @@ function WhereKnightsWorkContent() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-zinc-955 text-zinc-200 relative pb-16 overflow-x-hidden">
-      {/* Decorative Background */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="circuit-overlay"></div>
-      </div>
-
+    <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900 relative pb-16 overflow-x-hidden">
       {/* Primary Header Navbar */}
       <DirectoryNavbar
         role="standard"
@@ -69,25 +64,25 @@ function WhereKnightsWorkContent() {
       />
 
       {/* Hero Header Banner */}
-      <div className="w-full bg-zinc-900/80 border-b border-zinc-800 py-10 px-4 relative overflow-hidden">
+      <div className="w-full bg-white border-b border-slate-200 py-8 px-4 relative overflow-hidden">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
           <div>
             <Link
               href="/"
-              className="inline-flex items-center gap-1.5 text-xs text-amber-400 hover:text-amber-300 font-bold mb-3 transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs text-amber-700 hover:text-amber-800 font-bold mb-3 transition-colors"
             >
               <ArrowLeft size={14} />
               <span>Back to Member Catalog Directory</span>
             </Link>
             <div className="flex items-center gap-3">
-              <div className="p-3 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 text-zinc-955 shadow-lg">
+              <div className="p-3 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md">
                 <Building2 size={24} className="stroke-[2.5]" />
               </div>
               <div>
-                <h1 className="text-xl md:text-3xl font-black text-zinc-100 uppercase tracking-tight flex items-center gap-2">
+                <h1 className="text-xl md:text-3xl font-black text-slate-900 uppercase tracking-tight flex items-center gap-2">
                   Where Knights Work
                 </h1>
-                <p className="text-xs md:text-sm text-zinc-400 mt-1 leading-relaxed max-w-2xl">
+                <p className="text-xs md:text-sm text-slate-600 mt-1 leading-relaxed max-w-2xl">
                   Explore corporate placements, internships, and industry roles secured by UCF IEEE engineering students and alumni.
                 </p>
               </div>
@@ -95,15 +90,15 @@ function WhereKnightsWorkContent() {
           </div>
 
           <div className="flex items-center gap-3 shrink-0">
-            <div className="px-4 py-2.5 rounded-2xl bg-zinc-950/80 border border-zinc-800 flex items-center gap-4 shadow-inner">
+            <div className="px-4 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center gap-4 shadow-sm">
               <div className="text-center">
-                <span className="block text-lg font-black text-emerald-400 leading-none">{availableCompanies.length}</span>
-                <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Companies</span>
+                <span className="block text-lg font-black text-emerald-600 leading-none">{availableCompanies.length}</span>
+                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Companies</span>
               </div>
-              <div className="w-px h-7 bg-zinc-800" />
+              <div className="w-px h-7 bg-slate-200" />
               <div className="text-center">
-                <span className="block text-lg font-black text-amber-400 leading-none">{filteredStudents.length}</span>
-                <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Placed Knights</span>
+                <span className="block text-lg font-black text-amber-600 leading-none">{filteredStudents.length}</span>
+                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Placed Knights</span>
               </div>
             </div>
           </div>
@@ -122,10 +117,10 @@ function WhereKnightsWorkContent() {
         />
 
         {/* Filtered Students Header */}
-        <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
+        <div className="flex items-center justify-between border-b border-slate-200 pb-3">
           <div className="flex items-center gap-2">
-            <Briefcase size={16} className="text-emerald-400" />
-            <h2 className="text-sm font-bold text-zinc-200 uppercase tracking-wider">
+            <Briefcase size={16} className="text-emerald-600" />
+            <h2 className="text-sm font-bold text-slate-800 uppercase tracking-wider">
               {selectedCompanies.length > 0
                 ? `Candidates at ${selectedCompanies.join(", ")} (${filteredStudents.length})`
                 : `All Candidates with Industry Experience (${filteredStudents.length})`}
@@ -134,7 +129,7 @@ function WhereKnightsWorkContent() {
           {selectedCompanies.length > 0 && (
             <button
               onClick={() => setSelectedCompanies([])}
-              className="text-xs text-amber-400 hover:text-amber-300 font-medium underline"
+              className="text-xs text-amber-700 hover:text-amber-800 font-medium underline"
             >
               Clear company filter
             </button>
@@ -149,8 +144,8 @@ function WhereKnightsWorkContent() {
             <div className="h-48 glass-panel rounded-2xl animate-shimmer" />
           </div>
         ) : filteredStudents.length === 0 ? (
-          <div className="text-center py-16 bg-zinc-900/40 rounded-2xl border border-zinc-800">
-            <p className="text-zinc-400 text-sm">No candidate profiles match the selected company filter.</p>
+          <div className="text-center py-16 bg-white rounded-2xl border border-slate-200 shadow-sm">
+            <p className="text-slate-500 text-sm">No candidate profiles match the selected company filter.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

@@ -10,19 +10,18 @@ interface SkillTagProps {
   variant?: "card" | "row" | "modal";
 }
 
-// Calculates font-aware glyph width for proportional typography
 function getWeightedSkillLength(text: string): number {
   let width = 0;
   for (let i = 0; i < text.length; i++) {
     const char = text[i];
     if ("ilt1 .-+/:;,'()[]".includes(char)) {
-      width += 0.55; // Narrow glyphs
+      width += 0.55;
     } else if ("WMQ@#".includes(char)) {
-      width += 1.35; // Extra wide glyphs
+      width += 1.35;
     } else if (char >= "A" && char <= "Z") {
-      width += 1.1; // Capital letters
+      width += 1.1;
     } else {
-      width += 0.85; // Standard lowercase
+      width += 0.85;
     }
   }
   return width;
@@ -36,7 +35,6 @@ export default function SkillTag({
   const effectiveMaxWidthClass =
     maxWidthClass ?? (variant === "card" ? "max-w-[70px]" : variant === "row" ? "max-w-[85px]" : "max-w-[160px]");
 
-  // Weighted glyph length threshold: card pills fit up to 7.8 weighted units, row pills fit up to 10.2
   const weightedLength = getWeightedSkillLength(skill);
   const isTruncated =
     variant === "card"
@@ -46,9 +44,9 @@ export default function SkillTag({
       : false;
 
   const variantClasses = {
-    card: "text-[10px] bg-zinc-900 border border-zinc-800 text-zinc-300 px-2 py-0.5 rounded-md hover:border-amber-500/50 hover:text-amber-300 transition-colors",
-    row: "text-[10px] bg-zinc-955 border border-zinc-800 text-zinc-400 px-2 py-0.5 rounded-md hover:border-amber-500/50 hover:text-amber-300 transition-colors",
-    modal: "text-xs bg-zinc-950 border border-zinc-800 text-zinc-300 px-2.5 py-1 rounded-md font-medium hover:border-amber-500/50 hover:text-amber-300 transition-colors",
+    card: "text-[10px] font-medium bg-slate-100 border border-slate-200/90 text-slate-700 px-2 py-0.5 rounded-md hover:border-amber-500 hover:text-amber-800 transition-colors",
+    row: "text-[10px] font-medium bg-slate-100 border border-slate-200/90 text-slate-700 px-2 py-0.5 rounded-md hover:border-amber-500 hover:text-amber-800 transition-colors",
+    modal: "text-xs font-medium bg-slate-100 border border-slate-200/90 text-slate-800 px-2.5 py-1 rounded-md hover:border-amber-500 hover:text-amber-800 transition-colors",
   }[variant];
 
   return (

@@ -4,7 +4,7 @@ import { members, memberResumes } from './schema';
 
 const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/ieee-website';
 
-const DENSE_CANDIDATES = [
+export const DENSE_CANDIDATES = [
   {
     name: "Alex Rivera",
     email: "arivera@knights.ucf.edu",

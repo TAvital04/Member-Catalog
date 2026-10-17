@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Users, Laptop, Code2 } from "lucide-react";
+import { Users, GraduationCap, Sparkles } from "lucide-react";
 
 interface DirectoryStatsHeaderProps {
   totalResumes: number;
@@ -12,39 +12,32 @@ interface DirectoryStatsHeaderProps {
 export default function DirectoryStatsHeader({
   totalResumes,
   majorCount,
-  totalSkillsCount
+  totalSkillsCount,
 }: DirectoryStatsHeaderProps) {
   return (
-    <header className="max-w-7xl w-full mx-auto px-4 py-8 relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-      <div className="flex flex-col gap-1.5">
-        <h2 className="text-2xl font-black text-zinc-100 tracking-tight leading-tight">Student Directory</h2>
-        <p className="text-xs text-zinc-500 max-w-md leading-relaxed">
-          Browse engineering and computer science portfolios representing the IEEE Student Chapter at UCF.
+    <header className="max-w-7xl w-full mx-auto px-4 pt-6 pb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div>
+        <h1 className="text-xl md:text-2xl font-black text-slate-900 tracking-tight">
+          Member Candidate Directory
+        </h1>
+        <p className="text-xs text-slate-500 mt-1 max-w-xl leading-relaxed">
+          Explore verified UCF engineering and computer science student resumes, portfolios, and project achievements.
         </p>
       </div>
 
-      {/* Dashboard stats cards */}
-      <div className="grid grid-cols-3 gap-3 w-full md:w-auto shrink-0 text-xs">
-        <div className="p-3 rounded-xl bg-zinc-900/30 border border-zinc-800 min-w-[90px] text-center">
-          <span className="block text-zinc-500 text-[10px] font-bold uppercase tracking-wider mb-1">Profiles</span>
-          <span className="font-extrabold text-zinc-200 text-sm flex items-center justify-center gap-1">
-            <Users size={12} className="text-amber-500" />
-            {totalResumes}
-          </span>
+      {/* Lightweight compact metrics */}
+      <div className="flex flex-wrap items-center gap-2 text-xs">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 shadow-2xs font-semibold">
+          <Users size={13} className="text-amber-600" />
+          <span>{totalResumes} Candidates</span>
         </div>
-        <div className="p-3 rounded-xl bg-zinc-900/30 border border-zinc-800 min-w-[90px] text-center">
-          <span className="block text-zinc-500 text-[10px] font-bold uppercase tracking-wider mb-1">Majors</span>
-          <span className="font-extrabold text-zinc-200 text-sm flex items-center justify-center gap-1">
-            <Laptop size={12} className="text-amber-500" />
-            {majorCount}
-          </span>
+        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 shadow-2xs font-semibold">
+          <GraduationCap size={13} className="text-amber-600" />
+          <span>{majorCount} Majors</span>
         </div>
-        <div className="p-3 rounded-xl bg-zinc-900/30 border border-zinc-800 min-w-[90px] text-center">
-          <span className="block text-zinc-500 text-[10px] font-bold uppercase tracking-wider mb-1">Skills</span>
-          <span className="font-extrabold text-zinc-200 text-sm flex items-center justify-center gap-1">
-            <Code2 size={12} className="text-amber-500" />
-            {totalSkillsCount}
-          </span>
+        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 shadow-2xs font-semibold">
+          <Sparkles size={13} className="text-amber-600" />
+          <span>{totalSkillsCount} Skills</span>
         </div>
       </div>
     </header>

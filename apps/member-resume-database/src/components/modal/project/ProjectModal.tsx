@@ -65,18 +65,13 @@ export default function ProjectModal({
       <div
         ref={focusTrapRef}
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-5xl h-full md:h-[82vh] rounded-none md:rounded-3xl glass-panel border-0 md:border border-zinc-800 shadow-2xl flex flex-col max-h-screen md:max-h-[85vh] animate-scale-in cursor-default overflow-hidden"
+        className="relative w-full max-w-5xl h-full md:h-[82vh] rounded-none md:rounded-3xl bg-white border-0 md:border border-slate-200 shadow-2xl flex flex-col max-h-screen md:max-h-[85vh] animate-scale-in cursor-default overflow-hidden"
       >
-        {/* Decorative Tech Circuit Overlay Background */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="circuit-overlay"></div>
-        </div>
-
         {/* Modal Close Button */}
         <button
           onClick={onClose}
           type="button"
-          className="absolute top-4 right-4 z-50 p-2 rounded-full bg-zinc-850/90 border border-zinc-800 hover:bg-zinc-900 hover:border-zinc-700 text-zinc-400 hover:text-zinc-100 transition-all shadow-lg active:scale-90 group/tooltip cursor-pointer"
+          className="absolute top-4 right-4 z-50 p-2 rounded-full bg-slate-100 border border-slate-200 hover:bg-slate-200 text-slate-500 hover:text-slate-900 transition-all shadow-sm active:scale-90 group/tooltip cursor-pointer"
         >
           <X size={18} />
           <Tooltip content="Close Project Modal" position="bottom-right" groupClass="group-hover/tooltip:opacity-100" />

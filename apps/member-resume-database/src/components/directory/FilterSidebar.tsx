@@ -51,8 +51,6 @@ export default function FilterSidebar({
   setSelectedGradDates,
   selectedEvents,
   setSelectedEvents,
-  selectedCompanies = [],
-  setSelectedCompanies,
   skillFilterMode,
   setSkillFilterMode,
   adminMode,
@@ -62,7 +60,6 @@ export default function FilterSidebar({
   availableSkills,
   availableGradDates,
   availableEvents,
-  availableCompanies = [],
   layout = "side",
   role = "admin",
   onResetAll,
@@ -74,7 +71,6 @@ export default function FilterSidebar({
     selectedSkills.length +
     selectedGradDates.length +
     selectedEvents.length +
-    selectedCompanies.length +
     (adminFilterFlagged !== null ? 1 : 0);
 
   const handleMajorToggle = (major: string) => {
@@ -131,7 +127,7 @@ export default function FilterSidebar({
   return (
     <>
       {/* Horizontal Top-bar Dropdowns Layout */}
-      <div className={`w-full flex-col min-[1056px]:flex-row items-stretch min-[1056px]:items-center gap-3 bg-zinc-900/40 p-3 rounded-2xl border border-zinc-800 relative z-30 ${
+      <div className={`w-full flex-col min-[1056px]:flex-row items-stretch min-[1056px]:items-center gap-3 bg-white p-3 rounded-2xl border border-slate-200/90 shadow-2xs relative z-30 ${
         layout === "side" ? "flex min-[1056px]:hidden" : "flex"
       }`}>
         {activeDropdown && (
@@ -142,8 +138,8 @@ export default function FilterSidebar({
         )}
 
         <div className="flex flex-wrap items-center gap-2 grow relative z-30">
-          <div className="flex items-center gap-1.5 text-zinc-500 text-xs pr-1 font-bold">
-            <Filter size={14} className="text-amber-500" />
+          <div className="flex items-center gap-1.5 text-slate-700 text-xs pr-1 font-bold">
+            <Filter size={14} className="text-amber-600" />
             <span>Filters:</span>
           </div>
 
@@ -170,7 +166,7 @@ export default function FilterSidebar({
             widthClass="w-[calc(100vw-2.5rem)] max-w-[280px] md:w-60"
             headerAction={
               <div className="flex justify-between items-center text-[10px] w-full mb-1">
-                <span className="text-zinc-555">Skills matching:</span>
+                <span className="text-slate-500 font-semibold">Matching:</span>
                 <SkillModeSelector
                   skillFilterMode={skillFilterMode}
                   setSkillFilterMode={setSkillFilterMode}
@@ -226,7 +222,7 @@ export default function FilterSidebar({
               widthClass="w-[calc(100vw-2.5rem)] max-w-[280px] md:w-64"
             >
               <div className="flex flex-col gap-1.5 w-full">
-                <span className="text-[10px] text-zinc-555 font-bold uppercase tracking-wider mb-0.5">Flagged Status</span>
+                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-0.5">Flagged Status</span>
                 <AdminFilters
                   adminFilterFlagged={adminFilterFlagged}
                   setAdminFilterFlagged={setAdminFilterFlagged}
@@ -240,7 +236,7 @@ export default function FilterSidebar({
         <button
           type="button"
           onClick={resetAllFilters}
-          className="flex items-center gap-1.5 text-xs text-zinc-500 hover:text-amber-500 transition-colors py-1.5 px-3 rounded-xl hover:bg-zinc-900/40 justify-center shrink-0 cursor-pointer"
+          className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-amber-700 transition-colors py-1.5 px-3 rounded-xl hover:bg-slate-50 justify-center shrink-0 cursor-pointer font-semibold"
         >
           <RotateCcw size={12} />
           <span>Reset</span>
@@ -248,16 +244,16 @@ export default function FilterSidebar({
       </div>
 
       {/* Side Layout (Vertical list on larger viewports) */}
-      <aside className={`w-full min-[1056px]:w-64 shrink-0 flex-col gap-6 ${
+      <aside className={`w-full min-[1056px]:w-64 shrink-0 flex-col gap-5 bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs ${
         layout === "side" ? "hidden min-[1056px]:flex" : "hidden"
       }`}>
         {/* Active Sidebar Filters Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-zinc-800">
-          <div className="flex items-center gap-2 font-semibold text-zinc-100">
-            <Filter size={18} className="text-amber-500" />
+        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+          <div className="flex items-center gap-2 font-bold text-slate-900 text-sm">
+            <Filter size={16} className="text-amber-600" />
             <span>Filters</span>
             {activeFiltersCount > 0 && (
-              <span className="bg-amber-500/10 text-amber-500 border border-amber-500/20 text-[10px] px-2 py-0.5 rounded-full font-bold animate-fade-in">
+              <span className="bg-amber-50 text-amber-800 border border-amber-200 text-[10px] px-2 py-0.2 rounded-full font-bold">
                 {activeFiltersCount}
               </span>
             )}
@@ -265,7 +261,7 @@ export default function FilterSidebar({
           
           <button
             onClick={resetAllFilters}
-            className="flex items-center gap-1.5 text-xs text-zinc-400 hover:text-amber-400 transition-colors cursor-pointer"
+            className="flex items-center gap-1 text-xs text-slate-500 hover:text-amber-700 transition-colors cursor-pointer font-medium"
           >
             <RotateCcw size={12} />
             <span>Reset All</span>
@@ -273,14 +269,14 @@ export default function FilterSidebar({
         </div>
 
         {adminMode && (
-          <div className="border-b border-zinc-850/40 pb-5">
+          <div className="border-b border-slate-100 pb-4">
             <FilterDropdown
               title="Flagged Status"
               isOpen={true}
               onToggle={() => {}}
               isActive={adminFilterFlagged !== null}
               layout="side"
-              headerAction={<ShieldAlert size={16} className="text-red-400 animate-pulse" />}
+              headerAction={<ShieldAlert size={15} className="text-red-500" />}
             >
               <AdminFilters
                 adminFilterFlagged={adminFilterFlagged}
@@ -291,7 +287,7 @@ export default function FilterSidebar({
           </div>
         )}
 
-        <div className="border-b border-zinc-850/40 pb-5">
+        <div className="border-b border-slate-100 pb-4">
           <FilterDropdown
             title="Degree & Major"
             isOpen={true}
@@ -307,7 +303,7 @@ export default function FilterSidebar({
           </FilterDropdown>
         </div>
 
-        <div className="border-b border-zinc-850/40 pb-5">
+        <div className="border-b border-slate-100 pb-4">
           <FilterDropdown
             title="Technical Skills"
             isOpen={true}
@@ -329,7 +325,7 @@ export default function FilterSidebar({
           </FilterDropdown>
         </div>
 
-        <div className="border-b border-zinc-850/40 pb-5">
+        <div className="border-b border-slate-100 pb-4">
           <FilterDropdown
             title="Graduation Date"
             isOpen={true}
@@ -365,5 +361,3 @@ export default function FilterSidebar({
     </>
   );
 }
-
-

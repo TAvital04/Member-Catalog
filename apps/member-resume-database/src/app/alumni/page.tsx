@@ -47,12 +47,7 @@ function AlumniPageContent() {
   }, [alumniStudents, searchQuery]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-zinc-955 text-zinc-200 relative pb-16 overflow-x-hidden">
-      {/* Decorative Background */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="circuit-overlay"></div>
-      </div>
-
+    <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900 relative pb-16 overflow-x-hidden">
       {/* Primary Header Navbar */}
       <DirectoryNavbar
         role="standard"
@@ -64,25 +59,25 @@ function AlumniPageContent() {
       />
 
       {/* Hero Header Banner */}
-      <div className="w-full bg-zinc-900/80 border-b border-zinc-800 py-10 px-4 relative overflow-hidden">
+      <div className="w-full bg-white border-b border-slate-200 py-8 px-4 relative overflow-hidden">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
           <div>
             <Link
               href="/"
-              className="inline-flex items-center gap-1.5 text-xs text-amber-400 hover:text-amber-300 font-bold mb-3 transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs text-amber-700 hover:text-amber-800 font-bold mb-3 transition-colors"
             >
               <ArrowLeft size={14} />
               <span>Back to Member Catalog Directory</span>
             </Link>
             <div className="flex items-center gap-3">
-              <div className="p-3 rounded-2xl bg-gradient-to-br from-yellow-400 to-amber-600 text-zinc-955 shadow-lg">
+              <div className="p-3 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-500 text-slate-900 shadow-md">
                 <GraduationCap size={24} className="stroke-[2.5]" />
               </div>
               <div>
-                <h1 className="text-xl md:text-3xl font-black text-zinc-100 uppercase tracking-tight flex items-center gap-2">
+                <h1 className="text-xl md:text-3xl font-black text-slate-900 uppercase tracking-tight flex items-center gap-2">
                   IEEE UCF Alumni Showcase
                 </h1>
-                <p className="text-xs md:text-sm text-zinc-400 mt-1 leading-relaxed max-w-2xl">
+                <p className="text-xs md:text-sm text-slate-600 mt-1 leading-relaxed max-w-2xl">
                   Celebrating the professional achievements and career paths of graduated UCF IEEE engineering members.
                 </p>
               </div>
@@ -90,10 +85,10 @@ function AlumniPageContent() {
           </div>
 
           <div className="flex items-center gap-3 shrink-0">
-            <div className="px-4 py-2.5 rounded-2xl bg-zinc-950/80 border border-zinc-800 flex items-center gap-3 shadow-inner">
+            <div className="px-4 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center gap-3 shadow-sm">
               <div className="text-center">
-                <span className="block text-lg font-black text-yellow-400 leading-none">{alumniStudents.length}</span>
-                <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Featured Alumni</span>
+                <span className="block text-lg font-black text-amber-600 leading-none">{alumniStudents.length}</span>
+                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Featured Alumni</span>
               </div>
             </div>
           </div>
@@ -110,8 +105,8 @@ function AlumniPageContent() {
             <div className="h-48 glass-panel rounded-2xl animate-shimmer" />
           </div>
         ) : filteredAlumni.length === 0 ? (
-          <div className="text-center py-16 bg-zinc-900/40 rounded-2xl border border-zinc-800">
-            <p className="text-zinc-400 text-sm">No alumni records found.</p>
+          <div className="text-center py-16 bg-white rounded-2xl border border-slate-200 shadow-sm">
+            <p className="text-slate-500 text-sm">No alumni records found.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -121,45 +116,45 @@ function AlumniPageContent() {
                 <div
                   key={student.id}
                   onClick={() => setSelectedStudent(student)}
-                  className="p-5 rounded-2xl glass-panel border border-zinc-800 hover:border-yellow-500/40 transition-all duration-300 flex flex-col justify-between gap-4 cursor-pointer group shadow-xl relative overflow-hidden"
+                  className="p-5 rounded-2xl bg-white border border-slate-200 hover:border-amber-400 hover:shadow-md transition-all duration-300 flex flex-col justify-between gap-4 cursor-pointer group shadow-sm relative overflow-hidden"
                 >
                   <div className="flex items-start gap-3.5">
                     <Avatar name={student.name} size="md" />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <span className="px-2 py-0.5 rounded-md bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 text-[10px] font-black uppercase tracking-wider flex items-center gap-1">
+                        <span className="px-2 py-0.5 rounded-md bg-amber-50 text-amber-700 border border-amber-200 text-[10px] font-black uppercase tracking-wider flex items-center gap-1">
                           <GraduationCap size={10} />
                           Alumnus • {student.gradDate}
                         </span>
                       </div>
-                      <h3 className="text-base font-black text-zinc-100 group-hover:text-yellow-300 transition-colors mt-1.5 truncate">
+                      <h3 className="text-base font-black text-slate-900 group-hover:text-amber-700 transition-colors mt-1.5 truncate">
                         {student.name}
                       </h3>
-                      <p className="text-xs text-zinc-400 truncate">{student.major}</p>
+                      <p className="text-xs text-slate-600 truncate">{student.major}</p>
                     </div>
                   </div>
 
                   {currentWork && (
-                    <div className="p-3 rounded-xl bg-zinc-900/90 border border-zinc-800/80 text-xs">
-                      <div className="flex items-center gap-1.5 text-zinc-300 font-semibold truncate">
-                        <Building2 size={13} className="text-amber-400 shrink-0" />
+                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+                      <div className="flex items-center gap-1.5 text-slate-800 font-semibold truncate">
+                        <Building2 size={13} className="text-amber-600 shrink-0" />
                         <span className="truncate">{currentWork.name}</span>
                       </div>
-                      <p className="text-[11px] text-zinc-400 mt-0.5 truncate pl-4">
+                      <p className="text-[11px] text-slate-600 mt-0.5 truncate pl-4">
                         {currentWork.title}
                       </p>
                     </div>
                   )}
 
                   {student.bio && (
-                    <p className="text-xs text-zinc-400 line-clamp-2 leading-relaxed">
+                    <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
                       {student.bio}
                     </p>
                   )}
 
-                  <div className="flex items-center justify-between pt-3 border-t border-zinc-800/80 text-xs">
-                    <span className="text-zinc-500 font-medium">Click to view full career profile</span>
-                    <ChevronRight size={14} className="text-yellow-400 group-hover:translate-x-1 transition-transform" />
+                  <div className="flex items-center justify-between pt-3 border-t border-slate-100 text-xs">
+                    <span className="text-slate-500 font-medium">Click to view full career profile</span>
+                    <ChevronRight size={14} className="text-amber-600 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
               );

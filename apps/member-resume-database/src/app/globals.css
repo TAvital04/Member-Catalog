@@ -55,28 +55,22 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
-  background-image:
-    radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.04) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.04) 0%, transparent 40%),
-    linear-gradient(var(--grid-line-color) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line-color) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+  background-image: none;
 }
 
-/* Glassmorphism Styles */
+/* Crisp Clean Card Panels */
 .glass-panel {
   background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
 }
 
 .glass-panel-hover:hover {
   background: var(--glass-bg);
-  border-color: rgba(212, 175, 55, 0.3);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15), 0 0 15px rgba(212, 175, 55, 0.05);
+  border-color: #cbd5e1;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
   transform: translateY(-2px);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Shimmer Loading Animations */
@@ -105,7 +99,7 @@ body {
   background-image: linear-gradient(
     90deg,
     transparent 0%,
-    var(--shimmer-highlight) 50%,
+    rgba(217, 119, 6, 0.08) 50%,
     transparent 100%
   );
   animation: shimmerWave 1.8s infinite;
@@ -119,12 +113,12 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--scrollbar-track);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -136,18 +130,9 @@ body {
   background: var(--scrollbar-thumb-hover);
 }
 
-
-/* Circuit pattern background decoration */
+/* Circuit pattern background decoration (Disabled for clean minimal aesthetic) */
 .circuit-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: radial-gradient(circle, rgba(212, 175, 55, 0.15) 1.5px, transparent 1.5px);
-  background-size: 24px 24px;
-  pointer-events: none;
-  opacity: 0.2;
+  display: none;
 }
 
 @media (max-width: 1055px) {

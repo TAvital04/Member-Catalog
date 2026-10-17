@@ -73,19 +73,14 @@ export default function PortfolioModal({
         aria-modal="true"
         aria-label={`${student.name} - Engineering Portfolio`}
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-5xl h-full md:h-[80vh] rounded-none md:rounded-3xl glass-panel border-0 md:border border-zinc-800 shadow-2xl flex flex-col max-h-screen md:max-h-[85vh] animate-scale-in cursor-default overflow-hidden"
+        className="relative w-full max-w-5xl h-full md:h-[80vh] rounded-none md:rounded-3xl bg-white border-0 md:border border-slate-200 shadow-2xl flex flex-col max-h-screen md:max-h-[85vh] animate-scale-in cursor-default overflow-hidden"
       >
-        {/* Decorative Tech Overlay Background */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="circuit-overlay"></div>
-        </div>
-
         {/* Close Button */}
         <button
           onClick={onClose}
           type="button"
           aria-label="Close candidate portfolio modal"
-          className="absolute top-4 right-4 z-50 p-2 rounded-full bg-zinc-850/90 border border-zinc-800 hover:bg-zinc-900 hover:border-zinc-700 text-zinc-400 hover:text-zinc-155 transition-all shadow-lg active:scale-90 group/tooltip focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none"
+          className="absolute top-4 right-4 z-50 p-2 rounded-full bg-white border border-slate-200 hover:bg-slate-100 text-slate-500 hover:text-slate-900 transition-all shadow-xs active:scale-90 group/tooltip focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none cursor-pointer"
         >
           <X size={18} />
           <Tooltip content="Close Modal" position="bottom-right" groupClass="group-hover/tooltip:opacity-100" />
@@ -94,17 +89,17 @@ export default function PortfolioModal({
         {/* Scrollable Container Wrapper */}
         <div className="w-full flex flex-col md:flex-row overflow-hidden h-full">
           {/* Left Side Panel: Profile Hero & Desktop Metadata */}
-          <div className="w-full md:w-2/5 p-6 border-b md:border-b-0 md:border-r border-zinc-800/80 flex flex-col justify-between md:overflow-y-auto overflow-x-hidden relative z-10 bg-modal-left hidden md:flex">
+          <div className="w-full md:w-2/5 p-6 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col justify-between md:overflow-y-auto overflow-x-hidden relative z-10 bg-slate-50/70 hidden md:flex">
             <div className="flex flex-col gap-6">
               <StudentUpperInfo student={student} adminMode={adminMode} />
             </div>
-            <div className="flex flex-col gap-4 mt-8 pt-6 border-t border-zinc-800/80">
+            <div className="flex flex-col gap-4 mt-8 pt-6 border-t border-slate-200">
               <StudentLowerInfo student={student} adminMode={adminMode} onResolve={onResolve} />
             </div>
           </div>
 
           {/* Right Side Panel: Interactive Tabs */}
-          <div className="w-full md:w-3/5 p-5 md:p-6 pt-12 md:pt-6 flex flex-col h-full relative z-10 bg-modal-right overflow-hidden">
+          <div className="w-full md:w-3/5 p-5 md:p-6 pt-12 md:pt-6 flex flex-col h-full relative z-10 bg-white overflow-hidden">
             {/* Tab Navigation Header */}
             <ModalTabNavigation activeTab={activeTab} setActiveTab={setActiveTab} role={role} />
 

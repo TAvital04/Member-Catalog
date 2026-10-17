@@ -3,7 +3,7 @@
 import React from "react";
 import { UserRole } from "@/app/page";
 import Tooltip from "../common/Tooltip";
-import { Search, X, LayoutGrid, List } from "lucide-react";
+import { Search, X, LayoutGrid, List, SlidersHorizontal } from "lucide-react";
 
 interface DirectoryControlBarProps {
   searchQuery: string;
@@ -32,12 +32,10 @@ export default function DirectoryControlBar({
 }: DirectoryControlBarProps) {
   const [localQuery, setLocalQuery] = React.useState(searchQuery);
 
-  // Synchronize local input state when external searchQuery prop changes
   React.useEffect(() => {
     setLocalQuery(searchQuery);
   }, [searchQuery]);
 
-  // Debounce updating parent & URL search query state by 200ms
   React.useEffect(() => {
     const handler = setTimeout(() => {
       if (localQuery !== searchQuery) {
@@ -48,14 +46,14 @@ export default function DirectoryControlBar({
   }, [localQuery, searchQuery, setSearchQuery]);
 
   return (
-    <section className="max-w-7xl w-full mx-auto px-4 mb-6 relative z-10 flex flex-col sm:flex-row items-center gap-4">
+    <section className="max-w-7xl w-full mx-auto px-4 mb-5 flex flex-col sm:flex-row items-center gap-3">
       {/* Search Input Box */}
       <div className="relative w-full grow">
-        <Search size={16} className="absolute left-3 top-3 text-zinc-550" />
+        <Search size={16} className="absolute left-3.5 top-3.5 text-slate-400 pointer-events-none" />
         <input
           type="text"
           ref={searchInputRef}
-          placeholder="Search candidates, skills, bios (Ctrl+K)..."
+          placeholder="Search by candidate name, skill, coursework, bio (Ctrl+K)..."
           value={localQuery}
           onChange={(e) => setLocalQuery(e.target.value)}
           onKeyDown={(e) => {
@@ -64,7 +62,7 @@ export default function DirectoryControlBar({
               setSearchQuery("");
             }
           }}
-          className="w-full bg-zinc-900/80 border border-zinc-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-zinc-205 placeholder-zinc-550 focus:outline-none focus:border-amber-500 shadow-inner"
+          className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-9 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/10 shadow-2xs transition-all"
         />
         {localQuery && (
           <button
@@ -72,78 +70,92 @@ export default function DirectoryControlBar({
               setLocalQuery("");
               setSearchQuery("");
             }}
-            className="absolute right-3 top-3 text-zinc-550 hover:text-zinc-300"
+            className="absolute right-3 top-3 text-slate-400 hover:text-slate-600 p-0.5 cursor-pointer"
+            aria-label="Clear search"
           >
             <X size={15} />
           </button>
         )}
       </div>
 
-      {/* View mode toggle button */}
-      <div className="flex flex-wrap items-center gap-3 shrink-0 w-full sm:w-auto justify-end">
-        {/* Filter Layout Position Toggle */}
-        <div className="flex items-center gap-2 text-xs bg-zinc-900/80 border border-zinc-800 p-1 rounded-xl">
-          <span className="text-zinc-500 pl-1.5 select-none">Layout</span>
-          <div className="flex items-center bg-zinc-955 p-0.5 rounded border border-zinc-800">
+      {/* Control Actions & Utility Switchers */}
+      <div className="flex flex-wrap items-center gap-2.5 shrink-0 w-full sm:w-auto justify-end">
+        {/* Layout Toggle */}
+        <div className="flex items-center gap-1.5 text-xs bg-white border border-slate-200 p-1 rounded-xl shadow-2xs">
+          <span className="text-slate-500 pl-1.5 text-[11px] font-medium flex items-center gap-1 select-none">
+            <SlidersHorizontal size={12} className="text-slate-400" />
+            Layout:
+          </span>
+          <div className="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-200/60">
             <button
               type="button"
               onClick={() => setFilterLayout("side")}
-              className={`px-2 py-0.5 rounded text-[10px] font-bold transition-all relative group ${
-                filterLayout === "side" ? "bg-zinc-800 text-amber-400" : "text-zinc-500 hover:text-zinc-350"
+              className={`px-2 py-0.5 rounded text-[11px] font-bold transition-all relative group cursor-pointer ${
+                filterLayout === "side"
+                  ? "bg-white text-slate-900 shadow-2xs"
+                  : "text-slate-500 hover:text-slate-800"
               }`}
             >
-              Side
-              <Tooltip content="Sidebar Filter Layout" />
+              Sidebar
+              <Tooltip content="Show filters on the side" />
             </button>
             <button
               type="button"
               onClick={() => setFilterLayout("top")}
-              className={`px-2 py-0.5 rounded text-[10px] font-bold transition-all relative group ${
-                filterLayout === "top" ? "bg-zinc-800 text-amber-400" : "text-zinc-500 hover:text-zinc-350"
+              className={`px-2 py-0.5 rounded text-[11px] font-bold transition-all relative group cursor-pointer ${
+                filterLayout === "top"
+                  ? "bg-white text-slate-900 shadow-2xs"
+                  : "text-slate-500 hover:text-slate-800"
               }`}
             >
-              Top
-              <Tooltip content="Top Dropdowns Filter Layout" />
+              Top Bar
+              <Tooltip content="Show filters as top dropdowns" />
             </button>
           </div>
         </div>
 
-        {/* Sorting */}
+        {/* Sorting Dropdown (Sponsor and Admin) */}
         {role !== "standard" && (
-          <div className="flex items-center gap-2 text-xs bg-zinc-900/80 border border-zinc-800 p-1 rounded-xl animate-fade-in">
-            <span className="text-zinc-500 pl-1.5">Sort by</span>
+          <div className="flex items-center gap-1.5 text-xs bg-white border border-slate-200 p-1 rounded-xl shadow-2xs">
+            <span className="text-slate-500 pl-1.5 text-[11px] font-medium select-none">Sort:</span>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as "name" | "gradDate" | "gpa")}
-              className="bg-transparent text-zinc-300 font-bold pr-2 focus:outline-none border-none py-1 text-xs cursor-pointer"
+              className="bg-transparent text-slate-800 font-semibold pr-2 focus:outline-none border-none py-1 text-xs cursor-pointer"
             >
-              <option value="name">Name A-Z</option>
-              <option value="gradDate">Grad Date</option>
+              <option value="name">Name (A-Z)</option>
+              <option value="gradDate">Graduation Date</option>
               <option value="gpa">Highest GPA</option>
             </select>
           </div>
         )}
 
-        {/* Grid vs List buttons (Only for Admin role) */}
+        {/* Grid vs List View (Admin only) */}
         {role === "admin" && (
-          <div className="flex items-center bg-zinc-900/85 border border-zinc-800 p-1 rounded-xl gap-0.5 animate-fade-in">
+          <div className="flex items-center bg-white border border-slate-200 p-1 rounded-xl gap-0.5 shadow-2xs">
             <button
+              type="button"
               onClick={() => setViewMode("grid")}
-              className={`p-1.5 rounded-lg transition-all relative group ${
-                viewMode === "grid" ? "bg-zinc-800 text-amber-400" : "text-zinc-500 hover:text-zinc-300"
+              className={`p-1.5 rounded-lg transition-all relative group cursor-pointer ${
+                viewMode === "grid"
+                  ? "bg-slate-100 text-slate-900"
+                  : "text-slate-400 hover:text-slate-700"
               }`}
             >
               <LayoutGrid size={15} />
-              <Tooltip content="Grid Layout View" />
+              <Tooltip content="Grid Card View" />
             </button>
             <button
+              type="button"
               onClick={() => setViewMode("list")}
-              className={`p-1.5 rounded-lg transition-all relative group ${
-                viewMode === "list" ? "bg-zinc-800 text-amber-400" : "text-zinc-500 hover:text-zinc-300"
+              className={`p-1.5 rounded-lg transition-all relative group cursor-pointer ${
+                viewMode === "list"
+                  ? "bg-slate-100 text-slate-900"
+                  : "text-slate-400 hover:text-slate-700"
               }`}
             >
               <List size={15} />
-              <Tooltip content="Condensed Row List View" />
+              <Tooltip content="Compact Row View" />
             </button>
           </div>
         )}

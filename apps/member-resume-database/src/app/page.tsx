@@ -208,17 +208,12 @@ function StudentDirectoryContent() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-zinc-955 text-zinc-200 relative pb-16 overflow-x-hidden">
-      {/* Decorative Tech Overlay Background */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="circuit-overlay"></div>
-      </div>
-
+    <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900 relative pb-16 overflow-x-hidden">
       {/* Admin Mode active banner indicator */}
       {adminMode && (
-        <div className="bg-red-500/10 border-b border-red-500/20 py-1.5 px-4 text-center text-xs text-red-400 font-bold tracking-wide flex items-center justify-center gap-2 animate-pulse">
-          <Shield size={13} />
-          <span>ADMINISTRATIVE MAINTENANCE MODE ACTIVE — PRIVILEGES UNLOCKED</span>
+        <div className="bg-red-50 border-b border-red-200 py-2 px-4 text-center text-xs text-red-700 font-bold tracking-wide flex items-center justify-center gap-2 shadow-2xs">
+          <Shield size={14} className="text-red-600" />
+          <span>ADMINISTRATIVE MAINTENANCE MODE — PRIVILEGES UNLOCKED</span>
         </div>
       )}
 

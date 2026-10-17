@@ -26,27 +26,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      data-theme="light"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-      suppressHydrationWarning
     >
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  var saved = localStorage.getItem("ieee_resume_database_theme_v2");
-                  var theme = saved;
-                  if (!theme) {
-                    theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-                  }
-                  document.documentElement.setAttribute("data-theme", theme);
-                } catch (e) {}
-              })();
-            `,
-          }}
-        />
-      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

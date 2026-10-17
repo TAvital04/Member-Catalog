@@ -78,12 +78,7 @@ export default function SponsorRoiPage() {
   }, [students]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-zinc-955 text-zinc-200 relative pb-16 overflow-x-hidden">
-      {/* Decorative Technical Grid Background */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="circuit-overlay"></div>
-      </div>
-
+    <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900 relative pb-16 overflow-x-hidden">
       {/* Primary Header Navbar */}
       <DirectoryNavbar
         role="sponsor"
@@ -97,15 +92,15 @@ export default function SponsorRoiPage() {
       {/* Main Container */}
       <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 relative z-10 flex flex-col gap-8">
         {/* Header Hero Section */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-zinc-800/80 pb-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-slate-200 pb-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold mb-3">
-              <Sparkles size={14} /> Corporate Sponsor Talent Intelligence
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-semibold mb-3">
+              <Sparkles size={14} className="text-amber-600" /> Corporate Sponsor Talent Intelligence
             </div>
-            <h1 className="text-3xl md:text-4xl font-extrabold text-zinc-100 tracking-tight">
+            <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
               Sponsor Recruitment & Talent ROI Dashboard
             </h1>
-            <p className="text-sm md:text-base text-zinc-400 mt-2 max-w-2xl leading-relaxed">
+            <p className="text-sm md:text-base text-slate-600 mt-2 max-w-2xl leading-relaxed">
               Real-time scouting analytics, candidate engagement telemetry, and technical skill distribution
               for IEEE UCF corporate partners and defense industry sponsors.
             </p>
@@ -114,61 +109,60 @@ export default function SponsorRoiPage() {
           <div className="flex items-center gap-3">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-zinc-850 hover:bg-zinc-800 border border-zinc-700/80 text-zinc-200 text-sm font-semibold transition-all hover:border-zinc-600 shadow-sm"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-800 text-sm font-semibold transition-all hover:border-slate-300 shadow-sm"
             >
               <Users size={16} /> Candidate Directory
             </Link>
             <button
               onClick={() => alert("Candidate Resume Packet (PDF Bundle) export initialized for verified corporate sponsor.")}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-zinc-955 font-bold text-sm shadow-md transition-all active:scale-95"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold text-sm shadow-sm transition-all active:scale-95"
             >
               <Download size={16} /> Export Resume Packet
             </button>
           </div>
         </div>
-
         {/* Top Metric KPI Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="p-5 rounded-2xl bg-zinc-900/60 border border-zinc-800 backdrop-blur-md flex flex-col justify-between">
-            <div className="flex items-center justify-between text-zinc-400 mb-2">
+          <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div className="flex items-center justify-between text-slate-500 mb-2">
               <span className="text-xs font-semibold uppercase tracking-wider">Candidate Pool</span>
-              <Users size={18} className="text-amber-400" />
+              <Users size={18} className="text-amber-600" />
             </div>
-            <div className="text-3xl font-black text-zinc-100">{metrics.totalCandidates}</div>
-            <div className="text-xs text-amber-500/90 font-medium mt-2">
+            <div className="text-3xl font-black text-slate-900">{metrics.totalCandidates}</div>
+            <div className="text-xs text-amber-700 font-medium mt-2">
               {metrics.engineeringStudents} College of Engineering & CS
             </div>
           </div>
 
-          <div className="p-5 rounded-2xl bg-zinc-900/60 border border-zinc-800 backdrop-blur-md flex flex-col justify-between">
-            <div className="flex items-center justify-between text-zinc-400 mb-2">
+          <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div className="flex items-center justify-between text-slate-500 mb-2">
               <span className="text-xs font-semibold uppercase tracking-wider">Scouting Views</span>
-              <Target size={18} className="text-cyan-400" />
+              <Target size={18} className="text-cyan-600" />
             </div>
-            <div className="text-3xl font-black text-zinc-100">{metrics.profileViewImpressions}</div>
-            <div className="text-xs text-cyan-400/90 font-medium mt-2">
+            <div className="text-3xl font-black text-slate-900">{metrics.profileViewImpressions}</div>
+            <div className="text-xs text-cyan-700 font-medium mt-2">
               +38% candidate profile reviews this term
             </div>
           </div>
 
-          <div className="p-5 rounded-2xl bg-zinc-900/60 border border-zinc-800 backdrop-blur-md flex flex-col justify-between">
-            <div className="flex items-center justify-between text-zinc-400 mb-2">
+          <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div className="flex items-center justify-between text-slate-500 mb-2">
               <span className="text-xs font-semibold uppercase tracking-wider">Direct Inquiries</span>
-              <Mail size={18} className="text-emerald-400" />
+              <Mail size={18} className="text-emerald-600" />
             </div>
-            <div className="text-3xl font-black text-zinc-100">{metrics.inquiriesSentThisQuarter}</div>
-            <div className="text-xs text-emerald-400/90 font-medium mt-2">
+            <div className="text-3xl font-black text-slate-900">{metrics.inquiriesSentThisQuarter}</div>
+            <div className="text-xs text-emerald-700 font-medium mt-2">
               91% response rate from UCF engineering talent
             </div>
           </div>
 
-          <div className="p-5 rounded-2xl bg-zinc-900/60 border border-zinc-800 backdrop-blur-md flex flex-col justify-between">
-            <div className="flex items-center justify-between text-zinc-400 mb-2">
+          <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div className="flex items-center justify-between text-slate-500 mb-2">
               <span className="text-xs font-semibold uppercase tracking-wider">Sponsored Teams</span>
-              <Award size={18} className="text-purple-400" />
+              <Award size={18} className="text-purple-600" />
             </div>
-            <div className="text-3xl font-black text-zinc-100">{metrics.activeProjectsSupported}</div>
-            <div className="text-xs text-purple-400/90 font-medium mt-2">
+            <div className="text-3xl font-black text-slate-900">{metrics.activeProjectsSupported}</div>
+            <div className="text-xs text-purple-700 font-medium mt-2">
               Micromouse, Solar ESC, Swarm Robotics
             </div>
           </div>
@@ -177,51 +171,51 @@ export default function SponsorRoiPage() {
         {/* Talent Scout Funnel & Skill Density */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Scout Pipeline Funnel */}
-          <div className="p-6 rounded-2xl bg-zinc-900/60 border border-zinc-800 backdrop-blur-md flex flex-col gap-4">
-            <div className="flex items-center justify-between border-b border-zinc-800/80 pb-3">
-              <h2 className="text-base font-bold text-zinc-100 flex items-center gap-2">
-                <BarChart3 size={18} className="text-amber-400" /> Candidate Scouting Conversion Funnel
+          <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col gap-4">
+            <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+              <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                <BarChart3 size={18} className="text-amber-600" /> Candidate Scouting Conversion Funnel
               </h2>
-              <span className="text-xs font-mono text-zinc-400">Current Academic Year</span>
+              <span className="text-xs font-mono text-slate-500">Current Academic Year</span>
             </div>
 
             <div className="flex flex-col gap-3.5 mt-2">
               <div>
                 <div className="flex justify-between text-xs font-semibold mb-1">
-                  <span className="text-zinc-300">1. Directory Impressions & Filter Searches</span>
-                  <span className="text-amber-400">1,280 views (100%)</span>
+                  <span className="text-slate-700">1. Directory Impressions & Filter Searches</span>
+                  <span className="text-amber-700 font-bold">1,280 views (100%)</span>
                 </div>
-                <div className="h-3 rounded-full bg-zinc-800 overflow-hidden">
+                <div className="h-3 rounded-full bg-slate-100 overflow-hidden">
                   <div className="h-full bg-amber-500 rounded-full w-full"></div>
                 </div>
               </div>
 
               <div>
                 <div className="flex justify-between text-xs font-semibold mb-1">
-                  <span className="text-zinc-300">2. Portfolio Modal Detailed Inspections</span>
-                  <span className="text-cyan-400">412 candidates (32.2%)</span>
+                  <span className="text-slate-700">2. Portfolio Modal Detailed Inspections</span>
+                  <span className="text-cyan-700 font-bold">412 candidates (32.2%)</span>
                 </div>
-                <div className="h-3 rounded-full bg-zinc-800 overflow-hidden">
+                <div className="h-3 rounded-full bg-slate-100 overflow-hidden">
                   <div className="h-full bg-cyan-500 rounded-full w-[32.2%]"></div>
                 </div>
               </div>
 
               <div>
                 <div className="flex justify-between text-xs font-semibold mb-1">
-                  <span className="text-zinc-300">3. Direct Resume & GitHub Code Audits</span>
-                  <span className="text-emerald-400">188 verifications (14.7%)</span>
+                  <span className="text-slate-700">3. Direct Resume & GitHub Code Audits</span>
+                  <span className="text-emerald-700 font-bold">188 verifications (14.7%)</span>
                 </div>
-                <div className="h-3 rounded-full bg-zinc-800 overflow-hidden">
+                <div className="h-3 rounded-full bg-slate-100 overflow-hidden">
                   <div className="h-full bg-emerald-500 rounded-full w-[14.7%]"></div>
                 </div>
               </div>
 
               <div>
                 <div className="flex justify-between text-xs font-semibold mb-1">
-                  <span className="text-zinc-300">4. Interview Inquiries & Recruiter Outreach</span>
-                  <span className="text-purple-400">47 connections (3.7%)</span>
+                  <span className="text-slate-700">4. Interview Inquiries & Recruiter Outreach</span>
+                  <span className="text-purple-700 font-bold">47 connections (3.7%)</span>
                 </div>
-                <div className="h-3 rounded-full bg-zinc-800 overflow-hidden">
+                <div className="h-3 rounded-full bg-slate-100 overflow-hidden">
                   <div className="h-full bg-purple-500 rounded-full w-[3.7%]"></div>
                 </div>
               </div>
@@ -229,22 +223,22 @@ export default function SponsorRoiPage() {
           </div>
 
           {/* Technical Skill Density Distribution */}
-          <div className="p-6 rounded-2xl bg-zinc-900/60 border border-zinc-800 backdrop-blur-md flex flex-col gap-4">
-            <div className="flex items-center justify-between border-b border-zinc-800/80 pb-3">
-              <h2 className="text-base font-bold text-zinc-100 flex items-center gap-2">
-                <Target size={18} className="text-cyan-400" /> High-Demand Technical Skill Density
+          <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col gap-4">
+            <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+              <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                <Target size={18} className="text-cyan-600" /> High-Demand Technical Skill Density
               </h2>
-              <span className="text-xs font-mono text-zinc-400">Member Talent Pool</span>
+              <span className="text-xs font-mono text-slate-500">Member Talent Pool</span>
             </div>
 
             <div className="grid grid-cols-2 gap-3 mt-1">
               {metrics.topSkills.map(([skill, count]) => (
                 <div
                   key={skill}
-                  className="p-3 rounded-xl bg-zinc-950/50 border border-zinc-800/80 flex items-center justify-between"
+                  className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between"
                 >
-                  <span className="text-xs font-semibold text-zinc-200">{skill}</span>
-                  <span className="text-xs font-mono font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-md">
+                  <span className="text-xs font-semibold text-slate-800">{skill}</span>
+                  <span className="text-xs font-mono font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-md">
                     {count} candidates
                   </span>
                 </div>
@@ -254,19 +248,19 @@ export default function SponsorRoiPage() {
         </div>
 
         {/* Chapter Project Sponsorship ROI Section */}
-        <div className="p-6 rounded-2xl bg-zinc-900/60 border border-zinc-800 backdrop-blur-md flex flex-col gap-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-800/80 pb-4">
+        <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col gap-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-4">
             <div>
-              <h2 className="text-lg font-bold text-zinc-100 flex items-center gap-2">
-                <Award size={20} className="text-amber-400" /> Chapter Engineering Project ROI
+              <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                <Award size={20} className="text-amber-600" /> Chapter Engineering Project ROI
               </h2>
-              <p className="text-xs md:text-sm text-zinc-400 mt-1">
+              <p className="text-xs md:text-sm text-slate-600 mt-1">
                 Direct branding and recruiting access to students building hands-on hardware and autonomous systems.
               </p>
             </div>
             <Link
               href="/projects"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-400 hover:text-amber-300 transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-700 hover:text-amber-800 transition-colors"
             >
               Explore Chapter Project Hub <ArrowRight size={14} />
             </Link>
@@ -276,18 +270,18 @@ export default function SponsorRoiPage() {
             {SAMPLE_IEEE_PROJECTS.slice(0, 3).map((prj) => (
               <div
                 key={prj.id}
-                className="p-4 rounded-xl bg-zinc-950/60 border border-zinc-800 hover:border-zinc-700 transition-all flex flex-col justify-between"
+                className="p-4 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition-all flex flex-col justify-between"
               >
                 <div>
-                  <div className="text-xs font-mono text-cyan-400 uppercase tracking-wide font-semibold mb-1">
+                  <div className="text-xs font-mono text-cyan-700 uppercase tracking-wide font-semibold mb-1">
                     {prj.category}
                   </div>
-                  <h3 className="font-bold text-zinc-100 text-sm mb-2 line-clamp-1">{prj.title}</h3>
-                  <p className="text-xs text-zinc-400 line-clamp-2 mb-3">{prj.description}</p>
+                  <h3 className="font-bold text-slate-900 text-sm mb-2 line-clamp-1">{prj.title}</h3>
+                  <p className="text-xs text-slate-600 line-clamp-2 mb-3">{prj.description}</p>
                 </div>
-                <div className="pt-3 border-t border-zinc-800/60 flex items-center justify-between text-xs">
-                  <span className="text-zinc-400 font-medium">{prj.participants.length} Active Engineers</span>
-                  <span className="text-amber-400 font-semibold">Tier 1 Sponsored</span>
+                <div className="pt-3 border-t border-slate-200 flex items-center justify-between text-xs">
+                  <span className="text-slate-600 font-medium">{prj.participants.length} Active Engineers</span>
+                  <span className="text-amber-700 font-semibold">Tier 1 Sponsored</span>
                 </div>
               </div>
             ))}

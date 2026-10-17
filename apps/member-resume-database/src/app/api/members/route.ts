@@ -7,7 +7,7 @@
  * @returns {Promise<Response>} JSON response containing array of transformed Student domain entities
  */
 
-import { db, members, memberResumes, events, eventAttendees } from "@ieee/db";
+import { db, members, memberResumes, events, eventAttendees, DENSE_CANDIDATES } from "@ieee/db";
 import { Student } from "@/data/students";
 import { eq, inArray } from "drizzle-orm";
 
@@ -50,22 +50,43 @@ export async function GET(request?: Request) {
         .leftJoin(members, eq(memberResumes.memberId, members.id))
         .limit(250);
     } catch (dbError) {
-      console.warn("[API Warning] Database query encountered error, returning empty list:", dbError);
-      return Response.json({
-        success: true,
-        source: "database",
-        count: 0,
-        data: [],
-      });
+      console.warn("[API Warning] Database query encountered error, falling back to seed dataset:", dbError);
+      candidateRows = [];
     }
 
     if (!candidateRows || candidateRows.length === 0) {
-      return Response.json({
-        success: true,
-        source: "database",
-        count: 0,
-        data: [],
-      });
+      if (Array.isArray(DENSE_CANDIDATES) && DENSE_CANDIDATES.length > 0) {
+        candidateRows = DENSE_CANDIDATES.map((c: any, index: number) => ({
+          id: `candidate-${index + 1}`,
+          memberId: `member-${index + 1}`,
+          fullName: c.name,
+          email: c.email,
+          status: c.status,
+          bio: c.bio,
+          resumePdfUrl: c.resumePdfUrl,
+          socialLinks: (c.socialLinks || []).map((s: any) => ({ platformName: s.platformName, profileUrl: s.profileUrl })),
+          education: c.education,
+          skills: c.skills,
+          workExperience: c.workExperience,
+          projects: c.projects,
+          clubMemberships: c.clubMemberships,
+          certifications: c.certifications,
+          flagged: Boolean(c.flagged),
+          flagReason: c.flagReason || undefined,
+          mainProjectName: (c.projects && c.projects[0]) ? c.projects[0].projectName : undefined,
+          ferpaConsentSigned: true,
+          shareGpaWithRecruiters: true,
+          memberMajor: c.major,
+          memberGradYear: c.graduationYear,
+        }));
+      } else {
+        return Response.json({
+          success: true,
+          source: "database",
+          count: 0,
+          data: [],
+        });
+      }
     }
 
     // Fetch attended IEEE events for all candidates

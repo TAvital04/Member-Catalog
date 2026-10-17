@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-
 import Tooltip from "../common/Tooltip";
 
 interface ActiveFiltersBarProps {
@@ -41,18 +40,20 @@ export default function ActiveFiltersBar({
   if (!hasActiveFilters) return null;
 
   return (
-    <div className="flex flex-wrap items-center gap-1.5 pb-2 border-b border-zinc-800 text-xs">
-      <span className="text-zinc-555 pr-1 select-none font-bold uppercase tracking-wider">Active Filters:</span>
+    <div className="flex flex-wrap items-center gap-1.5 pb-2 border-b border-slate-200/80 text-xs">
+      <span className="text-slate-500 pr-1 select-none font-bold uppercase tracking-wider text-[11px]">
+        Active Filters:
+      </span>
       
       {selectedMajors.map((major) => (
         <span
           key={major}
-          className="flex items-center gap-1 bg-zinc-900 border border-zinc-800 text-zinc-300 px-2 py-0.5 rounded-md animate-fade-in"
+          className="flex items-center gap-1 bg-white border border-slate-200 text-slate-800 px-2.5 py-0.5 rounded-lg shadow-2xs font-medium animate-fade-in"
         >
           <span>{major}</span>
           <button
             onClick={() => removeMajorFilter(major)}
-            className="text-zinc-555 hover:text-red-400 font-bold text-[10px] cursor-pointer ml-1"
+            className="text-slate-400 hover:text-red-600 font-bold text-xs cursor-pointer ml-1"
           >
             ×
           </button>
@@ -62,12 +63,12 @@ export default function ActiveFiltersBar({
       {selectedGradDates.map((date) => (
         <span
           key={date}
-          className="flex items-center gap-1 bg-zinc-900 border border-zinc-800 text-zinc-300 px-2 py-0.5 rounded-md animate-fade-in"
+          className="flex items-center gap-1 bg-white border border-slate-200 text-slate-800 px-2.5 py-0.5 rounded-lg shadow-2xs font-medium animate-fade-in"
         >
           <span>{date}</span>
           <button
             onClick={() => removeGradFilter(date)}
-            className="text-zinc-555 hover:text-red-400 font-bold text-[10px] cursor-pointer ml-1"
+            className="text-slate-400 hover:text-red-600 font-bold text-xs cursor-pointer ml-1"
           >
             ×
           </button>
@@ -77,12 +78,12 @@ export default function ActiveFiltersBar({
       {selectedSkills.map((skill) => (
         <span
           key={skill}
-          className="relative group/tooltip hover:z-50 flex items-center gap-1 bg-zinc-900 border border-zinc-800 text-amber-400/90 font-medium px-2 py-0.5 rounded-md animate-fade-in cursor-help"
+          className="relative group/tooltip hover:z-50 flex items-center gap-1 bg-amber-50 border border-amber-200 text-amber-900 font-semibold px-2.5 py-0.5 rounded-lg shadow-2xs animate-fade-in cursor-help"
         >
           <span>{skill}</span>
           <button
             onClick={() => removeSkillFilter(skill)}
-            className="text-zinc-555 hover:text-red-400 font-bold text-[10px] cursor-pointer ml-1"
+            className="text-amber-600 hover:text-red-600 font-bold text-xs cursor-pointer ml-1"
           >
             ×
           </button>
@@ -93,12 +94,12 @@ export default function ActiveFiltersBar({
       {selectedEvents.map((evtTitle) => (
         <span
           key={evtTitle}
-          className="relative group/tooltip hover:z-50 flex items-center gap-1 bg-zinc-900 border border-zinc-800 text-cyan-400/90 font-medium px-2 py-0.5 rounded-md animate-fade-in cursor-help"
+          className="relative group/tooltip hover:z-50 flex items-center gap-1 bg-sky-50 border border-sky-200 text-sky-900 font-medium px-2.5 py-0.5 rounded-lg shadow-2xs animate-fade-in cursor-help"
         >
           <span>{evtTitle}</span>
           <button
             onClick={() => removeEventFilter?.(evtTitle)}
-            className="text-zinc-555 hover:text-red-400 font-bold text-[10px] cursor-pointer ml-1"
+            className="text-sky-500 hover:text-red-600 font-bold text-xs cursor-pointer ml-1"
           >
             ×
           </button>
@@ -109,12 +110,12 @@ export default function ActiveFiltersBar({
       {selectedCompanies.map((comp) => (
         <span
           key={comp}
-          className="relative group/tooltip hover:z-50 flex items-center gap-1 bg-zinc-900 border border-zinc-800 text-emerald-400/90 font-medium px-2 py-0.5 rounded-md animate-fade-in cursor-help"
+          className="relative group/tooltip hover:z-50 flex items-center gap-1 bg-emerald-50 border border-emerald-200 text-emerald-900 font-medium px-2.5 py-0.5 rounded-lg shadow-2xs animate-fade-in cursor-help"
         >
           <span>{comp}</span>
           <button
             onClick={() => removeCompanyFilter?.(comp)}
-            className="text-zinc-555 hover:text-red-400 font-bold text-[10px] cursor-pointer ml-1"
+            className="text-emerald-500 hover:text-red-600 font-bold text-xs cursor-pointer ml-1"
           >
             ×
           </button>
@@ -125,7 +126,7 @@ export default function ActiveFiltersBar({
       {onClearAll && (
         <button
           onClick={onClearAll}
-          className="text-amber-400 hover:text-amber-300 font-bold text-[11px] underline cursor-pointer ml-2"
+          className="text-amber-700 hover:text-amber-800 font-bold text-xs underline cursor-pointer ml-2"
         >
           Clear All
         </button>
@@ -133,4 +134,3 @@ export default function ActiveFiltersBar({
     </div>
   );
 }
-
