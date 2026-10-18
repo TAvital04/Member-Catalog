@@ -82,6 +82,61 @@
   --color-slate-900: #0f172a;
   --color-slate-950: #020617;
 
+  /* Semantic color badge explicit values (Light mode) */
+  --color-emerald-50: #ecfdf5;
+  --color-emerald-100: #d1fae5;
+  --color-emerald-200: #a7f3d0;
+  --color-emerald-600: #059669;
+  --color-emerald-700: #047857;
+  --color-emerald-800: #065f46;
+  --color-emerald-900: #064e3b;
+
+  --color-blue-50: #eff6ff;
+  --color-blue-100: #dbeafe;
+  --color-blue-200: #bfdbfe;
+  --color-blue-300: #93c5fd;
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+  --color-blue-800: #1e40af;
+  --color-blue-900: #1e3a8a;
+
+  --color-amber-50: #fffbeb;
+  --color-amber-100: #fef3c7;
+  --color-amber-200: #fde68a;
+  --color-amber-300: #fcd34d;
+  --color-amber-400: #fbbf24;
+  --color-amber-700: #b45309;
+  --color-amber-800: #92400e;
+  --color-amber-900: #78350f;
+  --color-amber-950: #451a03;
+
+  --color-sky-50: #f0f9ff;
+  --color-sky-100: #e0f2fe;
+  --color-sky-200: #bae6fd;
+  --color-sky-700: #0369a1;
+  --color-sky-800: #075985;
+  --color-sky-900: #0c4a6e;
+
+  --color-indigo-50: #eef2ff;
+  --color-indigo-100: #e0e7ff;
+  --color-indigo-200: #c7d2fe;
+  --color-indigo-700: #4338ca;
+  --color-indigo-800: #3730a3;
+  --color-indigo-900: #312e81;
+
+  --color-purple-50: #faf5ff;
+  --color-purple-100: #f3e8ff;
+  --color-purple-200: #e9d5ff;
+  --color-purple-700: #7e22ce;
+  --color-purple-800: #6b21a8;
+
+  --color-red-50: #fef2f2;
+  --color-red-100: #fee2e2;
+  --color-red-200: #fecaca;
+  --color-red-600: #dc2626;
+  --color-red-700: #b91c1c;
+  --color-red-800: #991b1b;
+
   /* Dynamic Zinc scale mapped to light surfaces */
   --zinc-955: #f8fafc;
   --zinc-950: #ffffff;
@@ -121,10 +176,10 @@
   --border-subtle: #223150;    /* Refined 1px warm blue border */
   --border-strong: #31456d;    /* Active / focused warm blue border */
 
-  /* Typography */
-  --text-primary: #f8fafc;     /* Bright, high-clarity slate */
-  --text-muted: #8fa4bf;       /* Warm soft slate-blue for secondary text */
-  --text-dark: #f8fafc;
+  /* Typography: Softened, glare-free, highly legible off-white tones */
+  --text-primary: #dbe4f0;     /* Soft warm slate-white, removes piercing glare */
+  --text-muted: #7e94ae;       /* Warm soft slate-blue for secondary text */
+  --text-dark: #dbe4f0;
 
   /* Accent UCF Gold / Amber (Vibrant and warm on dark blue) */
   --accent-gold: #f59e0b;      /* Amber-500 */
@@ -132,7 +187,7 @@
   --shimmer-bg: #152035;
   --shimmer-highlight: rgba(245, 158, 11, 0.18);
 
-  /* Tailwind CSS Utility class integrations - glowing warm tones */
+  /* Tailwind CSS Utility class integrations - refined warm tones */
   --primary-light: #fbbf24;    /* Amber-400 */
   --primary: #f59e0b;          /* Rich Amber-500 */
   --primary-dark: #d97706;     /* Deep Amber-600 */
@@ -180,50 +235,73 @@
   --scrollbar-thumb-hover: #3b5385;
 
   /* Direct Tailwind v4 utility overrides in dark warm blue mode */
-  --color-white: #121b2d;         /* bg-white elements become warm dark blue cards! */
-  --color-slate-50: #0b0f19;      /* bg-slate-50 canvas becomes deep warm midnight blue! */
+  --color-white: #121b2d;         /* bg-white elements become warm dark blue cards */
+  --color-slate-50: #0b0f19;      /* bg-slate-50 canvas becomes deep warm midnight blue */
   --color-slate-100: #18233a;     /* inputs, secondary tags, pill buttons */
   --color-slate-200: #223150;     /* borders, dividers */
   --color-slate-300: #31456d;     /* hover borders, focused states */
-  --color-slate-400: #627d98;     /* subtle icons, placeholder text */
-  --color-slate-500: #8fa4bf;     /* captions, metadata labels */
-  --color-slate-600: #b4c5dc;     /* readable body copy */
-  --color-slate-700: #d4e0f0;     /* high-contrast body text */
-  --color-slate-800: #e8f0fa;     /* subheadings, section labels */
-  --color-slate-900: #f8fafc;     /* main page headings, titles */
-  --color-slate-950: #ffffff;     /* supreme contrast elements */
+  --color-slate-400: #516680;     /* subtle icons, placeholder text */
+  --color-slate-500: #697f99;     /* captions, metadata labels */
+  --color-slate-600: #7e94ae;     /* readable body copy */
+  --color-slate-700: #94a9c2;     /* high-contrast body text */
+  --color-slate-800: #b8c9dd;     /* subheadings, section labels */
+  --color-slate-900: #dbe4f0;     /* main page headings, titles - softened, glare-free */
+  --color-slate-950: #edf2f7;     /* supreme contrast elements - softened from pure #ffffff */
 
-  /* Semantic color badge overrides for dark mode clarity */
-  --color-emerald-50: rgba(6, 78, 59, 0.32);
-  --color-emerald-100: rgba(6, 78, 59, 0.50);
-  --color-emerald-200: #065f46;
-  --color-emerald-600: #34d399;
-  --color-emerald-700: #6ee7b7;
-  --color-emerald-800: #a7f3d0;
+  /* Semantic color badge / pill overrides for dark mode clarity */
+  --color-emerald-50: rgba(6, 78, 59, 0.28);
+  --color-emerald-100: rgba(6, 78, 59, 0.45);
+  --color-emerald-200: rgba(16, 185, 129, 0.35);
+  --color-emerald-600: #10b981;
+  --color-emerald-700: #34d399;
+  --color-emerald-800: #6ee7b7;
+  --color-emerald-900: #a7f3d0;
 
-  --color-amber-50: rgba(120, 53, 15, 0.32);
-  --color-amber-100: rgba(120, 53, 15, 0.50);
-  --color-amber-200: #92400e;
-  --color-amber-300: #fcd34d;
+  --color-blue-50: rgba(29, 78, 216, 0.22);
+  --color-blue-100: rgba(29, 78, 216, 0.40);
+  --color-blue-200: rgba(59, 130, 246, 0.35);
+  --color-blue-300: rgba(96, 165, 250, 0.45);
+  --color-blue-600: #3b82f6;
+  --color-blue-700: #60a5fa;
+  --color-blue-800: #93c5fd;
+  --color-blue-900: #bfdbfe;
+
+  --color-amber-50: rgba(180, 83, 9, 0.25);
+  --color-amber-100: rgba(180, 83, 9, 0.45);
+  --color-amber-200: rgba(245, 158, 11, 0.35);
+  --color-amber-300: #f59e0b;
   --color-amber-400: #fbbf24;
-  --color-amber-700: #fde68a;
-  --color-amber-800: #fef3c7;
-  --color-amber-900: #fffbeb;
-  --color-amber-950: #ffffff;
+  --color-amber-700: #f59e0b;
+  --color-amber-800: #fbbf24;
+  --color-amber-900: #fde68a;
+  --color-amber-950: #fef3c7;
 
-  --color-sky-50: rgba(12, 74, 110, 0.32);
-  --color-sky-100: rgba(12, 74, 110, 0.50);
-  --color-sky-200: #075985;
-  --color-sky-700: #38bdf8;
-  --color-sky-800: #7dd3fc;
-  --color-sky-900: #bae6fd;
+  --color-sky-50: rgba(3, 105, 161, 0.22);
+  --color-sky-100: rgba(3, 105, 161, 0.40);
+  --color-sky-200: rgba(14, 165, 233, 0.35);
+  --color-sky-700: #0284c7;
+  --color-sky-800: #38bdf8;
+  --color-sky-900: #7dd3fc;
 
-  --color-red-50: rgba(127, 29, 29, 0.32);
-  --color-red-100: rgba(127, 29, 29, 0.50);
-  --color-red-200: #991b1b;
-  --color-red-600: #f87171;
-  --color-red-700: #fca5a5;
-  --color-red-800: #fee2e2;
+  --color-indigo-50: rgba(67, 56, 202, 0.25);
+  --color-indigo-100: rgba(67, 56, 202, 0.45);
+  --color-indigo-200: rgba(99, 102, 241, 0.35);
+  --color-indigo-700: #6366f1;
+  --color-indigo-800: #818cf8;
+  --color-indigo-900: #a5b4fc;
+
+  --color-purple-50: rgba(109, 40, 217, 0.25);
+  --color-purple-100: rgba(109, 40, 217, 0.45);
+  --color-purple-200: rgba(139, 92, 246, 0.35);
+  --color-purple-700: #8b5cf6;
+  --color-purple-800: #a78bfa;
+
+  --color-red-50: rgba(185, 28, 28, 0.25);
+  --color-red-100: rgba(185, 28, 28, 0.45);
+  --color-red-200: rgba(239, 68, 68, 0.35);
+  --color-red-600: #ef4444;
+  --color-red-700: #f87171;
+  --color-red-800: #fca5a5;
 
   /* Dynamic Zinc scale mapped to warm dark blue surfaces */
   --zinc-955: #0b0f19;
@@ -235,17 +313,17 @@
   --zinc-750: #2a3c61;
   --zinc-700: #31456d;
   --zinc-650: #48608e;
-  --zinc-600: #627d98;
-  --zinc-550: #748ea8;
-  --zinc-500: #8fa4bf;
-  --zinc-450: #a3b6ce;
-  --zinc-400: #b4c5dc;
-  --zinc-350: #c7d5e7;
-  --zinc-300: #d4e0f0;
-  --zinc-205: #e2ebf6;
-  --zinc-200: #e8f0fa;
-  --zinc-155: #f1f6fc;
-  --zinc-150: #f6f9fd;
-  --zinc-100: #ffffff;
-  --zinc-50: #ffffff;
+  --zinc-600: #516680;
+  --zinc-550: #5c7490;
+  --zinc-500: #647b95;
+  --zinc-450: #7187a2;
+  --zinc-400: #7e94ae;
+  --zinc-350: #869cb7;
+  --zinc-300: #94a9c2;
+  --zinc-205: #b0c3d9;
+  --zinc-200: #b8c9dd;
+  --zinc-155: #c2d0e0;
+  --zinc-150: #cbd7e6;
+  --zinc-100: #dbe4f0;
+  --zinc-50: #edf2f7;
 }

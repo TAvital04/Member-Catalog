@@ -11,12 +11,12 @@ interface AvatarProps {
 export default function Avatar({ name, size = "md", className = "" }: AvatarProps) {
   const getAvatarStyle = (nameStr: string) => {
     const styles = [
-      "bg-slate-100 text-slate-800 border border-slate-200",
-      "bg-amber-50 text-slate-800 border border-amber-200/60",
-      "bg-sky-50 text-slate-800 border border-sky-200/60",
-      "bg-emerald-50 text-slate-800 border border-emerald-200/60",
-      "bg-indigo-50 text-slate-800 border border-indigo-200/60",
-      "bg-slate-50 text-slate-800 border border-slate-200",
+      "bg-slate-100 text-slate-700 border border-slate-200",
+      "bg-amber-50 text-amber-800 border border-amber-200/60",
+      "bg-sky-50 text-sky-800 border border-sky-200/60",
+      "bg-emerald-50 text-emerald-800 border border-emerald-200/60",
+      "bg-indigo-50 text-indigo-800 border border-indigo-200/60",
+      "bg-purple-50 text-purple-800 border border-purple-200/60",
     ];
     let sum = 0;
     for (let i = 0; i < nameStr.length; i++) {
