@@ -31,7 +31,7 @@ function StudentRow({
       onClick={() => onClick(student)}
       data-student-id={student.id}
       className={`relative group flex flex-col md:flex-row md:items-center justify-between p-3.5 rounded-xl bg-white hover:bg-slate-50 transition-all border shadow-2xs cursor-pointer gap-4 ${
-        adminMode && student.flagged ? "border-red-300 bg-red-50/20 hover:border-red-400" : "border-slate-200 hover:border-slate-300"
+        student.flagged ? "border-red-300/80 bg-red-50/15 hover:border-red-400" : "border-slate-200 hover:border-slate-300"
       }`}
     >
       {/* Left: Avatar & Personal Info */}
@@ -70,10 +70,21 @@ function StudentRow({
 
       {/* Right: Status and Skills */}
       <div className="flex items-center gap-4 min-w-[280px] justify-between md:justify-end">
-        {/* Status Badge */}
-        <div className="flex flex-col items-start md:items-end">
-          <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1 md:hidden">Status</span>
-          <StatusBadge status={student.status} />
+        {/* Status Badge & Flagged Notice */}
+        <div className="flex flex-col items-start md:items-end gap-1">
+          <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5 md:hidden">Status</span>
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <StatusBadge status={student.status} />
+            {student.flagged && (
+              <span
+                className="text-[9.5px] font-bold text-red-700 bg-red-50 border border-red-200 px-2 py-0.5 rounded-full inline-flex items-center gap-1 shrink-0"
+                title={`Flag Reason: ${student.flagReason || "Under review"}`}
+              >
+                <Flag size={9} className="fill-current text-red-500 shrink-0" />
+                <span>Flagged: {student.flagReason || "Under review"}</span>
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Skills */}

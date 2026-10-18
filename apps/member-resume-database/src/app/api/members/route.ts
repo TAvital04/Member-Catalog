@@ -135,8 +135,6 @@ export async function GET(request?: Request) {
 
     // Safely transform Drizzle database rows into Student domain models with FERPA privacy enforcement
     const transformedStudents: Student[] = candidateRows
-      // Filter out flagged students for general public viewers
-      .filter((row: any) => isAdmin || !row.flagged)
       .map((row: any) => {
         const socialLinks = Array.isArray(row.socialLinks)
           ? row.socialLinks.map((l: any) => ({ name: l.platformName || "Link", text: l.profileUrl || "" }))
@@ -232,8 +230,8 @@ export async function GET(request?: Request) {
           degree: primaryEdu.degreeType || "Bachelor of Science",
           gradDate: primaryEdu.endDate ? primaryEdu.endDate : (row.memberGradYear ? `May ${row.memberGradYear}` : "May 2026"),
           status: (row.status as any) || "Seeking Internship",
-          flagged: isAdmin ? Boolean(row.flagged) : false,
-          flagReason: isAdmin ? (row.flagReason || undefined) : undefined,
+          flagged: Boolean(row.flagged),
+          flagReason: row.flagReason || undefined,
           mainProjectName: row.mainProjectName || undefined,
           points,
           recentPoints,

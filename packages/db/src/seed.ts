@@ -213,6 +213,8 @@ export const DENSE_CANDIDATES = [
     major: "Computer Science",
     graduationYear: "2025",
     status: "Employed",
+    flagged: true,
+    flagReason: "AI-generated profile content flagged for review",
     bio: "Senior CS student & Machine Learning Researcher at UCF Center for Research in Computer Vision (CRCV). Specializing in PyTorch, computer vision, vision-language models, and edge AI deployment.",
     resumePdfUrl: "https://drive.google.com/file/d/elena-rostova-resume/view",
     socialLinks: [
@@ -273,6 +275,8 @@ export const DENSE_CANDIDATES = [
     major: "Mechanical Engineering",
     graduationYear: "2026",
     status: "Seeking Internship",
+    flagged: true,
+    flagReason: "AI-generated portfolio content under audit",
     bio: "Mechanical Engineering junior focused on thermal management, finite element analysis (FEA), computational fluid dynamics (CFD), and solar racing chassis design.",
     resumePdfUrl: "https://drive.google.com/file/d/jordan-taylor-resume/view",
     socialLinks: [
@@ -601,6 +605,8 @@ export const DENSE_CANDIDATES = [
     major: "Aerospace Engineering",
     graduationYear: "2026",
     status: "Seeking Internship",
+    flagged: true,
+    flagReason: "Portfolio contains unverified claims under review",
     bio: "Aerospace Engineering junior specializing in flight dynamics, unmanned aerial systems (UAS), autopilot control systems (PX4/ArduPilot), and aerodynamic modeling.",
     resumePdfUrl: "https://drive.google.com/file/d/lucas-rossi-resume/view",
     socialLinks: [
@@ -1105,6 +1111,8 @@ export const DENSE_CANDIDATES = [
     major: "Electrical Engineering",
     graduationYear: "2025",
     status: "Seeking Full-time",
+    flagged: true,
+    flagReason: "Portfolio contains unverified claims under review",
     bio: "RSO UCF Secretary & Senior Electrical Engineering major. Focused on embedded firmware, digital signal processing (DSP), audio electronics, and microcontrollers.",
     resumePdfUrl: "https://drive.google.com/file/d/tyler-brooks-resume/view",
     socialLinks: [

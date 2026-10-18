@@ -94,11 +94,10 @@ export default function StudentLowerInfo({
                   ? "Profile AI Slop Flagged"
                   : "Profile Flagged / Reported"}
               </span>
-              {!student.duplicateGroup && (
-                <p className="text-xs text-zinc-400 mt-1.5 leading-relaxed italic">
-                  Reason: {student.flagReason || "No reason specified"}
-                </p>
-              )}
+              <p className="text-xs text-zinc-300 mt-1.5 leading-relaxed">
+                <span className="font-bold text-zinc-400">Reason:</span>{" "}
+                <span className="italic text-red-300/90">&ldquo;{student.flagReason || (student.duplicateGroup ? `Duplicate group: ${student.duplicateGroup}` : "Under administrative review")}&rdquo;</span>
+              </p>
             </div>
             {onResolve && adminMode && (
               <button

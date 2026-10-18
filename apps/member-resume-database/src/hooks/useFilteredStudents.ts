@@ -80,10 +80,6 @@ export function useFilteredStudents({
   const filteredStudents = useMemo(() => {
     return students
       .filter((student) => {
-        // Standard non-admin directory view hides flagged profiles pending admin moderation
-        if (!adminMode && student.flagged) {
-          return false;
-        }
 
         if (searchQuery.trim()) {
           const query = searchQuery.toLowerCase();

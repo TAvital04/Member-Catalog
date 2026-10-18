@@ -40,24 +40,24 @@ function StudentCard({
       onKeyDown={handleKeyDown}
       data-student-id={student.id}
       className={`relative group rounded-2xl bg-white border p-4 md:p-5 flex flex-col justify-between h-[195px] md:h-[295px] cursor-pointer transition-all duration-200 shadow-2xs hover:shadow-md hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 ${
-        adminMode && student.flagged
-          ? "border-red-300 bg-red-50/20 hover:border-red-400"
+        student.flagged
+          ? "border-red-300/80 bg-red-50/15 hover:border-red-400"
           : "border-slate-200/90 hover:border-slate-300"
       }`}
     >
-      {/* Flagged Indicator Icon at Top Right */}
+      {/* Flagged Indicator at Top Right */}
       {student.flagged && (
         <div
-          className="absolute top-3 right-3 md:top-4 md:right-4 text-red-600 bg-red-50 border border-red-200 p-1.5 rounded-lg shadow-2xs z-20"
-          title={student.flagReason || "Flagged / Reported"}
+          className="absolute top-3 right-3 md:top-4 md:right-4 text-red-600 bg-red-50 border border-red-200 p-1.5 rounded-lg shadow-2xs z-20 flex items-center justify-center"
+          title={`Flagged: ${student.flagReason || "Under review"}`}
         >
-          <Flag size={12} className="fill-current" />
+          <Flag size={12} className="fill-current text-red-500" />
         </div>
       )}
 
       {/* Top Section */}
       <div className="flex flex-col gap-2 md:gap-3">
-        <div className="flex items-start justify-between min-w-0">
+        <div className={`flex items-start justify-between min-w-0 ${student.flagged ? "pr-8 md:pr-10" : ""}`}>
           <div className="flex items-center gap-2.5 md:gap-3 min-w-0 grow">
             <Avatar name={student.name} size="sm" className="md:hidden" />
             <Avatar name={student.name} size="md" className="hidden md:flex" />
@@ -78,9 +78,18 @@ function StudentCard({
         </p>
       </div>
 
-      {/* Middle Section (Job Search Status Only) */}
-      <div className="flex items-center">
+      {/* Middle Section (Job Search Status & Flagged Reason) */}
+      <div className="flex items-center gap-2 flex-wrap">
         <StatusBadge status={student.status} />
+        {student.flagged && (
+          <span
+            className="text-[9.5px] font-bold text-red-700 bg-red-50 border border-red-200 px-2 py-0.5 rounded-full inline-flex items-center gap-1 shrink-0 max-w-[180px] md:max-w-[210px]"
+            title={`Flag Reason: ${student.flagReason || "Under review"}`}
+          >
+            <Flag size={9} className="fill-current text-red-500 shrink-0" />
+            <span className="truncate">Flagged: {student.flagReason || "Under review"}</span>
+          </span>
+        )}
       </div>
 
       {/* Bottom Section */}
