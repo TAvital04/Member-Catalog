@@ -75,14 +75,14 @@ export async function POST(req: Request) {
     const contactDisclaimer =
       `\n\n----------------------------------------\n` +
       `PLEASE NOTE: Do not reply directly to this automated address as inbox replies are unmonitored.\n` +
-      `For inquiries or support, please contact the IEEE UCF administrative team at ${ADMIN_EMAIL}.`;
+      `For inquiries or support, please contact the RSO UCF administrative team at ${ADMIN_EMAIL}.`;
 
     const fullMessage = String(message).slice(0, 5000) + contactDisclaimer;
 
     const apiKey = process.env.RESEND_API_KEY;
     if (apiKey) {
       const resend = new Resend(apiKey);
-      const fromAddress = process.env.RESEND_FROM_EMAIL || "IEEE UCF Member Database <onboarding@resend.dev>";
+      const fromAddress = process.env.RESEND_FROM_EMAIL || "RSO UCF Member Database <onboarding@resend.dev>";
 
       const emailResponse = await resend.emails.send({
         from: fromAddress,

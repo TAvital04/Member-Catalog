@@ -22,6 +22,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import DirectoryNavbar from "@/components/directory/DirectoryNavbar";
+import DirectoryStatsHeader from "@/components/directory/DirectoryStatsHeader";
 import { useThemeManager } from "@/hooks/useThemeManager";
 import { useStudentData } from "@/hooks/useStudentData";
 import Avatar from "@/components/common/Avatar";
@@ -98,78 +99,47 @@ function IEEEProjectsContent() {
         handleRoleChange={() => {}}
       />
 
-      {/* Hero Header Banner */}
-      <div className="w-full bg-white border-b border-slate-200 py-8 px-4 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
-          <div>
-            <Link
-              href="/"
-              className="inline-flex items-center gap-1.5 text-xs text-slate-600 hover:text-slate-900 font-semibold mb-3 transition-colors"
-            >
-              <ArrowLeft size={14} className="text-slate-400" />
-              <span>Back to Member Catalog Directory</span>
-            </Link>
-            <div className="flex items-center gap-3">
-              <div className="p-3 rounded-2xl bg-slate-100 border border-slate-200 text-slate-500 shadow-2xs">
-                <FolderGit2 size={24} className="stroke-[2]" />
-              </div>
-              <div>
-                <h1 className="text-xl md:text-3xl font-black text-slate-900 uppercase tracking-tight flex items-center gap-2">
-                  IEEE UCF Chapter Projects
-                </h1>
-                <p className="text-xs md:text-sm text-slate-600 mt-1 leading-relaxed max-w-2xl">
-                  Explore hands-on hardware builds, autonomous robotics, power inverters, and wireless IoT networks engineered by UCF IEEE students.
-                </p>
-              </div>
-            </div>
-          </div>
+      {/* Directory Page Header */}
+      <DirectoryStatsHeader
+        title="RSO UCF Chapter Projects"
+        description="Explore hands-on hardware builds, autonomous robotics, power inverters, and wireless IoT networks engineered by UCF RSO students."
+      />
 
-          <div className="flex items-center gap-3 shrink-0">
-            <div className="px-4 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center gap-3 shadow-2xs">
-              <div className="text-center">
-                <span className="block text-lg font-black text-slate-900 leading-none">{projects.length}</span>
-                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Active Projects</span>
-              </div>
-            </div>
-          </div>
+      {/* Controls Bar: Search & Category Filter */}
+      <section className="max-w-7xl w-full mx-auto px-4 mb-5 flex flex-col md:flex-row md:items-center justify-between gap-3">
+        {/* Search Bar */}
+        <div className="relative w-full md:max-w-md">
+          <Search size={16} className="absolute left-3.5 top-3.5 text-slate-400 pointer-events-none" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search projects by title, tool, or skill..."
+            className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-9 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/10 shadow-2xs transition-all"
+          />
         </div>
-      </div>
+
+        {/* Category Filter Pills */}
+        <div className="flex flex-wrap items-center gap-1.5">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              type="button"
+              onClick={() => setSelectedCategory(cat)}
+              className={`px-3 py-1.5 rounded-xl text-xs transition-all cursor-pointer ${
+                selectedCategory === cat
+                  ? "bg-slate-200/90 text-slate-900 border border-slate-300 font-bold shadow-2xs"
+                  : "bg-white border border-slate-200 text-slate-600 hover:text-slate-900 hover:border-slate-300 font-medium shadow-2xs"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      </section>
 
       {/* Main Content Area */}
-      <main className="max-w-7xl w-full mx-auto px-4 pt-8 flex flex-col gap-6 relative z-10">
-        {/* Controls Bar: Search & Category Filter */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-4">
-          {/* Category Filter Pills */}
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs text-slate-500 font-bold uppercase tracking-wider pr-1">Category:</span>
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-3 py-1.5 rounded-xl text-xs transition-all cursor-pointer ${
-                  selectedCategory === cat
-                    ? "bg-slate-200/80 text-slate-900 border border-slate-300 font-bold shadow-2xs"
-                    : "bg-white border border-slate-200 text-slate-600 hover:text-slate-900 hover:border-slate-300 font-medium"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-
-          {/* Search Bar */}
-          <div className="relative w-full md:w-72">
-            <Search size={14} className="absolute left-3 top-3 text-slate-400" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search projects, tools, skills..."
-              className="w-full pl-9 pr-3 py-2 rounded-xl bg-white border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-400 transition-colors shadow-2xs"
-            />
-          </div>
-        </div>
+      <main className="max-w-7xl w-full mx-auto px-4 flex flex-col gap-6 relative z-10">
 
         {/* Projects Grid */}
         {isLoading ? (
@@ -239,12 +209,15 @@ function IEEEProjectsContent() {
                       </span>
                       <div className="flex flex-wrap gap-1.5">
                         {project.tools.slice(0, 4).map((tool, idx) => (
-                          <span
+                          <Link
                             key={idx}
-                            className="px-2 py-0.5 rounded-lg bg-slate-50 border border-slate-200 text-[10.5px] font-mono font-medium text-slate-700"
+                            href={`/?skills=${encodeURIComponent(tool.name)}`}
+                            onClick={(e) => e.stopPropagation()}
+                            className="px-2 py-0.5 rounded-lg bg-slate-50 border border-slate-200 hover:border-amber-300 hover:text-amber-900 hover:bg-amber-50/70 text-[10.5px] font-mono font-medium text-slate-700 transition-colors cursor-pointer inline-block"
+                            title={`Filter candidates with skill/tool: ${tool.name}`}
                           >
                             {tool.name}
-                          </span>
+                          </Link>
                         ))}
                         {project.tools.length > 4 && (
                           <span className="px-2 py-0.5 rounded-lg bg-slate-50 border border-slate-200 text-[10px] text-slate-500">
@@ -367,6 +340,7 @@ function IEEEProjectsContent() {
       {activeModalProject && (
         <ProjectModal
           project={activeModalProject}
+          students={students}
           onClose={() => setActiveModalProject(null)}
           onSelectMember={(memberId) => {
             handleSelectMember(memberId);

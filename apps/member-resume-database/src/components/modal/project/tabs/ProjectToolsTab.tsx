@@ -1,14 +1,23 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { ProjectTool } from "@/data/projects";
-import { Wrench, Cpu, CircuitBoard, Code2, Box, Gauge, Layers } from "lucide-react";
+import { Student } from "@/data/students";
+import { studentHasSkill } from "@/lib/skillMatching";
+import { Wrench, Cpu, CircuitBoard, Code2, Box, Gauge, Layers, ArrowRight, Users } from "lucide-react";
 
 interface ProjectToolsTabProps {
   tools: ProjectTool[];
+  students?: Student[];
+  onClose?: () => void;
 }
 
-export default function ProjectToolsTab({ tools = [] }: ProjectToolsTabProps) {
+export default function ProjectToolsTab({
+  tools = [],
+  students = [],
+  onClose,
+}: ProjectToolsTabProps) {
   const safeTools = Array.isArray(tools) ? tools : [];
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
@@ -45,9 +54,10 @@ export default function ProjectToolsTab({ tools = [] }: ProjectToolsTabProps) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider py-1 leading-normal">
-          <Wrench size={14} className="text-slate-400 shrink-0" />
+          <Wrench size={14} className="text-amber-500 shrink-0" />
           <span>Tools, Hardware & Tech Stack ({safeTools.length})</span>
         </div>
+        <span className="text-[11px] text-slate-400">Click to filter candidates</span>
       </div>
 
       {safeTools.length === 0 ? (
@@ -82,19 +92,46 @@ export default function ProjectToolsTab({ tools = [] }: ProjectToolsTabProps) {
               {filteredTools.map((tool, idx) => {
                 const Icon = getCategoryIcon(tool.category);
                 const colorClass = getCategoryColor(tool.category);
+                const matchingStudents =
+                  students?.filter((s) => studentHasSkill(s.skills, tool.name)) || [];
+                const matchingCount = matchingStudents.length;
+
                 return (
-                  <div
+                  <Link
                     key={idx}
-                    className="p-3.5 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 transition-all flex items-center gap-3 shadow-2xs"
+                    href={`/?skills=${encodeURIComponent(tool.name)}`}
+                    onClick={() => onClose?.()}
+                    className="p-3.5 rounded-2xl bg-white border border-slate-200 hover:border-amber-400 hover:bg-amber-50/40 transition-all flex items-center gap-3 shadow-2xs group cursor-pointer"
+                    title={`Filter candidates with skill/tool: ${tool.name}`}
                   >
-                    <div className={`p-2.5 rounded-xl border ${colorClass} shrink-0`}>
-                      <Icon size={18} />
+                    <div className={`p-2.5 rounded-xl border ${colorClass} shrink-0 group-hover:border-amber-300 group-hover:bg-amber-100/60 transition-colors`}>
+                      <Icon size={18} className="group-hover:text-amber-800 transition-colors" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-xs font-bold text-slate-900 truncate">{tool.name}</h4>
-                      <span className="text-[10px] text-slate-500 font-mono block mt-0.5">{tool.category}</span>
+                      <div className="flex items-center justify-between gap-1">
+                        <h4 className="text-xs font-bold text-slate-900 group-hover:text-amber-950 truncate transition-colors">
+                          {tool.name}
+                        </h4>
+                        <ArrowRight
+                          size={12}
+                          className="text-slate-300 group-hover:text-amber-500 group-hover:translate-x-0.5 transition-all shrink-0"
+                        />
+                      </div>
+                      <div className="flex items-center justify-between gap-2 mt-0.5">
+                        <span className="text-[10px] text-slate-500 font-mono truncate">{tool.category}</span>
+                        {matchingCount > 0 ? (
+                          <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 group-hover:bg-amber-100 text-slate-600 group-hover:text-amber-900 transition-colors shrink-0 flex items-center gap-1">
+                            <Users size={10} className="text-slate-400 group-hover:text-amber-600" />
+                            {matchingCount} candidate{matchingCount === 1 ? "" : "s"}
+                          </span>
+                        ) : (
+                          <span className="text-[10px] text-slate-400 group-hover:text-amber-700 font-medium shrink-0">
+                            Filter →
+                          </span>
+                        )}
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 );
               })}
             </div>

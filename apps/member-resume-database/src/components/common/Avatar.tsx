@@ -4,7 +4,7 @@ import React from "react";
 
 interface AvatarProps {
   name: string;
-  size?: "sm" | "md" | "lg";
+  size?: "xs" | "sm" | "md" | "lg";
   className?: string;
 }
 
@@ -38,6 +38,7 @@ export default function Avatar({ name, size = "md", className = "" }: AvatarProp
   };
 
   const sizeClasses = {
+    xs: "w-6 h-6 rounded-full text-[9px] font-bold",
     sm: "w-8 h-8 rounded-lg text-[10px] font-extrabold",
     md: "w-12 h-12 rounded-xl text-xs font-bold",
     lg: "w-16 h-16 rounded-2xl text-base font-black",

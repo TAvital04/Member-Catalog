@@ -47,7 +47,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "IEEE Micromouse Autonomous Maze Solver",
+        projectName: "RSO Micromouse Autonomous Maze Solver",
         description: "Built high-speed maze-solving mobile robot using ROS2, C++, infrared distance sensors, and custom PID motor controllers.",
         startDate: "2024-01-15",
         endDate: "2024-11-30",
@@ -57,7 +57,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "Hardware Committee Chair",
         startDate: "2022-09-01",
         endDate: "2025-05-01",
@@ -122,7 +122,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "IEEE UCF Member Catalog & Resume Hub",
+        projectName: "RSO UCF Member Catalog & Resume Hub",
         description: "Full-stack Next.js 15 web application with tRPC, Tailwind CSS v4, Drizzle ORM, and Neon PostgreSQL serverless database.",
         startDate: "2024-08-01",
         endDate: "2025-04-15",
@@ -132,7 +132,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "Webmaster / Lead Software Engineer",
         startDate: "2022-08-25",
         endDate: "2025-05-01",
@@ -187,7 +187,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "IEEE Solar Knight Racing ESC",
+        projectName: "RSO Solar Knight Racing ESC",
         description: "High-efficiency motor speed controller PCB designed in Altium for solar racing vehicle telemetry.",
         startDate: "2024-08-25",
         endDate: "2024-12-10",
@@ -197,7 +197,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "Power & Energy Chapter Lead",
         startDate: "2023-01-15",
         endDate: "2025-05-01",
@@ -247,7 +247,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "IEEE Quadcopter Swarm Vision Pipeline",
+        projectName: "RSO Quadcopter Swarm Vision Pipeline",
         description: "Real-time thermal anomaly detection pipeline using PyTorch MobileNet-V3 quantized on Coral Edge TPU.",
         startDate: "2024-01-10",
         endDate: "2024-05-01",
@@ -257,7 +257,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "AI & Machine Learning Lead",
         startDate: "2022-09-01",
         endDate: "2025-05-01",
@@ -314,7 +314,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "IEEE Solar Knight Racing ESC",
+        projectName: "RSO Solar Knight Racing ESC",
         description: "Designed ultra-lightweight carbon-fiber aerodynamic shell and solar panel mounting structure.",
         startDate: "2024-01-10",
         endDate: "2024-11-20",
@@ -324,7 +324,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "Solar Racing Lead",
         startDate: "2023-01-10",
         endDate: "2026-05-01",
@@ -340,7 +340,7 @@ export const DENSE_CANDIDATES = [
     major: "Computer Engineering",
     graduationYear: "2025",
     status: "Seeking Full-time",
-    bio: "IEEE UCF Student Chapter Executive Chair. Senior Computer Engineering student specializing in computer architecture, semiconductor validation, and SoC design.",
+    bio: "RSO UCF Student Chapter Executive Chair. Senior Computer Engineering student specializing in computer architecture, semiconductor validation, and SoC design.",
     resumePdfUrl: "https://drive.google.com/file/d/david-chen-resume/view",
     socialLinks: [
       { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/david-chen-ucf" },
@@ -356,7 +356,7 @@ export const DENSE_CANDIDATES = [
         startDate: "2021-08-23",
         endDate: "2025-05-03",
         isCurrent: true,
-        description: "Burnett Honors College. Executive Chair of IEEE UCF Chapter."
+        description: "Burnett Honors College. Executive Chair of RSO UCF Chapter."
       }
     ],
     skills: [
@@ -382,7 +382,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "IEEE Micromouse Autonomous Maze Solver",
+        projectName: "RSO Micromouse Autonomous Maze Solver",
         description: "Custom RISC-V microcontroller core for real-time maze solver flood-fill pathfinding algorithm.",
         startDate: "2023-09-01",
         endDate: "2024-05-01",
@@ -392,12 +392,12 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "Executive Chair",
         startDate: "2022-08-25",
         endDate: "2025-05-01",
         isActive: true,
-        description: "Presiding over 450+ member student organization, overseeing $40k annual budget, and liaising with IEEE Florida Section."
+        description: "Presiding over 450+ member student organization, overseeing $40k annual budget, and liaising with RSO Florida Section."
       }
     ],
     certifications: []
@@ -408,7 +408,7 @@ export const DENSE_CANDIDATES = [
     major: "Computer Science",
     graduationYear: "2025",
     status: "Seeking Full-time",
-    bio: "IEEE UCF Vice Chair & Cyber Security specialist. Dual-focus in cloud security architecture, zero-trust network design, and secure software development.",
+    bio: "RSO UCF Vice Chair & Cyber Security specialist. Dual-focus in cloud security architecture, zero-trust network design, and secure software development.",
     resumePdfUrl: "https://drive.google.com/file/d/brianna-morales-resume/view",
     socialLinks: [
       { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/brianna-morales-sec" },
@@ -442,7 +442,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "IEEE Smart Campus IoT Beacon Network",
+        projectName: "RSO Smart Campus IoT Beacon Network",
         description: "Implemented encrypted AES-256 BLE telemetry beacon network for real-time UCF campus event tracking.",
         startDate: "2024-01-15",
         endDate: "2024-11-30",
@@ -452,7 +452,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "Vice Chair",
         startDate: "2022-09-01",
         endDate: "2025-05-01",
@@ -507,7 +507,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "IEEE PCB Design & Surface Mount Workshop Series",
+        projectName: "RSO PCB Design & Surface Mount Workshop Series",
         description: "Designed custom 2-layer USB-C rechargeable LED badge PCB in KiCAD for workshop attendees.",
         startDate: "2024-09-01",
         endDate: "2024-11-15",
@@ -517,7 +517,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "Workshops Lead",
         startDate: "2023-09-01",
         endDate: "2027-05-01",
@@ -533,7 +533,7 @@ export const DENSE_CANDIDATES = [
     major: "Computer Science",
     graduationYear: "2024",
     status: "Employed",
-    bio: "UCF CS Alumna ('24) & Full-Stack Software Engineer at Google. Former IEEE UCF Software Director passionate about cloud infrastructure, React, and scalable backend services.",
+    bio: "UCF CS Alumna ('24) & Full-Stack Software Engineer at Google. Former RSO UCF Software Director passionate about cloud infrastructure, React, and scalable backend services.",
     resumePdfUrl: "https://drive.google.com/file/d/maya-patel-resume/view",
     socialLinks: [
       { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/maya-patel-swe" },
@@ -549,7 +549,7 @@ export const DENSE_CANDIDATES = [
         startDate: "2020-08-24",
         endDate: "2024-05-04",
         isCurrent: false,
-        description: "Summa Cum Laude. Founder of IEEE Software SIG."
+        description: "Summa Cum Laude. Founder of RSO Software SIG."
       }
     ],
     skills: [
@@ -575,7 +575,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "IEEE UCF Member Catalog & Resume Hub",
+        projectName: "RSO UCF Member Catalog & Resume Hub",
         description: "Architected initial SQL schema and API endpoints for student catalog.",
         startDate: "2023-08-15",
         endDate: "2024-04-30",
@@ -585,12 +585,12 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "Software Director (Alumni)",
         startDate: "2021-08-25",
         endDate: "2024-05-04",
         isActive: false,
-        description: "Led software workshops and managed IEEE UCF chapter web platform."
+        description: "Led software workshops and managed RSO UCF chapter web platform."
       }
     ],
     certifications: []
@@ -642,7 +642,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "IEEE Quadcopter Swarm",
+        projectName: "RSO Quadcopter Swarm",
         description: "Autonomous multi-drone mesh network flight controller utilizing MAVLink protocol and PX4 autopilot.",
         startDate: "2024-01-15",
         endDate: "2024-12-01",
@@ -652,7 +652,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "Robotics Lead",
         startDate: "2023-01-10",
         endDate: "2026-05-01",
@@ -702,7 +702,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "IEEE Micromouse Autonomous Maze Solver",
+        projectName: "RSO Micromouse Autonomous Maze Solver",
         description: "Implemented 3D OpenGL simulation of maze solver environment with real-time sensor visualization.",
         startDate: "2024-02-01",
         endDate: "2024-06-01",
@@ -712,7 +712,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "Gaming & Graphics SIG Lead",
         startDate: "2023-09-01",
         endDate: "2027-05-01",
@@ -771,7 +771,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "RF & Wireless Lead (Alumni)",
         startDate: "2021-09-01",
         endDate: "2024-05-04",
@@ -787,7 +787,7 @@ export const DENSE_CANDIDATES = [
     major: "Industrial Engineering",
     graduationYear: "2026",
     status: "Seeking Internship",
-    bio: "IEEE UCF Treasurer & Industrial Engineering junior. Focused on supply chain optimization, operations research, project management, and data analytics.",
+    bio: "RSO UCF Treasurer & Industrial Engineering junior. Focused on supply chain optimization, operations research, project management, and data analytics.",
     resumePdfUrl: "https://drive.google.com/file/d/sophia-martinez-resume/view",
     socialLinks: [
       { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/sophia-martinez-ie" }
@@ -828,7 +828,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "IEEE Smart Campus IoT Beacon Network",
+        projectName: "RSO Smart Campus IoT Beacon Network",
         description: "Conducted spatial foot-traffic analytics using SQL and Tableau from IoT beacon sensor logs.",
         startDate: "2024-02-01",
         endDate: "2024-11-15",
@@ -838,7 +838,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "Treasurer",
         startDate: "2022-09-01",
         endDate: "2026-05-01",
@@ -885,7 +885,7 @@ export const DENSE_CANDIDATES = [
     workExperience: [],
     projects: [
       {
-        projectName: "IEEE PCB Design & Surface Mount Workshop Series",
+        projectName: "RSO PCB Design & Surface Mount Workshop Series",
         description: "Built automated registration bot in Python for workshop signups.",
         startDate: "2024-09-10",
         endDate: "2024-10-15",
@@ -895,7 +895,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "Freshman Representative",
         startDate: "2024-08-25",
         endDate: "2028-05-01",
@@ -911,7 +911,7 @@ export const DENSE_CANDIDATES = [
     major: "Computer Engineering",
     graduationYear: "2025",
     status: "Seeking Full-time",
-    bio: "Senior Computer Engineering major & IEEE SoutheastCon Competition Chair. Expert in autonomous vehicle controls, CAN bus, ROS2, and embedded hardware integration.",
+    bio: "Senior Computer Engineering major & RSO SoutheastCon Competition Chair. Expert in autonomous vehicle controls, CAN bus, ROS2, and embedded hardware integration.",
     resumePdfUrl: "https://drive.google.com/file/d/hannah-al-mansoor-resume/view",
     socialLinks: [
       { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/hannah-al-mansoor" },
@@ -953,7 +953,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "IEEE Micromouse Autonomous Maze Solver",
+        projectName: "RSO Micromouse Autonomous Maze Solver",
         description: "Designed custom 4-layer PCB mainboard incorporating STM32 microcontroller and dual encoder drivers.",
         startDate: "2023-09-01",
         endDate: "2024-04-30",
@@ -963,12 +963,12 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "SoutheastCon Chair",
         startDate: "2022-09-01",
         endDate: "2025-05-01",
         isActive: true,
-        description: "Directing 25 student engineers competing in IEEE Region 3 annual hardware competition."
+        description: "Directing 25 student engineers competing in RSO Region 3 annual hardware competition."
       }
     ],
     certifications: []
@@ -1012,7 +1012,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "IEEE Quadcopter Swarm",
+        projectName: "RSO Quadcopter Swarm",
         description: "Developed optical LiDAR rangefinding sensor interface module for airborne collision avoidance.",
         startDate: "2024-02-01",
         endDate: "2024-11-15",
@@ -1022,7 +1022,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "Quantum & Optics SIG Lead",
         startDate: "2023-01-15",
         endDate: "2026-05-01",
@@ -1038,7 +1038,7 @@ export const DENSE_CANDIDATES = [
     major: "Computer Science",
     graduationYear: "2024",
     status: "Employed",
-    bio: "UCF CS Alumna ('24) & Cloud Systems Engineer at Microsoft. Former IEEE UCF Corporate Liaison specializing in Azure infrastructure and distributed systems.",
+    bio: "UCF CS Alumna ('24) & Cloud Systems Engineer at Microsoft. Former RSO UCF Corporate Liaison specializing in Azure infrastructure and distributed systems.",
     resumePdfUrl: "https://drive.google.com/file/d/isabella-rossi-resume/view",
     socialLinks: [
       { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/isabella-rossi-cloud" }
@@ -1079,7 +1079,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "IEEE UCF Member Catalog & Resume Hub",
+        projectName: "RSO UCF Member Catalog & Resume Hub",
         description: "Built initial authentication and role-based access control (RBAC) middleware.",
         startDate: "2023-10-01",
         endDate: "2024-04-15",
@@ -1089,7 +1089,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "Corporate Liaison (Alumni)",
         startDate: "2021-09-01",
         endDate: "2024-05-04",
@@ -1105,7 +1105,7 @@ export const DENSE_CANDIDATES = [
     major: "Electrical Engineering",
     graduationYear: "2025",
     status: "Seeking Full-time",
-    bio: "IEEE UCF Secretary & Senior Electrical Engineering major. Focused on embedded firmware, digital signal processing (DSP), audio electronics, and microcontrollers.",
+    bio: "RSO UCF Secretary & Senior Electrical Engineering major. Focused on embedded firmware, digital signal processing (DSP), audio electronics, and microcontrollers.",
     resumePdfUrl: "https://drive.google.com/file/d/tyler-brooks-resume/view",
     socialLinks: [
       { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/tyler-brooks-ee" }
@@ -1146,7 +1146,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "IEEE Solar Knight Racing ESC",
+        projectName: "RSO Solar Knight Racing ESC",
         description: "Implemented digital filter firmware for battery voltage telemetry conditioning.",
         startDate: "2024-01-15",
         endDate: "2024-11-20",
@@ -1156,7 +1156,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "Secretary",
         startDate: "2022-09-01",
         endDate: "2025-05-01",
@@ -1206,7 +1206,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "IEEE Quadcopter Swarm Vision Pipeline",
+        projectName: "RSO Quadcopter Swarm Vision Pipeline",
         description: "Trained object classification pipeline on 50k annotated aerial images.",
         startDate: "2024-02-01",
         endDate: "2024-11-01",
@@ -1216,7 +1216,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "Data Analytics Lead",
         startDate: "2023-01-15",
         endDate: "2026-05-01",
@@ -1273,7 +1273,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "IEEE Micromouse Autonomous Maze Solver",
+        projectName: "RSO Micromouse Autonomous Maze Solver",
         description: "Wrote custom RTOS kernel for ARM Cortex-M4 microcontroller with deterministic thread scheduling.",
         startDate: "2023-09-01",
         endDate: "2024-04-30",
@@ -1283,7 +1283,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "Embedded Systems Lead",
         startDate: "2022-09-01",
         endDate: "2025-05-01",
@@ -1299,7 +1299,7 @@ export const DENSE_CANDIDATES = [
     major: "Mechanical Engineering",
     graduationYear: "2024",
     status: "Employed",
-    bio: "UCF ME Alumna ('24) & Propulsion Structures Engineer at SpaceX. Former IEEE Solar Racing Mechanical Lead.",
+    bio: "UCF ME Alumna ('24) & Propulsion Structures Engineer at SpaceX. Former RSO Solar Racing Mechanical Lead.",
     resumePdfUrl: "https://drive.google.com/file/d/zoe-jenkins-resume/view",
     socialLinks: [
       { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/zoe-jenkins-propulsion" }
@@ -1332,7 +1332,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "IEEE Solar Knight Racing ESC",
+        projectName: "RSO Solar Knight Racing ESC",
         description: "Designed structural roll cage and carbon composite suspension mounts.",
         startDate: "2023-08-15",
         endDate: "2024-04-30",
@@ -1342,7 +1342,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "Solar Racing Mechanical Lead (Alumni)",
         startDate: "2021-09-01",
         endDate: "2024-05-04",
@@ -1391,7 +1391,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "IEEE Smart Campus IoT Beacon Network",
+        projectName: "RSO Smart Campus IoT Beacon Network",
         description: "Configured Wi-Fi gateway routers and MQTT broker server on Raspberry Pi cluster.",
         startDate: "2024-03-01",
         endDate: "2024-11-01",
@@ -1401,12 +1401,12 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "Infrastructure Lead",
         startDate: "2023-09-01",
         endDate: "2027-05-01",
         isActive: true,
-        description: "Managing IEEE Innovation Lab network routers, server rack, and printer infrastructure."
+        description: "Managing RSO Innovation Lab network routers, server rack, and printer infrastructure."
       }
     ],
     certifications: [
@@ -1423,7 +1423,7 @@ export const DENSE_CANDIDATES = [
     major: "Computer Science",
     graduationYear: "2026",
     status: "Seeking Internship",
-    bio: "IEEE UCF Corporate Liaison & CS junior. Passionate about software engineering, corporate relations, technical event coordination, and web development.",
+    bio: "RSO UCF Corporate Liaison & CS junior. Passionate about software engineering, corporate relations, technical event coordination, and web development.",
     resumePdfUrl: "https://drive.google.com/file/d/amara-okafor-resume/view",
     socialLinks: [
       { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/amara-okafor-cs" },
@@ -1457,7 +1457,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "IEEE PCB Design & Surface Mount Workshop Series",
+        projectName: "RSO PCB Design & Surface Mount Workshop Series",
         description: "Built interactive web portal for scheduling workshop equipment and tracking attendance.",
         startDate: "2024-01-15",
         endDate: "2024-05-01",
@@ -1467,7 +1467,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "Corporate Liaison",
         startDate: "2023-01-10",
         endDate: "2026-05-01",
@@ -1483,7 +1483,7 @@ export const DENSE_CANDIDATES = [
     major: "Electrical Engineering",
     graduationYear: "2024",
     status: "Employed",
-    bio: "UCF EE Alumnus ('24) & Senior RF Test Engineer at Lockheed Martin. Former IEEE UCF Vice Chair specialized in radar signal processing and microwave systems.",
+    bio: "UCF EE Alumnus ('24) & Senior RF Test Engineer at Lockheed Martin. Former RSO UCF Vice Chair specialized in radar signal processing and microwave systems.",
     resumePdfUrl: "https://drive.google.com/file/d/benjamin-foster-resume/view",
     socialLinks: [
       { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/benjamin-foster-rf" }
@@ -1516,7 +1516,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "IEEE Micromouse Autonomous Maze Solver",
+        projectName: "RSO Micromouse Autonomous Maze Solver",
         description: "Designed high-speed IR proximity sensor array sub-board.",
         startDate: "2023-09-01",
         endDate: "2024-04-30",
@@ -1526,7 +1526,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "Vice Chair (Alumni)",
         startDate: "2021-09-01",
         endDate: "2024-05-04",
@@ -1645,7 +1645,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE Photonics Society UCF",
+        clubName: "RSO Photonics Society UCF",
         roleTitle: "Vice President",
         startDate: "2023-08-15",
         isActive: true,
@@ -1738,7 +1738,7 @@ export const DENSE_CANDIDATES = [
     projects: [
       {
         projectName: "High-Power Inverter Cold Plate Optimization",
-        description: "Designed 3D-printed aluminum liquid cooling cold plate with micro-fins for the IEEE Solar Car ESC.",
+        description: "Designed 3D-printed aluminum liquid cooling cold plate with micro-fins for the RSO Solar Car ESC.",
         startDate: "2024-03-01",
         isOngoing: false,
         projectLinks: ["https://github.com/ieee-ucf/solar-esc-cooling"]
@@ -1799,7 +1799,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "Software Committee Member",
         startDate: "2023-09-01",
         isActive: true,
@@ -1855,7 +1855,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE Power & Energy Society (PES) UCF",
+        clubName: "RSO Power & Energy Society (PES) UCF",
         roleTitle: "Technical Director",
         startDate: "2023-08-20",
         isActive: true,
@@ -1911,7 +1911,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "Digital Systems Instructor",
         startDate: "2022-09-01",
         isActive: true,
@@ -2057,7 +2057,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "Embedded Workshop Volunteer",
         startDate: "2023-09-15",
         isActive: true,
@@ -2072,7 +2072,7 @@ export const DENSE_CANDIDATES = [
     major: "Electrical Engineering",
     graduationYear: "2028",
     status: "Seeking Internship",
-    bio: "Freshman electrical engineering student passionate about radio frequency circuits, active filters, and hands-on SMD soldering. Active participant in all IEEE technical build nights.",
+    bio: "Freshman electrical engineering student passionate about radio frequency circuits, active filters, and hands-on SMD soldering. Active participant in all RSO technical build nights.",
     resumePdfUrl: "https://drive.google.com/file/d/carlos-mendoza-resume/view",
     socialLinks: [
       { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/carlos-mendoza-ee" }
@@ -2103,11 +2103,11 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "General Member",
         startDate: "2024-08-25",
         isActive: true,
-        description: "Attends weekly workshops in the IEEE Innovation Lab."
+        description: "Attends weekly workshops in the RSO Innovation Lab."
       }
     ],
     certifications: []
@@ -2261,7 +2261,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "Treasurer",
         startDate: "2023-05-01",
         isActive: true,
@@ -2308,7 +2308,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "IEEE UCF Student Chapter",
+        clubName: "RSO UCF Student Chapter",
         roleTitle: "PCB Design Co-Lead",
         startDate: "2023-09-01",
         isActive: true,
@@ -2461,12 +2461,12 @@ export const DENSE_CANDIDATES = [
 
 const SEED_IEEE_PROJECTS = [
   {
-    title: "IEEE Micromouse Autonomous Maze Solver",
+    title: "RSO Micromouse Autonomous Maze Solver",
     slug: "ieee-micromouse-autonomous-maze-solver",
     tagline: "High-speed autonomous robotics solving 16x16 maze grids using custom flood-fill algorithms and sub-millimeter motor control.",
     category: "Robotics",
     status: "Active",
-    description: "The IEEE Micromouse is an autonomous, battery-powered robotics competition platform. The robot must navigate and map an unknown 16x16 maze, compute the optimal shortest path using flood-fill and A* graph traversal, and execute high-speed speed runs with active yaw stabilization and PID motor velocity control.",
+    description: "The RSO Micromouse is an autonomous, battery-powered robotics competition platform. The robot must navigate and map an unknown 16x16 maze, compute the optimal shortest path using flood-fill and A* graph traversal, and execute high-speed speed runs with active yaw stabilization and PID motor velocity control.",
     repositoryUrl: "https://github.com/ieee-ucf/micromouse-maze-solver",
     demoUrl: "https://ieee.ucf.edu/projects/micromouse",
     tools: [
@@ -2501,7 +2501,7 @@ const SEED_IEEE_PROJECTS = [
       {
         date: "Apr 2025",
         title: "SoutheastCon 2025 Competition Run",
-        description: "Deploy finalized robot at IEEE SoutheastCon regional competition in Charlotte, NC.",
+        description: "Deploy finalized robot at RSO SoutheastCon regional competition in Charlotte, NC.",
         status: "upcoming",
       },
     ],
@@ -2516,7 +2516,7 @@ const SEED_IEEE_PROJECTS = [
     sponsorshipInfo: {
       fundingGoal: 2500,
       currentFunding: 1800,
-      needsDescription: "Funding directly covers custom JLCPCB multi-layer prototype fabrication, high-torque Faulhaber coreless DC motors, and team travel to the IEEE SoutheastCon robotics arena.",
+      needsDescription: "Funding directly covers custom JLCPCB multi-layer prototype fabrication, high-torque Faulhaber coreless DC motors, and team travel to the RSO SoutheastCon robotics arena.",
       budgetBreakdown: [
         { item: "Faulhaber Coreless Micro-Motors (x4)", cost: 680 },
         { item: "Custom 4-Layer PCB Prototyping & Stencils", cost: 350 },
@@ -2531,7 +2531,7 @@ const SEED_IEEE_PROJECTS = [
           description: "Fund our sensor arrays and prototype PCB fabrication batches.",
           perks: [
             "Company logo on project GitHub repository and open-source documentation",
-            "Special mention in IEEE UCF general body meetings",
+            "Special mention in RSO UCF general body meetings",
           ],
         },
         {
@@ -2547,10 +2547,10 @@ const SEED_IEEE_PROJECTS = [
         {
           name: "Title Robotics Sponsor",
           amount: 1500,
-          description: "Full title partner powering the IEEE SoutheastCon championship run.",
+          description: "Full title partner powering the RSO SoutheastCon championship run.",
           perks: [
             "Prominent physical logo placement on the robot chassis and lab test banner",
-            "Exclusive 1-hour private recruiting/tech talk with IEEE UCF members",
+            "Exclusive 1-hour private recruiting/tech talk with RSO UCF members",
             "VIP invitation to competition demo and final showcase dinner",
           ],
         },
@@ -2558,7 +2558,7 @@ const SEED_IEEE_PROJECTS = [
     },
   },
   {
-    title: "IEEE Solar Knight Racing ESC",
+    title: "RSO Solar Knight Racing ESC",
     slug: "ieee-solar-knight-racing-esc",
     tagline: "400V high-efficiency silicon-carbide (SiC) motor inverter engineered for maximum efficiency solar endurance racing.",
     category: "Power",
@@ -2644,7 +2644,7 @@ const SEED_IEEE_PROJECTS = [
           amount: 2500,
           description: "Premier power electronics patron powering our solar vehicle racing team.",
           perks: [
-            "Large company logo on vehicle exterior side pod alongside IEEE crest",
+            "Large company logo on vehicle exterior side pod alongside RSO crest",
             "Exclusive on-campus demo day and private student recruiting event",
             "Featured video case study shared across UCF Engineering channels",
           ],
@@ -2653,12 +2653,12 @@ const SEED_IEEE_PROJECTS = [
     },
   },
   {
-    title: "IEEE Quadcopter Swarm",
+    title: "RSO Quadcopter Swarm",
     slug: "ieee-quadcopter-swarm",
     tagline: "Decentralized mesh-networking micro-UAVs coordinating autonomous formation flight and distributed SLAM mapping.",
     category: "Autonomous Systems",
     status: "Active",
-    description: "The IEEE Quadcopter Swarm project develops low-cost autonomous micro aerial vehicles that communicate peer-to-peer over an ad-hoc 802.11s mesh network. The drones perform collaborative spatial exploration, vision-based obstacle avoidance using Google Coral Edge TPUs, and decentralized target tracking without a centralized ground station.",
+    description: "The RSO Quadcopter Swarm project develops low-cost autonomous micro aerial vehicles that communicate peer-to-peer over an ad-hoc 802.11s mesh network. The drones perform collaborative spatial exploration, vision-based obstacle avoidance using Google Coral Edge TPUs, and decentralized target tracking without a centralized ground station.",
     repositoryUrl: "https://github.com/ieee-ucf/quadcopter-swarm",
     tools: [
       { name: "PX4 Autopilot & MAVLink", category: "Embedded & Firmware" },
@@ -2744,7 +2744,7 @@ const SEED_IEEE_PROJECTS = [
     },
   },
   {
-    title: "IEEE Smart Campus IoT Beacon Network",
+    title: "RSO Smart Campus IoT Beacon Network",
     slug: "ieee-smart-campus-iot-beacon-network",
     tagline: "Low-power Bluetooth 5.4 telemetry nodes with AES-256 encryption providing campus spatial analytics and event tracking.",
     category: "IoT & Networking",
@@ -2825,7 +2825,7 @@ const SEED_IEEE_PROJECTS = [
     },
   },
   {
-    title: "IEEE PCB Design & Surface Mount Workshop Series",
+    title: "RSO PCB Design & Surface Mount Workshop Series",
     slug: "ieee-pcb-design-surface-mount-workshop",
     tagline: "Interactive electronic badges designed for semester workshops teaching 200+ students CAD layout and SMD soldering.",
     category: "Hardware",
@@ -2895,7 +2895,7 @@ const SEED_IEEE_PROJECTS = [
         {
           name: "Hardware Lab Sponsor",
           amount: 600,
-          description: "Purchases a permanent hot air rework station for the IEEE innovation lab.",
+          description: "Purchases a permanent hot air rework station for the RSO innovation lab.",
           perks: [
             "Company logo etched into copper on the back of all 200 workshop badge PCBs",
             "Direct recruiting pitch opportunity during workshop opening remarks",
@@ -3129,9 +3129,9 @@ const SEED_IEEE_PROJECTS = [
   },
 ];
 
-const SEED_EVENTS = [
+export const SEED_EVENTS = [
   {
-    title: "IEEE Fall Kickoff General Body Meeting (GBM 1)",
+    title: "RSO Fall Kickoff General Body Meeting (GBM 1)",
     location: "Harris Engineering Center (HEC 101)",
     description: "Overview of semester technical build projects, committee workshops, free pizza, and networking with IEEE student officers.",
     startTime: "2024-09-04T18:00:00Z",
@@ -3140,7 +3140,7 @@ const SEED_EVENTS = [
   },
   {
     title: "Hands-On PCB Design & Altium Workshop",
-    location: "IEEE Innovation Lab (ENG2 135)",
+    location: "RSO Innovation Lab (ENG2 135)",
     description: "Practical workshop covering schematic entry, PCB layout guidelines, trace routing, component selection, and surface-mount soldering techniques.",
     startTime: "2024-09-18T17:30:00Z",
     endTime: "2024-09-18T19:30:00Z",
@@ -3155,7 +3155,7 @@ const SEED_EVENTS = [
     slug: "embedded-linux-freertos-night",
   },
   {
-    title: "IEEE UCF Technical Resume & Recruiter Showcase",
+    title: "RSO UCF Technical Resume & Recruiter Showcase",
     location: "Student Union Pegasus Ballroom",
     description: "Exclusive member networking session with defense, cloud, and semiconductor industry recruiters ahead of UCF STEM Career Fair.",
     startTime: "2024-10-23T16:00:00Z",
@@ -3164,8 +3164,8 @@ const SEED_EVENTS = [
   },
   {
     title: "Region 3 SoutheastCon Hardware Competition Build Sprint",
-    location: "IEEE Innovation Lab (ENG2 135)",
-    description: "Collaborative hackathon & build session programming autonomous rovers and testing sensor arrays for IEEE Region 3 competition.",
+    location: "RSO Innovation Lab (ENG2 135)",
+    description: "Collaborative hackathon & build session programming autonomous rovers and testing sensor arrays for RSO Region 3 competition.",
     startTime: "2024-11-06T17:00:00Z",
     endTime: "2024-11-06T21:00:00Z",
     slug: "southeastcon-hardware-build-sprint",
@@ -3179,7 +3179,7 @@ const SEED_EVENTS = [
     slug: "pytorch-edge-ai-bootcamp",
   },
   {
-    title: "IEEE Spring General Body Meeting & Project Showcase",
+    title: "RSO Spring General Body Meeting & Project Showcase",
     location: "Harris Engineering Center (HEC 101)",
     description: "Unveiling 2025 student projects, announcing officer elections, and connecting with corporate sponsors.",
     startTime: "2025-01-22T18:00:00Z",
@@ -3196,7 +3196,7 @@ const SEED_EVENTS = [
   },
   {
     title: "IPC Soldering & Surface Mount Certification Bootcamp",
-    location: "IEEE Innovation Lab (ENG2 135)",
+    location: "RSO Innovation Lab (ENG2 135)",
     description: "Full-day intensive training in lead-free solder metallurgy, fine-pitch QFN rework, and ESD workstation safety compliance.",
     startTime: "2025-02-15T10:00:00Z",
     endTime: "2025-02-15T16:00:00Z",
@@ -3235,7 +3235,7 @@ const SEED_EVENTS = [
     slug: "northrop-grumman-cyber-embedded-security",
   },
   {
-    title: "IEEE UCF Senior Design Pitch & Sponsor Feedback Night",
+    title: "RSO UCF Senior Design Pitch & Sponsor Feedback Night",
     location: "Engineering I Atrium",
     description: "Graduating seniors present capstone engineering prototypes to industry sponsor judges and engineering faculty.",
     startTime: "2025-04-09T18:00:00Z",
@@ -3251,7 +3251,7 @@ const SEED_EVENTS = [
     slug: "l3harris-rf-comms-seminar",
   },
   {
-    title: "IEEE UCF Industry Dinner & End-of-Year Banquet",
+    title: "RSO UCF Industry Dinner & End-of-Year Banquet",
     location: "UCF Alumni Center",
     description: "Annual celebration honoring graduating seniors, outstanding committee chairs, and student competition winners.",
     startTime: "2025-04-18T18:30:00Z",
@@ -3372,30 +3372,30 @@ export async function seedDatabase() {
     const createdMemberIds: string[] = [];
 
     const projectAssigments: string[] = [
-      "IEEE Micromouse Autonomous Maze Solver",
-      "IEEE UCF Member Catalog & Resume Hub",
-      "IEEE Solar Knight Racing ESC",
-      "IEEE Quadcopter Swarm",
-      "IEEE Solar Knight Racing ESC",
-      "IEEE Micromouse Autonomous Maze Solver",
-      "IEEE Smart Campus IoT Beacon Network",
-      "IEEE PCB Design & Surface Mount Workshop Series",
-      "IEEE UCF Member Catalog & Resume Hub",
-      "IEEE Quadcopter Swarm",
-      "IEEE Micromouse Autonomous Maze Solver",
-      "IEEE Solar Knight Racing ESC",
-      "IEEE Smart Campus IoT Beacon Network",
-      "IEEE PCB Design & Surface Mount Workshop Series",
-      "IEEE Micromouse Autonomous Maze Solver",
-      "IEEE Quadcopter Swarm",
-      "IEEE UCF Member Catalog & Resume Hub",
-      "IEEE Solar Knight Racing ESC",
-      "IEEE Quadcopter Swarm",
-      "IEEE Micromouse Autonomous Maze Solver",
-      "IEEE Solar Knight Racing ESC",
-      "IEEE Smart Campus IoT Beacon Network",
-      "IEEE PCB Design & Surface Mount Workshop Series",
-      "IEEE Micromouse Autonomous Maze Solver"
+      "RSO Micromouse Autonomous Maze Solver",
+      "RSO UCF Member Catalog & Resume Hub",
+      "RSO Solar Knight Racing ESC",
+      "RSO Quadcopter Swarm",
+      "RSO Solar Knight Racing ESC",
+      "RSO Micromouse Autonomous Maze Solver",
+      "RSO Smart Campus IoT Beacon Network",
+      "RSO PCB Design & Surface Mount Workshop Series",
+      "RSO UCF Member Catalog & Resume Hub",
+      "RSO Quadcopter Swarm",
+      "RSO Micromouse Autonomous Maze Solver",
+      "RSO Solar Knight Racing ESC",
+      "RSO Smart Campus IoT Beacon Network",
+      "RSO PCB Design & Surface Mount Workshop Series",
+      "RSO Micromouse Autonomous Maze Solver",
+      "RSO Quadcopter Swarm",
+      "RSO UCF Member Catalog & Resume Hub",
+      "RSO Solar Knight Racing ESC",
+      "RSO Quadcopter Swarm",
+      "RSO Micromouse Autonomous Maze Solver",
+      "RSO Solar Knight Racing ESC",
+      "RSO Smart Campus IoT Beacon Network",
+      "RSO PCB Design & Surface Mount Workshop Series",
+      "RSO Micromouse Autonomous Maze Solver"
     ];
 
     for (let i = 0; i < DENSE_CANDIDATES.length; i++) {
@@ -3417,7 +3417,7 @@ export async function seedDatabase() {
       const memberId = memberRes.rows[0].id;
       createdMemberIds.push(memberId);
 
-      // Calculate contribution points based on IEEE point system rules
+      // Calculate contribution points based on RSO point system rules
       const simulatedEvents = SEED_EVENTS.filter((_, eIdx) => (i + eIdx) % 2 === 0 || (i * 2 + eIdx) % 3 === 0);
       const pointsData = calculateCandidatePoints({
         clubs: candidate.clubMemberships,

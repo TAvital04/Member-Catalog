@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import Tooltip from "./Tooltip";
 
 interface SkillTagProps {
@@ -8,6 +9,8 @@ interface SkillTagProps {
   maxCharLength?: number;
   maxWidthClass?: string;
   variant?: "card" | "row" | "modal";
+  clickable?: boolean;
+  onClick?: (e: React.MouseEvent) => void;
 }
 
 function getWeightedSkillLength(text: string): number {
@@ -31,6 +34,8 @@ export default function SkillTag({
   skill,
   maxWidthClass,
   variant = "card",
+  clickable = true,
+  onClick,
 }: SkillTagProps) {
   const effectiveMaxWidthClass =
     maxWidthClass ?? (variant === "card" ? "max-w-[70px]" : variant === "row" ? "max-w-[85px]" : "max-w-[160px]");
@@ -44,16 +49,34 @@ export default function SkillTag({
       : false;
 
   const variantClasses = {
-    card: "text-[10px] font-medium bg-slate-100 border border-slate-200/90 text-slate-700 px-2 py-0.5 rounded-md hover:border-slate-300 hover:text-slate-900 transition-colors",
-    row: "text-[10px] font-medium bg-slate-100 border border-slate-200/90 text-slate-700 px-2 py-0.5 rounded-md hover:border-slate-300 hover:text-slate-900 transition-colors",
-    modal: "text-xs font-medium bg-slate-100 border border-slate-200/90 text-slate-800 px-2.5 py-1 rounded-md hover:border-slate-300 hover:text-slate-900 transition-colors",
+    card: "text-[10px] font-medium bg-slate-100 border border-slate-200/90 text-slate-700 px-2 py-0.5 rounded-md hover:border-amber-300 hover:text-amber-900 hover:bg-amber-50/70 transition-colors",
+    row: "text-[10px] font-medium bg-slate-100 border border-slate-200/90 text-slate-700 px-2 py-0.5 rounded-md hover:border-amber-300 hover:text-amber-900 hover:bg-amber-50/70 transition-colors",
+    modal: "text-xs font-medium bg-slate-100 border border-slate-200/90 text-slate-800 px-2.5 py-1 rounded-md hover:border-amber-300 hover:text-amber-900 hover:bg-amber-50/70 transition-colors",
   }[variant];
 
+  const pillContent = (
+    <span className={`${variantClasses} block ${effectiveMaxWidthClass} truncate`}>
+      {skill}
+    </span>
+  );
+
   return (
-    <div className={`relative inline-block shrink-0 ${isTruncated ? "group/tooltip hover:z-50 cursor-help" : ""}`}>
-      <span className={`${variantClasses} block ${effectiveMaxWidthClass} truncate`}>
-        {skill}
-      </span>
+    <div className={`relative inline-block shrink-0 ${isTruncated ? "group/tooltip hover:z-50" : ""}`}>
+      {clickable ? (
+        <Link
+          href={`/?skills=${encodeURIComponent(skill)}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            onClick?.(e);
+          }}
+          className="block cursor-pointer focus:outline-none focus:ring-1 focus:ring-amber-500 rounded-md"
+          title={`Filter candidates with skill: ${skill}`}
+        >
+          {pillContent}
+        </Link>
+      ) : (
+        pillContent
+      )}
       {isTruncated && <Tooltip content={skill} position="top" />}
     </div>
   );

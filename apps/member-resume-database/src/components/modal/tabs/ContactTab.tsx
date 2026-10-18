@@ -30,7 +30,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
         sendDirectEmail({
           to: student.email,
           recipientType: "student",
-          subject: `Inquiry from IEEE UCF Resume Database: ${recruiterName}`,
+          subject: `Inquiry from RSO UCF Resume Database: ${recruiterName}`,
           message:
             `Hello ${student.name},\n\n` +
             `You have received a new candidate inquiry through the UCF Member Resume Database!\n\n` +

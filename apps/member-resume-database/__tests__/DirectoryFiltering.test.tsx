@@ -31,6 +31,9 @@ const sampleStudent: Student = {
   flagged: false,
 };
 
+import DirectoryNavbar from "@/components/directory/DirectoryNavbar";
+import { studentHasSkill } from "@/lib/skillMatching";
+
 describe("Directory Filtering & Component Rendering", () => {
   test("renders StudentCard correctly", () => {
     render(
@@ -43,6 +46,31 @@ describe("Directory Filtering & Component Rendering", () => {
     );
 
     expect(screen.getByText("Test Candidate")).toBeInTheDocument();
+  });
+
+  test("renders DirectoryNavbar with two permission levels switch and handles role changes", () => {
+    const handleRoleChange = jest.fn();
+
+    const { getAllByRole, getAllByText } = render(
+      <DirectoryNavbar
+        role="standard"
+        handleRoleChange={handleRoleChange}
+      />
+    );
+
+    // Verify switch contains Standard and Admin
+    const standardButtons = getAllByText("Standard");
+    const adminButtons = getAllByText("Admin");
+    expect(standardButtons.length).toBeGreaterThan(0);
+    expect(adminButtons.length).toBeGreaterThan(0);
+
+    // Click Admin switch button
+    fireEvent.click(adminButtons[0]);
+    expect(handleRoleChange).toHaveBeenCalledWith("admin");
+
+    // Click Standard switch button
+    fireEvent.click(standardButtons[0]);
+    expect(handleRoleChange).toHaveBeenCalledWith("standard");
   });
 
   test("renders DirectoryControlBar with custom dropdown and interacts with sort options", () => {
@@ -88,5 +116,28 @@ describe("Directory Filtering & Component Rendering", () => {
     fireEvent.click(reverseButton);
     expect(handleSetSort).toHaveBeenCalledWith("updated-asc");
   });
+
+  test("resiliently matches candidate skills against event and filter queries", () => {
+    const studentSkills = [
+      "C++",
+      "C",
+      "FreeRTOS",
+      "Embedded Linux",
+      "Altium Designer",
+      "Soldering (SMD 0805/0603)",
+    ];
+
+    expect(studentHasSkill(studentSkills, "Altium Designer")).toBe(true);
+    expect(studentHasSkill(studentSkills, "altium designer")).toBe(true);
+    expect(studentHasSkill(studentSkills, "Altium")).toBe(true);
+    expect(studentHasSkill(studentSkills, "Soldering")).toBe(true);
+    expect(studentHasSkill(studentSkills, "SMD Soldering")).toBe(true);
+    expect(studentHasSkill(studentSkills, "FreeRTOS")).toBe(true);
+    expect(studentHasSkill(studentSkills, "freertos")).toBe(true);
+    expect(studentHasSkill(studentSkills, "Embedded C")).toBe(true);
+    expect(studentHasSkill(studentSkills, "C")).toBe(true);
+    expect(studentHasSkill(studentSkills, "Rust")).toBe(false);
+  });
 });
+
 

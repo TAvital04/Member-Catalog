@@ -42,7 +42,7 @@ export default function IEEELeadershipSection({
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-base md:text-lg font-black text-zinc-100 uppercase tracking-wider">
-                IEEE UCF Officers & Committee Leads
+                RSO UCF Officers & Committee Leads
               </h2>
               <span className="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1">
                 <Sparkles size={10} />
@@ -50,7 +50,7 @@ export default function IEEELeadershipSection({
               </span>
             </div>
             <p className="text-xs text-zinc-400 mt-0.5 leading-relaxed">
-              Student officers, committee leads, and SIG chairs driving IEEE innovation labs, technical build sprints, and peer mentorship.
+              Student officers, committee leads, and SIG chairs driving RSO innovation labs, technical build sprints, and peer mentorship.
             </p>
           </div>
         </div>
@@ -67,7 +67,7 @@ export default function IEEELeadershipSection({
             }`}
           >
             <UserCheck size={13} />
-            <span>{onlyLeadersFilter ? "Showing IEEE Officers Only" : "Filter IEEE Officers"}</span>
+            <span>{onlyLeadersFilter ? "Showing RSO Officers Only" : "Filter RSO Officers"}</span>
           </button>
 
           <button

@@ -61,10 +61,10 @@ export interface IEEEProject {
 export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
   {
     id: "proj-micromouse-001",
-    title: "IEEE Micromouse Autonomous Maze Solver",
+    title: "RSO Micromouse Autonomous Maze Solver",
     slug: "ieee-micromouse-autonomous-maze-solver",
     tagline: "High-speed autonomous robotics solving 16x16 maze grids using custom flood-fill algorithms and sub-millimeter motor control.",
-    description: "The IEEE Micromouse is an autonomous, battery-powered robotics competition platform. The robot navigates and maps an unknown 16x16 maze, computes the optimal shortest path using flood-fill and A* graph traversal, and executes high-speed runs with active yaw stabilization and PID motor velocity control.",
+    description: "The RSO Micromouse is an autonomous, battery-powered robotics competition platform. The robot navigates and maps an unknown 16x16 maze, computes the optimal shortest path using flood-fill and A* graph traversal, and executes high-speed runs with active yaw stabilization and PID motor velocity control.",
     category: "Robotics",
     status: "Active",
     repositoryUrl: "https://github.com/ieee-ucf/micromouse-maze-solver",
@@ -102,7 +102,7 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
       {
         date: "Apr 2025",
         title: "SoutheastCon 2025 Competition Run",
-        description: "Deploy finalized robot at IEEE SoutheastCon regional competition in Charlotte, NC.",
+        description: "Deploy finalized robot at RSO SoutheastCon regional competition in Charlotte, NC.",
         status: "upcoming",
       },
     ],
@@ -115,11 +115,11 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
       "High-speed Hardware Debugging with Logic Analyzers",
     ],
     sponsorshipInfo: {
-      overview: "Sponsoring the IEEE Micromouse team directly equips students with high-precision components, fabrication materials, and competition travel funding.",
+      overview: "Sponsoring the RSO Micromouse team directly equips students with high-precision components, fabrication materials, and competition travel funding.",
       benefits: [
         {
           title: "Branding on Robot Carbon-Fiber Chassis",
-          description: "Your company logo permanently displayed on the physical robot chassis competing in front of hundreds at IEEE SoutheastCon.",
+          description: "Your company logo permanently displayed on the physical robot chassis competing in front of hundreds at RSO SoutheastCon.",
           category: "Brand Placement",
           highlight: true,
         },
@@ -136,12 +136,12 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
         },
         {
           title: "Dedicated Technical Tech-Talk & Recruiting Session",
-          description: "Host an exclusive 1-hour presentation with IEEE UCF members on campus or virtually during the academic semester.",
+          description: "Host an exclusive 1-hour presentation with RSO UCF members on campus or virtually during the academic semester.",
           category: "Recruiting & Talent",
         },
         {
           title: "Recognition on Project GitHub & Showcase Posters",
-          description: "Prominent acknowledgment across all open-source repositories, project documentation, and IEEE showcase display banners.",
+          description: "Prominent acknowledgment across all open-source repositories, project documentation, and RSO showcase display banners.",
           category: "Event & Community",
         },
       ],
@@ -179,7 +179,7 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
   },
   {
     id: "proj-solar-esc-002",
-    title: "IEEE Solar Knight Racing ESC",
+    title: "RSO Solar Knight Racing ESC",
     slug: "ieee-solar-knight-racing-esc",
     tagline: "400V high-efficiency silicon-carbide (SiC) motor inverter engineered for maximum efficiency solar endurance racing.",
     description: "The Solar Knight Electronic Speed Controller (ESC) is a custom three-phase inverter switching up to 400V DC bus voltages at 100A peak current with >98.5% electrical efficiency. Designed in collaboration with UCF Solar Car, it uses Silicon Carbide (SiC) MOSFETs, isolated gate drivers, and CAN bus telemetry.",
@@ -236,7 +236,7 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
       benefits: [
         {
           title: "Branding on Solar Vehicle Exterior Body & Inverter Enclosure",
-          description: "High-visibility company decal placed on the race vehicle side pod alongside the IEEE crest during the Formula Sun Grand Prix.",
+          description: "High-visibility company decal placed on the race vehicle side pod alongside the RSO crest during the Formula Sun Grand Prix.",
           category: "Brand Placement",
           highlight: true,
         },
@@ -284,10 +284,10 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
   },
   {
     id: "proj-quad-swarm-003",
-    title: "IEEE Quadcopter Swarm",
+    title: "RSO Quadcopter Swarm",
     slug: "ieee-quadcopter-swarm",
     tagline: "Decentralized mesh-networking micro-UAVs coordinating autonomous formation flight and distributed SLAM mapping.",
-    description: "The IEEE Quadcopter Swarm project develops low-cost autonomous micro aerial vehicles that communicate peer-to-peer over an ad-hoc 802.11s mesh network. The drones perform collaborative spatial exploration, vision-based obstacle avoidance using Google Coral Edge TPUs, and decentralized target tracking.",
+    description: "The RSO Quadcopter Swarm project develops low-cost autonomous micro aerial vehicles that communicate peer-to-peer over an ad-hoc 802.11s mesh network. The drones perform collaborative spatial exploration, vision-based obstacle avoidance using Google Coral Edge TPUs, and decentralized target tracking.",
     category: "Autonomous Systems",
     status: "Active",
     repositoryUrl: "https://github.com/ieee-ucf/quadcopter-swarm",
@@ -345,7 +345,7 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
           highlight: true,
         },
         {
-          title: "Featured in IEEE Flight Demonstration Videos",
+          title: "Featured in RSO Flight Demonstration Videos",
           description: "Logo watermark and closing sponsor acknowledgment in all video demonstrations shared on social media.",
           category: "Brand Placement",
         },
@@ -388,7 +388,7 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
   },
   {
     id: "proj-iot-beacon-004",
-    title: "IEEE Smart Campus IoT Beacon Network",
+    title: "RSO Smart Campus IoT Beacon Network",
     slug: "ieee-smart-campus-iot-beacon-network",
     tagline: "Low-power Bluetooth 5.4 telemetry nodes with AES-256 encryption providing campus spatial analytics and event tracking.",
     description: "The Smart Campus IoT Beacon Network is a multi-node sensor mesh deployed across UCF engineering buildings. Featuring solar energy harvesting and coin-cell operation, each beacon broadcasts encrypted indoor environmental metrics, ambient noise levels, and room occupancy heatmaps to a central Next.js dashboard.",
@@ -480,7 +480,7 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
   },
   {
     id: "proj-pcb-badge-005",
-    title: "IEEE PCB Design & Surface Mount Workshop Series",
+    title: "RSO PCB Design & Surface Mount Workshop Series",
     slug: "ieee-pcb-design-surface-mount-workshop",
     tagline: "Interactive electronic badges designed for semester workshops teaching 200+ students CAD layout and SMD soldering.",
     description: "This initiative designs and produces interactive, programmable electronic conference badges given to UCF engineering students. Each participant learns schematic design in KiCAD, trace routing, component selection, hands-on hot air/reflow soldering, and flashes their first custom firmware via USB-C.",
@@ -552,8 +552,8 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
           category: "Recruiting & Talent",
         },
         {
-          title: "Permanent Banner Placement in the IEEE Innovation Lab",
-          description: "Company display banner stationed in the IEEE Innovation Lab (ENG2 135) for the entire academic year.",
+          title: "Permanent Banner Placement in the RSO Innovation Lab",
+          description: "Company display banner stationed in the RSO Innovation Lab (ENG2 135) for the entire academic year.",
           category: "Event & Community",
         },
       ],

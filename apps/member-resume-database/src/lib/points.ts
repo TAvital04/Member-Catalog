@@ -51,6 +51,7 @@ export function isUniversityProject(projectName: string, description?: string): 
 
   // University / Collegiate / IEEE chapter keywords
   const universityKeywords = [
+    "rso",
     "ieee",
     "ucf",
     "micromouse",
@@ -109,7 +110,7 @@ export function isIeeeBoardMember(
     const clubName = (club.clubName || club.name || "").toLowerCase();
     const roleTitle = (club.roleTitle || club.title || "").toLowerCase();
 
-    if (clubName.includes("ieee")) {
+    if (clubName.includes("ieee") || clubName.includes("rso")) {
       if (boardRoles.some((br) => roleTitle.includes(br))) {
         return { isBoard: true, role: club.roleTitle || club.title };
       }
@@ -185,7 +186,7 @@ export function calculateCandidatePoints(candidate: {
   if (boardCheck.isBoard) {
     boardPoints = 10;
     total += 10;
-    details.push(`IEEE Board Member (${boardCheck.role}): +10 pts`);
+    details.push(`RSO Board Member (${boardCheck.role}): +10 pts`);
   }
 
   // 2. Leading a project is 15 points each

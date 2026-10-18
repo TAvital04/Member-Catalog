@@ -79,7 +79,7 @@ ${message || "No additional notes provided."}`,
         </div>
         <p className="text-xs text-slate-700 leading-relaxed font-sans">
           {sponsorship?.overview ||
-            "Sponsoring this IEEE UCF student initiative directly accelerates hands-on engineering development, hardware fabrication, and technical competition participation."}
+            "Sponsoring this RSO UCF student initiative directly accelerates hands-on engineering development, hardware fabrication, and technical competition participation."}
         </p>
       </div>
 
@@ -143,7 +143,7 @@ ${message || "No additional notes provided."}`,
               Inquire to Sponsor This Project
             </h4>
             <p className="text-xs text-slate-600 mt-0.5">
-              Connect directly with our student directors and IEEE chapter leadership to discuss custom sponsorship, equipment grants, or branding.
+              Connect directly with our student directors and RSO chapter leadership to discuss custom sponsorship, equipment grants, or branding.
             </p>
           </div>
         </div>
@@ -232,7 +232,7 @@ ${message || "No additional notes provided."}`,
 
             <div className="flex items-center justify-between pt-1">
               <span className="text-[11px] text-slate-500">
-                Routed directly to IEEE UCF leadership.
+                Routed directly to RSO UCF leadership.
               </span>
               <button
                 type="submit"

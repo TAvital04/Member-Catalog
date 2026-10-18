@@ -78,7 +78,7 @@ describe("Shared Validation Utilities", () => {
     const validResume = {
       fullName: "Jane Knight",
       email: "jknight@knights.ucf.edu",
-      status: "Seeking Full-time",
+      status: "Seeking Full-time" as const,
       bio: "Computer Science student specializing in distributed systems.",
       resumePdfUrl: "https://ieee.ucf.edu/resumes/jknight.pdf",
       skills: ["TypeScript", "Next.js", "PostgreSQL"],

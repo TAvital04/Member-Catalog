@@ -76,10 +76,10 @@ export function useFlagDialogManager({
           }
           setFlagDialog(null);
 
-          const subjectStudent = "[IEEE UCF Resume Database] Profile Record Deleted";
+          const subjectStudent = "[RSO UCF Resume Database] Profile Record Deleted";
           const bodyStudent = `Hello ${student.name},\n\nYour profile has been permanently deleted from the UCF Member Resume Database by an administrator.\n\nReason / Details:\n"${
             student.flagReason || "Administrative review / Profile record deletion"
-          }"\n\nIf you believe this was performed in error or would like to re-submit your profile, please contact our administrative team directly at ${ADMIN_EMAIL}.\n\nBest,\nUCF IEEE Admin Team`;
+          }"\n\nIf you believe this was performed in error or would like to re-submit your profile, please contact our administrative team directly at ${ADMIN_EMAIL}.\n\nBest,\nUCF RSO Admin Team`;
 
           const subjectAdmin = `[MRD Notice] Student Profile Deleted: ${student.name}`;
           const bodyAdmin = `Hello MRD Administrator,\n\nA student profile record has been deleted from the UCF Member Resume Database.\n\nDeleted Candidate Details:\n- Name: ${student.name}\n- Email: ${student.email}\n- Major: ${student.major}\n- Graduation: ${student.gradDate}\n- Flag/Deletion Reason: "${
@@ -169,8 +169,8 @@ export function useFlagDialogManager({
       }
 
       if (targetStudent) {
-        const subjectStudent = "[IEEE UCF Resume Database] Profile Flag Resolved";
-        const bodyStudent = `Hello ${targetStudent.name},\n\nGood news! Your candidate profile in the UCF Member Resume Database has been reviewed by an administrator and unflagged.\n\nYour profile is now active and restored to public directory searches.\n\nBest,\nUCF IEEE Admin Team`;
+        const subjectStudent = "[RSO UCF Resume Database] Profile Flag Resolved";
+        const bodyStudent = `Hello ${targetStudent.name},\n\nGood news! Your candidate profile in the UCF Member Resume Database has been reviewed by an administrator and unflagged.\n\nYour profile is now active and restored to public directory searches.\n\nBest,\nUCF RSO Admin Team`;
 
         const subjectAdmin = `[MRD Resolution] Candidate Profile Unflagged: ${targetStudent.name}`;
         const bodyAdmin = `Hello MRD Administrator,\n\nCandidate profile for ${targetStudent.name} (${targetStudent.email}) has been reviewed and unflagged.\n\nThe profile is now restored to active directory searches.\n\nBest,\nUCF Member Resume Database System`;
@@ -305,8 +305,8 @@ export function useFlagDialogManager({
 
         const targetStudent = students.find((s) => s.id === studentId);
         if (targetStudent) {
-          const subjectStudent = "IEEE UCF Resume Database Profile Flagged (AI Slop)";
-          const bodyStudent = `Hello ${targetStudent.name},\n\nYour profile has been flagged by an administrator for AI-generated content / low-quality slop:\n"${flagReasonVal}"\n\nYour profile is currently hidden from public directory searches. Please review and update your profile content. If you believe this is a mistake, contact ta616249@ucf.edu.\n\nBest,\nUCF IEEE Admin Team`;
+          const subjectStudent = "RSO UCF Resume Database Profile Flagged (AI Slop)";
+          const bodyStudent = `Hello ${targetStudent.name},\n\nYour profile has been flagged by an administrator for AI-generated content / low-quality slop:\n"${flagReasonVal}"\n\nYour profile is currently hidden from public directory searches. Please review and update your profile content. If you believe this is a mistake, contact ta616249@ucf.edu.\n\nBest,\nUCF RSO Admin Team`;
 
           const subjectAdmin = `[MRD Audit] Profile Flagged for AI Slop: ${targetStudent.name}`;
           const bodyAdmin = `Hello MRD Administrator,\n\nCandidate ${targetStudent.name} (${targetStudent.email}) has been flagged for AI Slop / low-quality content.\n\nFlag Reason:\n"${flagReasonVal}"\n\nBest,\nUCF Member Resume Database System`;

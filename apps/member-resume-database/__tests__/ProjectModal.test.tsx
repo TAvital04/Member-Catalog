@@ -14,7 +14,7 @@ describe("ProjectModal Component & Interactive Tabs", () => {
       />
     );
 
-    expect(screen.getByText("IEEE Micromouse Autonomous Maze Solver")).toBeInTheDocument();
+    expect(screen.getByText("RSO Micromouse Autonomous Maze Solver")).toBeInTheDocument();
     expect(screen.getByText("Robotics")).toBeInTheDocument();
     expect(screen.getByText(/Project Mission & Technical Overview/i)).toBeInTheDocument();
   });
@@ -32,6 +32,10 @@ describe("ProjectModal Component & Interactive Tabs", () => {
     fireEvent.click(toolsTabButton);
     expect(screen.getByText(/Tools, Hardware & Tech Stack/i)).toBeInTheDocument();
     expect(screen.getByText("STM32F4 Cortex-M4")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /STM32F4 Cortex-M4/i })).toHaveAttribute(
+      "href",
+      expect.stringContaining("/?skills=")
+    );
 
     // Click Timeline Tab
     const timelineTabButton = screen.getByRole("button", { name: /timeline/i });
@@ -49,6 +53,10 @@ describe("ProjectModal Component & Interactive Tabs", () => {
     fireEvent.click(skillsTabButton);
     expect(screen.getByText(/Skills Taught & Engineering Competencies/i)).toBeInTheDocument();
     expect(screen.getByText(/Custom 4-Layer PCB Design in KiCAD/i)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Custom 4-Layer PCB Design in KiCAD/i })).toHaveAttribute(
+      "href",
+      expect.stringContaining("/?skills=")
+    );
 
     // Click Sponsor Benefits Tab
     const sponsorTabButton = screen.getByRole("button", { name: /sponsor benefits/i });

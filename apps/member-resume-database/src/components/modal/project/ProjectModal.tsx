@@ -14,6 +14,7 @@
 
 import React, { useState, useEffect } from "react";
 import { IEEEProject } from "@/data/projects";
+import { Student } from "@/data/students";
 import { useFocusTrap } from "@/components/common/useFocusTrap";
 import Tooltip from "@/components/common/Tooltip";
 import ProjectUpperInfo from "./ProjectUpperInfo";
@@ -31,6 +32,7 @@ interface ProjectModalProps {
   onClose: () => void;
   onSelectMember?: (memberId: string) => void;
   initialTab?: ProjectTabType;
+  students?: Student[];
 }
 
 export default function ProjectModal({
@@ -38,6 +40,7 @@ export default function ProjectModal({
   onClose,
   onSelectMember,
   initialTab = "overview",
+  students = [],
 }: ProjectModalProps) {
   const [activeTab, setActiveTab] = useState<ProjectTabType>(initialTab);
   const focusTrapRef = useFocusTrap(true, onClose);
@@ -111,7 +114,7 @@ export default function ProjectModal({
 
               {/* Tools & Tech Stack Tab */}
               {activeTab === "tools" && (
-                <ProjectToolsTab tools={project.tools} />
+                <ProjectToolsTab tools={project.tools} students={students} onClose={onClose} />
               )}
 
               {/* Timeline & Roadmap Tab */}
@@ -129,7 +132,7 @@ export default function ProjectModal({
 
               {/* Skills Taught Tab */}
               {activeTab === "skills" && (
-                <ProjectSkillsTab skillsTaught={project.skillsTaught} />
+                <ProjectSkillsTab skillsTaught={project.skillsTaught} students={students} onClose={onClose} />
               )}
 
               {/* Sponsor & Partner Benefits Tab */}

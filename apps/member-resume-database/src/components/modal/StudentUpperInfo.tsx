@@ -54,13 +54,13 @@ export default function StudentUpperInfo({ student, adminMode }: StudentUpperInf
         </div>
       </div>
 
-      {/* IEEE Leadership Officer Badge & Primary Project Badge */}
+      {/* RSO Leadership Officer Badge & Primary Project Badge */}
       <div className="flex flex-col gap-2.5">
         {leadershipRole && (
           <div className="bg-amber-50/70 border border-amber-200/90 rounded-xl px-3.5 py-2.5 text-xs font-bold text-amber-900 flex items-center gap-2.5 shadow-2xs">
             <ShieldCheck size={16} className="text-amber-700 shrink-0" />
             <div>
-              <span className="text-[10px] font-bold text-amber-800/80 uppercase tracking-wider block leading-none mb-1">IEEE UCF Chapter Leadership</span>
+              <span className="text-[10px] font-bold text-amber-800/80 uppercase tracking-wider block leading-none mb-1">RSO UCF Chapter Leadership</span>
               <span className="leading-tight font-extrabold text-slate-900">{leadershipRole}</span>
             </div>
           </div>
@@ -69,7 +69,7 @@ export default function StudentUpperInfo({ student, adminMode }: StudentUpperInf
           <div className="bg-sky-50/70 border border-sky-200/90 rounded-xl px-3.5 py-2.5 text-xs font-bold text-sky-900 flex items-center gap-2.5 shadow-2xs">
             <FolderGit2 size={16} className="text-sky-700 shrink-0" />
             <div>
-              <span className="text-[10px] font-bold text-sky-800/80 uppercase tracking-wider block leading-none mb-1">Primary IEEE Project Affiliation</span>
+              <span className="text-[10px] font-bold text-sky-800/80 uppercase tracking-wider block leading-none mb-1">Primary RSO Project Affiliation</span>
               <span className="leading-tight font-extrabold text-slate-900">{student.mainProjectName}</span>
             </div>
           </div>

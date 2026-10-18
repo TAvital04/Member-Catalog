@@ -12,6 +12,7 @@ import { useMemo } from "react";
 import { Student, getPrimaryEducation, getIeeeLeadershipRole } from "@/data/students";
 import { getGradValue } from "@/lib/gradDate";
 import { DirectorySortOption } from "./useDirectoryFilters";
+import { studentHasSkill } from "@/lib/skillMatching";
 
 interface UseFilteredStudentsProps {
   students: Student[];
@@ -107,10 +108,10 @@ export function useFilteredStudents({
 
         if (selectedSkills.length > 0) {
           if (skillFilterMode === "AND") {
-            const hasAll = selectedSkills.every((s) => student.skills.includes(s));
+            const hasAll = selectedSkills.every((s) => studentHasSkill(student.skills, s));
             if (!hasAll) return false;
           } else {
-            const hasAny = selectedSkills.some((s) => student.skills.includes(s));
+            const hasAny = selectedSkills.some((s) => studentHasSkill(student.skills, s));
             if (!hasAny) return false;
           }
         }

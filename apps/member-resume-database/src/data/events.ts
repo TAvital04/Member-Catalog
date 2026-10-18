@@ -1,0 +1,487 @@
+/**
+ * @file events.ts
+ * @description IEEE UCF Chapter Events Data Models and Rich Seed Data.
+ * Defines comprehensive event models including category taxonomies, hosting corporate partners,
+ * attendance rosters, and technical workshop outcomes.
+ */
+
+export interface EventAttendee {
+  memberId: string;
+  name: string;
+  email: string;
+  major: string;
+  role?: string;
+  resumeId?: string;
+}
+
+export type EventCategory =
+  | "Technical Workshop"
+  | "General Body Meeting"
+  | "Industry Tech Talk"
+  | "Competition & Hackathon"
+  | "Career & Networking"
+  | "Special Event & Tour";
+
+export interface IEEEEvent {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  category: EventCategory;
+  location: string;
+  room?: string;
+  startTime: string;
+  endTime?: string;
+  host: string;
+  partner?: string;
+  pointsAwarded: number;
+  tags: string[];
+  skills?: string[];
+  flyerUrl?: string;
+  rsvpLink?: string;
+  attendees: EventAttendee[];
+  learningOutcomes?: string[];
+  requiresDues?: boolean;
+  active?: boolean;
+}
+
+export const SAMPLE_IEEE_EVENTS: IEEEEvent[] = [
+  {
+    id: "evt-1",
+    title: "RSO Fall Kickoff General Body Meeting (GBM 1)",
+    slug: "fall-kickoff-gbm-1",
+    location: "Harris Engineering Center (HEC 101)",
+    room: "HEC 101",
+    description: "Overview of semester technical build projects, committee workshops, free pizza, and networking with RSO student officers.",
+    category: "General Body Meeting",
+    host: "RSO UCF Student Chapter",
+    pointsAwarded: 3,
+    startTime: "2024-09-04T18:00:00Z",
+    endTime: "2024-09-04T20:00:00Z",
+    tags: ["Kickoff", "Networking", "Projects", "Officer Elections"],
+    skills: ["Embedded Systems", "Robotics", "Python", "C++", "Hardware"],
+    learningOutcomes: [
+      "Introduction to active technical build teams: MicroMouse, Solar Knights, and AUV",
+      "Overview of chapter committees (Technical, Industry Relations, Hardware, Web/Dev)",
+      "How to get involved in student research and project leadership roles",
+    ],
+    attendees: [
+      { memberId: "candidate-1", name: "Alex Rivera", email: "alex.rivera@knights.ucf.edu", major: "Computer Engineering" },
+      { memberId: "candidate-2", name: "Brianna Morales", email: "b.morales@knights.ucf.edu", major: "Computer Science" },
+      { memberId: "candidate-3", name: "Ethan Wright", email: "ewright@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-4", name: "Samantha Lin", email: "s.lin@knights.ucf.edu", major: "Computer Science" },
+      { memberId: "candidate-5", name: "Marcus Vance", email: "mvance@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-6", name: "Priya Sharma", email: "priya.sharma@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-7", name: "David Chen", email: "dchen@knights.ucf.edu", major: "Computer Engineering" },
+      { memberId: "candidate-8", name: "Elena Rostova", email: "elena.rostova@knights.ucf.edu", major: "Computer Science" },
+    ],
+  },
+  {
+    id: "evt-2",
+    title: "Hands-On PCB Design & Altium Workshop",
+    slug: "pcb-design-altium-workshop",
+    location: "RSO Innovation Lab (ENG2 135)",
+    room: "ENG2 135",
+    description: "Practical workshop covering schematic entry, PCB layout guidelines, trace routing, component selection, and surface-mount soldering techniques.",
+    category: "Technical Workshop",
+    host: "RSO Hardware & Embedded Committee",
+    pointsAwarded: 3,
+    startTime: "2024-09-18T17:30:00Z",
+    endTime: "2024-09-18T19:30:00Z",
+    tags: ["Altium Designer", "PCB Layout", "SMD Soldering", "Schematic Capture"],
+    skills: ["Altium Designer", "PCB Layout", "Soldering", "Hardware Testing"],
+    learningOutcomes: [
+      "Mastering 2-layer and 4-layer PCB stackups and design rules in Altium Designer",
+      "Ground plane separation, bypass capacitor placement, and differential pair routing",
+      "Generating Gerber, drill, and pick-and-place fabrication packages for JLCPCB",
+    ],
+    attendees: [
+      { memberId: "candidate-1", name: "Alex Rivera", email: "alex.rivera@knights.ucf.edu", major: "Computer Engineering" },
+      { memberId: "candidate-3", name: "Ethan Wright", email: "ewright@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-5", name: "Marcus Vance", email: "mvance@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-6", name: "Priya Sharma", email: "priya.sharma@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-9", name: "Benjamin Foster", email: "ben.foster@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-11", name: "Lucas Vance", email: "lucas.vance@knights.ucf.edu", major: "Electrical Engineering" },
+    ],
+  },
+  {
+    id: "evt-3",
+    title: "Embedded Linux & FreeRTOS Microcontroller Night",
+    slug: "embedded-linux-freertos-night",
+    location: "Harris Engineering Center (HEC 118)",
+    room: "HEC 118",
+    description: "Deep dive into real-time kernel task scheduling, IPC queues, hardware interrupts, and flashing custom C firmware on STM32 microcontrollers.",
+    category: "Technical Workshop",
+    host: "RSO Robotics & Embedded Committee",
+    pointsAwarded: 3,
+    startTime: "2024-10-09T18:00:00Z",
+    endTime: "2024-10-09T20:30:00Z",
+    tags: ["FreeRTOS", "Embedded C", "STM32", "ARM Cortex-M", "IPC Queues"],
+    skills: ["FreeRTOS", "Embedded Linux", "C", "STM32", "ARM Cortex-M"],
+    learningOutcomes: [
+      "Preemptive priority-based task scheduling and tick interrupt fundamentals",
+      "Semaphores, mutexes with priority inheritance, and message queues in C",
+      "Hands-on debugging with JTAG/SWD using GDB and STM32CubeIDE",
+    ],
+    attendees: [
+      { memberId: "candidate-1", name: "Alex Rivera", email: "alex.rivera@knights.ucf.edu", major: "Computer Engineering" },
+      { memberId: "candidate-4", name: "Samantha Lin", email: "s.lin@knights.ucf.edu", major: "Computer Science" },
+      { memberId: "candidate-7", name: "David Chen", email: "dchen@knights.ucf.edu", major: "Computer Engineering" },
+      { memberId: "candidate-12", name: "Devon Reed", email: "devon.reed@knights.ucf.edu", major: "Computer Engineering" },
+      { memberId: "candidate-15", name: "Jason Patel", email: "jason.patel@knights.ucf.edu", major: "Computer Engineering" },
+    ],
+  },
+  {
+    id: "evt-4",
+    title: "RSO UCF Technical Resume & Recruiter Showcase",
+    slug: "resume-recruiter-showcase-2024",
+    location: "Student Union Pegasus Ballroom",
+    room: "Pegasus Ballroom",
+    description: "Exclusive member networking session with defense, cloud, and semiconductor industry recruiters ahead of UCF STEM Career Fair.",
+    category: "Career & Networking",
+    host: "RSO UCF Corporate Relations",
+    partner: "Lockheed Martin & L3Harris",
+    pointsAwarded: 3,
+    startTime: "2024-10-23T16:00:00Z",
+    endTime: "2024-10-23T19:00:00Z",
+    tags: ["Recruiter Networking", "Resume Review", "Defense", "Semiconductors"],
+    skills: ["Embedded Systems", "Power Electronics", "Python", "C++", "Git"],
+    learningOutcomes: [
+      "1-on-1 technical resume critiques with senior defense & systems engineering managers",
+      "Direct fast-track interview pipelines for Spring & Summer 2025 internships",
+      "Elevator pitch rehearsal and portfolio walkthrough strategies",
+    ],
+    attendees: [
+      { memberId: "candidate-1", name: "Alex Rivera", email: "alex.rivera@knights.ucf.edu", major: "Computer Engineering" },
+      { memberId: "candidate-2", name: "Brianna Morales", email: "b.morales@knights.ucf.edu", major: "Computer Science" },
+      { memberId: "candidate-3", name: "Ethan Wright", email: "ewright@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-4", name: "Samantha Lin", email: "s.lin@knights.ucf.edu", major: "Computer Science" },
+      { memberId: "candidate-6", name: "Priya Sharma", email: "priya.sharma@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-8", name: "Elena Rostova", email: "elena.rostova@knights.ucf.edu", major: "Computer Science" },
+      { memberId: "candidate-9", name: "Benjamin Foster", email: "ben.foster@knights.ucf.edu", major: "Electrical Engineering" },
+    ],
+  },
+  {
+    id: "evt-5",
+    title: "Region 3 SoutheastCon Hardware Competition Build Sprint",
+    slug: "southeastcon-hardware-build-sprint",
+    location: "RSO Innovation Lab (ENG2 135)",
+    room: "ENG2 135",
+    description: "Collaborative hackathon & build session programming autonomous rovers and testing sensor arrays for RSO Region 3 competition.",
+    category: "Competition & Hackathon",
+    host: "SoutheastCon Competition Team",
+    pointsAwarded: 3,
+    startTime: "2024-11-06T17:00:00Z",
+    endTime: "2024-11-06T21:00:00Z",
+    tags: ["Robotics", "Autonomous Rover", "SoutheastCon", "Sensor Fusion"],
+    skills: ["Robotics", "ROS2", "PID Control", "C++", "Sensors"],
+    learningOutcomes: [
+      "Integrating optical line sensors with PID closed-loop motor controllers",
+      "Laser-cut chassis assembly and 3D printed mechanical gearing inspection",
+      "Simulating track obstacles and tuning encoder odometry feedback",
+    ],
+    attendees: [
+      { memberId: "candidate-1", name: "Alex Rivera", email: "alex.rivera@knights.ucf.edu", major: "Computer Engineering" },
+      { memberId: "candidate-5", name: "Marcus Vance", email: "mvance@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-10", name: "Jordan Taylor", email: "jordan.taylor@knights.ucf.edu", major: "Mechanical Engineering" },
+      { memberId: "candidate-11", name: "Lucas Vance", email: "lucas.vance@knights.ucf.edu", major: "Electrical Engineering" },
+    ],
+  },
+  {
+    id: "evt-6",
+    title: "PyTorch & Edge AI Computer Vision Bootcamp",
+    slug: "pytorch-edge-ai-bootcamp",
+    location: "Harris Engineering Center (HEC 101)",
+    room: "HEC 101",
+    description: "Hands-on workshop building zero-shot object detection models and deploying quantization pipelines on Raspberry Pi and Edge TPU devices.",
+    category: "Technical Workshop",
+    host: "RSO AI & Software Committee",
+    pointsAwarded: 3,
+    startTime: "2024-11-20T18:00:00Z",
+    endTime: "2024-11-20T20:00:00Z",
+    tags: ["PyTorch", "Edge AI", "Computer Vision", "Quantization", "Raspberry Pi"],
+    skills: ["PyTorch", "Python", "Computer Vision", "Edge AI", "OpenCV"],
+    learningOutcomes: [
+      "Training lightweight YOLO models on custom embedded datasets with transfer learning",
+      "Post-training INT8 quantization and ONNX runtime optimization for edge inference",
+      "Streaming camera feeds and rendering real-time bounding boxes via OpenCV",
+    ],
+    attendees: [
+      { memberId: "candidate-2", name: "Brianna Morales", email: "b.morales@knights.ucf.edu", major: "Computer Science" },
+      { memberId: "candidate-4", name: "Samantha Lin", email: "s.lin@knights.ucf.edu", major: "Computer Science" },
+      { memberId: "candidate-8", name: "Elena Rostova", email: "elena.rostova@knights.ucf.edu", major: "Computer Science" },
+      { memberId: "candidate-14", name: "Maya Patel", email: "maya.patel@knights.ucf.edu", major: "Computer Science" },
+    ],
+  },
+  {
+    id: "evt-7",
+    title: "RSO Spring General Body Meeting & Project Showcase",
+    slug: "spring-gbm-project-showcase-2025",
+    location: "Harris Engineering Center (HEC 101)",
+    room: "HEC 101",
+    description: "Unveiling 2025 student projects, announcing officer elections, and connecting with corporate sponsors.",
+    category: "General Body Meeting",
+    host: "RSO UCF Student Chapter",
+    pointsAwarded: 3,
+    startTime: "2025-01-22T18:00:00Z",
+    endTime: "2025-01-22T20:00:00Z",
+    tags: ["Spring GBM", "Officer Elections", "Project Showcase", "Sponsorship"],
+    skills: ["Embedded Systems", "Robotics", "Python", "C++", "Hardware"],
+    learningOutcomes: [
+      "Mid-year build team milestone reviews and prototype demonstrations",
+      "Nominations for upcoming 2025-2026 RSO UCF Executive Committee elections",
+      "Announcement of funding grants for senior design and independent projects",
+    ],
+    attendees: [
+      { memberId: "candidate-1", name: "Alex Rivera", email: "alex.rivera@knights.ucf.edu", major: "Computer Engineering" },
+      { memberId: "candidate-2", name: "Brianna Morales", email: "b.morales@knights.ucf.edu", major: "Computer Science" },
+      { memberId: "candidate-3", name: "Ethan Wright", email: "ewright@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-7", name: "David Chen", email: "dchen@knights.ucf.edu", major: "Computer Engineering" },
+      { memberId: "candidate-9", name: "Benjamin Foster", email: "ben.foster@knights.ucf.edu", major: "Electrical Engineering" },
+    ],
+  },
+  {
+    id: "evt-8",
+    title: "Lockheed Martin Defense Electronics & Radar Systems Tech Talk",
+    slug: "lockheed-martin-radar-tech-talk",
+    location: "Harris Engineering Center (HEC 101)",
+    room: "HEC 101",
+    description: "Technical presentation by Lockheed Martin radar systems architects on phased-array beamforming and FPGA DSP pipelines.",
+    category: "Industry Tech Talk",
+    host: "RSO Industry Relations",
+    partner: "Lockheed Martin",
+    pointsAwarded: 3,
+    startTime: "2025-02-05T17:30:00Z",
+    endTime: "2025-02-05T19:30:00Z",
+    tags: ["Radar Systems", "Beamforming", "FPGA DSP", "RF Engineering"],
+    skills: ["FPGA", "DSP", "RF Engineering", "MATLAB", "Radar"],
+    learningOutcomes: [
+      "Active Electronically Scanned Array (AESA) radar architectures and antenna elements",
+      "High-throughput digital signal processing pipelines on Xilinx UltraScale+ FPGAs",
+      "Career trajectories in Orlando defense electronics engineering",
+    ],
+    attendees: [
+      { memberId: "candidate-3", name: "Ethan Wright", email: "ewright@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-5", name: "Marcus Vance", email: "mvance@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-6", name: "Priya Sharma", email: "priya.sharma@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-9", name: "Benjamin Foster", email: "ben.foster@knights.ucf.edu", major: "Electrical Engineering" },
+    ],
+  },
+  {
+    id: "evt-9",
+    title: "IPC Soldering & Surface Mount Certification Bootcamp",
+    slug: "ipc-soldering-certification-bootcamp",
+    location: "RSO Innovation Lab (ENG2 135)",
+    room: "ENG2 135",
+    description: "Full-day intensive training in lead-free solder metallurgy, fine-pitch QFN rework, and ESD workstation safety compliance.",
+    category: "Technical Workshop",
+    host: "RSO Innovation Lab",
+    pointsAwarded: 3,
+    startTime: "2025-02-15T10:00:00Z",
+    endTime: "2025-02-15T16:00:00Z",
+    tags: ["IPC-A-610", "SMD Soldering", "Hot Air Rework", "ESD Safety"],
+    skills: ["Soldering", "SMD Soldering", "PCB Layout", "Hardware Testing"],
+    learningOutcomes: [
+      "Inspecting solder fillet quality to IPC-A-610 Class 3 aerospace and military standards",
+      "Hands-on soldering of 0402 passives, 0.5mm pitch QFPs, and thermal-pad QFN packages",
+      "Microscope inspection, flux chemistry, and board ultrasonic cleaning procedures",
+    ],
+    attendees: [
+      { memberId: "candidate-1", name: "Alex Rivera", email: "alex.rivera@knights.ucf.edu", major: "Computer Engineering" },
+      { memberId: "candidate-3", name: "Ethan Wright", email: "ewright@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-5", name: "Marcus Vance", email: "mvance@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-11", name: "Lucas Vance", email: "lucas.vance@knights.ucf.edu", major: "Electrical Engineering" },
+    ],
+  },
+  {
+    id: "evt-10",
+    title: "Space Coast Industry Tour: Kennedy Space Center & Blue Origin",
+    slug: "space-coast-industry-tour",
+    location: "Cape Canaveral Launch Complex & KSC Visitor Complex",
+    room: "Launch Complex 36",
+    description: "Behind-the-scenes engineering tour of launch vehicle assembly facilities and orbital integration cleanrooms.",
+    category: "Special Event & Tour",
+    host: "RSO Aerospace & Defense SIG",
+    partner: "Blue Origin & NASA KSC",
+    pointsAwarded: 3,
+    startTime: "2025-02-28T08:00:00Z",
+    endTime: "2025-02-28T17:00:00Z",
+    tags: ["Space Coast", "Avionics", "Orbital Cleanroom", "Launch Vehicles"],
+    skills: ["Avionics", "Embedded Systems", "Sensors", "Telemetry"],
+    learningOutcomes: [
+      "Walkthrough of orbital rocket staging and cryogenics routing",
+      "Cleanroom avionics qualification, vibration testing, and thermal vacuum chambers",
+      "Networking with launch operations engineers and UCF alumni at Blue Origin",
+    ],
+    attendees: [
+      { memberId: "candidate-1", name: "Alex Rivera", email: "alex.rivera@knights.ucf.edu", major: "Computer Engineering" },
+      { memberId: "candidate-6", name: "Priya Sharma", email: "priya.sharma@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-9", name: "Benjamin Foster", email: "ben.foster@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-10", name: "Jordan Taylor", email: "jordan.taylor@knights.ucf.edu", major: "Mechanical Engineering" },
+    ],
+  },
+  {
+    id: "evt-11",
+    title: "Texas Instruments Analog Power Management Deep Dive",
+    slug: "ti-analog-power-management",
+    location: "Engineering II (ENG2 102)",
+    room: "ENG2 102",
+    description: "Guest lecture and lab demo on buck/boost topology optimization, EMI suppression, and battery charge management ICs.",
+    category: "Industry Tech Talk",
+    host: "RSO Power & Energy Society",
+    partner: "Texas Instruments",
+    pointsAwarded: 3,
+    startTime: "2025-03-12T18:00:00Z",
+    endTime: "2025-03-12T20:00:00Z",
+    tags: ["Power Electronics", "Buck/Boost", "Texas Instruments", "EMI Suppression"],
+    skills: ["Power Electronics", "Analog Design", "LTspice", "PCB Layout"],
+    learningOutcomes: [
+      "Synchronous buck converter design: inductor saturation limits, switching losses, and ripple math",
+      "Minimizing high-di/dt current loops to pass FCC Part 15 Class B emissions testing",
+      "Lithium-ion battery charging profiles, cell balancing, and fuel gauge telemetry",
+    ],
+    attendees: [
+      { memberId: "candidate-3", name: "Ethan Wright", email: "ewright@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-6", name: "Priya Sharma", email: "priya.sharma@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-11", name: "Lucas Vance", email: "lucas.vance@knights.ucf.edu", major: "Electrical Engineering" },
+    ],
+  },
+  {
+    id: "evt-12",
+    title: "Autonomous Rover Hackathon & Line-Tracking Challenge",
+    slug: "autonomous-rover-hackathon",
+    location: "Harris Engineering Center Atrium",
+    room: "HEC Atrium",
+    description: "12-hour student team robotics hackathon programming autonomous navigation, line-following, and obstacle avoidance algorithms.",
+    category: "Competition & Hackathon",
+    host: "RSO Robotics Committee",
+    pointsAwarded: 3,
+    startTime: "2025-03-29T09:00:00Z",
+    endTime: "2025-03-29T21:00:00Z",
+    tags: ["Hackathon", "Robotics", "Computer Vision", "Autonomous Navigation"],
+    skills: ["Robotics", "Computer Vision", "Python", "C++", "PID Control"],
+    learningOutcomes: [
+      "Fast-paced algorithm development for ultrasonic and LiDAR obstacle evasion",
+      "Hardware-software integration on tight 12-hour hackathon deadlines",
+      "Live competition runs judged on course completion speed and path accuracy",
+    ],
+    attendees: [
+      { memberId: "candidate-1", name: "Alex Rivera", email: "alex.rivera@knights.ucf.edu", major: "Computer Engineering" },
+      { memberId: "candidate-4", name: "Samantha Lin", email: "s.lin@knights.ucf.edu", major: "Computer Science" },
+      { memberId: "candidate-5", name: "Marcus Vance", email: "mvance@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-10", name: "Jordan Taylor", email: "jordan.taylor@knights.ucf.edu", major: "Mechanical Engineering" },
+      { memberId: "candidate-12", name: "Devon Reed", email: "devon.reed@knights.ucf.edu", major: "Computer Engineering" },
+    ],
+  },
+  {
+    id: "evt-13",
+    title: "Northrop Grumman Cyber & Embedded Security Workshop",
+    slug: "northrop-grumman-cyber-embedded-security",
+    location: "Harris Engineering Center (HEC 118)",
+    room: "HEC 118",
+    description: "Interactive security lab exploring side-channel analysis, JTAG hardware debugging, and secure boot cryptographic validation.",
+    category: "Industry Tech Talk",
+    host: "RSO Cybersecurity Committee",
+    partner: "Northrop Grumman",
+    pointsAwarded: 3,
+    startTime: "2025-04-02T17:30:00Z",
+    endTime: "2025-04-02T19:30:00Z",
+    tags: ["Embedded Security", "Northrop Grumman", "Hardware Hacking", "Secure Boot"],
+    skills: ["Embedded Security", "Cybersecurity", "C", "Linux Security", "Reverse Engineering"],
+    learningOutcomes: [
+      "Hardware side-channel power analysis and fault injection concepts",
+      "Extracting flash memory dumps via unprotected JTAG/SWD ports",
+      "Implementing hardware root-of-trust with AES-GCM signed firmware images",
+    ],
+    attendees: [
+      { memberId: "candidate-2", name: "Brianna Morales", email: "b.morales@knights.ucf.edu", major: "Computer Science" },
+      { memberId: "candidate-7", name: "David Chen", email: "dchen@knights.ucf.edu", major: "Computer Engineering" },
+      { memberId: "candidate-8", name: "Elena Rostova", email: "elena.rostova@knights.ucf.edu", major: "Computer Science" },
+    ],
+  },
+  {
+    id: "evt-14",
+    title: "RSO UCF Senior Design Pitch & Sponsor Feedback Night",
+    slug: "senior-design-pitch-night-2025",
+    location: "Engineering I Atrium",
+    room: "ENG1 Atrium",
+    description: "Graduating seniors present capstone engineering prototypes to industry sponsor judges and engineering faculty.",
+    category: "Career & Networking",
+    host: "RSO Senior Design Liaison",
+    pointsAwarded: 3,
+    startTime: "2025-04-09T18:00:00Z",
+    endTime: "2025-04-09T21:00:00Z",
+    tags: ["Senior Design", "Capstone", "Industry Judges", "Sponsor Feedback"],
+    skills: ["Project Management", "Embedded Systems", "PCB Design", "System Architecture"],
+    learningOutcomes: [
+      "Formal technical pitch presentation skills under tight 10-minute scrutiny",
+      "Direct technical feedback from senior principal engineers and corporate sponsors",
+      "Demonstrating working hardware prototypes in live noisy environments",
+    ],
+    attendees: [
+      { memberId: "candidate-1", name: "Alex Rivera", email: "alex.rivera@knights.ucf.edu", major: "Computer Engineering" },
+      { memberId: "candidate-2", name: "Brianna Morales", email: "b.morales@knights.ucf.edu", major: "Computer Science" },
+      { memberId: "candidate-3", name: "Ethan Wright", email: "ewright@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-6", name: "Priya Sharma", email: "priya.sharma@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-9", name: "Benjamin Foster", email: "ben.foster@knights.ucf.edu", major: "Electrical Engineering" },
+    ],
+  },
+  {
+    id: "evt-15",
+    title: "L3Harris High-Frequency RF Communications Seminar",
+    slug: "l3harris-rf-comms-seminar",
+    location: "Harris Engineering Center (HEC 101)",
+    room: "HEC 101",
+    description: "Seminar on wideband satellite transceivers, phased-array antenna designs, and mil-spec electronic warfare communication links.",
+    category: "Industry Tech Talk",
+    host: "RSO Microwave & Antennas Group",
+    partner: "L3Harris Technologies",
+    pointsAwarded: 3,
+    startTime: "2025-04-14T17:00:00Z",
+    endTime: "2025-04-14T19:00:00Z",
+    tags: ["RF Communications", "L3Harris", "Satellite Comms", "Phased Arrays"],
+    skills: ["RF Engineering", "Wireless Communications", "Antennas", "Signal Processing"],
+    learningOutcomes: [
+      "Satellite uplink/downlink budget calculations across Ku and Ka frequency bands",
+      "Smith chart impedance matching and low-noise amplifier (LNA) stage design",
+      "Modern electronic counter-countermeasure (ECCM) frequency hopping topologies",
+    ],
+    attendees: [
+      { memberId: "candidate-3", name: "Ethan Wright", email: "ewright@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-5", name: "Marcus Vance", email: "mvance@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-9", name: "Benjamin Foster", email: "ben.foster@knights.ucf.edu", major: "Electrical Engineering" },
+    ],
+  },
+  {
+    id: "evt-16",
+    title: "RSO UCF Industry Dinner & End-of-Year Banquet",
+    slug: "industry-dinner-banquet-2025",
+    location: "UCF Alumni Center",
+    room: "Grand Ballroom",
+    description: "Annual celebration honoring graduating seniors, outstanding committee chairs, and student competition winners.",
+    category: "Special Event & Tour",
+    host: "RSO UCF Executive Board",
+    pointsAwarded: 3,
+    startTime: "2025-04-18T18:30:00Z",
+    endTime: "2025-04-18T21:30:00Z",
+    tags: ["Banquet", "Senior Send-Off", "Awards", "Networking Dinner"],
+    skills: ["Project Management", "Leadership", "Technical Communication"],
+    learningOutcomes: [
+      "Chapter annual awards ceremony recognizing top project contributors and leaders",
+      "Formal dinner with corporate sponsors, faculty advisors, and alumni",
+      "Passing of the gavel to newly elected 2025-2026 RSO UCF officers",
+    ],
+    attendees: [
+      { memberId: "candidate-1", name: "Alex Rivera", email: "alex.rivera@knights.ucf.edu", major: "Computer Engineering" },
+      { memberId: "candidate-2", name: "Brianna Morales", email: "b.morales@knights.ucf.edu", major: "Computer Science" },
+      { memberId: "candidate-3", name: "Ethan Wright", email: "ewright@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-4", name: "Samantha Lin", email: "s.lin@knights.ucf.edu", major: "Computer Science" },
+      { memberId: "candidate-5", name: "Marcus Vance", email: "mvance@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-6", name: "Priya Sharma", email: "priya.sharma@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-7", name: "David Chen", email: "dchen@knights.ucf.edu", major: "Computer Engineering" },
+      { memberId: "candidate-8", name: "Elena Rostova", email: "elena.rostova@knights.ucf.edu", major: "Computer Science" },
+      { memberId: "candidate-9", name: "Benjamin Foster", email: "ben.foster@knights.ucf.edu", major: "Electrical Engineering" },
+      { memberId: "candidate-10", name: "Jordan Taylor", email: "jordan.taylor@knights.ucf.edu", major: "Mechanical Engineering" },
+    ],
+  },
+];

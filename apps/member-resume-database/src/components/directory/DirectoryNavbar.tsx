@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { UserRole } from "@/app/page";
-import { FolderGit2, Users } from "lucide-react";
+import { FolderGit2, Users, Calendar, Shield } from "lucide-react";
 
 interface DirectoryNavbarProps {
   role?: UserRole;
@@ -14,8 +14,12 @@ interface DirectoryNavbarProps {
   handleRoleChange?: (role: UserRole) => void;
 }
 
-export default function DirectoryNavbar({}: DirectoryNavbarProps) {
+export default function DirectoryNavbar({
+  role = "standard",
+  handleRoleChange,
+}: DirectoryNavbarProps) {
   const pathname = usePathname();
+  const isAdmin = role === "admin";
 
   const navLinks = [
     {
@@ -28,25 +32,65 @@ export default function DirectoryNavbar({}: DirectoryNavbarProps) {
       label: "Projects",
       icon: FolderGit2,
     },
+    {
+      href: "/events",
+      label: "Events",
+      icon: Calendar,
+    },
   ];
+
+  const permissionSwitch = (
+    <div
+      className="flex items-center bg-slate-100/90 p-1 rounded-xl border border-slate-200/90 text-xs font-semibold shrink-0 select-none shadow-2xs"
+      role="group"
+      aria-label="Permission Level"
+    >
+      <button
+        type="button"
+        onClick={() => handleRoleChange?.("standard")}
+        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+          !isAdmin
+            ? "bg-white text-slate-900 shadow-xs border border-slate-200/90 font-bold"
+            : "text-slate-500 hover:text-slate-900 hover:bg-white/50"
+        }`}
+        title="Standard candidate browsing mode"
+      >
+        <span
+          className={`w-1.5 h-1.5 rounded-full transition-colors ${
+            !isAdmin ? "bg-slate-700" : "bg-slate-300"
+          }`}
+        />
+        <span>Standard</span>
+      </button>
+
+      <button
+        type="button"
+        onClick={() => handleRoleChange?.("admin")}
+        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+          isAdmin
+            ? "bg-red-50 text-red-700 shadow-xs border border-red-200 font-bold"
+            : "text-slate-500 hover:text-slate-900 hover:bg-white/50"
+        }`}
+        title="Admin maintenance mode — unlocks moderation, flags, and list view"
+      >
+        <Shield
+          size={13}
+          className={isAdmin ? "text-red-600" : "text-slate-400"}
+        />
+        <span>Admin</span>
+      </button>
+    </div>
+  );
 
   return (
     <nav className="border-b border-slate-200/90 bg-white/95 backdrop-blur-md sticky top-0 z-40 px-4 sm:px-6 py-3 transition-colors shadow-xs">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4">
-        {/* Brand & Main Links */}
+        {/* Brand & Main Links (Desktop) */}
         <div className="flex flex-wrap items-center justify-between w-full md:w-auto gap-4">
-          <Link href="/" className="flex items-center gap-2.5 group cursor-pointer shrink-0">
-            <div className="w-8 h-8 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center font-black text-slate-800 text-xs shadow-2xs group-hover:scale-105 transition-transform">
-              UCF
-            </div>
-            <div>
-              <span className="text-sm font-extrabold text-slate-900 tracking-tight group-hover:text-slate-700 transition-colors block leading-tight">
-                IEEE UCF
-              </span>
-              <span className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider block">
-                Resume Database
-              </span>
-            </div>
+          <Link href="/" className="flex items-center group cursor-pointer shrink-0 py-0.5">
+            <span className="text-base font-extrabold text-slate-900 tracking-tight group-hover:text-slate-700 transition-colors">
+              RSO UCF
+            </span>
           </Link>
 
           {/* Navigation items for desktop */}
@@ -70,6 +114,11 @@ export default function DirectoryNavbar({}: DirectoryNavbarProps) {
               );
             })}
           </div>
+
+          {/* Mobile Switch: Shown in top row on mobile */}
+          <div className="flex md:hidden items-center shrink-0">
+            {permissionSwitch}
+          </div>
         </div>
 
         {/* Mobile / Tablet scrollable navigation links */}
@@ -92,6 +141,11 @@ export default function DirectoryNavbar({}: DirectoryNavbarProps) {
               </Link>
             );
           })}
+        </div>
+
+        {/* Desktop Switch: Shown on right side on desktop */}
+        <div className="hidden md:flex items-center shrink-0">
+          {permissionSwitch}
         </div>
       </div>
     </nav>
