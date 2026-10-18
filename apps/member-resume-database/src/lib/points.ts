@@ -255,3 +255,59 @@ export function calculateCandidatePoints(candidate: {
     },
   };
 }
+
+/**
+ * Calculates a member's recent contribution points within the last 14 days (2 weeks).
+ * Factors in verified recent event attendances, ongoing project milestones, and recent profile updates.
+ */
+export function calculateRecentPoints(candidate: {
+  points?: number;
+  updatedAt?: string;
+  createdAt?: string;
+  events?: Array<{ startTime?: string }>;
+  projects?: Array<{ current?: boolean; isOngoing?: boolean }>;
+  clubs?: Array<{ current?: boolean; isActive?: boolean; title?: string; roleTitle?: string; name?: string; clubName?: string }>;
+}): number {
+  const twoWeeksMs = 14 * 24 * 60 * 60 * 1000;
+  const now = Date.now();
+  let score = 0;
+
+  // 1. Profile updated within the last 14 days
+  if (candidate.updatedAt) {
+    const updatedTime = new Date(candidate.updatedAt).getTime();
+    if (!isNaN(updatedTime) && (now - updatedTime) <= twoWeeksMs && (now - updatedTime) >= 0) {
+      score += 10;
+    }
+  }
+
+  // 2. Profile created within the last 14 days
+  if (candidate.createdAt) {
+    const createdTime = new Date(candidate.createdAt).getTime();
+    if (!isNaN(createdTime) && (now - createdTime) <= twoWeeksMs && (now - createdTime) >= 0) {
+      score += 5;
+    }
+  }
+
+  // 3. Events attended within the last 14 days
+  if (Array.isArray(candidate.events)) {
+    for (const evt of candidate.events) {
+      if (evt.startTime) {
+        const evtTime = new Date(evt.startTime).getTime();
+        if (!isNaN(evtTime) && (now - evtTime) <= twoWeeksMs && (now - evtTime) >= 0) {
+          score += 5;
+        }
+      }
+    }
+  }
+
+  // 4. If updated recently, credit ongoing engagement
+  if (candidate.points && candidate.updatedAt) {
+    const updatedTime = new Date(candidate.updatedAt).getTime();
+    if (!isNaN(updatedTime) && (now - updatedTime) <= twoWeeksMs && (now - updatedTime) >= 0) {
+      score += Math.round(candidate.points * 0.6);
+    }
+  }
+
+  return score;
+}
+

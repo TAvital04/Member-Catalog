@@ -84,7 +84,10 @@ export interface Student {
   mainProjectName?: string;
   email: string;
   points?: number;
+  recentPoints?: number;
   pointBreakdown?: PointBreakdown;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface PointBreakdown {

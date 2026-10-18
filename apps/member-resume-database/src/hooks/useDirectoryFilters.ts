@@ -13,6 +13,22 @@
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useCallback, useTransition } from "react";
 
+export type DirectorySortOption =
+  | "activity"
+  | "activity-asc"
+  | "activity-recent"
+  | "activity-recent-asc"
+  | "updated"
+  | "updated-asc"
+  | "created"
+  | "created-asc"
+  | "name"
+  | "name-desc"
+  | "gradDate"
+  | "gradDate-desc"
+  | "gpa"
+  | "gpa-asc";
+
 export interface DirectoryFilterState {
   searchQuery: string;
   selectedMajors: string[];
@@ -22,7 +38,7 @@ export interface DirectoryFilterState {
   selectedCompanies: string[];
   skillFilterMode: "AND" | "OR";
   adminFilterFlagged: boolean | null;
-  sortBy: "activity" | "name" | "gradDate" | "gpa";
+  sortBy: DirectorySortOption;
 }
 
 export function useDirectoryFilters() {
@@ -62,8 +78,25 @@ export function useDirectoryFilters() {
     flaggedParam === "true" ? true : flaggedParam === "false" ? false : null;
 
   const sortParam = searchParams.get("sort");
-  const sortBy: "activity" | "name" | "gradDate" | "gpa" =
-    sortParam === "name" || sortParam === "gradDate" || sortParam === "gpa" ? sortParam : "activity";
+  const validSortOptions: DirectorySortOption[] = [
+    "activity",
+    "activity-asc",
+    "activity-recent",
+    "activity-recent-asc",
+    "updated",
+    "updated-asc",
+    "created",
+    "created-asc",
+    "name",
+    "name-desc",
+    "gradDate",
+    "gradDate-desc",
+    "gpa",
+    "gpa-asc",
+  ];
+  const sortBy: DirectorySortOption = validSortOptions.includes(sortParam as any)
+    ? (sortParam as DirectorySortOption)
+    : "activity";
 
   // Helper to push updated search parameters to the URL
   const updateQueryParams = useCallback(
@@ -147,7 +180,7 @@ export function useDirectoryFilters() {
   );
 
   const setSortBy = useCallback(
-    (sort: "activity" | "name" | "gradDate" | "gpa") => {
+    (sort: DirectorySortOption) => {
       updateQueryParams({ sort: sort === "activity" ? null : sort });
     },
     [updateQueryParams]

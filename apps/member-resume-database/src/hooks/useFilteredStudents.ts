@@ -11,6 +11,7 @@
 import { useMemo } from "react";
 import { Student, getPrimaryEducation, getIeeeLeadershipRole } from "@/data/students";
 import { getGradValue } from "@/lib/gradDate";
+import { DirectorySortOption } from "./useDirectoryFilters";
 
 interface UseFilteredStudentsProps {
   students: Student[];
@@ -24,7 +25,7 @@ interface UseFilteredStudentsProps {
   skillFilterMode: "AND" | "OR";
   adminMode: boolean;
   adminFilterFlagged: boolean | null;
-  sortBy: "activity" | "points" | "name" | "gradDate" | "gpa";
+  sortBy: DirectorySortOption | string;
 }
 
 export function useFilteredStudents({
@@ -140,22 +141,94 @@ export function useFilteredStudents({
         return true;
       })
       .sort((a, b) => {
+        // Activity: Most Active in the Last 2 Weeks vs Least Active Recent
+        if (sortBy === "activity-recent") {
+          const recA = a.recentPoints ?? (a.updatedAt ? (Date.now() - new Date(a.updatedAt).getTime() < 14 * 86400000 ? 10 : 0) : 0);
+          const recB = b.recentPoints ?? (b.updatedAt ? (Date.now() - new Date(b.updatedAt).getTime() < 14 * 86400000 ? 10 : 0) : 0);
+          const diff = recB - recA;
+          if (diff !== 0) return diff;
+          const ptDiff = (b.points ?? 0) - (a.points ?? 0);
+          if (ptDiff !== 0) return ptDiff;
+          return a.name.localeCompare(b.name);
+        }
+        if (sortBy === "activity-recent-asc") {
+          const recA = a.recentPoints ?? (a.updatedAt ? (Date.now() - new Date(a.updatedAt).getTime() < 14 * 86400000 ? 10 : 0) : 0);
+          const recB = b.recentPoints ?? (b.updatedAt ? (Date.now() - new Date(b.updatedAt).getTime() < 14 * 86400000 ? 10 : 0) : 0);
+          const diff = recA - recB;
+          if (diff !== 0) return diff;
+          const ptDiff = (a.points ?? 0) - (b.points ?? 0);
+          if (ptDiff !== 0) return ptDiff;
+          return a.name.localeCompare(b.name);
+        }
+
+        // Activity: Most Active Ever vs Least Active Ever
         if (sortBy === "activity" || sortBy === "points") {
           const diff = (b.points ?? 0) - (a.points ?? 0);
           if (diff !== 0) return diff;
           return a.name.localeCompare(b.name);
         }
+        if (sortBy === "activity-asc" || sortBy === "points-asc") {
+          const diff = (a.points ?? 0) - (b.points ?? 0);
+          if (diff !== 0) return diff;
+          return a.name.localeCompare(b.name);
+        }
+
+        // Recently Updated (Most recently updated profiles first vs oldest updated)
+        if (sortBy === "updated") {
+          const timeA = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
+          const timeB = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
+          if (timeB !== timeA) return timeB - timeA;
+          return a.name.localeCompare(b.name);
+        }
+        if (sortBy === "updated-asc") {
+          const timeA = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
+          const timeB = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
+          if (timeA !== timeB) return timeA - timeB;
+          return a.name.localeCompare(b.name);
+        }
+
+        // Recently Created (Most recently created profiles first vs oldest created)
+        if (sortBy === "created") {
+          const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+          const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+          if (timeB !== timeA) return timeB - timeA;
+          return a.name.localeCompare(b.name);
+        }
+        if (sortBy === "created-asc") {
+          const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+          const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+          if (timeA !== timeB) return timeA - timeB;
+          return a.name.localeCompare(b.name);
+        }
+
+        // Name (A-Z vs Z-A)
         if (sortBy === "name") {
           return a.name.localeCompare(b.name);
         }
+        if (sortBy === "name-desc") {
+          return b.name.localeCompare(a.name);
+        }
+
+        // Graduation Date (Soonest first vs Latest first)
         if (sortBy === "gradDate") {
           return getGradValue(a.gradDate) - getGradValue(b.gradDate);
         }
+        if (sortBy === "gradDate-desc") {
+          return getGradValue(b.gradDate) - getGradValue(a.gradDate);
+        }
+
+        // GPA (Highest first vs Lowest first)
         if (sortBy === "gpa") {
           const gpaA = getPrimaryEducation(a)?.gpa ?? 0;
           const gpaB = getPrimaryEducation(b)?.gpa ?? 0;
           return gpaB - gpaA;
         }
+        if (sortBy === "gpa-asc") {
+          const gpaA = getPrimaryEducation(a)?.gpa ?? 0;
+          const gpaB = getPrimaryEducation(b)?.gpa ?? 0;
+          return gpaA - gpaB;
+        }
+
         return 0;
       });
   }, [

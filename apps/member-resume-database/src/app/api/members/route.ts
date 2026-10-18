@@ -9,7 +9,7 @@
 
 import { db, members, memberResumes, events, eventAttendees, DENSE_CANDIDATES } from "@ieee/db";
 import { Student } from "@/data/students";
-import { calculateCandidatePoints } from "@/lib/points";
+import { calculateCandidatePoints, calculateRecentPoints } from "@/lib/points";
 import { eq, inArray } from "drizzle-orm";
 
 export async function GET(request?: Request) {
@@ -46,6 +46,8 @@ export async function GET(request?: Request) {
           shareGpaWithRecruiters: memberResumes.shareGpaWithRecruiters,
           memberMajor: members.major,
           memberGradYear: members.graduationYear,
+          createdAt: memberResumes.createdAt,
+          updatedAt: memberResumes.updatedAt,
         })
         .from(memberResumes)
         .leftJoin(members, eq(memberResumes.memberId, members.id))
@@ -79,6 +81,8 @@ export async function GET(request?: Request) {
           shareGpaWithRecruiters: true,
           memberMajor: c.major,
           memberGradYear: c.graduationYear,
+          createdAt: c.createdAt || new Date(Date.now() - (index * 86400000 * 3) - 3600000).toISOString(),
+          updatedAt: c.updatedAt || new Date(Date.now() - (index * 43200000) - 1800000).toISOString(),
         }));
       } else {
         return Response.json({
@@ -165,6 +169,15 @@ export async function GET(request?: Request) {
           mainProjectName: row.mainProjectName,
         });
 
+        const recentPoints = calculateRecentPoints({
+          points,
+          updatedAt: row.updatedAt ? (typeof row.updatedAt === "object" ? row.updatedAt.toISOString() : String(row.updatedAt)) : undefined,
+          createdAt: row.createdAt ? (typeof row.createdAt === "object" ? row.createdAt.toISOString() : String(row.createdAt)) : undefined,
+          events: candidateEvents,
+          projects: Array.isArray(row.projects) ? row.projects : [],
+          clubs: Array.isArray(row.clubMemberships) ? row.clubMemberships : [],
+        });
+
         return {
           id: row.id,
           name: row.fullName || "UCF Member",
@@ -223,7 +236,10 @@ export async function GET(request?: Request) {
           flagReason: isAdmin ? (row.flagReason || undefined) : undefined,
           mainProjectName: row.mainProjectName || undefined,
           points,
+          recentPoints,
           pointBreakdown,
+          createdAt: row.createdAt ? (typeof row.createdAt === "object" ? row.createdAt.toISOString() : String(row.createdAt)) : undefined,
+          updatedAt: row.updatedAt ? (typeof row.updatedAt === "object" ? row.updatedAt.toISOString() : String(row.updatedAt)) : undefined,
         };
       });
 
