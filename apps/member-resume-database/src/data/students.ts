@@ -59,6 +59,9 @@ export interface EventEntry {
   endTime?: string;
   description: string;
   slug?: string;
+  category?: string;
+  skills?: string[];
+  pointsAwarded?: number;
 }
 
 export interface Student {

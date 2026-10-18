@@ -101,7 +101,7 @@ export default function PortfolioModal({
           {/* Right Side Panel: Interactive Tabs */}
           <div className="w-full md:w-3/5 p-5 md:p-6 pt-12 md:pt-6 flex flex-col h-full relative z-10 bg-white overflow-hidden">
             {/* Tab Navigation Header */}
-            <ModalTabNavigation activeTab={activeTab} setActiveTab={setActiveTab} role={role} />
+            <ModalTabNavigation activeTab={activeTab} setActiveTab={setActiveTab} role={role} eventCount={student.events?.length} />
 
             {/* Tab Content Display */}
             <div className={`grow pr-1 ${activeTab === "about" ? "overflow-hidden" : "overflow-y-auto"} md:overflow-y-auto`}>
@@ -124,7 +124,7 @@ export default function PortfolioModal({
 
               {/* Projects Panel */}
               {activeTab === "projects" && (
-                <ProjectsTab projects={student.projects} formatDateStr={formatDateStr} />
+                <ProjectsTab projects={student.projects} formatDateStr={formatDateStr} student={student} />
               )}
 
               {/* Skills Panel */}
