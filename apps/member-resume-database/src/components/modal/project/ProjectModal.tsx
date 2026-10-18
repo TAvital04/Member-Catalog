@@ -33,6 +33,7 @@ interface ProjectModalProps {
   onSelectMember?: (memberId: string) => void;
   initialTab?: ProjectTabType;
   students?: Student[];
+  role?: "standard" | "sponsor" | "admin";
 }
 
 export default function ProjectModal({
@@ -41,6 +42,7 @@ export default function ProjectModal({
   onSelectMember,
   initialTab = "overview",
   students = [],
+  role,
 }: ProjectModalProps) {
   const [activeTab, setActiveTab] = useState<ProjectTabType>(initialTab);
   const focusTrapRef = useFocusTrap(true, onClose);
@@ -114,7 +116,7 @@ export default function ProjectModal({
 
               {/* Tools & Tech Stack Tab */}
               {activeTab === "tools" && (
-                <ProjectToolsTab tools={project.tools} students={students} onClose={onClose} />
+                <ProjectToolsTab tools={project.tools} students={students} onClose={onClose} role={role} />
               )}
 
               {/* Timeline & Roadmap Tab */}
@@ -132,7 +134,7 @@ export default function ProjectModal({
 
               {/* Skills Taught Tab */}
               {activeTab === "skills" && (
-                <ProjectSkillsTab skillsTaught={project.skillsTaught} students={students} onClose={onClose} />
+                <ProjectSkillsTab skillsTaught={project.skillsTaught} students={students} onClose={onClose} role={role} />
               )}
 
               {/* Sponsor & Partner Benefits Tab */}

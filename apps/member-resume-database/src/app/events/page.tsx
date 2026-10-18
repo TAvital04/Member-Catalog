@@ -27,6 +27,7 @@ import {
 import DirectoryNavbar from "@/components/directory/DirectoryNavbar";
 import DirectoryStatsHeader from "@/components/directory/DirectoryStatsHeader";
 import { useThemeManager } from "@/hooks/useThemeManager";
+import { useRoleManager } from "@/hooks/useRoleManager";
 import { useStudentData } from "@/hooks/useStudentData";
 import EventModal from "@/components/modal/event/EventModal";
 import PortfolioModal from "@/components/modal/PortfolioModal";
@@ -35,6 +36,7 @@ import { Student } from "@/data/students";
 
 function IEEEEventsContent() {
   const { theme, toggleTheme } = useThemeManager();
+  const { role, handleRoleChange, hasFilterPermission, isAdmin } = useRoleManager();
   const { students } = useStudentData();
   const [eventsList, setEventsList] = useState<IEEEEvent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -155,12 +157,12 @@ function IEEEEventsContent() {
     <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900 relative pb-16 overflow-x-hidden">
       {/* Primary Header Navbar */}
       <DirectoryNavbar
-        role="standard"
+        role={role}
         theme={theme}
         roleDropdownOpen={false}
         setRoleDropdownOpen={() => {}}
         toggleTheme={toggleTheme}
-        handleRoleChange={() => {}}
+        handleRoleChange={handleRoleChange}
       />
 
       {/* Directory Page Header */}
@@ -374,6 +376,7 @@ function IEEEEventsContent() {
       {activeModalEvent && (
         <EventModal
           event={activeModalEvent}
+          role={role}
           onClose={() => setActiveModalEvent(null)}
           onSelectMember={handleSelectMember}
           students={students}
@@ -385,7 +388,8 @@ function IEEEEventsContent() {
         <PortfolioModal
           student={selectedMemberStudent}
           onClose={() => setSelectedMemberStudent(null)}
-          adminMode={false}
+          adminMode={isAdmin}
+          role={role}
           onToggleFlag={() => {}}
         />
       )}

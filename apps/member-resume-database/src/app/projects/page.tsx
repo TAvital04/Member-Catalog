@@ -24,6 +24,7 @@ import {
 import DirectoryNavbar from "@/components/directory/DirectoryNavbar";
 import DirectoryStatsHeader from "@/components/directory/DirectoryStatsHeader";
 import { useThemeManager } from "@/hooks/useThemeManager";
+import { useRoleManager } from "@/hooks/useRoleManager";
 import { useStudentData } from "@/hooks/useStudentData";
 import Avatar from "@/components/common/Avatar";
 import ProjectModal from "@/components/modal/project/ProjectModal";
@@ -33,6 +34,7 @@ import { Student } from "@/data/students";
 
 function IEEEProjectsContent() {
   const { theme, toggleTheme } = useThemeManager();
+  const { role, handleRoleChange, hasFilterPermission, isAdmin } = useRoleManager();
   const { students } = useStudentData();
   const [projects, setProjects] = useState<IEEEProject[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -91,12 +93,12 @@ function IEEEProjectsContent() {
     <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900 relative pb-16 overflow-x-hidden">
       {/* Primary Header Navbar */}
       <DirectoryNavbar
-        role="standard"
+        role={role}
         theme={theme}
         roleDropdownOpen={false}
         setRoleDropdownOpen={() => {}}
         toggleTheme={toggleTheme}
-        handleRoleChange={() => {}}
+        handleRoleChange={handleRoleChange}
       />
 
       {/* Directory Page Header */}
@@ -208,17 +210,27 @@ function IEEEProjectsContent() {
                         Key Tech Stack ({project.tools.length})
                       </span>
                       <div className="flex flex-wrap gap-1.5">
-                        {project.tools.slice(0, 4).map((tool, idx) => (
-                          <Link
-                            key={idx}
-                            href={`/?skills=${encodeURIComponent(tool.name)}`}
-                            onClick={(e) => e.stopPropagation()}
-                            className="px-2 py-0.5 rounded-lg bg-slate-50 border border-slate-200 hover:border-amber-300 hover:text-amber-900 hover:bg-amber-50/70 text-[10.5px] font-mono font-medium text-slate-700 transition-colors cursor-pointer inline-block"
-                            title={`Filter candidates with skill/tool: ${tool.name}`}
-                          >
-                            {tool.name}
-                          </Link>
-                        ))}
+                        {project.tools.slice(0, 4).map((tool, idx) =>
+                          hasFilterPermission ? (
+                            <Link
+                              key={idx}
+                              href={`/?skills=${encodeURIComponent(tool.name)}`}
+                              onClick={(e) => e.stopPropagation()}
+                              className="px-2 py-0.5 rounded-lg bg-slate-50 border border-slate-200 hover:border-amber-300 hover:text-amber-900 hover:bg-amber-50/70 text-[10.5px] font-mono font-medium text-slate-700 transition-colors cursor-pointer inline-block"
+                              title={`Filter candidates with skill/tool: ${tool.name}`}
+                            >
+                              {tool.name}
+                            </Link>
+                          ) : (
+                            <span
+                              key={idx}
+                              className="px-2 py-0.5 rounded-lg bg-slate-50 border border-slate-200 text-[10.5px] font-mono font-medium text-slate-700 inline-block select-none"
+                              title={`Tool / Tech: ${tool.name}`}
+                            >
+                              {tool.name}
+                            </span>
+                          )
+                        )}
                         {project.tools.length > 4 && (
                           <span className="px-2 py-0.5 rounded-lg bg-slate-50 border border-slate-200 text-[10px] text-slate-500">
                             +{project.tools.length - 4} more
@@ -341,6 +353,7 @@ function IEEEProjectsContent() {
         <ProjectModal
           project={activeModalProject}
           students={students}
+          role={role}
           onClose={() => setActiveModalProject(null)}
           onSelectMember={(memberId) => {
             handleSelectMember(memberId);
@@ -353,8 +366,8 @@ function IEEEProjectsContent() {
         <PortfolioModal
           student={selectedMemberStudent}
           onClose={() => setSelectedMemberStudent(null)}
-          adminMode={false}
-          role="standard"
+          adminMode={isAdmin}
+          role={role}
         />
       )}
     </div>

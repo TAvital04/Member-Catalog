@@ -1,8 +1,9 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, renderHook } from "@testing-library/react";
 import StudentCard from "@/components/directory/StudentCard";
 import DirectoryControlBar from "@/components/directory/DirectoryControlBar";
 import { Student } from "@/data/students";
+import { useFilteredStudents } from "@/hooks/useFilteredStudents";
 
 const sampleStudent: Student = {
   id: "test-student-1",
@@ -48,21 +49,27 @@ describe("Directory Filtering & Component Rendering", () => {
     expect(screen.getByText("Test Candidate")).toBeInTheDocument();
   });
 
-  test("renders DirectoryNavbar with two permission levels switch and handles role changes", () => {
+  test("renders DirectoryNavbar with permission levels switch and handles role changes", () => {
     const handleRoleChange = jest.fn();
 
-    const { getAllByRole, getAllByText } = render(
+    const { getAllByText } = render(
       <DirectoryNavbar
         role="standard"
         handleRoleChange={handleRoleChange}
       />
     );
 
-    // Verify switch contains Standard and Admin
+    // Verify switch contains Standard, Sponsor, and Admin
     const standardButtons = getAllByText("Standard");
+    const sponsorButtons = getAllByText("Sponsor");
     const adminButtons = getAllByText("Admin");
     expect(standardButtons.length).toBeGreaterThan(0);
+    expect(sponsorButtons.length).toBeGreaterThan(0);
     expect(adminButtons.length).toBeGreaterThan(0);
+
+    // Click Sponsor switch button
+    fireEvent.click(sponsorButtons[0]);
+    expect(handleRoleChange).toHaveBeenCalledWith("sponsor");
 
     // Click Admin switch button
     fireEvent.click(adminButtons[0]);
@@ -137,6 +144,56 @@ describe("Directory Filtering & Component Rendering", () => {
     expect(studentHasSkill(studentSkills, "Embedded C")).toBe(true);
     expect(studentHasSkill(studentSkills, "C")).toBe(true);
     expect(studentHasSkill(studentSkills, "Rust")).toBe(false);
+  });
+
+  test("disables faceted filter evaluation when hasFilterPermission is false", () => {
+    const studentA: Student = {
+      ...sampleStudent,
+      id: "std-a",
+      skills: ["Python"],
+    };
+    const studentB: Student = {
+      ...sampleStudent,
+      id: "std-b",
+      skills: ["Rust"],
+    };
+
+    // When hasFilterPermission is false (standard access), filters are ignored
+    const { result: standardResult } = renderHook(() =>
+      useFilteredStudents({
+        students: [studentA, studentB],
+        searchQuery: "",
+        selectedMajors: [],
+        selectedSkills: ["Python"],
+        selectedGradDates: [],
+        skillFilterMode: "OR",
+        adminMode: false,
+        adminFilterFlagged: null,
+        sortBy: "points",
+        hasFilterPermission: false,
+      })
+    );
+
+    expect(standardResult.current.filteredStudents).toHaveLength(2);
+
+    // When hasFilterPermission is true (elevated access), filters are evaluated
+    const { result: elevatedResult } = renderHook(() =>
+      useFilteredStudents({
+        students: [studentA, studentB],
+        searchQuery: "",
+        selectedMajors: [],
+        selectedSkills: ["Python"],
+        selectedGradDates: [],
+        skillFilterMode: "OR",
+        adminMode: false,
+        adminFilterFlagged: null,
+        sortBy: "points",
+        hasFilterPermission: true,
+      })
+    );
+
+    expect(elevatedResult.current.filteredStudents).toHaveLength(1);
+    expect(elevatedResult.current.filteredStudents[0].id).toBe("std-a");
   });
 });
 

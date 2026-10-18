@@ -13,6 +13,7 @@ interface StudentRowProps {
   student: Student;
   onClick: (student: Student) => void;
   adminMode: boolean;
+  canFilter?: boolean;
   onDelete?: (id: string) => void;
   onToggleFlag?: (id: string) => void;
 }
@@ -21,6 +22,7 @@ function StudentRow({
   student,
   onClick,
   adminMode,
+  canFilter,
   onDelete,
   onToggleFlag,
 }: StudentRowProps) {
@@ -83,6 +85,7 @@ function StudentRow({
               variant="row"
               maxCharLength={8}
               maxWidthClass="max-w-[60px]"
+              clickable={canFilter ?? true}
             />
           ))}
           {student.skills.length > 2 && (

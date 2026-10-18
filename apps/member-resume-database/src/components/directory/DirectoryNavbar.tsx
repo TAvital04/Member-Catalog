@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { UserRole } from "@/app/page";
-import { FolderGit2, Users, Calendar, Shield, Sun, Moon } from "lucide-react";
+import { FolderGit2, Users, Calendar, Shield, Award, Sun, Moon } from "lucide-react";
 
 interface DirectoryNavbarProps {
   role?: UserRole;
@@ -21,6 +21,8 @@ export default function DirectoryNavbar({
   handleRoleChange,
 }: DirectoryNavbarProps) {
   const pathname = usePathname();
+  const isStandard = role === "standard";
+  const isSponsor = role === "sponsor";
   const isAdmin = role === "admin";
 
   const navLinks = [
@@ -50,8 +52,8 @@ export default function DirectoryNavbar({
       <button
         type="button"
         onClick={() => handleRoleChange?.("standard")}
-        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-          !isAdmin
+        className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+          isStandard
             ? "bg-white text-slate-900 shadow-xs border border-slate-200/90 font-bold"
             : "text-slate-500 hover:text-slate-900 hover:bg-white/50"
         }`}
@@ -59,7 +61,7 @@ export default function DirectoryNavbar({
       >
         <span
           className={`w-1.5 h-1.5 rounded-full transition-colors ${
-            !isAdmin ? "bg-slate-700" : "bg-slate-300"
+            isStandard ? "bg-slate-700" : "bg-slate-300"
           }`}
         />
         <span>Standard</span>
@@ -67,8 +69,25 @@ export default function DirectoryNavbar({
 
       <button
         type="button"
+        onClick={() => handleRoleChange?.("sponsor")}
+        className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+          isSponsor
+            ? "bg-amber-50 text-amber-800 shadow-xs border border-amber-200 font-bold"
+            : "text-slate-500 hover:text-slate-900 hover:bg-white/50"
+        }`}
+        title="Sponsor access — unlocks candidate filtering, tech stacks, and direct email messaging"
+      >
+        <Award
+          size={13}
+          className={isSponsor ? "text-amber-600" : "text-slate-400"}
+        />
+        <span>Sponsor</span>
+      </button>
+
+      <button
+        type="button"
         onClick={() => handleRoleChange?.("admin")}
-        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+        className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
           isAdmin
             ? "bg-red-50 text-red-700 shadow-xs border border-red-200 font-bold"
             : "text-slate-500 hover:text-slate-900 hover:bg-white/50"

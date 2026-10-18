@@ -10,9 +10,13 @@ interface SkillsTabProps {
   student: Student;
   formatDateStr: (dateStr: string) => string;
   onClose?: () => void;
+  role?: "standard" | "sponsor" | "admin";
+  canFilter?: boolean;
 }
 
-export default function SkillsTab({ student, formatDateStr, onClose }: SkillsTabProps) {
+export default function SkillsTab({ student, formatDateStr, onClose, role, canFilter: explicitCanFilter }: SkillsTabProps) {
+  const canFilter = explicitCanFilter ?? (role ? role !== "standard" : true);
+
   return (
     <div className="flex flex-col gap-6 animate-fade-in pt-1 pb-4">
       {/* Tech Stacks */}
@@ -22,20 +26,32 @@ export default function SkillsTab({ student, formatDateStr, onClose }: SkillsTab
             <Code size={14} className="text-amber-500 shrink-0" />
             <span>Skills & Tech Stack ({student.skills.length})</span>
           </div>
-          <span className="text-[11px] text-slate-400">Click to filter candidates</span>
+          {canFilter && (
+            <span className="text-[11px] text-slate-400">Click to filter candidates</span>
+          )}
         </div>
         <div className="flex flex-wrap gap-2 p-4 rounded-xl bg-slate-50/70 border border-slate-200/90 overflow-visible">
-          {student.skills.map((skill) => (
-            <Link
-              key={skill}
-              href={`/?skills=${encodeURIComponent(skill)}`}
-              onClick={() => onClose?.()}
-              className="text-xs bg-white border border-slate-200/90 text-slate-800 px-3 py-1.5 rounded-lg font-medium hover:border-amber-300 hover:text-amber-900 hover:bg-amber-50/70 transition-all cursor-pointer shadow-2xs"
-              title={`Filter candidates with skill: ${skill}`}
-            >
-              {skill}
-            </Link>
-          ))}
+          {student.skills.map((skill) =>
+            canFilter ? (
+              <Link
+                key={skill}
+                href={`/?skills=${encodeURIComponent(skill)}`}
+                onClick={() => onClose?.()}
+                className="text-xs bg-white border border-slate-200/90 text-slate-800 px-3 py-1.5 rounded-lg font-medium hover:border-amber-300 hover:text-amber-900 hover:bg-amber-50/70 transition-all cursor-pointer shadow-2xs"
+                title={`Filter candidates with skill: ${skill}`}
+              >
+                {skill}
+              </Link>
+            ) : (
+              <span
+                key={skill}
+                className="text-xs bg-white border border-slate-200/90 text-slate-800 px-3 py-1.5 rounded-lg font-medium shadow-2xs select-none"
+                title={`Skill: ${skill}`}
+              >
+                {skill}
+              </span>
+            )
+          )}
         </div>
       </div>
 

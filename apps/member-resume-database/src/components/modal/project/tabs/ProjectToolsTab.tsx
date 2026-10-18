@@ -11,14 +11,19 @@ interface ProjectToolsTabProps {
   tools: ProjectTool[];
   students?: Student[];
   onClose?: () => void;
+  role?: "standard" | "sponsor" | "admin";
+  canFilter?: boolean;
 }
 
 export default function ProjectToolsTab({
   tools = [],
   students = [],
   onClose,
+  role,
+  canFilter: explicitCanFilter,
 }: ProjectToolsTabProps) {
   const safeTools = Array.isArray(tools) ? tools : [];
+  const canFilter = explicitCanFilter ?? (role ? role !== "standard" : true);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
   const categories = ["All", ...Array.from(new Set(safeTools.map((t) => t.category)))];
@@ -96,7 +101,43 @@ export default function ProjectToolsTab({
                   students?.filter((s) => studentHasSkill(s.skills, tool.name)) || [];
                 const matchingCount = matchingStudents.length;
 
-                return (
+                const toolCardContent = (
+                  <>
+                    <div className={`p-2.5 rounded-xl border ${colorClass} shrink-0 ${canFilter ? "group-hover:border-amber-300 group-hover:bg-amber-100/60 transition-colors" : ""}`}>
+                      <Icon size={18} className={canFilter ? "group-hover:text-amber-800 transition-colors" : ""} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-1">
+                        <h4 className={`text-xs font-bold text-slate-900 ${canFilter ? "group-hover:text-amber-950 transition-colors" : ""} truncate`}>
+                          {tool.name}
+                        </h4>
+                        {canFilter && (
+                          <ArrowRight
+                            size={12}
+                            className="text-slate-300 group-hover:text-amber-500 group-hover:translate-x-0.5 transition-all shrink-0"
+                          />
+                        )}
+                      </div>
+                      <div className="flex items-center justify-between gap-2 mt-0.5">
+                        <span className="text-[10px] text-slate-500 font-mono truncate">{tool.category}</span>
+                        {matchingCount > 0 ? (
+                          <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 ${canFilter ? "group-hover:bg-amber-100 text-slate-600 group-hover:text-amber-900 transition-colors" : "text-slate-600"} shrink-0 flex items-center gap-1`}>
+                            <Users size={10} className={`text-slate-400 ${canFilter ? "group-hover:text-amber-600" : ""}`} />
+                            {matchingCount} candidate{matchingCount === 1 ? "" : "s"}
+                          </span>
+                        ) : (
+                          canFilter && (
+                            <span className="text-[10px] text-slate-400 group-hover:text-amber-700 font-medium shrink-0">
+                              Filter →
+                            </span>
+                          )
+                        )}
+                      </div>
+                    </div>
+                  </>
+                );
+
+                return canFilter ? (
                   <Link
                     key={idx}
                     href={`/?skills=${encodeURIComponent(tool.name)}`}
@@ -104,34 +145,16 @@ export default function ProjectToolsTab({
                     className="p-3.5 rounded-2xl bg-white border border-slate-200 hover:border-amber-400 hover:bg-amber-50/40 transition-all flex items-center gap-3 shadow-2xs group cursor-pointer"
                     title={`Filter candidates with skill/tool: ${tool.name}`}
                   >
-                    <div className={`p-2.5 rounded-xl border ${colorClass} shrink-0 group-hover:border-amber-300 group-hover:bg-amber-100/60 transition-colors`}>
-                      <Icon size={18} className="group-hover:text-amber-800 transition-colors" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-1">
-                        <h4 className="text-xs font-bold text-slate-900 group-hover:text-amber-950 truncate transition-colors">
-                          {tool.name}
-                        </h4>
-                        <ArrowRight
-                          size={12}
-                          className="text-slate-300 group-hover:text-amber-500 group-hover:translate-x-0.5 transition-all shrink-0"
-                        />
-                      </div>
-                      <div className="flex items-center justify-between gap-2 mt-0.5">
-                        <span className="text-[10px] text-slate-500 font-mono truncate">{tool.category}</span>
-                        {matchingCount > 0 ? (
-                          <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 group-hover:bg-amber-100 text-slate-600 group-hover:text-amber-900 transition-colors shrink-0 flex items-center gap-1">
-                            <Users size={10} className="text-slate-400 group-hover:text-amber-600" />
-                            {matchingCount} candidate{matchingCount === 1 ? "" : "s"}
-                          </span>
-                        ) : (
-                          <span className="text-[10px] text-slate-400 group-hover:text-amber-700 font-medium shrink-0">
-                            Filter →
-                          </span>
-                        )}
-                      </div>
-                    </div>
+                    {toolCardContent}
                   </Link>
+                ) : (
+                  <div
+                    key={idx}
+                    className="p-3.5 rounded-2xl bg-white border border-slate-200 flex items-center gap-3 shadow-2xs select-none"
+                    title={`Tool / Tech: ${tool.name}`}
+                  >
+                    {toolCardContent}
+                  </div>
                 );
               })}
             </div>

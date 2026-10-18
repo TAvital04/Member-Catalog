@@ -26,6 +26,8 @@ interface EventModalProps {
   onClose: () => void;
   onSelectMember?: (memberId: string) => void;
   students?: Student[];
+  role?: "standard" | "sponsor" | "admin";
+  canFilter?: boolean;
 }
 
 export default function EventModal({
@@ -33,7 +35,10 @@ export default function EventModal({
   onClose,
   onSelectMember,
   students = [],
+  role,
+  canFilter: explicitCanFilter,
 }: EventModalProps) {
+  const canFilter = explicitCanFilter ?? (role ? role !== "standard" : true);
   const [activeTab, setActiveTab] = useState<"overview" | "attendees">("overview");
 
   // Handle escape key
@@ -218,9 +223,11 @@ export default function EventModal({
                     <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
                       Skills
                     </h3>
-                    <span className="text-[11px] text-slate-400">
-                      Click skill to filter candidates
-                    </span>
+                    {canFilter && (
+                      <span className="text-[11px] text-slate-400">
+                        Click skill to filter candidates
+                      </span>
+                    )}
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {((event.skills && event.skills.length > 0) ? event.skills : event.tags).map((skill, idx) => {
@@ -228,7 +235,18 @@ export default function EventModal({
                         students?.filter((s) => studentHasSkill(s.skills, skill)) || [];
                       const studentCount = matchingStudents.length;
 
-                      return (
+                      const pillContent = (
+                        <>
+                          <span>{skill}</span>
+                          {studentCount > 0 && (
+                            <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded-full ${canFilter ? "bg-slate-200/70 group-hover:bg-amber-200/80 text-slate-600 group-hover:text-amber-900 transition-colors" : "bg-slate-200/70 text-slate-600"}`}>
+                              {studentCount}
+                            </span>
+                          )}
+                        </>
+                      );
+
+                      return canFilter ? (
                         <Link
                           key={idx}
                           href={`/?skills=${encodeURIComponent(skill)}`}
@@ -236,13 +254,16 @@ export default function EventModal({
                           className="inline-flex items-center gap-1.5 text-xs font-medium bg-slate-50 hover:bg-amber-50 text-slate-700 hover:text-amber-900 px-3 py-1.5 rounded-full border border-slate-200/80 hover:border-amber-300 transition-all cursor-pointer group shadow-2xs"
                           title={`Explore ${studentCount} candidate${studentCount === 1 ? "" : "s"} with ${skill}`}
                         >
-                          <span>{skill}</span>
-                          {studentCount > 0 && (
-                            <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-slate-200/70 group-hover:bg-amber-200/80 text-slate-600 group-hover:text-amber-900 transition-colors">
-                              {studentCount}
-                            </span>
-                          )}
+                          {pillContent}
                         </Link>
+                      ) : (
+                        <span
+                          key={idx}
+                          className="inline-flex items-center gap-1.5 text-xs font-medium bg-slate-50 text-slate-700 px-3 py-1.5 rounded-full border border-slate-200/80 shadow-2xs select-none"
+                          title={`Skill: ${skill}`}
+                        >
+                          {pillContent}
+                        </span>
                       );
                     })}
                   </div>

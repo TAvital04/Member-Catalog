@@ -10,6 +10,7 @@ interface StudentDirectoryResultsProps {
   filteredStudents: Student[];
   viewMode: "grid" | "list";
   adminMode: boolean;
+  canFilter?: boolean;
   onSelectStudent: (student: Student | null) => void;
   onDeleteStudent: (id: string) => void;
   onToggleFlagStudent: (id: string) => void;
@@ -21,6 +22,7 @@ export default function StudentDirectoryResults({
   filteredStudents,
   viewMode,
   adminMode,
+  canFilter,
   onSelectStudent,
   onDeleteStudent,
   onToggleFlagStudent,
@@ -46,6 +48,7 @@ export default function StudentDirectoryResults({
               student={student}
               onClick={onSelectStudent}
               adminMode={adminMode}
+              canFilter={canFilter}
               onToggleFlag={onToggleFlagStudent}
             />
           ))}
@@ -61,6 +64,7 @@ export default function StudentDirectoryResults({
             student={student}
             onClick={onSelectStudent}
             adminMode={adminMode}
+            canFilter={canFilter}
             onDelete={onDeleteStudent}
             onToggleFlag={onToggleFlagStudent}
           />

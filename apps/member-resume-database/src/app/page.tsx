@@ -29,11 +29,13 @@ import ResolveDialog from "@/components/dialogs/ResolveDialog";
 import FlagDialog from "@/components/dialogs/FlagDialog";
 import ToastNotification from "@/components/dialogs/ToastNotification";
 import { Shield } from "lucide-react";
+import { useRoleManager, UserRole } from "@/hooks/useRoleManager";
 
-export type UserRole = "standard" | "sponsor" | "admin";
+export type { UserRole };
 
 function StudentDirectoryContent() {
   const { theme, toggleTheme } = useThemeManager();
+  const { role, setRole, hasFilterPermission, isAdmin } = useRoleManager();
   const { students, setStudents, isLoading } = useStudentData();
 
   // Synced directory filter state from URL search params
@@ -63,7 +65,6 @@ function StudentDirectoryContent() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [filterLayout, setFilterLayout] = useState<"side" | "top">("side");
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
-  const [role, setRole] = useState<UserRole>("standard");
   const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [onlyLeadersFilter, setOnlyLeadersFilter] = useState(false);
@@ -88,7 +89,7 @@ function StudentDirectoryContent() {
     });
   };
 
-  const adminMode = role === "admin";
+  const adminMode = isAdmin;
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const handleRoleChange = (newRole: UserRole) => {
@@ -101,6 +102,21 @@ function StudentDirectoryContent() {
       setOnlyLeadersFilter(false);
     }
   };
+
+  // Clean up URL filters if standard user navigates to a URL containing filter parameters
+  React.useEffect(() => {
+    if (!hasFilterPermission) {
+      if (
+        selectedMajors.length > 0 ||
+        selectedSkills.length > 0 ||
+        selectedGradDates.length > 0 ||
+        selectedEvents.length > 0 ||
+        (selectedCompanies && selectedCompanies.length > 0)
+      ) {
+        resetAllFilters();
+      }
+    }
+  }, [hasFilterPermission, selectedMajors, selectedSkills, selectedGradDates, selectedEvents, selectedCompanies, resetAllFilters]);
 
   // Keyboard shortcut Ctrl+K to search
   React.useEffect(() => {
@@ -138,6 +154,7 @@ function StudentDirectoryContent() {
     adminMode,
     adminFilterFlagged,
     sortBy,
+    hasFilterPermission,
   });
 
   // Moderation & Flagging dialog manager hook
@@ -285,26 +302,28 @@ function StudentDirectoryContent() {
 
         {/* Results directory area */}
         <div className="grow flex flex-col gap-4">
-          <ActiveFiltersBar
-            selectedMajors={selectedMajors}
-            removeMajorFilter={removeMajorFilter}
-            selectedGradDates={selectedGradDates}
-            removeGradFilter={removeGradFilter}
-            selectedSkills={selectedSkills}
-            removeSkillFilter={removeSkillFilter}
-            selectedEvents={selectedEvents}
-            removeEventFilter={removeEventFilter}
-            selectedCompanies={selectedCompanies}
-            removeCompanyFilter={removeCompanyFilter}
-            onClearAll={resetAllFilters}
-          />
-
+          {hasFilterPermission && (
+            <ActiveFiltersBar
+              selectedMajors={selectedMajors}
+              removeMajorFilter={removeMajorFilter}
+              selectedGradDates={selectedGradDates}
+              removeGradFilter={removeGradFilter}
+              selectedSkills={selectedSkills}
+              removeSkillFilter={removeSkillFilter}
+              selectedEvents={selectedEvents}
+              removeEventFilter={removeEventFilter}
+              selectedCompanies={selectedCompanies}
+              removeCompanyFilter={removeCompanyFilter}
+              onClearAll={resetAllFilters}
+            />
+          )}
 
           <StudentDirectoryResults
             isLoading={isLoading}
             filteredStudents={filteredStudents}
             viewMode={viewMode}
             adminMode={adminMode}
+            canFilter={hasFilterPermission}
             onSelectStudent={setSelectedStudent}
             onDeleteStudent={handleDeleteStudent}
             onToggleFlagStudent={handleToggleFlagStudent}

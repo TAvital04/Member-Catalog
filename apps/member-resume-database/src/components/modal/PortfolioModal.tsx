@@ -129,7 +129,7 @@ export default function PortfolioModal({
 
               {/* Skills Panel */}
               {activeTab === "skills" && (
-                <SkillsTab student={student} formatDateStr={formatDateStr} onClose={onClose} />
+                <SkillsTab student={student} formatDateStr={formatDateStr} onClose={onClose} role={role} />
               )}
 
               {/* Events Panel */}

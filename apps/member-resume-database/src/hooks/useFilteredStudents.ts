@@ -27,6 +27,7 @@ interface UseFilteredStudentsProps {
   adminMode: boolean;
   adminFilterFlagged: boolean | null;
   sortBy: DirectorySortOption | string;
+  hasFilterPermission?: boolean;
 }
 
 export function useFilteredStudents({
@@ -42,6 +43,7 @@ export function useFilteredStudents({
   adminMode,
   adminFilterFlagged,
   sortBy,
+  hasFilterPermission = true,
 }: UseFilteredStudentsProps) {
   // Memoize unique metadata for filter selection options
   const { availableMajors, availableSkills, availableGradDates, availableEvents, availableCompanies } = useMemo(() => {
@@ -98,38 +100,40 @@ export function useFilteredStudents({
           }
         }
 
-        if (selectedMajors.length > 0 && !selectedMajors.includes(student.major)) {
-          return false;
-        }
-
-        if (selectedGradDates.length > 0 && !selectedGradDates.includes(student.gradDate)) {
-          return false;
-        }
-
-        if (selectedSkills.length > 0) {
-          if (skillFilterMode === "AND") {
-            const hasAll = selectedSkills.every((s) => studentHasSkill(student.skills, s));
-            if (!hasAll) return false;
-          } else {
-            const hasAny = selectedSkills.some((s) => studentHasSkill(student.skills, s));
-            if (!hasAny) return false;
+        if (hasFilterPermission) {
+          if (selectedMajors.length > 0 && !selectedMajors.includes(student.major)) {
+            return false;
           }
-        }
 
-        if (selectedEvents.length > 0) {
-          const studentEventTitles = (student.events || []).map((e) => e.title);
-          const hasAnyEvent = selectedEvents.some((evtTitle) => studentEventTitles.includes(evtTitle));
-          if (!hasAnyEvent) return false;
-        }
+          if (selectedGradDates.length > 0 && !selectedGradDates.includes(student.gradDate)) {
+            return false;
+          }
 
-        if (selectedCompanies.length > 0) {
-          const studentCompanies = (student.workExperiences || []).map((w) => w.name);
-          const hasAnyCompany = selectedCompanies.some((comp) => studentCompanies.includes(comp));
-          if (!hasAnyCompany) return false;
-        }
+          if (selectedSkills.length > 0) {
+            if (skillFilterMode === "AND") {
+              const hasAll = selectedSkills.every((s) => studentHasSkill(student.skills, s));
+              if (!hasAll) return false;
+            } else {
+              const hasAny = selectedSkills.some((s) => studentHasSkill(student.skills, s));
+              if (!hasAny) return false;
+            }
+          }
 
-        if (onlyLeaders && !getIeeeLeadershipRole(student)) {
-          return false;
+          if (selectedEvents.length > 0) {
+            const studentEventTitles = (student.events || []).map((e) => e.title);
+            const hasAnyEvent = selectedEvents.some((evtTitle) => studentEventTitles.includes(evtTitle));
+            if (!hasAnyEvent) return false;
+          }
+
+          if (selectedCompanies.length > 0) {
+            const studentCompanies = (student.workExperiences || []).map((w) => w.name);
+            const hasAnyCompany = selectedCompanies.some((comp) => studentCompanies.includes(comp));
+            if (!hasAnyCompany) return false;
+          }
+
+          if (onlyLeaders && !getIeeeLeadershipRole(student)) {
+            return false;
+          }
         }
 
         if (adminMode) {

@@ -13,6 +13,7 @@ interface StudentCardProps {
   student: Student;
   onClick: (student: Student) => void;
   adminMode: boolean;
+  canFilter?: boolean;
   onToggleFlag?: (id: string) => void;
 }
 
@@ -20,6 +21,7 @@ function StudentCard({
   student,
   onClick,
   adminMode,
+  canFilter,
   onToggleFlag,
 }: StudentCardProps) {
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -108,6 +110,7 @@ function StudentCard({
                 variant="card"
                 maxCharLength={10}
                 maxWidthClass="max-w-[70px]"
+                clickable={canFilter ?? true}
               />
             ))}
           </div>
