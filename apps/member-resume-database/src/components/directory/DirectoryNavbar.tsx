@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { UserRole } from "@/app/page";
-import { FolderGit2, Users, Calendar, Shield } from "lucide-react";
+import { FolderGit2, Users, Calendar, Shield, Sun, Moon } from "lucide-react";
 
 interface DirectoryNavbarProps {
   role?: UserRole;
@@ -16,6 +16,8 @@ interface DirectoryNavbarProps {
 
 export default function DirectoryNavbar({
   role = "standard",
+  theme = "dark",
+  toggleTheme,
   handleRoleChange,
 }: DirectoryNavbarProps) {
   const pathname = usePathname();
@@ -82,6 +84,22 @@ export default function DirectoryNavbar({
     </div>
   );
 
+  const themeToggle = toggleTheme ? (
+    <button
+      type="button"
+      onClick={toggleTheme}
+      className="flex items-center justify-center p-2 rounded-xl bg-slate-100/90 hover:bg-slate-200/90 border border-slate-200/90 text-slate-700 hover:text-slate-900 transition-all cursor-pointer shadow-2xs shrink-0"
+      title={theme === "dark" ? "Switch to light mode" : "Switch to dark warm blue mode"}
+      aria-label="Toggle color theme"
+    >
+      {theme === "dark" ? (
+        <Sun size={14} className="text-amber-400" />
+      ) : (
+        <Moon size={14} className="text-slate-600" />
+      )}
+    </button>
+  ) : null;
+
   return (
     <nav className="border-b border-slate-200/90 bg-white/95 backdrop-blur-md sticky top-0 z-40 px-4 sm:px-6 py-3 transition-colors shadow-xs">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4">
@@ -116,8 +134,9 @@ export default function DirectoryNavbar({
           </div>
 
           {/* Mobile Switch: Shown in top row on mobile */}
-          <div className="flex md:hidden items-center shrink-0">
+          <div className="flex md:hidden items-center gap-1.5 shrink-0">
             {permissionSwitch}
+            {themeToggle}
           </div>
         </div>
 
@@ -144,8 +163,9 @@ export default function DirectoryNavbar({
         </div>
 
         {/* Desktop Switch: Shown on right side on desktop */}
-        <div className="hidden md:flex items-center shrink-0">
+        <div className="hidden md:flex items-center gap-2 shrink-0">
           {permissionSwitch}
+          {themeToggle}
         </div>
       </div>
     </nav>

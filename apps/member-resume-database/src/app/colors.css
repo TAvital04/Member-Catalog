@@ -1,12 +1,12 @@
 :root {
   /* ==========================================================================
-     LIGHT-ONLY COLOR DESIGN SYSTEM (Clean, High-Clarity, Minimal Visual Noise)
+     LIGHT COLOR DESIGN SYSTEM (Clean, High-Clarity, Minimal Visual Noise)
      ========================================================================== */
 
   /* The Base Surfaces & Backgrounds */
   --bg-app: #f8fafc;           /* Crisp, clean slate-50 canvas */
   --bg-card: #ffffff;          /* Pure white card surface */
-  --bg-card-inner: #ffffff;    /* Pure white inner surface */
+  --bg-card-inner: #f1f5f9;    /* Light grey inner surface */
   --border-subtle: #e2e8f0;    /* Crisp 1px slate-200 border */
   --border-strong: #cbd5e1;    /* Slate-300 border for active/focused elements */
 
@@ -15,20 +15,20 @@
   --text-muted: #64748b;       /* Slate-500 for secondary/meta text */
   --text-dark: #0f172a;
 
-  /* Accent UCF Gold / Amber (Refined for light background contrast, subdued warmth) */
+  /* Accent UCF Gold / Amber */
   --accent-gold: #b45309;      /* Amber-700 */
   --accent-gold-glow: rgba(180, 83, 9, 0.10);
   --shimmer-bg: #f1f5f9;
   --shimmer-highlight: rgba(180, 83, 9, 0.10);
 
-  /* Tailwind CSS Utility class integrations - grounded, non-glaring tones */
-  --primary-light: #c27803;    /* Calmer amber */
-  --primary: #b45309;          /* Deep rich amber-700 */
-  --primary-dark: #92400e;     /* Deep amber-800 */
+  /* Tailwind CSS Utility class integrations */
+  --primary-light: #c27803;
+  --primary: #b45309;
+  --primary-dark: #92400e;
   --yellow-light: #c27803;
   --yellow-dark: #92400e;
 
-  /* Semantic Accent Hues (Subdued, calm light mode contrast) */
+  /* Semantic Accent Hues */
   --purple-light: #6d28d9;
   --purple-medium: #5b21b6;
   --blue-light: #1d4ed8;
@@ -50,8 +50,6 @@
   /* Semantic UI Mappings */
   --background: var(--bg-app);
   --foreground: var(--text-primary);
-  --primary: var(--accent-gold);
-  --primary-glow: var(--accent-gold-glow);
   --card-bg: #ffffff;
   --border-color: var(--border-subtle);
 
@@ -70,27 +68,184 @@
   --scrollbar-thumb: #cbd5e1;
   --scrollbar-thumb-hover: #94a3b8;
 
-  /* Dynamic Zinc scale mapped to light surfaces for legacy utility classes */
-  --zinc-955: #f8fafc;         /* Page canvas background */
-  --zinc-950: #ffffff;         /* Card / navbar background */
-  --zinc-900: #f1f5f9;         /* Light grey inputs / chips */
-  --zinc-855: #ffffff;         /* Inner card */
-  --zinc-850: #f8fafc;         /* Hover state / subtle highlight */
-  --zinc-800: #e2e8f0;         /* Subtle borders */
+  /* Light mode slate palette explicit values */
+  --color-white: #ffffff;
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+  --color-slate-950: #020617;
+
+  /* Dynamic Zinc scale mapped to light surfaces */
+  --zinc-955: #f8fafc;
+  --zinc-950: #ffffff;
+  --zinc-900: #f1f5f9;
+  --zinc-855: #ffffff;
+  --zinc-850: #f8fafc;
+  --zinc-800: #e2e8f0;
   --zinc-750: #cbd5e1;
-  --zinc-700: #cbd5e1;         /* Strong borders */
-  --zinc-650: #94a3b8;         /* Neutral accents */
-  --zinc-600: #64748b;         /* Muted icons and text */
+  --zinc-700: #cbd5e1;
+  --zinc-650: #94a3b8;
+  --zinc-600: #64748b;
   --zinc-550: #64748b;
   --zinc-500: #64748b;
-  --zinc-450: #475569;         /* Readable subtext */
-  --zinc-400: #334155;         /* Body copy */
+  --zinc-450: #475569;
+  --zinc-400: #334155;
   --zinc-350: #1e293b;
   --zinc-300: #1e293b;
   --zinc-205: #0f172a;
-  --zinc-200: #0f172a;         /* High-contrast headings */
+  --zinc-200: #0f172a;
   --zinc-155: #0f172a;
   --zinc-150: #0f172a;
   --zinc-100: #020617;
   --zinc-50: #020617;
+}
+
+/* ==========================================================================
+   DARK WARM BLUE COLOR DESIGN SYSTEM
+   Deep twilight & warm midnight navy surfaces, crisp elevated layers,
+   and glowing warm amber accents.
+   ========================================================================== */
+
+[data-theme="dark"] {
+  /* The Base Surfaces & Backgrounds */
+  --bg-app: #0b0f19;           /* Deep, warm midnight twilight canvas */
+  --bg-card: #121b2d;          /* Elevated warm dark navy surface */
+  --bg-card-inner: #18233a;    /* Elevated inner card layer */
+  --border-subtle: #223150;    /* Refined 1px warm blue border */
+  --border-strong: #31456d;    /* Active / focused warm blue border */
+
+  /* Typography */
+  --text-primary: #f8fafc;     /* Bright, high-clarity slate */
+  --text-muted: #8fa4bf;       /* Warm soft slate-blue for secondary text */
+  --text-dark: #f8fafc;
+
+  /* Accent UCF Gold / Amber (Vibrant and warm on dark blue) */
+  --accent-gold: #f59e0b;      /* Amber-500 */
+  --accent-gold-glow: rgba(245, 158, 11, 0.20);
+  --shimmer-bg: #152035;
+  --shimmer-highlight: rgba(245, 158, 11, 0.18);
+
+  /* Tailwind CSS Utility class integrations - glowing warm tones */
+  --primary-light: #fbbf24;    /* Amber-400 */
+  --primary: #f59e0b;          /* Rich Amber-500 */
+  --primary-dark: #d97706;     /* Deep Amber-600 */
+  --yellow-light: #fbbf24;
+  --yellow-dark: #d97706;
+
+  /* Semantic Accent Hues (Tailored for dark warm blue backgrounds) */
+  --purple-light: #a78bfa;
+  --purple-medium: #8b5cf6;
+  --blue-light: #60a5fa;
+  --blue-medium: #3b82f6;
+  --emerald-light: #34d399;
+  --emerald-medium: #10b981;
+  --red-light: #f87171;
+  --red-medium: #ef4444;
+
+  --accent-purple: #a78bfa;
+  --accent-purple-bg: rgba(167, 139, 250, 0.12);
+  --accent-blue: #60a5fa;
+  --accent-blue-bg: rgba(96, 165, 250, 0.12);
+  --accent-emerald: #34d399;
+  --accent-emerald-bg: rgba(52, 211, 153, 0.12);
+  --accent-red: #f87171;
+  --accent-red-bg: rgba(248, 113, 113, 0.12);
+
+  /* Semantic UI Mappings */
+  --background: var(--bg-app);
+  --foreground: var(--text-primary);
+  --card-bg: var(--bg-card);
+  --border-color: var(--border-subtle);
+
+  --grid-line-color: rgba(34, 49, 80, 0.40);
+  --circuit-color: rgba(245, 158, 11, 0.08);
+  --glass-bg: #121b2d;
+  --glass-border: var(--border-subtle);
+
+  /* Modal surfaces */
+  --modal-left-bg: #0e1524;
+  --modal-right-bg: #121b2d;
+  --modal-overlay-bg: rgba(7, 11, 19, 0.80);
+
+  /* Scrollbar */
+  --scrollbar-track: transparent;
+  --scrollbar-thumb: #2a3c61;
+  --scrollbar-thumb-hover: #3b5385;
+
+  /* Direct Tailwind v4 utility overrides in dark warm blue mode */
+  --color-white: #121b2d;         /* bg-white elements become warm dark blue cards! */
+  --color-slate-50: #0b0f19;      /* bg-slate-50 canvas becomes deep warm midnight blue! */
+  --color-slate-100: #18233a;     /* inputs, secondary tags, pill buttons */
+  --color-slate-200: #223150;     /* borders, dividers */
+  --color-slate-300: #31456d;     /* hover borders, focused states */
+  --color-slate-400: #627d98;     /* subtle icons, placeholder text */
+  --color-slate-500: #8fa4bf;     /* captions, metadata labels */
+  --color-slate-600: #b4c5dc;     /* readable body copy */
+  --color-slate-700: #d4e0f0;     /* high-contrast body text */
+  --color-slate-800: #e8f0fa;     /* subheadings, section labels */
+  --color-slate-900: #f8fafc;     /* main page headings, titles */
+  --color-slate-950: #ffffff;     /* supreme contrast elements */
+
+  /* Semantic color badge overrides for dark mode clarity */
+  --color-emerald-50: rgba(6, 78, 59, 0.32);
+  --color-emerald-100: rgba(6, 78, 59, 0.50);
+  --color-emerald-200: #065f46;
+  --color-emerald-600: #34d399;
+  --color-emerald-700: #6ee7b7;
+  --color-emerald-800: #a7f3d0;
+
+  --color-amber-50: rgba(120, 53, 15, 0.32);
+  --color-amber-100: rgba(120, 53, 15, 0.50);
+  --color-amber-200: #92400e;
+  --color-amber-300: #fcd34d;
+  --color-amber-400: #fbbf24;
+  --color-amber-700: #fde68a;
+  --color-amber-800: #fef3c7;
+  --color-amber-900: #fffbeb;
+  --color-amber-950: #ffffff;
+
+  --color-sky-50: rgba(12, 74, 110, 0.32);
+  --color-sky-100: rgba(12, 74, 110, 0.50);
+  --color-sky-200: #075985;
+  --color-sky-700: #38bdf8;
+  --color-sky-800: #7dd3fc;
+  --color-sky-900: #bae6fd;
+
+  --color-red-50: rgba(127, 29, 29, 0.32);
+  --color-red-100: rgba(127, 29, 29, 0.50);
+  --color-red-200: #991b1b;
+  --color-red-600: #f87171;
+  --color-red-700: #fca5a5;
+  --color-red-800: #fee2e2;
+
+  /* Dynamic Zinc scale mapped to warm dark blue surfaces */
+  --zinc-955: #0b0f19;
+  --zinc-950: #121b2d;
+  --zinc-900: #18233a;
+  --zinc-855: #152035;
+  --zinc-850: #1c2a47;
+  --zinc-800: #223150;
+  --zinc-750: #2a3c61;
+  --zinc-700: #31456d;
+  --zinc-650: #48608e;
+  --zinc-600: #627d98;
+  --zinc-550: #748ea8;
+  --zinc-500: #8fa4bf;
+  --zinc-450: #a3b6ce;
+  --zinc-400: #b4c5dc;
+  --zinc-350: #c7d5e7;
+  --zinc-300: #d4e0f0;
+  --zinc-205: #e2ebf6;
+  --zinc-200: #e8f0fa;
+  --zinc-155: #f1f6fc;
+  --zinc-150: #f6f9fd;
+  --zinc-100: #ffffff;
+  --zinc-50: #ffffff;
 }
