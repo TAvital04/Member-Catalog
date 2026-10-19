@@ -3,7 +3,7 @@
 import React from "react";
 import { Student, getPrimaryEducation, getIeeeLeadershipRole } from "../../data/students";
 import Avatar from "../common/Avatar";
-import { Calendar, Award, User, AlertTriangle, ShieldCheck, Sparkles } from "lucide-react";
+import { Calendar, Award, User, AlertTriangle, ShieldCheck } from "lucide-react";
 
 interface StudentUpperInfoProps {
   student: Student;
@@ -88,12 +88,6 @@ export default function StudentUpperInfo({ student, adminMode }: StudentUpperInf
           <Calendar size={12} className="text-slate-400" />
           <span>Grad: {student.gradDate}</span>
         </span>
-        {student.events && student.events.length > 0 && (
-          <span className="bg-zinc-850 border border-zinc-800 text-amber-300/90 px-3 py-1 rounded-full flex items-center justify-center gap-1.5 shadow-sm grow">
-            <Sparkles size={12} className="text-amber-400 fill-current" />
-            <span>{student.events.length} RSO Events</span>
-          </span>
-        )}
         {getPrimaryEducation(student)?.gpa && (
           <span className="bg-zinc-850 border border-zinc-800 text-zinc-300 px-3 py-1 rounded-full flex items-center justify-center gap-1.5 shadow-sm grow">
             <Award size={12} className="text-slate-400" />

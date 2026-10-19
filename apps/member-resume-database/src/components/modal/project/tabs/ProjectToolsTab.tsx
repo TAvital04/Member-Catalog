@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ProjectTool } from "@/data/projects";
 import { Student } from "@/data/students";
 import { studentHasSkill } from "@/lib/skillMatching";
-import { Wrench, Cpu, CircuitBoard, Code2, Box, Gauge, Layers, ArrowRight, Users } from "lucide-react";
+import { Wrench, ArrowRight, Users } from "lucide-react";
 
 interface ProjectToolsTabProps {
   tools: ProjectTool[];
@@ -33,26 +33,6 @@ export default function ProjectToolsTab({
     return true;
   });
 
-  const getCategoryIcon = (cat: string) => {
-    switch (cat) {
-      case "Embedded & Firmware":
-        return Cpu;
-      case "Hardware & PCB":
-        return CircuitBoard;
-      case "Software & AI":
-        return Code2;
-      case "CAD & Fabrication":
-        return Box;
-      case "Lab & Test Equipment":
-        return Gauge;
-      default:
-        return Layers;
-    }
-  };
-
-  const getCategoryColor = (_cat: string) => {
-    return "text-slate-600 bg-slate-100 border-slate-200";
-  };
 
   return (
     <div className="flex flex-col gap-4 animate-fade-in pt-1 pb-4">
@@ -95,18 +75,12 @@ export default function ProjectToolsTab({
           {filteredTools.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {filteredTools.map((tool, idx) => {
-                const Icon = getCategoryIcon(tool.category);
-                const colorClass = getCategoryColor(tool.category);
                 const matchingStudents =
                   students?.filter((s) => studentHasSkill(s.skills, tool.name)) || [];
                 const matchingCount = matchingStudents.length;
 
                 const toolCardContent = (
-                  <>
-                    <div className={`p-2.5 rounded-xl border ${colorClass} shrink-0 ${canFilter ? "group-hover:border-amber-300 group-hover:bg-amber-100/60 transition-colors" : ""}`}>
-                      <Icon size={18} className={canFilter ? "group-hover:text-amber-800 transition-colors" : ""} />
-                    </div>
-                    <div className="flex-1 min-w-0">
+                  <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-1">
                         <h4 className={`text-xs font-bold text-slate-900 ${canFilter ? "group-hover:text-amber-950 transition-colors" : ""} truncate`}>
                           {tool.name}
@@ -134,7 +108,6 @@ export default function ProjectToolsTab({
                         )}
                       </div>
                     </div>
-                  </>
                 );
 
                 return canFilter ? (

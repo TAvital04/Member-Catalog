@@ -40,9 +40,6 @@ export default function ModalTabNavigation({
       {tabsList.map((tab) => {
         let label: string = tab;
         if (tab === "experience") label = "Timeline";
-        else if (tab === "events" && typeof eventCount === "number" && eventCount > 0) {
-          label = `Events (${eventCount})`;
-        }
 
         return (
           <button

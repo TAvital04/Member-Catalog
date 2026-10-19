@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Student, getPrimaryEducation } from "../../data/students";
-import { Calendar, Award, Flag, Sparkles } from "lucide-react";
+import { Calendar, Award, Flag } from "lucide-react";
 import Avatar from "../common/Avatar";
 import StatusBadge from "../common/StatusBadge";
 import TruncatedText from "../common/TruncatedText";
@@ -100,12 +100,6 @@ function StudentCard({
             <Calendar size={13} className="text-slate-400 hidden md:block" />
             <span>Grad: {student.gradDate}</span>
           </div>
-          {student.events && student.events.length > 0 && (
-            <div className="flex items-center gap-1 text-amber-700 dark:text-amber-400 font-semibold text-[10.5px]" title={`${student.events.length} RSO Chapter Events Attended`}>
-              <Sparkles size={11} className="text-amber-500 fill-current shrink-0" />
-              <span>{student.events.length} Events</span>
-            </div>
-          )}
           {getPrimaryEducation(student)?.gpa && (
             <div className="flex items-center gap-1">
               <Award size={12} className="text-slate-400 md:hidden" />

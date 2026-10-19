@@ -38,11 +38,6 @@ export default function EventsTab({ events = [], formatDateStr }: EventsTabProps
                         {evt.category}
                       </span>
                     )}
-                    {evt.pointsAwarded && (
-                      <span className="text-[9.5px] font-extrabold text-amber-700 dark:text-amber-400 bg-amber-500/10 border border-amber-400/30 px-2 py-0.5 rounded-md">
-                        +{evt.pointsAwarded} Pts
-                      </span>
-                    )}
                   </div>
                   <h4 className="text-sm font-bold text-slate-900 dark:text-zinc-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors leading-snug">
                     {evt.title}
