@@ -8,6 +8,7 @@ import StatusBadge from "../common/StatusBadge";
 import Tooltip from "../common/Tooltip";
 import TruncatedText from "../common/TruncatedText";
 import SkillTag from "../common/SkillTag";
+import { CARD_TITLE_HOVER } from "../../lib/cardStyles";
 
 interface StudentRowProps {
   student: Student;
@@ -38,7 +39,7 @@ function StudentRow({
       <div className="flex items-center gap-3 min-w-[240px]">
         <Avatar name={student.name} size="sm" />
         <div className="flex flex-col min-w-0">
-          <h4 className="font-bold text-slate-900 text-sm group-hover:text-slate-700 transition-colors flex">
+          <h4 className={`font-bold text-sm flex ${CARD_TITLE_HOVER}`}>
             <TruncatedText text={student.name} maxLength={28} align="left" />
           </h4>
           <div className="text-xs text-slate-600 font-medium flex">

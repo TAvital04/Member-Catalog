@@ -8,7 +8,7 @@ import StatusBadge from "../common/StatusBadge";
 import TruncatedText from "../common/TruncatedText";
 import SkillTag from "../common/SkillTag";
 import Tooltip from "../common/Tooltip";
-import { getCardClasses } from "../../lib/cardStyles";
+import { getCardClasses, CARD_TITLE_HOVER } from "../../lib/cardStyles";
 
 interface StudentCardProps {
   student: Student;
@@ -62,7 +62,7 @@ function StudentCard({
             <Avatar name={student.name} size="sm" className="md:hidden" />
             <Avatar name={student.name} size="md" className="hidden md:flex" />
             <div className="min-w-0 grow flex flex-col">
-              <h3 className="font-bold text-slate-900 text-sm md:text-base leading-tight group-hover:text-slate-700 transition-colors flex">
+              <h3 className={`font-bold text-sm md:text-base leading-tight flex ${CARD_TITLE_HOVER}`}>
                 <TruncatedText text={student.name} maxLength={26} align="left" />
               </h3>
               <div className="text-[11px] md:text-xs text-slate-600 font-medium leading-none md:leading-[1.1] mt-1 flex">

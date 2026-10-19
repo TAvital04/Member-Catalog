@@ -33,7 +33,7 @@ import EventModal from "@/components/modal/event/EventModal";
 import PortfolioModal from "@/components/modal/PortfolioModal";
 import { IEEEEvent, EventCategory, SAMPLE_IEEE_EVENTS } from "@/data/events";
 import { Student } from "@/data/students";
-import { CARD_INTERACTIVE } from "@/lib/cardStyles";
+import { CARD_INTERACTIVE, CARD_TITLE_HOVER, CARD_ACTION_HOVER } from "@/lib/cardStyles";
 
 function IEEEEventsContent() {
   const { theme, toggleTheme } = useThemeManager();
@@ -321,7 +321,7 @@ function IEEEEventsContent() {
                     </div>
 
                     {/* Event Title */}
-                    <h3 className="text-base font-bold text-slate-900 group-hover:text-amber-800 transition-colors leading-snug line-clamp-2">
+                    <h3 className={`text-base font-bold leading-snug line-clamp-2 ${CARD_TITLE_HOVER}`}>
                       {event.title}
                     </h3>
 
@@ -361,7 +361,7 @@ function IEEEEventsContent() {
                     </div>
 
                     {/* Action Arrow */}
-                    <div className="flex items-center gap-1 text-xs font-semibold text-slate-700 group-hover:text-amber-800 transition-colors">
+                    <div className={`flex items-center gap-1 text-xs font-semibold ${CARD_ACTION_HOVER}`}>
                       <span>Details</span>
                       <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
                     </div>

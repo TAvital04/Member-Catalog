@@ -22,7 +22,7 @@ import { Student } from "@/data/students";
 import Avatar from "@/components/common/Avatar";
 import Tooltip from "@/components/common/Tooltip";
 import { studentHasSkill } from "@/lib/skillMatching";
-import { CARD_INTERACTIVE, CARD_BASE } from "@/lib/cardStyles";
+import { CARD_INTERACTIVE, CARD_BASE, CARD_TITLE_HOVER } from "@/lib/cardStyles";
 import CurrentSponsorsSegment from "@/components/common/CurrentSponsorsSegment";
 import EventSponsorTab from "./tabs/EventSponsorTab";
 
@@ -411,7 +411,7 @@ export default function EventModal({
                         <Users size={16} />
                       </div>
                       <div>
-                        <h4 className="text-xs font-bold text-slate-900 group-hover:text-amber-950 transition-colors">
+                        <h4 className={`text-xs font-bold ${CARD_TITLE_HOVER}`}>
                           View Verified Attendees ({event.attendees ? event.attendees.length : 0})
                         </h4>
                         <p className="text-[11px] text-slate-500 mt-0.5">
@@ -455,7 +455,7 @@ export default function EventModal({
                             title={`Filter candidates with skill: ${skill}`}
                           >
                             <div className="min-w-0 pr-2">
-                              <h4 className="text-xs font-bold text-slate-900 group-hover:text-amber-950 transition-colors truncate">
+                              <h4 className={`text-xs font-bold truncate ${CARD_TITLE_HOVER}`}>
                                 {skill}
                               </h4>
                               <span className="text-[10px] text-slate-500 mt-0.5 block">
@@ -539,7 +539,7 @@ export default function EventModal({
                                 className="shrink-0 bg-slate-100 text-slate-800 font-bold border border-slate-200"
                               />
                               <div className="min-w-0">
-                                <span className="text-xs font-bold text-slate-900 group-hover:text-amber-950 transition-colors block truncate">
+                                <span className={`text-xs font-bold block truncate ${CARD_TITLE_HOVER}`}>
                                   {displayName}
                                 </span>
                                 <span className="text-[11px] text-slate-500 block truncate">

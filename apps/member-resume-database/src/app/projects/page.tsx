@@ -28,8 +28,7 @@ import { useRoleManager } from "@/hooks/useRoleManager";
 import { useStudentData } from "@/hooks/useStudentData";
 import Avatar from "@/components/common/Avatar";
 import ProjectModal from "@/components/modal/project/ProjectModal";
-import PortfolioModal from "@/components/modal/PortfolioModal";
-import { CARD_INTERACTIVE } from "@/lib/cardStyles";
+import { CARD_INTERACTIVE, CARD_TITLE_HOVER, CARD_BUTTON_INTERACTIVE } from "@/lib/cardStyles";
 import { IEEEProject } from "@/data/projects";
 import { Student } from "@/data/students";
 
@@ -186,7 +185,7 @@ function IEEEProjectsContent() {
 
                   {/* Title & Tagline */}
                   <div>
-                    <h3 className="text-lg md:text-xl font-black text-slate-900 group-hover:text-slate-700 transition-colors leading-tight">
+                    <h3 className={`text-lg md:text-xl font-black leading-tight ${CARD_TITLE_HOVER}`}>
                       {project.title}
                     </h3>
                     {project.tagline ? (
@@ -337,10 +336,10 @@ function IEEEProjectsContent() {
                   <button
                     type="button"
                     onClick={() => setActiveModalProject(project)}
-                    className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-900 text-xs font-bold transition-all shadow-2xs flex items-center gap-1.5 cursor-pointer active:scale-95"
+                    className={CARD_BUTTON_INTERACTIVE}
                   >
                     <span>Explore Project Hub</span>
-                    <ChevronRight size={13} className="text-slate-400" />
+                    <ChevronRight size={13} className="text-slate-400 group-hover:text-amber-600 dark:group-hover:text-amber-400 group-hover:translate-x-0.5 transition-all" />
                   </button>
                 </div>
               </div>

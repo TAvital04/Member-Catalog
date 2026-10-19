@@ -4,6 +4,7 @@ import React from "react";
 import { IEEEProject } from "@/data/projects";
 import { FolderGit2, Target, Lightbulb, Compass, ArrowRight } from "lucide-react";
 import { ProjectTabType } from "../ProjectTabNavigation";
+import { CARD_TITLE_HOVER } from "@/lib/cardStyles";
 
 interface ProjectOverviewTabProps {
   project: IEEEProject;
@@ -78,9 +79,9 @@ export default function ProjectOverviewTab({ project, onNavigateTab }: ProjectOv
           onClick={() => onNavigateTab("tools")}
           className="p-3.5 rounded-xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group shadow-2xs"
         >
-          <div className="flex items-center justify-between text-xs font-bold text-slate-900">
+          <div className={`flex items-center justify-between text-xs font-bold ${CARD_TITLE_HOVER}`}>
             <span>Hardware & Software Stack</span>
-            <ArrowRight size={13} className="text-slate-400 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight size={13} className="text-slate-400 group-hover:text-amber-600 dark:group-hover:text-amber-400 group-hover:translate-x-1 transition-all" />
           </div>
           <p className="text-[11px] text-slate-500 mt-1">
             {tools.length > 0
@@ -93,9 +94,9 @@ export default function ProjectOverviewTab({ project, onNavigateTab }: ProjectOv
           onClick={() => onNavigateTab("skills")}
           className="p-3.5 rounded-xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group shadow-2xs"
         >
-          <div className="flex items-center justify-between text-xs font-bold text-slate-900">
+          <div className={`flex items-center justify-between text-xs font-bold ${CARD_TITLE_HOVER}`}>
             <span>Member Learning Outcomes</span>
-            <ArrowRight size={13} className="text-slate-400 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight size={13} className="text-slate-400 group-hover:text-amber-600 dark:group-hover:text-amber-400 group-hover:translate-x-1 transition-all" />
           </div>
           <p className="text-[11px] text-slate-500 mt-1">
             {skillsTaught.length > 0

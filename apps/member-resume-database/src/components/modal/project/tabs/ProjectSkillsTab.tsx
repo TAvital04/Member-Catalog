@@ -69,7 +69,7 @@ export default function ProjectSkillsTab({
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-1">
-                    <span className={`text-xs font-bold text-slate-900 ${canFilter ? "group-hover:text-amber-950 transition-colors" : ""} leading-snug truncate`}>
+                    <span className={`text-xs font-bold text-slate-900 ${canFilter ? "group-hover:text-amber-800 transition-colors" : ""} leading-snug truncate`}>
                       {skill}
                     </span>
                     {canFilter && (

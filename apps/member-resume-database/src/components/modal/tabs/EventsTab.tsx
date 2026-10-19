@@ -3,6 +3,7 @@
 import React from "react";
 import { EventEntry } from "../../../data/students";
 import { Calendar, MapPin, Clock, CheckCircle2, Tag } from "lucide-react";
+import { CARD_TITLE_HOVER, CARD_INTERACTIVE } from "@/lib/cardStyles";
 
 interface EventsTabProps {
   events?: EventEntry[];
@@ -28,7 +29,7 @@ export default function EventsTab({ events = [], formatDateStr }: EventsTabProps
           {events.map((evt, idx) => (
             <div
               key={evt.id || idx}
-              className="rounded-2xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-850 p-4.5 shadow-2xs hover:border-slate-300 dark:hover:border-zinc-700 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col gap-2.5 group"
+              className={`${CARD_INTERACTIVE} p-4.5 flex flex-col gap-2.5`}
             >
               <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 border-b border-slate-100 dark:border-zinc-800/80 pb-2.5">
                 <div className="flex flex-col gap-1 min-w-0">
@@ -39,7 +40,7 @@ export default function EventsTab({ events = [], formatDateStr }: EventsTabProps
                       </span>
                     )}
                   </div>
-                  <h4 className="text-sm font-bold text-slate-900 dark:text-zinc-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors leading-snug">
+                  <h4 className={`text-sm font-bold leading-snug ${CARD_TITLE_HOVER}`}>
                     {evt.title}
                   </h4>
                 </div>

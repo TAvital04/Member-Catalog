@@ -3,6 +3,7 @@
 import React from "react";
 import { ProjectMilestone } from "@/data/projects";
 import { Calendar, CheckCircle2, Clock, CircleDot } from "lucide-react";
+import { CARD_TITLE_HOVER } from "@/lib/cardStyles";
 
 interface ProjectTimelineTabProps {
   timeline: ProjectMilestone[];
@@ -80,7 +81,7 @@ export default function ProjectTimelineTab({ timeline = [] }: ProjectTimelineTab
               </div>
 
               {/* Milestone Card */}
-              <div className="p-4 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 shadow-2xs flex flex-col gap-2">
+              <div className="p-4 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 shadow-2xs flex flex-col gap-2 group">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
                   <div className="flex items-center gap-2">
                     <span className="text-[11px] font-mono font-bold text-slate-700 bg-slate-50 px-2 py-0.5 rounded-md border border-slate-200">
@@ -90,7 +91,7 @@ export default function ProjectTimelineTab({ timeline = [] }: ProjectTimelineTab
                   </div>
                 </div>
 
-                <h4 className="text-sm font-bold text-slate-900 group-hover:text-slate-700 transition-colors">
+                <h4 className={`text-sm font-bold ${CARD_TITLE_HOVER}`}>
                   {item.title}
                 </h4>
 

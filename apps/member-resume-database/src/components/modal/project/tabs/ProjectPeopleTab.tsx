@@ -4,6 +4,7 @@ import React from "react";
 import { ProjectParticipant } from "@/data/projects";
 import Avatar from "@/components/common/Avatar";
 import { Users, GraduationCap, Crown, ExternalLink } from "lucide-react";
+import { CARD_TITLE_HOVER } from "@/lib/cardStyles";
 
 interface ProjectPeopleTabProps {
   participants: ProjectParticipant[];
@@ -49,7 +50,7 @@ export default function ProjectPeopleTab({ participants = [], onSelectMember }: 
                       </span>
                     </div>
 
-                    <h4 className="text-sm font-bold text-slate-900 group-hover:text-slate-700 transition-colors truncate">
+                    <h4 className={`text-sm font-bold truncate ${CARD_TITLE_HOVER}`}>
                       {person.name}
                     </h4>
 

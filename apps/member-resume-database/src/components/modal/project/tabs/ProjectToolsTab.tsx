@@ -83,7 +83,7 @@ export default function ProjectToolsTab({
                 const toolCardContent = (
                   <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-1">
-                        <h4 className={`text-xs font-bold text-slate-900 ${canFilter ? "group-hover:text-amber-950 transition-colors" : ""} truncate`}>
+                        <h4 className={`text-xs font-bold text-slate-900 ${canFilter ? "group-hover:text-amber-800 transition-colors" : ""} truncate`}>
                           {tool.name}
                         </h4>
                         {canFilter && (
