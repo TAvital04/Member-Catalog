@@ -6,6 +6,7 @@ import { ProjectTool } from "@/data/projects";
 import { Student } from "@/data/students";
 import { studentHasSkill } from "@/lib/skillMatching";
 import { Wrench, ArrowRight, Users } from "lucide-react";
+import { CARD_INTERACTIVE, CARD_BASE } from "@/lib/cardStyles";
 
 interface ProjectToolsTabProps {
   tools: ProjectTool[];
@@ -115,7 +116,7 @@ export default function ProjectToolsTab({
                     key={idx}
                     href={`/?skills=${encodeURIComponent(tool.name)}`}
                     onClick={() => onClose?.()}
-                    className="p-3.5 rounded-2xl bg-white border border-slate-200 hover:border-amber-400 hover:bg-amber-50/40 transition-all flex items-center gap-3 shadow-2xs group cursor-pointer"
+                    className={`${CARD_INTERACTIVE} p-3.5 flex items-center gap-3 group`}
                     title={`Filter candidates with skill/tool: ${tool.name}`}
                   >
                     {toolCardContent}
@@ -123,7 +124,7 @@ export default function ProjectToolsTab({
                 ) : (
                   <div
                     key={idx}
-                    className="p-3.5 rounded-2xl bg-white border border-slate-200 flex items-center gap-3 shadow-2xs select-none"
+                    className={`${CARD_BASE} p-3.5 flex items-center gap-3 select-none`}
                     title={`Tool / Tech: ${tool.name}`}
                   >
                     {toolCardContent}

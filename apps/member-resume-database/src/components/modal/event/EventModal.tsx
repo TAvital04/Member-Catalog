@@ -309,7 +309,7 @@ export default function EventModal({
                             onSelectMember(student?.id || attendee.memberId);
                           }
                         }}
-                        className="p-3 bg-white border border-slate-200/90 hover:border-slate-300 rounded-xl shadow-2xs hover:shadow-xs transition-all flex items-center justify-between text-left group cursor-pointer"
+                        className="p-3 bg-white border border-slate-200/90 hover:border-slate-300 rounded-xl shadow-2xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between text-left group cursor-pointer"
                       >
                         <div className="flex items-center gap-3 min-w-0 pr-2">
                           <Avatar

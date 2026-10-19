@@ -8,6 +8,7 @@ import StatusBadge from "../common/StatusBadge";
 import TruncatedText from "../common/TruncatedText";
 import SkillTag from "../common/SkillTag";
 import Tooltip from "../common/Tooltip";
+import { getCardClasses } from "../../lib/cardStyles";
 
 interface StudentCardProps {
   student: Student;
@@ -39,11 +40,10 @@ function StudentCard({
       onClick={() => onClick(student)}
       onKeyDown={handleKeyDown}
       data-student-id={student.id}
-      className={`relative group rounded-2xl bg-white border p-4 md:p-5 flex flex-col justify-between h-[195px] md:h-[295px] cursor-pointer transition-all duration-200 shadow-2xs hover:shadow-md hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 ${
-        student.flagged
-          ? "border-red-300/80 bg-red-50/15 hover:border-red-400"
-          : "border-slate-200/90 hover:border-slate-300"
-      }`}
+      className={getCardClasses({
+        flagged: student.flagged,
+        className: "p-4 md:p-5 flex flex-col justify-between h-[195px] md:h-[295px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400",
+      })}
     >
       {/* Flagged Indicator at Top Right */}
       {student.flagged && (

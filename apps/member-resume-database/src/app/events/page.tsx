@@ -33,6 +33,7 @@ import EventModal from "@/components/modal/event/EventModal";
 import PortfolioModal from "@/components/modal/PortfolioModal";
 import { IEEEEvent, EventCategory, SAMPLE_IEEE_EVENTS } from "@/data/events";
 import { Student } from "@/data/students";
+import { CARD_INTERACTIVE } from "@/lib/cardStyles";
 
 function IEEEEventsContent() {
   const { theme, toggleTheme } = useThemeManager();
@@ -303,7 +304,7 @@ function IEEEEventsContent() {
                 <div
                   key={event.id}
                   onClick={() => setActiveModalEvent(event)}
-                  className="bg-white border border-slate-200/90 hover:border-slate-300 rounded-2xl p-6 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between group cursor-pointer gap-5"
+                  className={`${CARD_INTERACTIVE} p-6 flex flex-col justify-between group gap-5`}
                 >
                   <div className="space-y-3.5">
                     {/* Category & Partner Badge Header */}

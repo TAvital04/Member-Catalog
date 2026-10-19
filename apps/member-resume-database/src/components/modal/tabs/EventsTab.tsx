@@ -28,7 +28,7 @@ export default function EventsTab({ events = [], formatDateStr }: EventsTabProps
           {events.map((evt, idx) => (
             <div
               key={evt.id || idx}
-              className="rounded-2xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-850 p-4.5 shadow-2xs hover:border-amber-400/60 dark:hover:border-amber-400/60 transition-all flex flex-col gap-2.5 group"
+              className="rounded-2xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-850 p-4.5 shadow-2xs hover:border-slate-300 dark:hover:border-zinc-700 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col gap-2.5 group"
             >
               <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 border-b border-slate-100 dark:border-zinc-800/80 pb-2.5">
                 <div className="flex flex-col gap-1 min-w-0">

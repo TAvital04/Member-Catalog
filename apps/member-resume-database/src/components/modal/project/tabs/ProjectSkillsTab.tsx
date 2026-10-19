@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Sparkles, CheckCircle2, GraduationCap, Trophy, ArrowRight, Users } from "lucide-react";
 import { Student } from "@/data/students";
 import { studentHasSkill } from "@/lib/skillMatching";
+import { CARD_INTERACTIVE, CARD_BASE } from "@/lib/cardStyles";
 
 interface ProjectSkillsTabProps {
   skillsTaught: string[];
@@ -104,7 +105,7 @@ export default function ProjectSkillsTab({
                 key={idx}
                 href={`/?skills=${encodeURIComponent(skill)}`}
                 onClick={() => onClose?.()}
-                className="p-3.5 rounded-2xl bg-white border border-slate-200 hover:border-amber-400 hover:bg-amber-50/40 transition-all flex items-start gap-2.5 shadow-2xs group cursor-pointer"
+                className={`${CARD_INTERACTIVE} p-3.5 flex items-start gap-2.5 group`}
                 title={`Filter candidates with skill: ${skill}`}
               >
                 {cardContent}
@@ -112,7 +113,7 @@ export default function ProjectSkillsTab({
             ) : (
               <div
                 key={idx}
-                className="p-3.5 rounded-2xl bg-white border border-slate-200 flex items-start gap-2.5 shadow-2xs select-none"
+                className={`${CARD_BASE} p-3.5 flex items-start gap-2.5 select-none`}
                 title={`Skill: ${skill}`}
               >
                 {cardContent}

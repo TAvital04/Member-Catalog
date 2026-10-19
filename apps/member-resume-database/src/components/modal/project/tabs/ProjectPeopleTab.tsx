@@ -31,7 +31,7 @@ export default function ProjectPeopleTab({ participants = [], onSelectMember }: 
             return (
               <div
                 key={person.memberId}
-                className="p-4 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 transition-all flex flex-col justify-between gap-3 shadow-2xs group"
+                className="p-4 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between gap-3 shadow-2xs group"
               >
                 <div className="flex items-start gap-3">
                   <Avatar name={person.name} size="md" />

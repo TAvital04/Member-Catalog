@@ -29,6 +29,7 @@ import { useStudentData } from "@/hooks/useStudentData";
 import Avatar from "@/components/common/Avatar";
 import ProjectModal from "@/components/modal/project/ProjectModal";
 import PortfolioModal from "@/components/modal/PortfolioModal";
+import { CARD_INTERACTIVE } from "@/lib/cardStyles";
 import { IEEEProject } from "@/data/projects";
 import { Student } from "@/data/students";
 
@@ -159,7 +160,7 @@ function IEEEProjectsContent() {
               <div
                 key={project.id}
                 onClick={() => setActiveModalProject(project)}
-                className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-300 flex flex-col justify-between gap-5 relative group shadow-2xs cursor-pointer"
+                className={`${CARD_INTERACTIVE} p-6 flex flex-col justify-between gap-5 relative group`}
               >
                 <div className="flex flex-col gap-4">
                   {/* Header Badges */}
