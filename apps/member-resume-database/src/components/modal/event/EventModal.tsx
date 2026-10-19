@@ -508,10 +508,6 @@ export default function EventModal({
                         const student = getStudentForAttendee(attendee);
                         const displayName = student?.name || attendee.name;
                         const displayMajor = student?.major || attendee.major;
-                        const studentSkills = student?.skills || [];
-                        const matchingSkills = eventSkills.filter((sk) =>
-                          studentHasSkill(studentSkills, sk)
-                        );
 
                         return (
                           <button
@@ -537,18 +533,6 @@ export default function EventModal({
                                 <span className="text-[11px] text-slate-500 block truncate">
                                   {displayMajor}
                                 </span>
-                                {matchingSkills.length > 0 && (
-                                  <div className="flex flex-wrap gap-1 mt-1.5">
-                                    {matchingSkills.map((sk, sIdx) => (
-                                      <span
-                                        key={sIdx}
-                                        className="text-[9px] font-semibold bg-amber-50 text-amber-900 border border-amber-200/60 px-1.5 py-0.2 rounded-md"
-                                      >
-                                        {sk}
-                                      </span>
-                                    ))}
-                                  </div>
-                                )}
                               </div>
                             </div>
                             <ChevronRight
