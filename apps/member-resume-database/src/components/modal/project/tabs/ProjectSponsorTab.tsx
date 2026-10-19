@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { IEEEProject } from "@/data/projects";
 import { CheckCircle2, ShieldCheck, HeartHandshake, Sparkles, Send, Building2, User, Mail, MessageSquare, Award } from "lucide-react";
+import CurrentSponsorsSegment from "@/components/common/CurrentSponsorsSegment";
 
 interface ProjectSponsorTabProps {
   project: IEEEProject;
@@ -133,6 +134,9 @@ ${message || "No additional notes provided."}`,
           </p>
         </div>
       )}
+
+      {/* Current Chapter Sponsors Segment */}
+      <CurrentSponsorsSegment variant="full" title="Current IEEE UCF Chapter Sponsors" />
 
       {/* Direct Sponsorship Inquiry Form */}
       <div className="p-5 rounded-2xl bg-white border border-slate-200 flex flex-col gap-4 shadow-2xs">

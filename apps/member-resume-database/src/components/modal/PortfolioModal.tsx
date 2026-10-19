@@ -13,6 +13,7 @@ import SkillsTab from "./tabs/SkillsTab";
 import EventsTab from "./tabs/EventsTab";
 import ContactTab from "./tabs/ContactTab";
 import { X, Flag, FlagOff } from "lucide-react";
+import CurrentSponsorsSegment from "../common/CurrentSponsorsSegment";
 
 interface PortfolioModalProps {
   student: Student;
@@ -95,6 +96,7 @@ export default function PortfolioModal({
             </div>
             <div className="flex flex-col gap-4 mt-8 pt-6 border-t border-slate-200">
               <StudentLowerInfo student={student} adminMode={adminMode} onResolve={onResolve} />
+              <CurrentSponsorsSegment variant="panel" />
             </div>
           </div>
 
@@ -108,8 +110,9 @@ export default function PortfolioModal({
               {/* About / Info Panel (Mobile Only) */}
               {activeTab === "about" && (
                 <div className="flex flex-col h-full md:hidden relative overflow-hidden animate-fade-in">
-                  <div className="grow overflow-y-auto pb-36 pr-1">
+                  <div className="grow overflow-y-auto pb-36 pr-1 flex flex-col gap-4">
                     <StudentUpperInfo student={student} adminMode={adminMode} />
+                    <CurrentSponsorsSegment variant="panel" />
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 px-6 py-4 bg-modal-right border-t border-zinc-800/80 z-30">
                     <StudentLowerInfo student={student} adminMode={adminMode} onResolve={onResolve} />

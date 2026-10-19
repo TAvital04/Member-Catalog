@@ -3,7 +3,7 @@
 import React from "react";
 import { Student, getPrimaryEducation, getIeeeLeadershipRole } from "../../data/students";
 import Avatar from "../common/Avatar";
-import { Calendar, Award, User, AlertTriangle, ShieldCheck } from "lucide-react";
+import { Calendar, Award, User, AlertTriangle, ShieldCheck, Sparkles } from "lucide-react";
 
 interface StudentUpperInfoProps {
   student: Student;

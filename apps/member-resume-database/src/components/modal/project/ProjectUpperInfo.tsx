@@ -3,6 +3,7 @@
 import React from "react";
 import { IEEEProject } from "@/data/projects";
 import { FolderGit2, GitBranch, ExternalLink, CheckCircle2, Clock } from "lucide-react";
+import CurrentSponsorsSegment from "@/components/common/CurrentSponsorsSegment";
 
 interface ProjectUpperInfoProps {
   project: IEEEProject;
@@ -121,6 +122,9 @@ export default function ProjectUpperInfo({ project }: ProjectUpperInfoProps) {
           )}
         </div>
       </div>
+
+      {/* Current Sponsors Segment */}
+      <CurrentSponsorsSegment variant="panel" />
     </div>
   );
 }

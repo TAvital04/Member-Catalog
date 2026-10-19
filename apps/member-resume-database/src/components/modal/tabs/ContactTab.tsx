@@ -5,6 +5,7 @@ import { Student } from "../../../data/students";
 import TruncatedText from "../../common/TruncatedText";
 import { Mail, Send, Loader2 } from "lucide-react";
 import { sendDirectEmail } from "../../../lib/email";
+import CurrentSponsorsSegment from "../../common/CurrentSponsorsSegment";
 
 interface ContactTabProps {
   student: Student;
@@ -73,29 +74,35 @@ export default function ContactTab({ student, role }: ContactTabProps) {
 
   if (role === "standard") {
     return (
-      <div className="p-7 rounded-2xl border border-zinc-800 glass-panel flex flex-col items-center justify-between text-center relative overflow-hidden my-auto w-full max-w-lg mx-auto shadow-lg animate-fade-in">
-        <div className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:16px_16px]"></div>
+      <div className="flex flex-col gap-6 animate-fade-in pb-4">
+        <div className="p-7 rounded-2xl border border-zinc-800 glass-panel flex flex-col items-center justify-between text-center relative overflow-hidden my-auto w-full max-w-lg mx-auto shadow-lg">
+          <div className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:16px_16px]"></div>
 
-        <div className="w-12 h-12 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center border border-amber-500/20 shrink-0 mb-3 shadow-inner">
-          <svg viewBox="0 0 24 24" className="w-6 h-6 fill-none stroke-current stroke-2">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-          </svg>
+          <div className="w-12 h-12 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center border border-amber-500/20 shrink-0 mb-3 shadow-inner">
+            <svg viewBox="0 0 24 24" className="w-6 h-6 fill-none stroke-current stroke-2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </div>
+
+          <h3 className="text-base font-extrabold text-zinc-100 mb-1">Direct Candidate Messaging Locked</h3>
+          <p className="text-xs text-zinc-400 leading-relaxed mb-6 max-w-sm">
+            Sponsor access is required to view candidate contact details, send direct messages, or access official recruiter channels.
+          </p>
+
+          <a
+            href="https://www.ieeeucf.com/sponsorships"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto px-6 py-3 bg-amber-500/10 border border-amber-500/25 rounded-xl text-xs text-amber-400 font-extrabold tracking-wide uppercase hover:bg-amber-500/20 hover:border-amber-500/40 transition-all shadow-sm flex items-center justify-center cursor-pointer"
+          >
+            Learn More About Sponsoring
+          </a>
         </div>
 
-        <h3 className="text-base font-extrabold text-zinc-100 mb-1">Direct Candidate Messaging Locked</h3>
-        <p className="text-xs text-zinc-400 leading-relaxed mb-6 max-w-sm">
-          Sponsor access is required to view candidate contact details, send direct messages, or access official recruiter channels.
-        </p>
-
-        <a
-          href="https://www.ieeeucf.com/sponsorships"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-full sm:w-auto px-6 py-3 bg-amber-500/10 border border-amber-500/25 rounded-xl text-xs text-amber-400 font-extrabold tracking-wide uppercase hover:bg-amber-500/20 hover:border-amber-500/40 transition-all shadow-sm flex items-center justify-center cursor-pointer"
-        >
-          Learn More About Sponsoring
-        </a>
+        <div className="w-full pt-4 border-t border-slate-200">
+          <CurrentSponsorsSegment variant="full" />
+        </div>
       </div>
     );
   }
@@ -175,6 +182,10 @@ export default function ContactTab({ student, role }: ContactTabProps) {
           {toastMessage.text}
         </div>
       )}
+
+      <div className="mt-6 pt-5 border-t border-slate-200">
+        <CurrentSponsorsSegment variant="full" />
+      </div>
     </div>
   );
 }

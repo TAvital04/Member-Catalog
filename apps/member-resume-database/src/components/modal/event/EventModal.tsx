@@ -15,6 +15,7 @@ import {
   ChevronRight,
   Info,
   ArrowRight,
+  HeartHandshake,
 } from "lucide-react";
 import { IEEEEvent, EventAttendee } from "@/data/events";
 import { Student } from "@/data/students";
@@ -22,6 +23,8 @@ import Avatar from "@/components/common/Avatar";
 import Tooltip from "@/components/common/Tooltip";
 import { studentHasSkill } from "@/lib/skillMatching";
 import { CARD_INTERACTIVE, CARD_BASE } from "@/lib/cardStyles";
+import CurrentSponsorsSegment from "@/components/common/CurrentSponsorsSegment";
+import EventSponsorTab from "./tabs/EventSponsorTab";
 
 interface EventModalProps {
   event: IEEEEvent | null;
@@ -32,7 +35,7 @@ interface EventModalProps {
   canFilter?: boolean;
 }
 
-export type EventTabType = "info" | "overview" | "skills" | "attendees";
+export type EventTabType = "info" | "overview" | "skills" | "attendees" | "sponsor";
 
 export default function EventModal({
   event,
@@ -135,6 +138,12 @@ export default function EventModal({
       ariaLabel: "Attending Members",
       icon: Users,
     },
+    {
+      id: "sponsor",
+      label: "Sponsor",
+      ariaLabel: "Sponsor an Event",
+      icon: HeartHandshake,
+    },
   ];
 
   // Reusable Left Side Hero & Metadata Panel
@@ -225,6 +234,9 @@ export default function EventModal({
           {event.description}
         </p>
       </div>
+
+      {/* Current Chapter Sponsors Segment */}
+      <CurrentSponsorsSegment variant="panel" />
     </div>
   );
 
@@ -545,6 +557,11 @@ export default function EventModal({
                     </div>
                   )}
                 </div>
+              )}
+
+              {/* Sponsor an Event Tab */}
+              {activeTab === "sponsor" && (
+                <EventSponsorTab event={event} />
               )}
             </div>
           </div>
