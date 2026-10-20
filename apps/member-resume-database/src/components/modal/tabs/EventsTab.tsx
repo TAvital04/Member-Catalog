@@ -3,7 +3,6 @@
 import React from "react";
 import { EventEntry } from "../../../data/students";
 import { Calendar, MapPin, Clock, Tag } from "lucide-react";
-import { CARD_TITLE_HOVER, CARD_INTERACTIVE } from "@/lib/cardStyles";
 
 interface EventsTabProps {
   events?: EventEntry[];
@@ -25,47 +24,46 @@ export default function EventsTab({ events = [], formatDateStr }: EventsTabProps
           {events.map((evt, idx) => (
             <div
               key={evt.id || idx}
-              className={`${CARD_INTERACTIVE} p-4.5 flex flex-col gap-2.5`}
+              className="p-5 rounded-2xl bg-zinc-850 border border-zinc-800 hover:border-zinc-750 transition-all flex flex-col gap-3 shadow-sm"
             >
-              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 border-b border-slate-100 dark:border-zinc-800/80 pb-2.5">
-                <div className="flex flex-col gap-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    {evt.category && (
-                      <span className="text-[9.5px] font-bold uppercase tracking-wider bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 px-2 py-0.5 rounded-md border border-slate-200/80 dark:border-zinc-700">
-                        {evt.category}
-                      </span>
-                    )}
-                  </div>
-                  <h4 className={`text-sm font-bold leading-snug ${CARD_TITLE_HOVER}`}>
-                    {evt.title}
-                  </h4>
+              <div className="flex justify-between items-center gap-2 border-b border-zinc-800/80 pb-3">
+                <div className="flex items-center gap-2 flex-wrap">
+                  {evt.category && (
+                    <span className="text-[9.5px] font-bold uppercase tracking-wider bg-zinc-900 border border-zinc-750 text-zinc-300 px-2.5 py-1 rounded-full shadow-2xs leading-none">
+                      {evt.category}
+                    </span>
+                  )}
                 </div>
 
-                <span className="text-[10px] font-medium text-slate-600 dark:text-zinc-400 bg-slate-100 dark:bg-zinc-800 border border-slate-200/80 dark:border-zinc-700 px-2.5 py-0.5 rounded-full shrink-0 flex items-center gap-1 w-fit">
-                  <Clock size={10} className="text-slate-400 dark:text-zinc-500" />
+                <span className="text-[10px] font-medium text-zinc-400 bg-zinc-900 border border-zinc-800 px-2.5 py-1 rounded-full shrink-0 flex items-center gap-1.5 leading-none">
+                  <Clock size={11} className="text-zinc-500" />
                   {formatDateStr(evt.startTime.split("T")[0])}
                 </span>
               </div>
 
-              <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-zinc-400 font-medium">
+              <h4 className="text-sm font-bold text-zinc-100 leading-snug">
+                {evt.title}
+              </h4>
+
+              <div className="flex items-center gap-1.5 text-xs text-zinc-400 font-medium">
                 <MapPin size={12} className="text-zinc-400 shrink-0" />
                 <span>{evt.location}</span>
               </div>
 
-              <p className="text-xs text-slate-600 dark:text-zinc-350 leading-relaxed font-sans">
+              <p className="text-xs text-zinc-350 leading-relaxed font-sans">
                 {evt.description}
               </p>
 
               {evt.skills && evt.skills.length > 0 && (
-                <div className="flex items-center gap-1.5 flex-wrap pt-1">
-                  <span className="text-[10px] font-semibold text-slate-400 dark:text-zinc-500 flex items-center gap-1 mr-1">
+                <div className="flex items-center gap-1.5 flex-wrap pt-2 border-t border-zinc-800/80">
+                  <span className="text-[10px] font-semibold text-zinc-500 flex items-center gap-1 mr-1">
                     <Tag size={10} />
                     Skills Covered:
                   </span>
                   {evt.skills.map((skill, sIdx) => (
                     <span
                       key={sIdx}
-                      className="text-[10px] font-medium bg-slate-50 dark:bg-zinc-800 border border-slate-200/90 dark:border-zinc-700 text-slate-700 dark:text-zinc-300 px-2 py-0.5 rounded-md"
+                      className="text-[10px] font-medium bg-zinc-900 border border-zinc-800 text-zinc-300 px-2 py-0.5 rounded-md"
                     >
                       {skill}
                     </span>
