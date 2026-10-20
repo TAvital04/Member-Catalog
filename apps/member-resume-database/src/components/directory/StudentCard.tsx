@@ -83,11 +83,6 @@ function StudentCard({
           <Award size={10} className="text-amber-600" />
           <span>{student.projects?.length || 0} Chapter Projects</span>
         </span>
-        {student.points !== undefined && (
-          <span className="text-[10px] font-bold text-amber-800 bg-amber-50 border border-amber-200/80 px-2 py-0.5 rounded-md inline-flex items-center gap-1">
-            <span>⚡ {student.points} Chapter Pts</span>
-          </span>
-        )}
         {student.flagged && (
           <span
             className="text-[9.5px] font-bold text-red-700 bg-red-50 border border-red-200 px-2 py-0.5 rounded-full inline-flex items-center gap-1 shrink-0 max-w-[180px] md:max-w-[210px]"

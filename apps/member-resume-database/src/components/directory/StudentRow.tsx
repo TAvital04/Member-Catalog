@@ -69,13 +69,8 @@ function StudentRow({
 
       {/* Right: Chapter Points and Action */}
       <div className="flex items-center gap-3 min-w-[200px] justify-between md:justify-end">
-        {/* Points & Flagged Notice */}
+        {/* Flagged Notice */}
         <div className="flex flex-col items-start md:items-end gap-1">
-          {student.points !== undefined && (
-            <span className="text-[10px] font-bold text-amber-800 bg-amber-50 border border-amber-200/80 px-2 py-0.5 rounded-md inline-flex items-center gap-1">
-              <span>⚡ {student.points} Chapter Pts</span>
-            </span>
-          )}
           {student.flagged && (
             <span
               className="text-[9.5px] font-bold text-red-700 bg-red-50 border border-red-200 px-2 py-0.5 rounded-full inline-flex items-center gap-1 shrink-0"

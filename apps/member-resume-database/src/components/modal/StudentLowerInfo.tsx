@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Student, getIeeeLeadershipRole } from "../../data/students";
-import { Globe, AlertTriangle, ShieldCheck, Sparkles, Calendar, Mail, CheckCircle2 } from "lucide-react";
+import { Globe, AlertTriangle, ShieldCheck, Sparkles, Calendar, Mail } from "lucide-react";
 
 // Custom SVG brand icons since newer lucide-react versions have deprecated them
 const Github = ({ size = 18, ...props }: React.SVGProps<SVGSVGElement> & { size?: number }) => (
@@ -81,16 +81,10 @@ export default function StudentLowerInfo({
         </span>
       </div>
 
-      {/* Verified Chapter Activity & Telemetry Summary Card */}
+      {/* Chapter Activity Summary Card */}
       <div className="rounded-2xl border border-zinc-800 bg-zinc-850 p-4 md:p-5 shadow-sm backdrop-blur-sm flex flex-col gap-3">
-        <h3 className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider flex items-center justify-between">
-          <span className="flex items-center gap-1.5">
-            <CheckCircle2 size={13} className="text-amber-500" />
-            <span>Verified Chapter Activity</span>
-          </span>
-          <span className="text-amber-400 font-extrabold text-[11px]">
-            {student.points || 0} Total Points
-          </span>
+        <h3 className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">
+          Chapter Activity
         </h3>
 
         <div className="grid grid-cols-2 gap-2.5 pt-1">
@@ -99,7 +93,6 @@ export default function StudentLowerInfo({
             <span className="text-base font-extrabold text-zinc-100 mt-0.5">
               {student.events?.length || 0}
             </span>
-            <span className="text-[10px] text-slate-400 mt-0.5">Workshops & GMs</span>
           </div>
 
           <div className="bg-zinc-900/80 border border-zinc-800/80 rounded-xl p-3 flex flex-col">
@@ -107,23 +100,8 @@ export default function StudentLowerInfo({
             <span className="text-base font-extrabold text-zinc-100 mt-0.5">
               {student.projects?.length || 0}
             </span>
-            <span className="text-[10px] text-slate-400 mt-0.5">Engineering Teams</span>
           </div>
         </div>
-
-        {student.pointBreakdown?.details && student.pointBreakdown.details.length > 0 && (
-          <div className="pt-2 border-t border-zinc-800 flex flex-col gap-1.5">
-            <span className="text-[9.5px] font-bold text-zinc-400 uppercase tracking-wider">Activity Breakdown</span>
-            <div className="flex flex-col gap-1 max-h-24 overflow-y-auto pr-1">
-              {student.pointBreakdown.details.slice(0, 3).map((detail, idx) => (
-                <div key={idx} className="text-[11px] text-zinc-300 flex items-start gap-1.5">
-                  <span className="text-amber-500 leading-none mt-0.5">•</span>
-                  <span className="leading-tight">{detail}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
 
       {/* External Profile Links (LinkedIn, GitHub) */}
