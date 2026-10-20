@@ -54,14 +54,14 @@ export default function DirectoryNavbar({
         onClick={() => handleRoleChange?.("standard")}
         className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
           isStandard
-            ? "bg-white text-slate-900 shadow-xs border border-slate-200/90 font-bold"
+            ? "bg-white text-slate-950 shadow-xs border border-slate-200/90 font-bold"
             : "text-slate-500 hover:text-slate-900 hover:bg-white/50"
         }`}
         title="Standard candidate browsing mode"
       >
         <span
           className={`w-1.5 h-1.5 rounded-full transition-colors ${
-            isStandard ? "bg-slate-700" : "bg-slate-300"
+            isStandard ? "bg-slate-500" : "bg-slate-300"
           }`}
         />
         <span>Standard</span>
@@ -72,14 +72,14 @@ export default function DirectoryNavbar({
         onClick={() => handleRoleChange?.("sponsor")}
         className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
           isSponsor
-            ? "bg-amber-50 text-amber-800 shadow-xs border border-amber-200 font-bold"
+            ? "bg-white text-slate-950 shadow-xs border border-slate-200/90 font-bold"
             : "text-slate-500 hover:text-slate-900 hover:bg-white/50"
         }`}
         title="Sponsor access — unlocks candidate filtering, tech stacks, and direct email messaging"
       >
         <Award
           size={13}
-          className={isSponsor ? "text-amber-600" : "text-slate-400"}
+          className={isSponsor ? "text-slate-500" : "text-slate-400"}
         />
         <span>Sponsor</span>
       </button>
@@ -89,14 +89,14 @@ export default function DirectoryNavbar({
         onClick={() => handleRoleChange?.("admin")}
         className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
           isAdmin
-            ? "bg-red-50 text-red-700 shadow-xs border border-red-200 font-bold"
+            ? "bg-white text-slate-950 shadow-xs border border-slate-200/90 font-bold"
             : "text-slate-500 hover:text-slate-900 hover:bg-white/50"
         }`}
         title="Admin maintenance mode — unlocks moderation, flags, and list view"
       >
         <Shield
           size={13}
-          className={isAdmin ? "text-red-600" : "text-slate-400"}
+          className={isAdmin ? "text-slate-500" : "text-slate-400"}
         />
         <span>Admin</span>
       </button>
