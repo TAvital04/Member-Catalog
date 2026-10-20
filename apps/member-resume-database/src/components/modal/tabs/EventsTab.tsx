@@ -15,7 +15,7 @@ export default function EventsTab({ events = [], formatDateStr }: EventsTabProps
     <div className="flex flex-col gap-4 animate-fade-in pt-1 pb-4">
       <div className="flex items-center justify-between border-b border-slate-200 dark:border-zinc-800 pb-2">
         <div className="flex items-center gap-2 text-slate-900 dark:text-zinc-200 font-bold text-xs uppercase tracking-wider py-1 leading-normal">
-          <Calendar size={14} className="text-amber-500 shrink-0" />
+          <Calendar size={14} className="text-zinc-400 shrink-0" />
           <span>RSO Chapter Events & Workshops</span>
         </div>
       </div>
@@ -48,7 +48,7 @@ export default function EventsTab({ events = [], formatDateStr }: EventsTabProps
               </div>
 
               <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-zinc-400 font-medium">
-                <MapPin size={12} className="text-amber-500 shrink-0" />
+                <MapPin size={12} className="text-zinc-400 shrink-0" />
                 <span>{evt.location}</span>
               </div>
 

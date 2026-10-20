@@ -19,12 +19,12 @@ export default function ProjectsTab({ projects, formatDateStr, student }: Projec
     <div className="flex flex-col gap-4 animate-fade-in pt-1 pb-4">
       <div className="flex items-center justify-between py-1">
         <div className="flex items-center gap-2 text-slate-900 dark:text-zinc-200 font-extrabold text-xs uppercase tracking-wider leading-normal">
-          <Sparkles size={14} className="text-amber-500 shrink-0" />
+          <Sparkles size={14} className="text-zinc-400 shrink-0" />
           <span>Highlight Projects ({projects.length})</span>
         </div>
         {rsoCount > 0 && (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-500/15 border border-amber-400/60 text-amber-800 dark:text-amber-300">
-            <Sparkles size={11} className="text-amber-500 fill-current" />
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-zinc-850 border border-zinc-800 text-zinc-300">
+            <Sparkles size={11} className="text-zinc-400" />
             <span>{rsoCount} RSO Affiliated</span>
           </span>
         )}

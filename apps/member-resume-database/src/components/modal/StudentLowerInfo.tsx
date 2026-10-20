@@ -49,7 +49,7 @@ export default function StudentLowerInfo({
       <div className="flex flex-col gap-2.5">
         {leadershipRole && (
           <div className="bg-zinc-850 border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs font-bold flex items-center gap-2.5 shadow-sm">
-            <ShieldCheck size={16} className="text-amber-500 shrink-0" />
+            <ShieldCheck size={16} className="text-zinc-400 shrink-0" />
             <div>
               <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block leading-none mb-1">RSO UCF Chapter Leadership</span>
               <span className="leading-tight font-extrabold text-zinc-100">{leadershipRole}</span>
@@ -58,7 +58,7 @@ export default function StudentLowerInfo({
         )}
         {student.mainProjectName && (
           <div className="bg-zinc-850 border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs font-bold flex items-center gap-2.5 shadow-sm">
-            <Sparkles size={16} className="text-amber-500 shrink-0" />
+            <Sparkles size={16} className="text-zinc-400 shrink-0" />
             <div>
               <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block leading-none mb-1 flex items-center gap-1">
                 Primary RSO Project Affiliation
@@ -76,7 +76,7 @@ export default function StudentLowerInfo({
           <span>Grad: {student.gradDate}</span>
         </span>
         <span className="bg-zinc-850 border border-zinc-800 text-zinc-300 px-3 py-1 rounded-full flex items-center justify-center gap-1.5 shadow-sm grow">
-          <Mail size={12} className="text-amber-500" />
+          <Mail size={12} className="text-zinc-400" />
           <span className="truncate">{student.email}</span>
         </span>
       </div>

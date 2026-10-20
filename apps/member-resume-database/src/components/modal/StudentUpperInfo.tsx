@@ -46,7 +46,7 @@ export default function StudentUpperInfo({ student }: StudentUpperInfoProps) {
           <h2 className="text-xl font-black text-zinc-100 leading-tight whitespace-normal break-words">
             {student.name}
           </h2>
-          <div className="text-sm font-bold text-amber-800 leading-snug whitespace-normal break-words mt-0.5">
+          <div className="text-sm font-semibold text-zinc-400 leading-snug whitespace-normal break-words mt-0.5">
             {primaryDegree} in {primaryMajor}
           </div>
           {minorEdu && (
