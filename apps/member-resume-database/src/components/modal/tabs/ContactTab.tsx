@@ -5,7 +5,6 @@ import { Student } from "../../../data/students";
 import TruncatedText from "../../common/TruncatedText";
 import { Mail, Send, Loader2 } from "lucide-react";
 import { sendDirectEmail } from "../../../lib/email";
-import CurrentSponsorsSegment from "../../common/CurrentSponsorsSegment";
 
 interface ContactTabProps {
   student: Student;
@@ -99,10 +98,6 @@ export default function ContactTab({ student, role }: ContactTabProps) {
             Learn More About Sponsoring
           </a>
         </div>
-
-        <div className="w-full pt-4 border-t border-slate-200">
-          <CurrentSponsorsSegment variant="full" />
-        </div>
       </div>
     );
   }
@@ -182,10 +177,6 @@ export default function ContactTab({ student, role }: ContactTabProps) {
           {toastMessage.text}
         </div>
       )}
-
-      <div className="mt-6 pt-5 border-t border-slate-200">
-        <CurrentSponsorsSegment variant="full" />
-      </div>
     </div>
   );
 }
