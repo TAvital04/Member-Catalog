@@ -224,7 +224,7 @@ export default function DirectoryControlBar({
               id="directory-sort-reverse-toggle"
               className={`p-1.5 rounded-lg transition-colors cursor-pointer relative group ${
                 isReversed
-                  ? "bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200/60"
+                  ? "bg-slate-100 text-slate-800 hover:bg-slate-200 border border-slate-200"
                   : "text-slate-400 hover:text-slate-700 hover:bg-slate-100"
               }`}
               aria-label="Reverse sort order"
@@ -247,12 +247,9 @@ export default function DirectoryControlBar({
               aria-labelledby="directory-sort-button"
               className="absolute right-0 top-full mt-2 w-72 bg-white border border-slate-200/90 rounded-2xl shadow-xl p-1.5 z-50 max-h-96 overflow-y-auto animate-scale-in"
             >
-              {/* Group 1: Activity (Own Category, Highlighted at the top) */}
-              <div className="px-2.5 pt-2 pb-1 text-[10px] font-bold text-amber-700 uppercase tracking-wider select-none flex items-center justify-between">
-                <span>Activity</span>
-                <span className="text-[9px] font-semibold text-amber-700 bg-amber-100/90 px-1.5 py-0.5 rounded-full">
-                  Recommended
-                </span>
+              {/* Group 1: Activity */}
+              <div className="px-2.5 pt-1.5 pb-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider select-none">
+                Activity
               </div>
               <div className="space-y-0.5">
                 {activityOptions.map((opt) => {
@@ -267,16 +264,16 @@ export default function DirectoryControlBar({
                         setSortBy(opt.id);
                         setIsSortOpen(false);
                       }}
-                      className={`w-full text-left px-2.5 py-2 rounded-xl text-xs flex items-center justify-between transition-colors cursor-pointer border ${
+                      className={`w-full text-left px-2.5 py-1.5 rounded-xl text-xs flex items-center justify-between transition-colors cursor-pointer ${
                         isSelected
-                          ? "bg-amber-100/80 border-amber-300/80 text-amber-950 font-semibold shadow-2xs"
-                          : "bg-amber-50/60 border-amber-200/60 text-amber-900 hover:bg-amber-100/70 font-semibold"
+                          ? "bg-slate-100 text-slate-900 font-semibold"
+                          : "text-slate-700 hover:bg-slate-50 font-medium"
                       }`}
                     >
                       <div className="flex flex-col pr-2">
                         <span className="leading-tight">{opt.label}</span>
                         {opt.hint && (
-                          <span className="text-[10px] text-amber-700/80 font-normal mt-0.5">
+                          <span className="text-[10px] text-slate-400 font-normal mt-0.5">
                             {opt.hint}
                           </span>
                         )}
@@ -284,7 +281,7 @@ export default function DirectoryControlBar({
                       {isSelected && (
                         <Check
                           size={14}
-                          className="text-amber-700 shrink-0 stroke-[2.5]"
+                          className="text-slate-800 shrink-0 stroke-[2.5]"
                         />
                       )}
                     </button>
@@ -328,7 +325,7 @@ export default function DirectoryControlBar({
                       {isSelected && (
                         <Check
                           size={14}
-                          className="text-amber-600 shrink-0 stroke-[2.5]"
+                          className="text-slate-800 shrink-0 stroke-[2.5]"
                         />
                       )}
                     </button>
@@ -372,7 +369,7 @@ export default function DirectoryControlBar({
                       {isSelected && (
                         <Check
                           size={14}
-                          className="text-amber-600 shrink-0 stroke-[2.5]"
+                          className="text-slate-800 shrink-0 stroke-[2.5]"
                         />
                       )}
                     </button>
