@@ -67,7 +67,7 @@ function StudentRow({
         </div>
       </div>
 
-      {/* Right: Chapter Points and Action */}
+      {/* Right: Actions and Status */}
       <div className="flex items-center gap-3 min-w-[200px] justify-between md:justify-end">
         {/* Flagged Notice */}
         <div className="flex flex-col items-start md:items-end gap-1">
