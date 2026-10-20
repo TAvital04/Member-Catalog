@@ -16,7 +16,7 @@ export const CARD_HOVER_EFFECT =
  * Standard non-interactive base styling for white/elevated cards.
  */
 export const CARD_BASE =
-  "rounded-2xl bg-white border border-slate-200/90 shadow-2xs";
+  "relative rounded-2xl bg-white border border-slate-200/90 shadow-2xs";
 
 /**
  * Complete class string for full-size interactive cards (e.g. Candidates, Projects, Events).
@@ -28,7 +28,7 @@ export const CARD_INTERACTIVE =
  * Compact / Sub-card interactive styling (e.g., Tools, Skills, Attendees in modals).
  */
 export const SUB_CARD_BASE =
-  "rounded-xl bg-white border border-slate-200/90 shadow-2xs";
+  "relative rounded-xl bg-white border border-slate-200/90 shadow-2xs";
 
 export const SUB_CARD_INTERACTIVE =
   `${SUB_CARD_BASE} ${CARD_HOVER_EFFECT}`;
@@ -66,7 +66,7 @@ export function getCardClasses(options?: {
   const isCompact = options?.variant === "compact";
 
   const rounding = isCompact ? "rounded-xl" : "rounded-2xl";
-  const base = `${rounding} bg-white border shadow-2xs`;
+  const base = `relative ${rounding} bg-white border shadow-2xs`;
 
   if (!isInteractive) {
     const border = isFlagged ? "border-red-300/80 bg-red-50/15" : "border-slate-200/90";

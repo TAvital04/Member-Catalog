@@ -42,7 +42,7 @@ function StudentCard({
       data-student-id={student.id}
       className={getCardClasses({
         flagged: student.flagged,
-        className: "p-4 md:p-5 flex flex-col justify-between h-[195px] md:h-[295px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400",
+        className: "relative p-4 md:p-5 flex flex-col justify-between h-[195px] md:h-[295px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400",
       })}
     >
       {/* Flagged Indicator at Top Right */}
