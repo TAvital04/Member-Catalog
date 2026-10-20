@@ -96,7 +96,7 @@ export default function StudentLowerInfo({
           </div>
 
           <div className="bg-zinc-900/80 border border-zinc-800/80 rounded-xl p-3 flex flex-col">
-            <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Chapter Projects</span>
+            <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Projects</span>
             <span className="text-base font-extrabold text-zinc-100 mt-0.5">
               {student.projects?.length || 0}
             </span>

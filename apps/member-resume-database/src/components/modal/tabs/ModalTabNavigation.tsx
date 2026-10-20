@@ -39,7 +39,7 @@ export default function ModalTabNavigation({
       {/* Main Streamlined Tabs */}
       {tabsList.map((tab) => {
         let label: string = tab;
-        if (tab === "projects") label = "Chapter Projects";
+        if (tab === "projects") label = "Projects";
         if (tab === "events") label = eventCount !== undefined ? `Events (${eventCount})` : "Events";
         if (tab === "contact") label = "Contact";
 

@@ -62,7 +62,7 @@ function StudentRow({
           <span className="text-slate-800 font-semibold">{student.events?.length || 0} Events</span>
         </div>
         <div className="hidden md:flex flex-col">
-          <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Chapter Projects</span>
+          <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Projects</span>
           <span className="text-slate-800 font-semibold">{student.projects?.length || 0} Projects</span>
         </div>
       </div>

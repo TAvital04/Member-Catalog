@@ -56,7 +56,7 @@ describe("Portfolio Modal Link & Tab Rendering", () => {
       />
     );
 
-    expect(getByRole("button", { name: /chapter projects/i })).toBeInTheDocument();
+    expect(getByRole("button", { name: /^projects$/i })).toBeInTheDocument();
     expect(getByRole("button", { name: /events/i })).toBeInTheDocument();
     expect(getByRole("button", { name: /contact/i })).toBeInTheDocument();
   });

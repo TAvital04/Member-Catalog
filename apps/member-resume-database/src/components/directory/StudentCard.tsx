@@ -81,7 +81,7 @@ function StudentCard({
         </span>
         <span className="text-[10px] font-semibold text-slate-700 bg-slate-100 border border-slate-200/90 px-2 py-0.5 rounded-md inline-flex items-center gap-1">
           <Award size={10} className="text-amber-600" />
-          <span>{student.projects?.length || 0} Chapter Projects</span>
+          <span>{student.projects?.length || 0} Projects</span>
         </span>
         {student.flagged && (
           <span
