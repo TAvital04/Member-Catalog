@@ -88,10 +88,10 @@ export default function PortfolioModal({
         <div className="w-full flex flex-col md:flex-row overflow-hidden h-full">
           {/* Left Side Panel: Profile Hero & Desktop Metadata */}
           <div className="w-full md:w-2/5 p-6 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col justify-between md:overflow-y-auto overflow-x-hidden relative z-10 bg-slate-50/70 hidden md:flex">
-            <div className="flex flex-col gap-6">
+            <div>
               <StudentUpperInfo student={student} adminMode={adminMode} />
             </div>
-            <div className="flex flex-col gap-4 mt-8 pt-6 border-t border-slate-200">
+            <div className="flex flex-col gap-4 mt-auto pt-6 border-t border-slate-200">
               <StudentLowerInfo student={student} adminMode={adminMode} onResolve={onResolve} />
             </div>
           </div>
@@ -106,11 +106,13 @@ export default function PortfolioModal({
               {/* About / Info Panel (Mobile Only) */}
               {activeTab === "about" && (
                 <div className="flex flex-col h-full md:hidden relative overflow-hidden animate-fade-in">
-                  <div className="grow overflow-y-auto pb-36 pr-1 flex flex-col gap-4">
-                    <StudentUpperInfo student={student} adminMode={adminMode} />
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 px-6 py-4 bg-modal-right border-t border-zinc-800/80 z-30">
-                    <StudentLowerInfo student={student} adminMode={adminMode} onResolve={onResolve} />
+                  <div className="grow overflow-y-auto pb-8 pr-1 flex flex-col justify-between min-h-full gap-6">
+                    <div>
+                      <StudentUpperInfo student={student} adminMode={adminMode} />
+                    </div>
+                    <div className="mt-auto pt-6 border-t border-slate-200">
+                      <StudentLowerInfo student={student} adminMode={adminMode} onResolve={onResolve} />
+                    </div>
                   </div>
                 </div>
               )}
