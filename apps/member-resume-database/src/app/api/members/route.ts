@@ -187,60 +187,57 @@ export async function GET(request?: Request) {
           clubs: Array.isArray(row.clubMemberships) ? row.clubMemberships : [],
         });
 
+        // Filter for official chapter build projects only (excluding personal hobby projects)
+        const chapterProjects = (Array.isArray(row.projects) ? row.projects : [])
+          .filter((p: any) => {
+            const name = (p.projectName || "").toLowerCase();
+            return name.includes("rso") || name.includes("ieee") || name.includes("solar") || name.includes("micromouse") || name.includes("quadcopter") || name.includes("campus") || name.includes("pcb");
+          })
+          .map((p: any) => ({
+            name: p.projectName || "",
+            description: p.description || "",
+            startDate: p.startDate || "",
+            endDate: p.endDate,
+            current: Boolean(p.isOngoing),
+            projectLinks: p.projectLinks || [],
+          }));
+
         return {
           id: row.id,
           name: row.fullName || "UCF Member",
           email: row.email || "student@knights.ucf.edu",
-          bio: row.bio || "",
-          skills: Array.isArray(row.skills) ? row.skills : [],
+          bio: "",
+          skills: [],
           links: socialLinks,
-          education: education,
-          projects: Array.isArray(row.projects)
-            ? row.projects.map((p: any) => ({
-                name: p.projectName || "",
-                description: p.description || "",
-                startDate: p.startDate || "",
-                endDate: p.endDate,
-                current: Boolean(p.isOngoing),
-                projectLinks: p.projectLinks || [],
-              }))
-            : [],
-          workExperiences: Array.isArray(row.workExperience)
-            ? row.workExperience.map((w: any) => ({
-                name: w.companyName || "",
-                title: w.jobTitle || "",
-                description: w.description || "",
-                startDate: w.startDate || "",
-                endDate: w.endDate,
-                currentJob: Boolean(w.isCurrentJob),
-              }))
-            : [],
-          clubs: Array.isArray(row.clubMemberships)
-            ? row.clubMemberships.map((c: any) => ({
-                name: c.clubName || "",
-                title: c.roleTitle || "",
-                description: c.description || "",
-                startDate: c.startDate || "",
-                endDate: c.endDate,
-                current: Boolean(c.isActive),
-              }))
-            : [],
-          certifications: Array.isArray(row.certifications)
-            ? row.certifications.map((cert: any) => ({
-                name: cert.certificationName || "",
-                issuer: cert.issuer || "",
-                issueDate: cert.issueDate || "",
-                expirationDate: cert.expirationDate,
-                credentialId: cert.credentialId,
-                credentialUrl: cert.credentialUrl,
-              }))
-            : [],
+          education: [
+            {
+              schoolName: "University of Central Florida",
+              degreeType: "Bachelor of Science",
+              major: row.memberMajor || primaryEdu.major || "Computer Science",
+              startDate: "2022-08-20",
+              endDate: row.memberGradYear ? `May ${row.memberGradYear}` : "May 2026",
+              current: true,
+            },
+          ],
+          projects: chapterProjects,
+          workExperiences: [],
+          clubs: (Array.isArray(row.clubMemberships) ? row.clubMemberships : [])
+            .filter((c: any) => /ieee|rso|institute of electrical/i.test(c.clubName || ""))
+            .map((c: any) => ({
+              name: c.clubName || "IEEE UCF Student Chapter",
+              title: c.roleTitle || "Active Member",
+              description: c.description || "Participating in chapter workshops and build projects.",
+              startDate: c.startDate || "2023-08-20",
+              endDate: c.endDate,
+              current: Boolean(c.isActive),
+            })),
+          certifications: [],
           events: candidateEvents,
-          resumeLink: row.resumePdfUrl || undefined,
-          major: primaryEdu.major || row.memberMajor || "Computer Science",
-          degree: primaryEdu.degreeType || "Bachelor of Science",
-          gradDate: primaryEdu.endDate ? primaryEdu.endDate : (row.memberGradYear ? `May ${row.memberGradYear}` : "May 2026"),
-          status: (row.status as any) || "Seeking Internship",
+          resumeLink: undefined,
+          major: row.memberMajor || primaryEdu.major || "Computer Science",
+          degree: "Bachelor of Science",
+          gradDate: row.memberGradYear ? `May ${row.memberGradYear}` : "May 2026",
+          status: "Employed",
           flagged: Boolean(row.flagged),
           flagReason: row.flagReason || undefined,
           mainProjectName: row.mainProjectName || undefined,

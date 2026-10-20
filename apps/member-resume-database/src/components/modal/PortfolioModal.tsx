@@ -6,10 +6,8 @@ import { useFocusTrap } from "../common/useFocusTrap";
 import Tooltip from "../common/Tooltip";
 import StudentUpperInfo from "./StudentUpperInfo";
 import StudentLowerInfo from "./StudentLowerInfo";
-import TimelineSection from "../timeline/TimelineSection";
 import ModalTabNavigation, { TabType } from "./tabs/ModalTabNavigation";
 import ProjectsTab from "./tabs/ProjectsTab";
-import SkillsTab from "./tabs/SkillsTab";
 import EventsTab from "./tabs/EventsTab";
 import ContactTab from "./tabs/ContactTab";
 import { X, Flag, FlagOff } from "lucide-react";
@@ -37,7 +35,7 @@ export default function PortfolioModal({
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {
-        setActiveTab((prev) => (prev === "about" ? "experience" : prev));
+        setActiveTab((prev) => (prev === "about" ? "projects" : prev));
       }
     };
 
@@ -117,19 +115,9 @@ export default function PortfolioModal({
                 </div>
               )}
 
-              {/* Experience Timeline Panel */}
-              {activeTab === "experience" && (
-                <TimelineSection student={student} formatDateStr={formatDateStr} />
-              )}
-
               {/* Projects Panel */}
               {activeTab === "projects" && (
                 <ProjectsTab projects={student.projects} formatDateStr={formatDateStr} student={student} />
-              )}
-
-              {/* Skills Panel */}
-              {activeTab === "skills" && (
-                <SkillsTab student={student} formatDateStr={formatDateStr} onClose={onClose} role={role} />
               )}
 
               {/* Events Panel */}

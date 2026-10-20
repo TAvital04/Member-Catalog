@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Student } from "../../data/students";
-import { Globe, FileText, AlertTriangle, ExternalLink } from "lucide-react";
+import { Globe, AlertTriangle } from "lucide-react";
 
 // Custom SVG brand icons since newer lucide-react versions have deprecated them
 const Github = ({ size = 18, ...props }: React.SVGProps<SVGSVGElement> & { size?: number }) => (
@@ -64,20 +64,6 @@ export default function StudentLowerInfo({
           );
         })}
       </div>
-
-      {/* PDF Resume Link Download */}
-      {student.resumeLink && (
-        <a
-          href={student.resumeLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 w-full bg-amber-500 hover:bg-amber-600 active:scale-95 text-zinc-950 font-bold text-xs py-2.5 px-4 rounded-xl shadow-md shadow-black/30 transition-all"
-        >
-          <FileText size={15} />
-          <span>View Official Resume</span>
-          <ExternalLink size={13} className="ml-0.5 opacity-80" />
-        </a>
-      )}
 
       {student.flagged && (
         <div className="rounded-2xl border border-zinc-800 bg-zinc-850 p-5 shadow-sm backdrop-blur-sm">

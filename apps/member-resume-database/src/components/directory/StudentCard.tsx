@@ -71,16 +71,23 @@ function StudentCard({
             </div>
           </div>
         </div>
-
-        {/* Bio snippet - Desktop only */}
-        <p className="hidden md:block text-slate-600 text-xs leading-relaxed mt-0.5">
-          {student.bio.length > 105 ? student.bio.substring(0, 102) + "..." : student.bio}
-        </p>
       </div>
 
-      {/* Middle Section (Job Search Status & Flagged Reason) */}
-      <div className="flex items-center gap-2 flex-wrap">
-        <StatusBadge status={student.status} />
+      {/* Middle Section: Dashboard Attendance & Chapter Activity Metrics */}
+      <div className="flex items-center gap-1.5 flex-wrap">
+        <span className="text-[10px] font-semibold text-slate-700 bg-slate-100 border border-slate-200/90 px-2 py-0.5 rounded-md inline-flex items-center gap-1">
+          <Calendar size={10} className="text-amber-600" />
+          <span>{student.events?.length || 0} Events Attended</span>
+        </span>
+        <span className="text-[10px] font-semibold text-slate-700 bg-slate-100 border border-slate-200/90 px-2 py-0.5 rounded-md inline-flex items-center gap-1">
+          <Award size={10} className="text-amber-600" />
+          <span>{student.projects?.length || 0} Chapter Projects</span>
+        </span>
+        {student.points !== undefined && (
+          <span className="text-[10px] font-bold text-amber-800 bg-amber-50 border border-amber-200/80 px-2 py-0.5 rounded-md inline-flex items-center gap-1">
+            <span>⚡ {student.points} Chapter Pts</span>
+          </span>
+        )}
         {student.flagged && (
           <span
             className="text-[9.5px] font-bold text-red-700 bg-red-50 border border-red-200 px-2 py-0.5 rounded-full inline-flex items-center gap-1 shrink-0 max-w-[180px] md:max-w-[210px]"
@@ -100,19 +107,17 @@ function StudentCard({
             <Calendar size={13} className="text-slate-400 hidden md:block" />
             <span>Grad: {student.gradDate}</span>
           </div>
-          {getPrimaryEducation(student)?.gpa && (
-            <div className="flex items-center gap-1">
-              <Award size={12} className="text-slate-400 md:hidden" />
-              <Award size={13} className="text-slate-400 hidden md:block" />
-              <span>GPA: {getPrimaryEducation(student)?.gpa}</span>
-            </div>
+          {student.mainProjectName && (
+            <span className="text-[10.5px] font-semibold text-amber-900 bg-amber-50 border border-amber-200/70 px-2 py-0.5 rounded-md truncate max-w-[170px]">
+              {student.mainProjectName}
+            </span>
           )}
         </div>
 
         {/* Skills Row & Action */}
         <div className="flex items-center justify-between">
           <div className="flex gap-1 overflow-visible">
-            {student.skills.slice(0, 3).map((skill) => (
+            {student.skills && student.skills.slice(0, 3).map((skill) => (
               <SkillTag
                 key={skill}
                 skill={skill}

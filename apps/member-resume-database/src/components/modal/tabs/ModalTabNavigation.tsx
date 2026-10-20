@@ -2,7 +2,7 @@
 
 import React from "react";
 
-export type TabType = "about" | "experience" | "projects" | "skills" | "events" | "contact";
+export type TabType = "about" | "projects" | "events" | "contact" | "experience" | "skills";
 
 interface ModalTabNavigationProps {
   activeTab: TabType;
@@ -16,11 +16,11 @@ export default function ModalTabNavigation({
   setActiveTab,
   eventCount,
 }: ModalTabNavigationProps) {
-  const tabsList = ["experience", "projects", "skills", "events", "contact"] as const;
+  const tabsList = ["projects", "events", "contact"] as const;
 
   return (
     <div className="flex border-b border-zinc-800 mb-5 pb-1 text-xs md:text-sm gap-1 md:gap-2 overflow-x-auto no-scrollbar md:overflow-visible pr-12 md:pr-16 shrink-0">
-      {/* Mobile Info Tab */}
+      {/* Mobile Info / Overview Tab */}
       <button
         type="button"
         onClick={() => setActiveTab("about")}
@@ -30,16 +30,18 @@ export default function ModalTabNavigation({
             : "text-zinc-500 hover:text-zinc-350"
         }`}
       >
-        Info
+        Overview
         {activeTab === "about" && (
           <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 rounded-full"></span>
         )}
       </button>
 
-      {/* Main Tabs */}
+      {/* Main Streamlined Tabs */}
       {tabsList.map((tab) => {
         let label: string = tab;
-        if (tab === "experience") label = "Timeline";
+        if (tab === "projects") label = "Chapter Projects";
+        if (tab === "events") label = eventCount !== undefined ? `Events (${eventCount})` : "Events";
+        if (tab === "contact") label = "Contact";
 
         return (
           <button

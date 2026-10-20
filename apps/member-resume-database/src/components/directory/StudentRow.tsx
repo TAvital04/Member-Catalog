@@ -48,14 +48,8 @@ function StudentRow({
         </div>
       </div>
 
-      {/* Middle: Degree, Grad, GPA */}
-      <div className="grid grid-cols-3 gap-2 md:gap-4 text-xs text-slate-600 grow">
-        <div className="flex flex-col min-w-0">
-          <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Degree</span>
-          <div className="text-slate-800 flex font-medium">
-            <TruncatedText text={student.degree} maxLength={22} align="left" />
-          </div>
-        </div>
+      {/* Middle: Degree, Grad, Dashboard metrics */}
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 text-xs text-slate-600 grow">
         <div className="flex flex-col">
           <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Graduation</span>
           <span className="flex items-center gap-1 text-slate-800 font-medium">
@@ -64,45 +58,31 @@ function StudentRow({
           </span>
         </div>
         <div className="flex flex-col">
-          <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">GPA</span>
-          <span className="text-slate-800 font-bold">{getPrimaryEducation(student)?.gpa || "N/A"}</span>
+          <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Events Attended</span>
+          <span className="text-slate-800 font-semibold">{student.events?.length || 0} Events</span>
+        </div>
+        <div className="hidden md:flex flex-col">
+          <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Chapter Projects</span>
+          <span className="text-slate-800 font-semibold">{student.projects?.length || 0} Projects</span>
         </div>
       </div>
 
-      {/* Right: Status and Skills */}
-      <div className="flex items-center gap-4 min-w-[280px] justify-between md:justify-end">
-        {/* Status Badge & Flagged Notice */}
+      {/* Right: Chapter Points and Action */}
+      <div className="flex items-center gap-3 min-w-[200px] justify-between md:justify-end">
+        {/* Points & Flagged Notice */}
         <div className="flex flex-col items-start md:items-end gap-1">
-          <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5 md:hidden">Status</span>
-          <div className="flex items-center gap-1.5 flex-wrap">
-            <StatusBadge status={student.status} />
-            {student.flagged && (
-              <span
-                className="text-[9.5px] font-bold text-red-700 bg-red-50 border border-red-200 px-2 py-0.5 rounded-full inline-flex items-center gap-1 shrink-0"
-                title={`Flag Reason: ${student.flagReason || "Under review"}`}
-              >
-                <Flag size={9} className="fill-current text-red-500 shrink-0" />
-                <span>Flagged: {student.flagReason || "Under review"}</span>
-              </span>
-            )}
-          </div>
-        </div>
-
-        {/* Skills */}
-        <div className="hidden lg:flex items-center gap-1 max-w-[140px] overflow-visible">
-          {student.skills.slice(0, 2).map((skill) => (
-            <SkillTag
-              key={skill}
-              skill={skill}
-              variant="row"
-              maxCharLength={8}
-              maxWidthClass="max-w-[60px]"
-              clickable={canFilter ?? true}
-            />
-          ))}
-          {student.skills.length > 2 && (
-            <span className="text-[9px] text-slate-500 font-semibold">
-              +{student.skills.length - 2}
+          {student.points !== undefined && (
+            <span className="text-[10px] font-bold text-amber-800 bg-amber-50 border border-amber-200/80 px-2 py-0.5 rounded-md inline-flex items-center gap-1">
+              <span>⚡ {student.points} Chapter Pts</span>
+            </span>
+          )}
+          {student.flagged && (
+            <span
+              className="text-[9.5px] font-bold text-red-700 bg-red-50 border border-red-200 px-2 py-0.5 rounded-full inline-flex items-center gap-1 shrink-0"
+              title={`Flag Reason: ${student.flagReason || "Under review"}`}
+            >
+              <Flag size={9} className="fill-current text-red-500 shrink-0" />
+              <span>Flagged</span>
             </span>
           )}
         </div>

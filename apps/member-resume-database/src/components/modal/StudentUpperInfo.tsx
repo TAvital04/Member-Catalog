@@ -3,7 +3,7 @@
 import React from "react";
 import { Student, getPrimaryEducation, getIeeeLeadershipRole } from "../../data/students";
 import Avatar from "../common/Avatar";
-import { Calendar, Award, User, AlertTriangle, ShieldCheck, Sparkles } from "lucide-react";
+import { Calendar, Award, User, AlertTriangle, ShieldCheck, Sparkles, CheckCircle2, Mail } from "lucide-react";
 
 interface StudentUpperInfoProps {
   student: Student;
@@ -88,23 +88,55 @@ export default function StudentUpperInfo({ student, adminMode }: StudentUpperInf
           <Calendar size={12} className="text-slate-400" />
           <span>Grad: {student.gradDate}</span>
         </span>
-        {getPrimaryEducation(student)?.gpa && (
-          <span className="bg-zinc-850 border border-zinc-800 text-zinc-300 px-3 py-1 rounded-full flex items-center justify-center gap-1.5 shadow-sm grow">
-            <Award size={12} className="text-slate-400" />
-            <span>GPA: {getPrimaryEducation(student)?.gpa} / {getPrimaryEducation(student)?.gpaScale || 4.0}</span>
-          </span>
-        )}
+        <span className="bg-zinc-850 border border-zinc-800 text-zinc-300 px-3 py-1 rounded-full flex items-center justify-center gap-1.5 shadow-sm grow">
+          <Mail size={12} className="text-amber-500" />
+          <span className="truncate">{student.email}</span>
+        </span>
       </div>
 
-      {/* Biography Card Component */}
-      <div className="rounded-2xl border border-zinc-800 bg-zinc-850 p-5 shadow-sm backdrop-blur-sm flex flex-col bio-stretch">
-        <h3 className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
-          <User size={13} className="text-slate-400" />
-          <span>Biography</span>
+      {/* Verified Chapter Activity & Telemetry Summary Card */}
+      <div className="rounded-2xl border border-zinc-800 bg-zinc-850 p-4 md:p-5 shadow-sm backdrop-blur-sm flex flex-col gap-3">
+        <h3 className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider flex items-center justify-between">
+          <span className="flex items-center gap-1.5">
+            <CheckCircle2 size={13} className="text-amber-500" />
+            <span>Verified Chapter Activity</span>
+          </span>
+          <span className="text-amber-400 font-extrabold text-[11px]">
+            {student.points || 0} Total Points
+          </span>
         </h3>
-        <p className="text-xs text-zinc-300 leading-relaxed font-sans">
-          {student.bio}
-        </p>
+
+        <div className="grid grid-cols-2 gap-2.5 pt-1">
+          <div className="bg-zinc-900/80 border border-zinc-800/80 rounded-xl p-3 flex flex-col">
+            <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Events Attended</span>
+            <span className="text-base font-extrabold text-zinc-100 mt-0.5">
+              {student.events?.length || 0}
+            </span>
+            <span className="text-[10px] text-slate-400 mt-0.5">Workshops & GMs</span>
+          </div>
+
+          <div className="bg-zinc-900/80 border border-zinc-800/80 rounded-xl p-3 flex flex-col">
+            <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Chapter Projects</span>
+            <span className="text-base font-extrabold text-zinc-100 mt-0.5">
+              {student.projects?.length || 0}
+            </span>
+            <span className="text-[10px] text-slate-400 mt-0.5">Engineering Teams</span>
+          </div>
+        </div>
+
+        {student.pointBreakdown?.details && student.pointBreakdown.details.length > 0 && (
+          <div className="pt-2 border-t border-zinc-800 flex flex-col gap-1.5">
+            <span className="text-[9.5px] font-bold text-zinc-400 uppercase tracking-wider">Activity Breakdown</span>
+            <div className="flex flex-col gap-1 max-h-24 overflow-y-auto pr-1">
+              {student.pointBreakdown.details.slice(0, 3).map((detail, idx) => (
+                <div key={idx} className="text-[11px] text-zinc-300 flex items-start gap-1.5">
+                  <span className="text-amber-500 leading-none mt-0.5">•</span>
+                  <span className="leading-tight">{detail}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -45,8 +45,8 @@ describe("Portfolio Modal Link & Tab Rendering", () => {
     expect(screen.getAllByText("Test Candidate")[0]).toBeInTheDocument();
   });
 
-  test("standard access disables skill clicking and does not render filter links", () => {
-    const { getByRole, queryByText, queryByRole } = render(
+  test("renders streamlined tabs: Chapter Projects, Events, and Contact", () => {
+    const { getByRole } = render(
       <PortfolioModal
         student={sampleStudent}
         onClose={jest.fn()}
@@ -56,46 +56,30 @@ describe("Portfolio Modal Link & Tab Rendering", () => {
       />
     );
 
-    // Navigate to Skills tab
-    const skillsTabButton = getByRole("button", { name: /skills/i });
-    fireEvent.click(skillsTabButton);
-
-    // Filter invitation subtitle should NOT be present for standard role
-    expect(queryByText("Click to filter candidates")).not.toBeInTheDocument();
-
-    // Skills should NOT be links to /?skills=
-    const reactLink = queryByRole("link", { name: /react/i });
-    expect(reactLink).not.toBeInTheDocument();
-
-    // Skills should still be displayed as badges
-    expect(screen.getByText("React")).toBeInTheDocument();
+    expect(getByRole("button", { name: /chapter projects/i })).toBeInTheDocument();
+    expect(getByRole("button", { name: /events/i })).toBeInTheDocument();
+    expect(getByRole("button", { name: /contact/i })).toBeInTheDocument();
   });
 
-  test("admin access enables skill clicking and renders filter links", () => {
+  test("standard access locks direct contact tab with sponsor required banner", () => {
     const { getByRole, getByText } = render(
       <PortfolioModal
         student={sampleStudent}
         onClose={jest.fn()}
         onToggleFlag={jest.fn()}
-        adminMode={true}
-        role="admin"
+        adminMode={false}
+        role="standard"
       />
     );
 
-    // Navigate to Skills tab
-    const skillsTabButton = getByRole("button", { name: /skills/i });
-    fireEvent.click(skillsTabButton);
+    const contactTabButton = getByRole("button", { name: /contact/i });
+    fireEvent.click(contactTabButton);
 
-    // Filter subtitle should be visible for admin role
-    expect(getByText("Click to filter candidates")).toBeInTheDocument();
-
-    // Skills SHOULD be links with /?skills=
-    const reactLink = getByRole("link", { name: /react/i });
-    expect(reactLink).toHaveAttribute("href", "/?skills=React");
+    expect(getByText("Direct Candidate Messaging Locked")).toBeInTheDocument();
   });
 
-  test("sponsor access enables skill clicking and unlocks email features without admin privileges", () => {
-    const { getByRole, getByText, queryByText } = render(
+  test("sponsor access unlocks email contact features without admin privileges", () => {
+    const { getByRole, queryByText } = render(
       <PortfolioModal
         student={sampleStudent}
         onClose={jest.fn()}
@@ -105,13 +89,7 @@ describe("Portfolio Modal Link & Tab Rendering", () => {
       />
     );
 
-    // 1. Verify Skills tab is unlocked for filtering
-    const skillsTabButton = getByRole("button", { name: /skills/i });
-    fireEvent.click(skillsTabButton);
-    expect(getByText("Click to filter candidates")).toBeInTheDocument();
-    expect(getByRole("link", { name: /react/i })).toHaveAttribute("href", "/?skills=React");
-
-    // 2. Verify Contact tab is unlocked for direct candidate emailing
+    // Verify Contact tab is unlocked for direct candidate emailing
     const contactTabButton = getByRole("button", { name: /contact/i });
     fireEvent.click(contactTabButton);
 
