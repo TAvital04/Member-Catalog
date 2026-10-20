@@ -102,11 +102,6 @@ function StudentCard({
             <Calendar size={13} className="text-slate-400 hidden md:block" />
             <span>Grad: {student.gradDate}</span>
           </div>
-          {student.mainProjectName && (
-            <span className="text-[10.5px] font-semibold text-amber-900 bg-amber-50 border border-amber-200/70 px-2 py-0.5 rounded-md truncate max-w-[170px]">
-              {student.mainProjectName}
-            </span>
-          )}
         </div>
 
         {/* Skills Row & Action */}
