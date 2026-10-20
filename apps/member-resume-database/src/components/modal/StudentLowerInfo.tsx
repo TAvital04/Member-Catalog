@@ -34,7 +34,7 @@ export default function StudentLowerInfo({
   const leadershipRole = getIeeeLeadershipRole(student);
 
   return (
-    <div className="flex flex-col gap-4 w-full">
+    <div className="flex flex-col justify-between gap-4 w-full h-full min-h-full">
       <style dangerouslySetInnerHTML={{
         __html: `
         @media (max-width: 1055px) {
@@ -45,123 +45,129 @@ export default function StudentLowerInfo({
         }
       `}} />
 
-      {/* RSO Leadership Officer Badge & Primary Project Badge */}
-      <div className="flex flex-col gap-2.5">
-        {leadershipRole && (
-          <div className="bg-zinc-850 border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs font-bold flex items-center gap-2.5 shadow-sm">
-            <ShieldCheck size={16} className="text-zinc-400 shrink-0" />
-            <div>
-              <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block leading-none mb-1">RSO UCF Chapter Leadership</span>
-              <span className="leading-tight font-extrabold text-zinc-100">{leadershipRole}</span>
-            </div>
+      {/* Top Group: Badges & High-level status bar */}
+      <div className="flex flex-col gap-3 shrink-0">
+        {(leadershipRole || student.mainProjectName) && (
+          <div className="flex flex-col gap-2.5">
+            {leadershipRole && (
+              <div className="bg-zinc-850 border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs font-bold flex items-center gap-2.5 shadow-sm">
+                <ShieldCheck size={16} className="text-zinc-400 shrink-0" />
+                <div>
+                  <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block leading-none mb-1">RSO UCF Chapter Leadership</span>
+                  <span className="leading-tight font-extrabold text-zinc-100">{leadershipRole}</span>
+                </div>
+              </div>
+            )}
+            {student.mainProjectName && (
+              <div className="bg-zinc-850 border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs font-bold flex items-center gap-2.5 shadow-sm">
+                <Sparkles size={16} className="text-zinc-400 shrink-0" />
+                <div>
+                  <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block leading-none mb-1 flex items-center gap-1">
+                    Primary RSO Project Affiliation
+                  </span>
+                  <span className="leading-tight font-extrabold text-zinc-100">{student.mainProjectName}</span>
+                </div>
+              </div>
+            )}
           </div>
         )}
-        {student.mainProjectName && (
-          <div className="bg-zinc-850 border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs font-bold flex items-center gap-2.5 shadow-sm">
-            <Sparkles size={16} className="text-zinc-400 shrink-0" />
-            <div>
-              <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block leading-none mb-1 flex items-center gap-1">
-                Primary RSO Project Affiliation
-              </span>
-              <span className="leading-tight font-extrabold text-zinc-100">{student.mainProjectName}</span>
-            </div>
-          </div>
-        )}
-      </div>
 
-      {/* High-level status bar */}
-      <div className="flex flex-wrap gap-2 text-xs w-full status-stack">
-        <span className="bg-zinc-850 border border-zinc-800 text-zinc-300 px-3 py-1 rounded-full flex items-center justify-center gap-1.5 shadow-sm grow">
-          <Calendar size={12} className="text-slate-400" />
-          <span>Grad: {student.gradDate}</span>
-        </span>
-        <span className="bg-zinc-850 border border-zinc-800 text-zinc-300 px-3 py-1 rounded-full flex items-center justify-center gap-1.5 shadow-sm grow">
-          <Mail size={12} className="text-zinc-400" />
-          <span className="truncate">{student.email}</span>
-        </span>
+        {/* High-level status bar */}
+        <div className="flex flex-wrap gap-2 text-xs w-full status-stack">
+          <span className="bg-zinc-850 border border-zinc-800 text-zinc-300 px-3 py-1.5 rounded-full flex items-center justify-center gap-1.5 shadow-sm grow">
+            <Calendar size={12} className="text-slate-400" />
+            <span>Grad: {student.gradDate}</span>
+          </span>
+          <span className="bg-zinc-850 border border-zinc-800 text-zinc-300 px-3 py-1.5 rounded-full flex items-center justify-center gap-1.5 shadow-sm grow">
+            <Mail size={12} className="text-zinc-400" />
+            <span className="truncate">{student.email}</span>
+          </span>
+        </div>
       </div>
 
       {/* Chapter Activity Summary Card */}
-      <div className="rounded-2xl border border-zinc-800 bg-zinc-850 p-4 md:p-5 shadow-sm backdrop-blur-sm flex flex-col gap-3">
-        <h3 className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">
+      <div className="rounded-2xl border border-zinc-800 bg-zinc-850 p-4 md:p-5 shadow-sm backdrop-blur-sm flex flex-col gap-3 grow justify-center">
+        <h3 className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider shrink-0">
           Chapter Activity
         </h3>
 
         <div className="grid grid-cols-2 gap-2.5 pt-1">
-          <div className="bg-zinc-900/80 border border-zinc-800/80 rounded-xl p-3 flex flex-col">
+          <div className="bg-zinc-900/80 border border-zinc-800/80 rounded-xl p-3 md:p-3.5 flex flex-col justify-center">
             <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Events Attended</span>
-            <span className="text-base font-extrabold text-zinc-100 mt-0.5">
+            <span className="text-lg md:text-xl font-extrabold text-zinc-100 mt-1">
               {student.events?.length || 0}
             </span>
           </div>
 
-          <div className="bg-zinc-900/80 border border-zinc-800/80 rounded-xl p-3 flex flex-col">
+          <div className="bg-zinc-900/80 border border-zinc-800/80 rounded-xl p-3 md:p-3.5 flex flex-col justify-center">
             <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Projects</span>
-            <span className="text-base font-extrabold text-zinc-100 mt-0.5">
+            <span className="text-lg md:text-xl font-extrabold text-zinc-100 mt-1">
               {student.projects?.length || 0}
             </span>
           </div>
         </div>
       </div>
 
-      {/* External Profile Links (LinkedIn, GitHub) */}
-      {student.links && student.links.length > 0 && (
-        <div className="flex flex-wrap items-center gap-2 w-full links-stack">
-          {student.links.map((link, idx) => {
-            const lowerName = link.name.toLowerCase();
-            const isGithub = lowerName.includes("github");
-            const isLinkedin = lowerName.includes("linkedin");
+      {/* Bottom Group: External Profile Links & Moderation */}
+      <div className="flex flex-col gap-3 shrink-0 mt-auto">
+        {student.links && student.links.length > 0 && (
+          <div className="flex flex-wrap items-center gap-2 w-full links-stack">
+            {student.links.map((link, idx) => {
+              const lowerName = link.name.toLowerCase();
+              const isGithub = lowerName.includes("github");
+              const isLinkedin = lowerName.includes("linkedin");
 
-            return (
-              <a
-                key={idx}
-                href={link.text}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-850 border border-zinc-800 text-xs text-zinc-400 hover:text-amber-400 hover:border-amber-500/30 hover:bg-zinc-900 transition-all shadow grow"
-              >
-                {isGithub && <Github size={13} />}
-                {isLinkedin && <Linkedin size={13} />}
-                {!isGithub && !isLinkedin && <Globe size={13} />}
-                <span>{link.name}</span>
-              </a>
-            );
-          })}
-        </div>
-      )}
-
-      {student.flagged && (
-        <div className="rounded-2xl border border-zinc-800 bg-zinc-850 p-5 shadow-sm backdrop-blur-sm">
-          <h3 className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
-            <AlertTriangle size={13} className="text-red-500" />
-            <span>{adminMode ? "Admin Moderation" : "Moderation Warning"}</span>
-          </h3>
-          <div className="flex flex-col gap-3">
-            <div>
-              <span className="font-extrabold uppercase tracking-wider block text-[10px] text-red-500">
-                {student.duplicateGroup
-                  ? "Profile Duplicate Flagged"
-                  : student.flagReason && /ai|slop|generated|chatgpt/i.test(student.flagReason)
-                  ? "Profile AI Slop Flagged"
-                  : "Profile Flagged / Reported"}
-              </span>
-              <p className="text-xs text-zinc-300 mt-1.5 leading-relaxed">
-                <span className="font-bold text-zinc-400">Reason:</span>{" "}
-                <span className="italic text-red-300/90">&ldquo;{student.flagReason || (student.duplicateGroup ? `Duplicate group: ${student.duplicateGroup}` : "Under administrative review")}&rdquo;</span>
-              </p>
-            </div>
-            {onResolve && adminMode && (
-              <button
-                type="button"
-                onClick={() => onResolve(student)}
-                className="w-full py-2.5 px-4 rounded-xl bg-red-500 hover:bg-red-600 active:scale-95 text-white font-bold text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
-              >
-                <span>Resolve Issue</span>
-              </button>
-            )}
+              return (
+                <a
+                  key={idx}
+                  href={link.text}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-zinc-850 border border-zinc-800 text-xs text-zinc-400 hover:text-amber-400 hover:border-amber-500/30 hover:bg-zinc-900 transition-all shadow grow"
+                >
+                  {isGithub && <Github size={13} />}
+                  {isLinkedin && <Linkedin size={13} />}
+                  {!isGithub && !isLinkedin && <Globe size={13} />}
+                  <span>{link.name}</span>
+                </a>
+              );
+            })}
           </div>
-        </div>
-      )}
+        )}
+
+        {student.flagged && (
+          <div className="rounded-2xl border border-zinc-800 bg-zinc-850 p-4 shadow-sm backdrop-blur-sm">
+            <h3 className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+              <AlertTriangle size={13} className="text-red-500" />
+              <span>{adminMode ? "Admin Moderation" : "Moderation Warning"}</span>
+            </h3>
+            <div className="flex flex-col gap-2.5">
+              <div>
+                <span className="font-extrabold uppercase tracking-wider block text-[10px] text-red-500">
+                  {student.duplicateGroup
+                    ? "Profile Duplicate Flagged"
+                    : student.flagReason && /ai|slop|generated|chatgpt/i.test(student.flagReason)
+                    ? "Profile AI Slop Flagged"
+                    : "Profile Flagged / Reported"}
+                </span>
+                <p className="text-xs text-zinc-300 mt-1 leading-relaxed">
+                  <span className="font-bold text-zinc-400">Reason:</span>{" "}
+                  <span className="italic text-red-300/90">&ldquo;{student.flagReason || (student.duplicateGroup ? `Duplicate group: ${student.duplicateGroup}` : "Under administrative review")}&rdquo;</span>
+                </p>
+              </div>
+              {onResolve && adminMode && (
+                <button
+                  type="button"
+                  onClick={() => onResolve(student)}
+                  className="w-full py-2 px-3 rounded-xl bg-red-500 hover:bg-red-600 active:scale-95 text-white font-bold text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <span>Resolve Issue</span>
+                </button>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
