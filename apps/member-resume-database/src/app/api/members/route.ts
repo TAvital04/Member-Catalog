@@ -233,7 +233,7 @@ export async function GET(request?: Request) {
             })),
           certifications: [],
           events: candidateEvents,
-          resumeLink: undefined,
+          resumeLink: row.resumePdfUrl || undefined,
           major: row.memberMajor || primaryEdu.major || "Computer Science",
           degree: "Bachelor of Science",
           gradDate: row.memberGradYear ? `May ${row.memberGradYear}` : "May 2026",

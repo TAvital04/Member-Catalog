@@ -101,4 +101,20 @@ describe("Portfolio Modal Link & Tab Rendering", () => {
     expect(screen.getByPlaceholderText(/recruiter@company\.com/i)).toBeInTheDocument();
     expect(getByRole("button", { name: /send direct message/i })).toBeInTheDocument();
   });
+
+  test("renders View Resume PDF button in modal left panel", () => {
+    const { getAllByRole } = render(
+      <PortfolioModal
+        student={sampleStudent}
+        onClose={jest.fn()}
+        onToggleFlag={jest.fn()}
+        adminMode={false}
+        role="standard"
+      />
+    );
+
+    const resumeLinks = getAllByRole("link", { name: /view resume pdf/i });
+    expect(resumeLinks.length).toBeGreaterThan(0);
+    expect(resumeLinks[0]).toHaveAttribute("target", "_blank");
+  });
 });

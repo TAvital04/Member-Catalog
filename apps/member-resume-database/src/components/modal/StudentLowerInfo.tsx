@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Student, getIeeeLeadershipRole } from "../../data/students";
-import { Globe, AlertTriangle, ShieldCheck, Sparkles, Calendar, Mail } from "lucide-react";
+import { Globe, AlertTriangle, ShieldCheck, Sparkles, Calendar, Mail, FileText, ExternalLink } from "lucide-react";
 
 // Custom SVG brand icons since newer lucide-react versions have deprecated them
 const Github = ({ size = 18, ...props }: React.SVGProps<SVGSVGElement> & { size?: number }) => (
@@ -32,6 +32,10 @@ export default function StudentLowerInfo({
   onResolve,
 }: StudentLowerInfoProps) {
   const leadershipRole = getIeeeLeadershipRole(student);
+  const resumeUrl =
+    student.resumeLink ||
+    student.links?.find((l) => /resume|cv/i.test(l.name))?.text ||
+    `https://drive.google.com/file/d/${student.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-resume/view`;
 
   return (
     <div className="flex flex-col justify-between gap-4 w-full h-full min-h-full">
@@ -134,6 +138,18 @@ export default function StudentLowerInfo({
             })}
           </div>
         )}
+
+        {/* View Resume PDF Button */}
+        <a
+          href={resumeUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-100 hover:text-white border border-zinc-700 hover:border-zinc-600 font-bold text-xs transition-all shadow-sm active:scale-98 cursor-pointer group/resume"
+        >
+          <FileText size={14} className="text-zinc-300 group-hover/resume:text-white transition-colors" />
+          <span>View Resume PDF</span>
+          <ExternalLink size={12} className="text-zinc-400 group-hover/resume:text-zinc-200 ml-auto transition-colors" />
+        </a>
 
         {student.flagged && (
           <div className="rounded-2xl border border-zinc-800 bg-zinc-850 p-4 shadow-sm backdrop-blur-sm">
