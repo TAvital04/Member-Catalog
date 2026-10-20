@@ -48,22 +48,22 @@ export default function StudentLowerInfo({
       {/* RSO Leadership Officer Badge & Primary Project Badge */}
       <div className="flex flex-col gap-2.5">
         {leadershipRole && (
-          <div className="bg-amber-50/70 dark:bg-amber-500/10 border border-amber-200/90 dark:border-amber-400/30 rounded-xl px-3.5 py-2.5 text-xs font-bold text-amber-900 dark:text-amber-300 flex items-center gap-2.5 shadow-2xs">
-            <ShieldCheck size={16} className="text-amber-700 dark:text-amber-400 shrink-0" />
+          <div className="bg-zinc-850 border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs font-bold flex items-center gap-2.5 shadow-sm">
+            <ShieldCheck size={16} className="text-amber-500 shrink-0" />
             <div>
-              <span className="text-[10px] font-bold text-amber-800/80 dark:text-amber-400/80 uppercase tracking-wider block leading-none mb-1">RSO UCF Chapter Leadership</span>
-              <span className="leading-tight font-extrabold text-slate-900 dark:text-zinc-100">{leadershipRole}</span>
+              <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block leading-none mb-1">RSO UCF Chapter Leadership</span>
+              <span className="leading-tight font-extrabold text-zinc-100">{leadershipRole}</span>
             </div>
           </div>
         )}
         {student.mainProjectName && (
-          <div className="bg-amber-500/15 border border-amber-400/70 rounded-xl px-3.5 py-2.5 text-xs font-bold text-amber-950 dark:text-amber-200 flex items-center gap-2.5 shadow-2xs ring-1 ring-amber-400/25">
-            <Sparkles size={16} className="text-amber-500 shrink-0 fill-current" />
+          <div className="bg-zinc-850 border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs font-bold flex items-center gap-2.5 shadow-sm">
+            <Sparkles size={16} className="text-amber-500 shrink-0" />
             <div>
-              <span className="text-[10px] font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider block leading-none mb-1 flex items-center gap-1">
+              <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block leading-none mb-1 flex items-center gap-1">
                 Primary RSO Project Affiliation
               </span>
-              <span className="leading-tight font-extrabold text-slate-900 dark:text-amber-100">{student.mainProjectName}</span>
+              <span className="leading-tight font-extrabold text-zinc-100">{student.mainProjectName}</span>
             </div>
           </div>
         )}
