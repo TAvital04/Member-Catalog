@@ -87,11 +87,11 @@ export default function PortfolioModal({
         {/* Scrollable Container Wrapper */}
         <div className="w-full flex flex-col md:flex-row overflow-hidden h-full">
           {/* Left Side Panel: Profile Hero & Desktop Metadata */}
-          <div className="w-full md:w-2/5 p-6 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col justify-between md:overflow-y-auto overflow-x-hidden relative z-10 bg-slate-50/70 hidden md:flex">
-            <div>
+          <div className="w-full md:w-2/5 p-6 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col md:overflow-y-auto overflow-x-hidden relative z-10 bg-slate-50/70 hidden md:flex">
+            <div className="pb-6 border-b border-slate-200 shrink-0">
               <StudentUpperInfo student={student} adminMode={adminMode} />
             </div>
-            <div className="flex flex-col gap-4 mt-auto pt-6 border-t border-slate-200">
+            <div className="my-auto py-6 w-full">
               <StudentLowerInfo student={student} adminMode={adminMode} onResolve={onResolve} />
             </div>
           </div>
@@ -106,11 +106,11 @@ export default function PortfolioModal({
               {/* About / Info Panel (Mobile Only) */}
               {activeTab === "about" && (
                 <div className="flex flex-col h-full md:hidden relative overflow-hidden animate-fade-in">
-                  <div className="grow overflow-y-auto pb-8 pr-1 flex flex-col justify-between min-h-full gap-6">
-                    <div>
+                  <div className="grow overflow-y-auto pb-8 pr-1 flex flex-col min-h-full">
+                    <div className="pb-6 border-b border-slate-200 shrink-0">
                       <StudentUpperInfo student={student} adminMode={adminMode} />
                     </div>
-                    <div className="mt-auto pt-6 border-t border-slate-200">
+                    <div className="my-auto py-6 w-full">
                       <StudentLowerInfo student={student} adminMode={adminMode} onResolve={onResolve} />
                     </div>
                   </div>
