@@ -2,7 +2,7 @@
 
 import React from "react";
 import { EventEntry } from "../../../data/students";
-import { Calendar, MapPin, Clock, CheckCircle2, Tag } from "lucide-react";
+import { Calendar, MapPin, Clock, Tag } from "lucide-react";
 import { CARD_TITLE_HOVER, CARD_INTERACTIVE } from "@/lib/cardStyles";
 
 interface EventsTabProps {
@@ -18,10 +18,6 @@ export default function EventsTab({ events = [], formatDateStr }: EventsTabProps
           <Calendar size={14} className="text-amber-500 shrink-0" />
           <span>RSO Chapter Events & Workshops</span>
         </div>
-        <span className="text-[10px] font-bold bg-amber-500/15 text-amber-800 dark:text-amber-300 border border-amber-400/50 px-2.5 py-0.5 rounded-full flex items-center gap-1">
-          <CheckCircle2 size={10} className="text-amber-500" />
-          <span>{events.length} Verified Events</span>
-        </span>
       </div>
 
       {events.length > 0 ? (
@@ -45,8 +41,8 @@ export default function EventsTab({ events = [], formatDateStr }: EventsTabProps
                   </h4>
                 </div>
 
-                <span className="text-[10px] font-bold text-amber-800 dark:text-amber-300 bg-amber-500/15 border border-amber-400/40 px-2.5 py-0.5 rounded-full shrink-0 flex items-center gap-1 w-fit">
-                  <Clock size={10} className="text-amber-500" />
+                <span className="text-[10px] font-medium text-slate-600 dark:text-zinc-400 bg-slate-100 dark:bg-zinc-800 border border-slate-200/80 dark:border-zinc-700 px-2.5 py-0.5 rounded-full shrink-0 flex items-center gap-1 w-fit">
+                  <Clock size={10} className="text-slate-400 dark:text-zinc-500" />
                   {formatDateStr(evt.startTime.split("T")[0])}
                 </span>
               </div>
