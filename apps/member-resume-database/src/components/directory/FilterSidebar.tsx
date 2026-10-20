@@ -7,6 +7,7 @@ import MajorsFilter from "./filters/MajorsFilter";
 import SkillsFilter, { SkillModeSelector } from "./filters/SkillsFilter";
 import GradDatesFilter from "./filters/GradDatesFilter";
 import EventsFilter from "./filters/EventsFilter";
+import ProjectsFilter from "./filters/ProjectsFilter";
 import AdminFilters from "./filters/AdminFilters";
 import SponsorLockPanel from "./filters/SponsorLockPanel";
 
@@ -19,6 +20,8 @@ interface FilterSidebarProps {
   setSelectedGradDates: (dates: string[]) => void;
   selectedEvents: string[];
   setSelectedEvents: (events: string[]) => void;
+  selectedProjects?: string[];
+  setSelectedProjects?: (projects: string[]) => void;
   selectedCompanies?: string[];
   setSelectedCompanies?: (companies: string[]) => void;
   skillFilterMode: "AND" | "OR";
@@ -34,6 +37,7 @@ interface FilterSidebarProps {
   availableSkills: string[];
   availableGradDates: string[];
   availableEvents: string[];
+  availableProjects?: string[];
   availableCompanies?: string[];
 
   // Layout choice
@@ -51,6 +55,8 @@ export default function FilterSidebar({
   setSelectedGradDates,
   selectedEvents,
   setSelectedEvents,
+  selectedProjects = [],
+  setSelectedProjects = () => {},
   skillFilterMode,
   setSkillFilterMode,
   adminMode,
@@ -60,17 +66,19 @@ export default function FilterSidebar({
   availableSkills,
   availableGradDates,
   availableEvents,
+  availableProjects = [],
   layout = "side",
   role = "admin",
   onResetAll,
 }: FilterSidebarProps) {
-  const [activeDropdown, setActiveDropdown] = useState<"major" | "skill" | "grad" | "event" | "company" | "admin" | null>(null);
+  const [activeDropdown, setActiveDropdown] = useState<"major" | "skill" | "grad" | "event" | "project" | "company" | "admin" | null>(null);
   
   const activeFiltersCount =
     selectedMajors.length +
     selectedSkills.length +
     selectedGradDates.length +
     selectedEvents.length +
+    selectedProjects.length +
     (adminFilterFlagged !== null ? 1 : 0);
 
   const handleMajorToggle = (major: string) => {
@@ -105,6 +113,14 @@ export default function FilterSidebar({
     }
   };
 
+  const handleProjectToggle = (projectName: string) => {
+    if (selectedProjects.includes(projectName)) {
+      setSelectedProjects(selectedProjects.filter((p) => p !== projectName));
+    } else {
+      setSelectedProjects([...selectedProjects, projectName]);
+    }
+  };
+
   const resetAllFilters = () => {
     if (onResetAll) {
       onResetAll();
@@ -113,6 +129,7 @@ export default function FilterSidebar({
       setSelectedSkills([]);
       setSelectedGradDates([]);
       setSelectedEvents([]);
+      setSelectedProjects([]);
       setSkillFilterMode("OR");
       setAdminFilterFlagged(null);
     }
@@ -207,6 +224,22 @@ export default function FilterSidebar({
               availableEvents={availableEvents}
               selectedEvents={selectedEvents}
               onEventToggle={handleEventToggle}
+              layout="top"
+            />
+          </FilterDropdown>
+
+          <FilterDropdown
+            title={`Projects ${selectedProjects.length > 0 ? `(${selectedProjects.length})` : ""}`}
+            isOpen={activeDropdown === "project"}
+            onToggle={() => setActiveDropdown(activeDropdown === "project" ? null : "project")}
+            isActive={selectedProjects.length > 0}
+            layout="top"
+            widthClass="w-[calc(100vw-2.5rem)] max-w-[280px] md:w-64"
+          >
+            <ProjectsFilter
+              availableProjects={availableProjects}
+              selectedProjects={selectedProjects}
+              onProjectToggle={handleProjectToggle}
               layout="top"
             />
           </FilterDropdown>
@@ -341,7 +374,7 @@ export default function FilterSidebar({
           </FilterDropdown>
         </div>
 
-        <div>
+        <div className="border-b border-slate-100 pb-4">
           <FilterDropdown
             title="Events Attended"
             isOpen={true}
@@ -353,6 +386,23 @@ export default function FilterSidebar({
               availableEvents={availableEvents}
               selectedEvents={selectedEvents}
               onEventToggle={handleEventToggle}
+              layout="side"
+            />
+          </FilterDropdown>
+        </div>
+
+        <div>
+          <FilterDropdown
+            title="Projects Participated In"
+            isOpen={true}
+            onToggle={() => {}}
+            isActive={selectedProjects.length > 0}
+            layout="side"
+          >
+            <ProjectsFilter
+              availableProjects={availableProjects}
+              selectedProjects={selectedProjects}
+              onProjectToggle={handleProjectToggle}
               layout="side"
             />
           </FilterDropdown>

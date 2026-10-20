@@ -50,6 +50,8 @@ function StudentDirectoryContent() {
     setSelectedGradDates,
     selectedEvents,
     setSelectedEvents,
+    selectedProjects,
+    setSelectedProjects,
     selectedCompanies,
     setSelectedCompanies,
     skillFilterMode,
@@ -111,12 +113,13 @@ function StudentDirectoryContent() {
         selectedSkills.length > 0 ||
         selectedGradDates.length > 0 ||
         selectedEvents.length > 0 ||
+        selectedProjects.length > 0 ||
         (selectedCompanies && selectedCompanies.length > 0)
       ) {
         resetAllFilters();
       }
     }
-  }, [hasFilterPermission, selectedMajors, selectedSkills, selectedGradDates, selectedEvents, selectedCompanies, resetAllFilters]);
+  }, [hasFilterPermission, selectedMajors, selectedSkills, selectedGradDates, selectedEvents, selectedProjects, selectedCompanies, resetAllFilters]);
 
   // Keyboard shortcut Ctrl+K to search
   React.useEffect(() => {
@@ -136,6 +139,7 @@ function StudentDirectoryContent() {
     availableSkills,
     availableGradDates,
     availableEvents,
+    availableProjects,
     availableCompanies,
     filteredStudents,
     totalResumes,
@@ -148,6 +152,7 @@ function StudentDirectoryContent() {
     selectedSkills,
     selectedGradDates,
     selectedEvents,
+    selectedProjects,
     selectedCompanies,
     onlyLeaders: onlyLeadersFilter,
     skillFilterMode,
@@ -214,6 +219,7 @@ function StudentDirectoryContent() {
   const removeSkillFilter = (skill: string) => setSelectedSkills(selectedSkills.filter((s) => s !== skill));
   const removeGradFilter = (date: string) => setSelectedGradDates(selectedGradDates.filter((d) => d !== date));
   const removeEventFilter = (evtTitle: string) => setSelectedEvents(selectedEvents.filter((e) => e !== evtTitle));
+  const removeProjectFilter = (projName: string) => setSelectedProjects(selectedProjects.filter((p) => p !== projName));
   const removeCompanyFilter = (company: string) => setSelectedCompanies(selectedCompanies.filter((c) => c !== company));
 
   const handleCompanyToggle = (company: string) => {
@@ -282,6 +288,8 @@ function StudentDirectoryContent() {
             setSelectedGradDates={setSelectedGradDates}
             selectedEvents={selectedEvents}
             setSelectedEvents={setSelectedEvents}
+            selectedProjects={selectedProjects}
+            setSelectedProjects={setSelectedProjects}
             selectedCompanies={selectedCompanies}
             setSelectedCompanies={setSelectedCompanies}
             skillFilterMode={skillFilterMode}
@@ -293,6 +301,7 @@ function StudentDirectoryContent() {
             availableSkills={availableSkills}
             availableGradDates={availableGradDates}
             availableEvents={availableEvents}
+            availableProjects={availableProjects}
             availableCompanies={availableCompanies}
             layout={filterLayout}
             role={role}
@@ -312,6 +321,8 @@ function StudentDirectoryContent() {
               removeSkillFilter={removeSkillFilter}
               selectedEvents={selectedEvents}
               removeEventFilter={removeEventFilter}
+              selectedProjects={selectedProjects}
+              removeProjectFilter={removeProjectFilter}
               selectedCompanies={selectedCompanies}
               removeCompanyFilter={removeCompanyFilter}
               onClearAll={resetAllFilters}

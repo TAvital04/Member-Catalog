@@ -195,6 +195,47 @@ describe("Directory Filtering & Component Rendering", () => {
     expect(elevatedResult.current.filteredStudents).toHaveLength(1);
     expect(elevatedResult.current.filteredStudents[0].id).toBe("std-a");
   });
+
+  test("filters candidates based on participated projects", () => {
+    const studentWithProject: Student = {
+      ...sampleStudent,
+      id: "std-project",
+      projects: [
+        {
+          name: "RSO Smart Campus IoT Beacon",
+          description: "IoT beacon project",
+          startDate: "2023-08-20",
+          current: true,
+          projectLinks: [],
+        },
+      ],
+    };
+    const studentWithoutProject: Student = {
+      ...sampleStudent,
+      id: "std-no-project",
+      projects: [],
+    };
+
+    const { result } = renderHook(() =>
+      useFilteredStudents({
+        students: [studentWithProject, studentWithoutProject],
+        searchQuery: "",
+        selectedMajors: [],
+        selectedSkills: [],
+        selectedGradDates: [],
+        selectedProjects: ["RSO Smart Campus IoT Beacon"],
+        skillFilterMode: "OR",
+        adminMode: false,
+        adminFilterFlagged: null,
+        sortBy: "points",
+        hasFilterPermission: true,
+      })
+    );
+
+    expect(result.current.filteredStudents).toHaveLength(1);
+    expect(result.current.filteredStudents[0].id).toBe("std-project");
+    expect(result.current.availableProjects).toContain("RSO Smart Campus IoT Beacon");
+  });
 });
 
 

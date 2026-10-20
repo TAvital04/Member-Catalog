@@ -21,6 +21,7 @@ interface UseFilteredStudentsProps {
   selectedSkills: string[];
   selectedGradDates: string[];
   selectedEvents?: string[];
+  selectedProjects?: string[];
   selectedCompanies?: string[];
   onlyLeaders?: boolean;
   skillFilterMode: "AND" | "OR";
@@ -37,6 +38,7 @@ export function useFilteredStudents({
   selectedSkills,
   selectedGradDates,
   selectedEvents = [],
+  selectedProjects = [],
   selectedCompanies = [],
   onlyLeaders = false,
   skillFilterMode,
@@ -46,11 +48,12 @@ export function useFilteredStudents({
   hasFilterPermission = true,
 }: UseFilteredStudentsProps) {
   // Memoize unique metadata for filter selection options
-  const { availableMajors, availableSkills, availableGradDates, availableEvents, availableCompanies } = useMemo(() => {
+  const { availableMajors, availableSkills, availableGradDates, availableEvents, availableProjects, availableCompanies } = useMemo(() => {
     const majors = new Set<string>();
     const skills = new Set<string>();
     const gradDates = new Set<string>();
     const eventsSet = new Set<string>();
+    const projectsSet = new Set<string>();
     const companiesSet = new Set<string>();
 
     students.forEach((s) => {
@@ -58,6 +61,9 @@ export function useFilteredStudents({
       s.skills.forEach((sk) => skills.add(sk));
       gradDates.add(s.gradDate);
       (s.events || []).forEach((e) => eventsSet.add(e.title));
+      (s.projects || []).forEach((p) => {
+        if (p.name) projectsSet.add(p.name);
+      });
       (s.workExperiences || []).forEach((w) => {
         if (w.name) companiesSet.add(w.name);
       });
@@ -72,6 +78,7 @@ export function useFilteredStudents({
         return yearA - yearB;
       }),
       availableEvents: Array.from(eventsSet).sort(),
+      availableProjects: Array.from(projectsSet).sort(),
       availableCompanies: Array.from(companiesSet).sort(),
     };
   }, [students]);
@@ -90,8 +97,11 @@ export function useFilteredStudents({
           const matchesCompany = (student.workExperiences || []).some((w) =>
             w.name.toLowerCase().includes(query) || w.title.toLowerCase().includes(query)
           );
+          const matchesProject = (student.projects || []).some((p) =>
+            p.name.toLowerCase().includes(query) || p.description.toLowerCase().includes(query)
+          );
 
-          if (!matchesName && !matchesMajor && !matchesBio && !matchesSkills && !matchesCompany) {
+          if (!matchesName && !matchesMajor && !matchesBio && !matchesSkills && !matchesCompany && !matchesProject) {
             return false;
           }
         }
@@ -119,6 +129,12 @@ export function useFilteredStudents({
             const studentEventTitles = (student.events || []).map((e) => e.title);
             const hasAnyEvent = selectedEvents.some((evtTitle) => studentEventTitles.includes(evtTitle));
             if (!hasAnyEvent) return false;
+          }
+
+          if (selectedProjects.length > 0) {
+            const studentProjectNames = (student.projects || []).map((p) => p.name);
+            const hasAnyProject = selectedProjects.some((projName) => studentProjectNames.includes(projName));
+            if (!hasAnyProject) return false;
           }
 
           if (selectedCompanies.length > 0) {
@@ -260,6 +276,7 @@ export function useFilteredStudents({
     availableSkills,
     availableGradDates,
     availableEvents,
+    availableProjects,
     availableCompanies,
     filteredStudents,
     totalResumes,

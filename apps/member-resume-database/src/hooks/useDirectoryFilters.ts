@@ -35,6 +35,7 @@ export interface DirectoryFilterState {
   selectedSkills: string[];
   selectedGradDates: string[];
   selectedEvents: string[];
+  selectedProjects: string[];
   selectedCompanies: string[];
   skillFilterMode: "AND" | "OR";
   adminFilterFlagged: boolean | null;
@@ -64,6 +65,10 @@ export function useDirectoryFilters() {
 
   const selectedEvents = searchParams.get("events")
     ? searchParams.get("events")!.split(",").filter(Boolean)
+    : [];
+
+  const selectedProjects = searchParams.get("projects")
+    ? searchParams.get("projects")!.split(",").filter(Boolean)
     : [];
 
   const selectedCompanies = searchParams.get("companies")
@@ -156,6 +161,13 @@ export function useDirectoryFilters() {
     [updateQueryParams]
   );
 
+  const setSelectedProjects = useCallback(
+    (projects: string[]) => {
+      updateQueryParams({ projects: projects.length > 0 ? projects.join(",") : null });
+    },
+    [updateQueryParams]
+  );
+
   const setSelectedCompanies = useCallback(
     (companies: string[]) => {
       updateQueryParams({ companies: companies.length > 0 ? companies.join(",") : null });
@@ -203,6 +215,8 @@ export function useDirectoryFilters() {
     setSelectedGradDates,
     selectedEvents,
     setSelectedEvents,
+    selectedProjects,
+    setSelectedProjects,
     selectedCompanies,
     setSelectedCompanies,
     skillFilterMode,

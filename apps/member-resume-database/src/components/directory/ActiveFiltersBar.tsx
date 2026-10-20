@@ -12,6 +12,8 @@ interface ActiveFiltersBarProps {
   removeSkillFilter: (skill: string) => void;
   selectedEvents?: string[];
   removeEventFilter?: (eventTitle: string) => void;
+  selectedProjects?: string[];
+  removeProjectFilter?: (projectName: string) => void;
   selectedCompanies?: string[];
   removeCompanyFilter?: (company: string) => void;
   onClearAll?: () => void;
@@ -26,6 +28,8 @@ export default function ActiveFiltersBar({
   removeSkillFilter,
   selectedEvents = [],
   removeEventFilter,
+  selectedProjects = [],
+  removeProjectFilter,
   selectedCompanies = [],
   removeCompanyFilter,
   onClearAll,
@@ -35,6 +39,7 @@ export default function ActiveFiltersBar({
     selectedGradDates.length > 0 ||
     selectedSkills.length > 0 ||
     selectedEvents.length > 0 ||
+    selectedProjects.length > 0 ||
     selectedCompanies.length > 0;
 
   if (!hasActiveFilters) return null;
@@ -104,6 +109,22 @@ export default function ActiveFiltersBar({
             ×
           </button>
           <Tooltip content={`Event: ${evtTitle}`} position="top" />
+        </span>
+      ))}
+
+      {selectedProjects.map((projectName) => (
+        <span
+          key={projectName}
+          className="relative group/tooltip hover:z-50 flex items-center gap-1 bg-indigo-50 border border-indigo-200 text-indigo-900 font-medium px-2.5 py-0.5 rounded-lg shadow-2xs animate-fade-in cursor-help"
+        >
+          <span>{projectName}</span>
+          <button
+            onClick={() => removeProjectFilter?.(projectName)}
+            className="text-indigo-500 hover:text-red-600 font-bold text-xs cursor-pointer ml-1"
+          >
+            ×
+          </button>
+          <Tooltip content={`Project: ${projectName}`} position="top" />
         </span>
       ))}
 
