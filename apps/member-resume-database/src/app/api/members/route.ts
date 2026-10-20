@@ -206,7 +206,7 @@ export async function GET(request?: Request) {
           id: row.id,
           name: row.fullName || "UCF Member",
           email: row.email || "student@knights.ucf.edu",
-          bio: "",
+          bio: row.bio || "",
           skills: [],
           links: socialLinks,
           education: [

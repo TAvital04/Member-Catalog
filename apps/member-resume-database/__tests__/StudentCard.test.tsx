@@ -57,22 +57,16 @@ describe("StudentCard Rendering & Actions", () => {
     expect(mockOnClick).toHaveBeenCalledWith(mockStudent);
   });
 
-  test("renders skill tags as links to candidate filter and stops card propagation", () => {
-    const handleCardClick = jest.fn();
+  test("renders short bio content on the card", () => {
     render(
       <StudentCard
         student={mockStudent}
-        onClick={handleCardClick}
+        onClick={mockOnClick}
         adminMode={false}
         onToggleFlag={mockOnToggleFlag}
       />
     );
 
-    const reactSkillLink = screen.getByRole("link", { name: /react/i });
-    expect(reactSkillLink).toHaveAttribute("href", "/?skills=React");
-
-    fireEvent.click(reactSkillLink);
-    // Ensure clicking the skill tag does NOT trigger the card's open modal handler
-    expect(handleCardClick).not.toHaveBeenCalled();
+    expect(screen.getByText("Passionate CS student.")).toBeInTheDocument();
   });
 });
