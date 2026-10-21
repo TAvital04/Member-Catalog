@@ -8,15 +8,13 @@ interface ModalTabNavigationProps {
   activeTab: TabType;
   setActiveTab: (tab: TabType) => void;
   role?: "standard" | "sponsor" | "admin";
-  eventCount?: number;
 }
 
 export default function ModalTabNavigation({
   activeTab,
   setActiveTab,
-  eventCount,
 }: ModalTabNavigationProps) {
-  const tabsList = ["projects", "events", "contact"] as const;
+  const tabsList = ["projects", "skills", "events", "contact"] as const;
 
   return (
     <div className="flex border-b border-zinc-800 mb-5 pb-1 text-xs md:text-sm gap-1 md:gap-2 overflow-x-auto no-scrollbar md:overflow-visible pr-12 md:pr-16 shrink-0">
@@ -40,7 +38,8 @@ export default function ModalTabNavigation({
       {tabsList.map((tab) => {
         let label: string = tab;
         if (tab === "projects") label = "Projects";
-        if (tab === "events") label = eventCount !== undefined ? `Events (${eventCount})` : "Events";
+        if (tab === "skills") label = "Skills";
+        if (tab === "events") label = "Events";
         if (tab === "contact") label = "Contact";
 
         return (

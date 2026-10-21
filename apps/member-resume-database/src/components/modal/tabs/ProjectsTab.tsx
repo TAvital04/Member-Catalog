@@ -4,17 +4,22 @@ import React from "react";
 import { ProjectEntry, Student } from "../../../data/students";
 import ProjectCard from "../cards/ProjectCard";
 import { Sparkles } from "lucide-react";
-import { isRsoProject } from "../../../lib/rsoAffiliation";
 
 interface ProjectsTabProps {
   projects: ProjectEntry[];
   formatDateStr: (dateStr: string) => string;
   student?: Student;
+  onSelectProject?: (projectSlugOrId: string) => void;
+  onCloseModal?: () => void;
 }
 
-export default function ProjectsTab({ projects, formatDateStr, student }: ProjectsTabProps) {
-  const rsoCount = projects.filter((p) => isRsoProject(p, student)).length;
-
+export default function ProjectsTab({
+  projects,
+  formatDateStr,
+  student,
+  onSelectProject,
+  onCloseModal,
+}: ProjectsTabProps) {
   return (
     <div className="flex flex-col gap-4 animate-fade-in pt-1 pb-4">
       <div className="flex items-center justify-between py-1">
@@ -22,18 +27,19 @@ export default function ProjectsTab({ projects, formatDateStr, student }: Projec
           <Sparkles size={14} className="text-zinc-400 shrink-0" />
           <span>Highlight Projects ({projects.length})</span>
         </div>
-        {rsoCount > 0 && (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-zinc-850 border border-zinc-800 text-zinc-300">
-            <Sparkles size={11} className="text-zinc-400" />
-            <span>{rsoCount} RSO Affiliated</span>
-          </span>
-        )}
       </div>
 
       {projects.length > 0 ? (
         <div className="grid grid-cols-1 gap-4">
           {projects.map((proj, idx) => (
-            <ProjectCard key={idx} project={proj} formatDateStr={formatDateStr} student={student} />
+            <ProjectCard
+              key={idx}
+              project={proj}
+              formatDateStr={formatDateStr}
+              student={student}
+              onSelectProject={onSelectProject}
+              onCloseModal={onCloseModal}
+            />
           ))}
         </div>
       ) : (

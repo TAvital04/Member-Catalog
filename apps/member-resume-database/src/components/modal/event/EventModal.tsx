@@ -21,7 +21,6 @@ import { IEEEEvent, EventAttendee } from "@/data/events";
 import { Student } from "@/data/students";
 import Avatar from "@/components/common/Avatar";
 import Tooltip from "@/components/common/Tooltip";
-import { studentHasSkill } from "@/lib/skillMatching";
 import { CARD_INTERACTIVE, CARD_BASE, CARD_TITLE_HOVER } from "@/lib/cardStyles";
 import CurrentSponsorsSegment from "@/components/common/CurrentSponsorsSegment";
 import EventSponsorTab from "./tabs/EventSponsorTab";
@@ -364,24 +363,15 @@ export default function EventModal({
                       </div>
                       <div className="flex flex-wrap gap-2">
                         {eventSkills.map((skill, idx) => {
-                          const matchingStudents =
-                            students?.filter((s) => studentHasSkill(s.skills, skill)) || [];
-                          const studentCount = matchingStudents.length;
-
                           return canFilter ? (
                             <Link
                               key={idx}
                               href={`/?skills=${encodeURIComponent(skill)}`}
                               onClick={() => onClose()}
                               className="inline-flex items-center gap-1.5 text-xs font-medium bg-slate-50 hover:bg-amber-50 text-slate-700 hover:text-amber-900 px-3 py-1.5 rounded-full border border-slate-200 hover:border-amber-300 transition-all cursor-pointer group shadow-2xs"
-                              title={`Explore ${studentCount} candidate${studentCount === 1 ? "" : "s"} with ${skill}`}
+                              title={`Filter candidates with skill: ${skill}`}
                             >
                               <span>{skill}</span>
-                              {studentCount > 0 && (
-                                <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-slate-200/80 group-hover:bg-amber-200/80 text-slate-700 group-hover:text-amber-950 transition-colors">
-                                  {studentCount}
-                                </span>
-                              )}
                             </Link>
                           ) : (
                             <span
@@ -389,11 +379,6 @@ export default function EventModal({
                               className="inline-flex items-center gap-1.5 text-xs font-medium bg-slate-50 text-slate-700 px-3 py-1.5 rounded-full border border-slate-200 shadow-2xs select-none"
                             >
                               <span>{skill}</span>
-                              {studentCount > 0 && (
-                                <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-slate-200/80 text-slate-700">
-                                  {studentCount}
-                                </span>
-                              )}
                             </span>
                           );
                         })}
@@ -442,10 +427,6 @@ export default function EventModal({
                   ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {eventSkills.map((skill, idx) => {
-                        const matchingStudents =
-                          students?.filter((s) => studentHasSkill(s.skills, skill)) || [];
-                        const matchingCount = matchingStudents.length;
-
                         return canFilter ? (
                           <Link
                             key={idx}
@@ -462,11 +443,10 @@ export default function EventModal({
                                 Verified Workshop Competency
                               </span>
                             </div>
-                            {matchingCount > 0 && (
-                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 group-hover:bg-amber-100 text-slate-600 group-hover:text-amber-900 transition-colors shrink-0">
-                                {matchingCount} student{matchingCount === 1 ? "" : "s"}
-                              </span>
-                            )}
+                            <ArrowRight
+                              size={14}
+                              className="text-slate-400 group-hover:text-amber-500 group-hover:translate-x-0.5 transition-all shrink-0"
+                            />
                           </Link>
                         ) : (
                           <div
@@ -474,7 +454,7 @@ export default function EventModal({
                             className={`${CARD_BASE} p-3.5 flex items-center justify-between select-none`}
                             title={`Skill: ${skill}`}
                           >
-                            <div className="min-w-0 pr-2">
+                            <div className="min-w-0">
                               <h4 className="text-xs font-bold text-slate-900 truncate">
                                 {skill}
                               </h4>
@@ -482,11 +462,6 @@ export default function EventModal({
                                 Verified Workshop Competency
                               </span>
                             </div>
-                            {matchingCount > 0 && (
-                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 shrink-0">
-                                {matchingCount} student{matchingCount === 1 ? "" : "s"}
-                              </span>
-                            )}
                           </div>
                         );
                       })}

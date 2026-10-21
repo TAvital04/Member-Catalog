@@ -9,6 +9,7 @@
 
 import { db, members, memberResumes, events, eventAttendees, DENSE_CANDIDATES } from "@ieee/db";
 import { Student } from "@/data/students";
+import { SAMPLE_IEEE_EVENTS } from "@/data/events";
 import { calculateCandidatePoints, calculateRecentPoints } from "@/lib/points";
 import { getSeededEventsForCandidate } from "@/lib/eventSeeding";
 import { eq, inArray } from "drizzle-orm";
@@ -117,6 +118,9 @@ export async function GET(request?: Request) {
           .where(inArray(eventAttendees.memberId, memberIds));
 
         for (const row of attendedRows) {
+          const sample = SAMPLE_IEEE_EVENTS.find(
+            (s) => s.id === row.id || s.slug === row.slug || s.title.toLowerCase() === row.title.toLowerCase()
+          );
           const list = attendedEventsMap.get(row.memberId) || [];
           list.push({
             id: row.id,
@@ -126,6 +130,9 @@ export async function GET(request?: Request) {
             startTime: typeof row.startTime === "object" && row.startTime ? row.startTime.toISOString() : String(row.startTime),
             endTime: row.endTime ? (typeof row.endTime === "object" ? row.endTime.toISOString() : String(row.endTime)) : undefined,
             slug: row.slug || undefined,
+            category: sample?.category,
+            skills: sample?.skills || [],
+            pointsAwarded: sample?.pointsAwarded,
           });
           attendedEventsMap.set(row.memberId, list);
         }
@@ -202,12 +209,35 @@ export async function GET(request?: Request) {
             projectLinks: p.projectLinks || [],
           }));
 
+        // Extract skills acquired based on the events that the member attended
+        const eventSkills: string[] = [];
+        candidateEvents.forEach((evt: any) => {
+          if (Array.isArray(evt.skills)) {
+            evt.skills.forEach((sk: string) => {
+              const clean = typeof sk === "string" ? sk.trim() : "";
+              if (clean && !eventSkills.some((s) => s.toLowerCase() === clean.toLowerCase())) {
+                eventSkills.push(clean);
+              }
+            });
+          }
+        });
+
+        // Merge event skills with any explicit resume skills, prioritizing event-verified skills
+        const resumeSkills: string[] = Array.isArray(row.skills) ? row.skills : [];
+        const memberSkills = [...eventSkills];
+        resumeSkills.forEach((sk: string) => {
+          const clean = typeof sk === "string" ? sk.trim() : "";
+          if (clean && !memberSkills.some((s) => s.toLowerCase() === clean.toLowerCase())) {
+            memberSkills.push(clean);
+          }
+        });
+
         return {
           id: row.id,
           name: row.fullName || "UCF Member",
           email: row.email || "student@knights.ucf.edu",
           bio: row.bio || "",
-          skills: [],
+          skills: memberSkills,
           links: socialLinks,
           education: [
             {

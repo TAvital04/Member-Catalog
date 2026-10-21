@@ -4,8 +4,8 @@ import React from "react";
 import Link from "next/link";
 import { Student } from "../../../data/students";
 import CertificationCard from "../cards/CertificationCard";
-import { Code, CheckCircle2, Sparkles } from "lucide-react";
-import { isRsoSkill } from "../../../lib/rsoAffiliation";
+import { Code, CheckCircle2 } from "lucide-react";
+import { isLeadSkill } from "../../../lib/rsoAffiliation";
 
 interface SkillsTabProps {
   student: Student;
@@ -17,7 +17,7 @@ interface SkillsTabProps {
 
 export default function SkillsTab({ student, formatDateStr, onClose, role, canFilter: explicitCanFilter }: SkillsTabProps) {
   const canFilter = explicitCanFilter ?? (role ? role !== "standard" : true);
-  const rsoSkillCount = student.skills.filter((s) => isRsoSkill(s, student)).length;
+  const leadSkillCount = student.skills.filter((s) => isLeadSkill(s, student)).length;
 
   return (
     <div className="flex flex-col gap-6 animate-fade-in pt-1 pb-4">
@@ -29,10 +29,10 @@ export default function SkillsTab({ student, formatDateStr, onClose, role, canFi
             <span>Skills & Tech Stack ({student.skills.length})</span>
           </div>
           <div className="flex items-center gap-2 text-[11px]">
-            {rsoSkillCount > 0 && (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-bold bg-amber-500/15 border border-amber-400/60 text-amber-800 dark:text-amber-300">
-                <Sparkles size={10} className="text-amber-500 fill-current" />
-                <span>Gold = RSO Affiliated</span>
+            {leadSkillCount > 0 && (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-medium text-[11px] bg-zinc-900 border border-amber-400 text-zinc-300">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0"></span>
+                <span>Gold Border = Project / Workshop Lead</span>
               </span>
             )}
             {canFilter && (
@@ -40,31 +40,29 @@ export default function SkillsTab({ student, formatDateStr, onClose, role, canFi
             )}
           </div>
         </div>
-        <div className="flex flex-wrap gap-2 p-4 rounded-xl bg-slate-50/70 dark:bg-zinc-900/60 border border-slate-200/90 dark:border-zinc-800 overflow-visible">
+        <div className="flex flex-wrap gap-2 p-4 rounded-xl bg-zinc-900/60 border border-zinc-800 overflow-visible">
           {student.skills.map((skill) => {
-            const isAffiliated = isRsoSkill(skill, student);
-            const rsoClasses = isAffiliated
-              ? "bg-amber-500/15 border-amber-400/80 text-amber-950 dark:text-amber-200 ring-1 ring-amber-400/30 font-bold hover:bg-amber-500/25 shadow-2xs"
-              : "bg-white dark:bg-zinc-850 border-slate-200/90 dark:border-zinc-800 text-slate-800 dark:text-zinc-200 font-medium hover:border-amber-300 hover:text-amber-900 hover:bg-amber-50/70 shadow-2xs";
+            const isLead = isLeadSkill(skill, student);
+            const chipClasses = isLead
+              ? "bg-zinc-900 hover:bg-zinc-800 border-amber-400 hover:border-amber-300 text-zinc-300 hover:text-zinc-100 font-medium shadow-2xs"
+              : "bg-zinc-900 hover:bg-zinc-800 border-zinc-800 hover:border-zinc-700 text-zinc-300 hover:text-zinc-100 font-medium shadow-2xs";
 
             return canFilter ? (
               <Link
                 key={skill}
                 href={`/?skills=${encodeURIComponent(skill)}`}
                 onClick={() => onClose?.()}
-                className={`text-xs border px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${rsoClasses}`}
-                title={isAffiliated ? `RSO Affiliated Skill: ${skill} (Click to filter)` : `Filter candidates with skill: ${skill}`}
+                className={`text-xs border px-3 py-1.5 rounded-lg transition-all duration-200 active:scale-95 cursor-pointer ${chipClasses}`}
+                title={isLead ? `Project / Workshop Lead Skill: ${skill} (Click to filter)` : `Filter candidates with skill: ${skill}`}
               >
-                {isAffiliated && <Sparkles size={11} className="text-amber-500 shrink-0 fill-current" />}
                 <span>{skill}</span>
               </Link>
             ) : (
               <span
                 key={skill}
-                className={`text-xs border px-3 py-1.5 rounded-lg select-none flex items-center gap-1.5 ${rsoClasses}`}
-                title={isAffiliated ? `RSO Affiliated Skill: ${skill}` : `Skill: ${skill}`}
+                className={`text-xs border px-3 py-1.5 rounded-lg select-none ${chipClasses}`}
+                title={isLead ? `Project / Workshop Lead Skill: ${skill}` : `Skill: ${skill}`}
               >
-                {isAffiliated && <Sparkles size={11} className="text-amber-500 shrink-0 fill-current" />}
                 <span>{skill}</span>
               </span>
             );

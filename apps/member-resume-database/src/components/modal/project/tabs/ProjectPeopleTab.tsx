@@ -26,20 +26,33 @@ export default function ProjectPeopleTab({ participants = [], onSelectMember }: 
 
       {/* Roster Grid */}
       {safeParticipants.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-1">
           {safeParticipants.map((person) => {
             const isDirector = /director|lead|chair/i.test(person.roleTitle);
             return (
               <div
                 key={person.memberId}
-                className="p-4 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between gap-3 shadow-2xs group"
+                role="button"
+                tabIndex={0}
+                onClick={() => onSelectMember?.(person.memberId)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    onSelectMember?.(person.memberId);
+                  }
+                }}
+                aria-label={`View member profile of ${person.name}`}
+                className="p-5 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between gap-3.5 shadow-2xs group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
               >
-                <div className="flex items-start gap-3">
-                  <Avatar name={person.name} size="md" />
+                <div className="flex items-center gap-3.5">
+                  <Avatar name={person.name} size="md" className="shrink-0" />
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-1.5 mb-1">
+                    <h4 className="text-sm font-bold truncate text-slate-900 group-hover:text-amber-800 transition-colors">
+                      {person.name}
+                    </h4>
+                    <div className="flex items-center gap-1.5 mt-1">
                       <span
-                        className={`text-[9.5px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md flex items-center gap-1 ${
+                        className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md inline-flex items-center gap-1 ${
                           isDirector
                             ? "bg-slate-100 text-slate-800 border border-slate-200"
                             : "bg-slate-50 text-slate-700 border border-slate-200 font-medium"
@@ -49,30 +62,12 @@ export default function ProjectPeopleTab({ participants = [], onSelectMember }: 
                         {person.roleTitle}
                       </span>
                     </div>
-
-                    <h4 className={`text-sm font-bold truncate ${CARD_TITLE_HOVER}`}>
-                      {person.name}
-                    </h4>
-
-                    <div className="flex items-center gap-1.5 text-xs text-slate-600 mt-0.5 truncate">
-                      <GraduationCap size={12} className="text-slate-400 shrink-0" />
-                      <span className="truncate">{person.major}</span>
-                    </div>
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
-                  <span className="text-[11px] text-slate-500 truncate">{person.email}</span>
-                  {onSelectMember && (
-                    <button
-                      type="button"
-                      onClick={() => onSelectMember(person.memberId)}
-                      className="text-slate-800 hover:text-slate-900 font-bold flex items-center gap-1 cursor-pointer shrink-0"
-                    >
-                      <span>Resume Profile</span>
-                      <ExternalLink size={11} className="text-slate-400" />
-                    </button>
-                  )}
+                <div className="flex items-center gap-1.5 text-xs text-slate-600 pl-0.5">
+                  <GraduationCap size={13} className="text-slate-400 shrink-0" />
+                  <span className="truncate">{person.major}</span>
                 </div>
               </div>
             );

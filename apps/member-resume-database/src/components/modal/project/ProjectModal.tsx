@@ -116,7 +116,13 @@ export default function ProjectModal({
 
               {/* Tools & Tech Stack Tab */}
               {activeTab === "tools" && (
-                <ProjectToolsTab tools={project.tools} students={students} onClose={onClose} role={role} />
+                <ProjectToolsTab
+                  tools={project.tools}
+                  skills={project.skillsTaught}
+                  students={students}
+                  onClose={onClose}
+                  role={role}
+                />
               )}
 
               {/* Timeline & Roadmap Tab */}
@@ -130,11 +136,6 @@ export default function ProjectModal({
                   participants={project.participants}
                   onSelectMember={onSelectMember}
                 />
-              )}
-
-              {/* Skills Taught Tab */}
-              {activeTab === "skills" && (
-                <ProjectSkillsTab skillsTaught={project.skillsTaught} students={students} onClose={onClose} role={role} />
               )}
 
               {/* Sponsor & Partner Benefits Tab */}

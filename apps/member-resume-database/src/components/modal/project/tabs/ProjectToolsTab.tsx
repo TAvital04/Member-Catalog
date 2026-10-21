@@ -1,15 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { ProjectTool } from "@/data/projects";
 import { Student } from "@/data/students";
-import { studentHasSkill } from "@/lib/skillMatching";
-import { Wrench, ArrowRight, Users } from "lucide-react";
-import { CARD_INTERACTIVE, CARD_BASE } from "@/lib/cardStyles";
+import { Wrench, Sparkles } from "lucide-react";
 
 interface ProjectToolsTabProps {
   tools: ProjectTool[];
+  skills?: string[];
   students?: Student[];
   onClose?: () => void;
   role?: "standard" | "sponsor" | "admin";
@@ -18,128 +17,100 @@ interface ProjectToolsTabProps {
 
 export default function ProjectToolsTab({
   tools = [],
-  students = [],
+  skills = [],
   onClose,
   role,
   canFilter: explicitCanFilter,
 }: ProjectToolsTabProps) {
   const safeTools = Array.isArray(tools) ? tools : [];
+  const safeSkills = Array.isArray(skills) ? skills : [];
   const canFilter = explicitCanFilter ?? (role ? role !== "standard" : true);
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
-
-  const categories = ["All", ...Array.from(new Set(safeTools.map((t) => t.category)))];
-
-  const filteredTools = safeTools.filter((tool) => {
-    if (selectedCategory !== "All" && tool.category !== selectedCategory) return false;
-    return true;
-  });
-
 
   return (
-    <div className="flex flex-col gap-4 animate-fade-in pt-1 pb-4">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider py-1 leading-normal">
-          <Wrench size={14} className="text-amber-500 shrink-0" />
-          <span>Tools, Hardware & Tech Stack ({safeTools.length})</span>
+    <div className="flex flex-col gap-6 animate-fade-in pt-1 pb-4">
+      {/* Tools Section */}
+      <div className="flex flex-col gap-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider py-1 leading-normal">
+            <Wrench size={14} className="text-amber-500 shrink-0" />
+            <span>Tools & Tech Stack ({safeTools.length})</span>
+          </div>
+          {canFilter && (
+            <span className="text-[11px] text-slate-400">Click to filter candidates</span>
+          )}
         </div>
-        <span className="text-[11px] text-slate-400">Click to filter candidates</span>
+
+        {safeTools.length > 0 ? (
+          <div className="flex flex-wrap gap-2 p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+            {safeTools.map((tool, idx) => {
+              const chipClass =
+                "px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all inline-flex items-center";
+              return canFilter ? (
+                <Link
+                  key={idx}
+                  href={`/?skills=${encodeURIComponent(tool.name)}`}
+                  onClick={() => onClose?.()}
+                  className={`${chipClass} bg-white text-slate-800 border-slate-200 hover:border-amber-400 hover:text-amber-900 hover:bg-amber-50/60 shadow-2xs cursor-pointer active:scale-95`}
+                  title={`Filter candidates with tool: ${tool.name}`}
+                >
+                  <span>{tool.name}</span>
+                </Link>
+              ) : (
+                <span
+                  key={idx}
+                  className={`${chipClass} bg-white text-slate-700 border-slate-200 shadow-2xs select-none`}
+                >
+                  {tool.name}
+                </span>
+              );
+            })}
+          </div>
+        ) : (
+          <p className="text-slate-400 text-xs italic pl-1">No tools specified yet.</p>
+        )}
       </div>
 
-      {safeTools.length === 0 ? (
-        <div className="text-center py-12 border border-dashed border-slate-200 rounded-2xl p-6 bg-slate-50/50">
-          <Wrench size={24} className="text-slate-300 mx-auto mb-2" />
-          <h4 className="text-sm font-bold text-slate-800">No Tools Specified</h4>
-          <p className="text-slate-500 text-xs mt-1">Tools and hardware stack have not been specified for this project yet.</p>
-        </div>
-      ) : (
-        <>
-          {/* Category Filter Pills */}
-          <div className="flex flex-wrap items-center gap-1.5 border-b border-slate-200 pb-3">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-2.5 py-1 rounded-lg text-xs transition-all cursor-pointer ${
-                  selectedCategory === cat
-                    ? "bg-slate-200/80 text-slate-900 border border-slate-300 font-bold shadow-2xs"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-50 border border-slate-200 bg-white font-medium"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+      {/* Skills Section */}
+      <div className="flex flex-col gap-3 border-t border-slate-200 pt-5">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider py-1 leading-normal">
+            <Sparkles size={14} className="text-amber-500 shrink-0" />
+            <span>Skills & Engineering Competencies ({safeSkills.length})</span>
           </div>
-
-          {/* Tools Grid */}
-          {filteredTools.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {filteredTools.map((tool, idx) => {
-                const matchingStudents =
-                  students?.filter((s) => studentHasSkill(s.skills, tool.name)) || [];
-                const matchingCount = matchingStudents.length;
-
-                const toolCardContent = (
-                  <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-1">
-                        <h4 className={`text-xs font-bold text-slate-900 ${canFilter ? "group-hover:text-amber-800 transition-colors" : ""} truncate`}>
-                          {tool.name}
-                        </h4>
-                        {canFilter && (
-                          <ArrowRight
-                            size={12}
-                            className="text-slate-300 group-hover:text-amber-500 group-hover:translate-x-0.5 transition-all shrink-0"
-                          />
-                        )}
-                      </div>
-                      <div className="flex items-center justify-between gap-2 mt-0.5">
-                        <span className="text-[10px] text-slate-500 font-mono truncate">{tool.category}</span>
-                        {matchingCount > 0 ? (
-                          <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 ${canFilter ? "group-hover:bg-amber-100 text-slate-600 group-hover:text-amber-900 transition-colors" : "text-slate-600"} shrink-0 flex items-center gap-1`}>
-                            <Users size={10} className={`text-slate-400 ${canFilter ? "group-hover:text-amber-600" : ""}`} />
-                            {matchingCount} candidate{matchingCount === 1 ? "" : "s"}
-                          </span>
-                        ) : (
-                          canFilter && (
-                            <span className="text-[10px] text-slate-400 group-hover:text-amber-700 font-medium shrink-0">
-                              Filter →
-                            </span>
-                          )
-                        )}
-                      </div>
-                    </div>
-                );
-
-                return canFilter ? (
-                  <Link
-                    key={idx}
-                    href={`/?skills=${encodeURIComponent(tool.name)}`}
-                    onClick={() => onClose?.()}
-                    className={`${CARD_INTERACTIVE} p-3.5 flex items-center gap-3 group`}
-                    title={`Filter candidates with skill/tool: ${tool.name}`}
-                  >
-                    {toolCardContent}
-                  </Link>
-                ) : (
-                  <div
-                    key={idx}
-                    className={`${CARD_BASE} p-3.5 flex items-center gap-3 select-none`}
-                    title={`Tool / Tech: ${tool.name}`}
-                  >
-                    {toolCardContent}
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <div className="text-center py-10 border border-dashed border-slate-200 rounded-2xl p-6">
-              <p className="text-slate-500 text-xs">No tools in this category.</p>
-            </div>
+          {canFilter && (
+            <span className="text-[11px] text-slate-400">Click to filter candidates</span>
           )}
-        </>
-      )}
+        </div>
+
+        {safeSkills.length > 0 ? (
+          <div className="flex flex-wrap gap-2 p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+            {safeSkills.map((skill, idx) => {
+              const chipClass =
+                "px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all inline-flex items-center";
+              return canFilter ? (
+                <Link
+                  key={idx}
+                  href={`/?skills=${encodeURIComponent(skill)}`}
+                  onClick={() => onClose?.()}
+                  className={`${chipClass} bg-white text-slate-800 border-slate-200 hover:border-amber-400 hover:text-amber-900 hover:bg-amber-50/60 shadow-2xs cursor-pointer active:scale-95`}
+                  title={`Filter candidates with skill: ${skill}`}
+                >
+                  <span>{skill}</span>
+                </Link>
+              ) : (
+                <span
+                  key={idx}
+                  className={`${chipClass} bg-white text-slate-700 border-slate-200 shadow-2xs select-none`}
+                >
+                  {skill}
+                </span>
+              );
+            })}
+          </div>
+        ) : (
+          <p className="text-slate-400 text-xs italic pl-1">No skills specified yet.</p>
+        )}
+      </div>
     </div>
   );
 }
-

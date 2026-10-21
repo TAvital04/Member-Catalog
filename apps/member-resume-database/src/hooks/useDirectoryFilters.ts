@@ -55,8 +55,9 @@ export function useDirectoryFilters() {
     ? searchParams.get("majors")!.split(",").filter(Boolean)
     : [];
 
-  const selectedSkills = searchParams.get("skills")
-    ? searchParams.get("skills")!.split(",").filter(Boolean)
+  const skillsParam = searchParams.get("skills") || searchParams.get("skill");
+  const selectedSkills = skillsParam
+    ? skillsParam.split(",").filter(Boolean)
     : [];
 
   const selectedGradDates = searchParams.get("grad")

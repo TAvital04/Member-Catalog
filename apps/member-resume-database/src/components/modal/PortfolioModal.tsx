@@ -8,6 +8,7 @@ import StudentUpperInfo from "./StudentUpperInfo";
 import StudentLowerInfo from "./StudentLowerInfo";
 import ModalTabNavigation, { TabType } from "./tabs/ModalTabNavigation";
 import ProjectsTab from "./tabs/ProjectsTab";
+import SkillsTab from "./tabs/SkillsTab";
 import EventsTab from "./tabs/EventsTab";
 import ContactTab from "./tabs/ContactTab";
 import { X, Flag, FlagOff } from "lucide-react";
@@ -19,6 +20,7 @@ interface PortfolioModalProps {
   onResolve?: (student: Student) => void;
   adminMode?: boolean;
   role?: "standard" | "sponsor" | "admin";
+  onSelectProject?: (projectSlugOrId: string) => void;
 }
 
 export default function PortfolioModal({
@@ -28,6 +30,7 @@ export default function PortfolioModal({
   onResolve,
   adminMode,
   role = "admin",
+  onSelectProject,
 }: PortfolioModalProps) {
   const [activeTab, setActiveTab] = useState<TabType>("about");
   const focusTrapRef = useFocusTrap(true, onClose);
@@ -92,14 +95,21 @@ export default function PortfolioModal({
               <StudentUpperInfo student={student} adminMode={adminMode} />
             </div>
             <div className="flex-1 flex flex-col min-h-0 overflow-y-auto overflow-x-hidden pt-5 pb-1 pr-1 w-full">
-              <StudentLowerInfo student={student} adminMode={adminMode} onResolve={onResolve} />
+              <StudentLowerInfo
+                student={student}
+                adminMode={adminMode}
+                onResolve={onResolve}
+                onSelectProject={onSelectProject}
+                onClose={onClose}
+                onSelectTab={setActiveTab}
+              />
             </div>
           </div>
 
           {/* Right Side Panel: Interactive Tabs */}
           <div className="w-full md:w-3/5 p-5 md:p-6 pt-12 md:pt-6 flex flex-col h-full relative z-10 bg-white overflow-hidden">
             {/* Tab Navigation Header */}
-            <ModalTabNavigation activeTab={activeTab} setActiveTab={setActiveTab} role={role} eventCount={student.events?.length} />
+            <ModalTabNavigation activeTab={activeTab} setActiveTab={setActiveTab} role={role} />
 
             {/* Tab Content Display */}
             <div className={`grow pr-1 ${activeTab === "about" ? "overflow-hidden" : "overflow-y-auto"} md:overflow-y-auto`}>
@@ -111,7 +121,14 @@ export default function PortfolioModal({
                       <StudentUpperInfo student={student} adminMode={adminMode} />
                     </div>
                     <div className="flex-1 flex flex-col min-h-0 pt-5 w-full">
-                      <StudentLowerInfo student={student} adminMode={adminMode} onResolve={onResolve} />
+                      <StudentLowerInfo
+                        student={student}
+                        adminMode={adminMode}
+                        onResolve={onResolve}
+                        onSelectProject={onSelectProject}
+                        onClose={onClose}
+                        onSelectTab={setActiveTab}
+                      />
                     </div>
                   </div>
                 </div>
@@ -119,12 +136,33 @@ export default function PortfolioModal({
 
               {/* Projects Panel */}
               {activeTab === "projects" && (
-                <ProjectsTab projects={student.projects} formatDateStr={formatDateStr} student={student} />
+                <ProjectsTab
+                  projects={student.projects}
+                  formatDateStr={formatDateStr}
+                  student={student}
+                  onSelectProject={onSelectProject}
+                  onCloseModal={onClose}
+                />
+              )}
+
+              {/* Skills Panel */}
+              {activeTab === "skills" && (
+                <SkillsTab
+                  student={student}
+                  formatDateStr={formatDateStr}
+                  role={role}
+                  onClose={onClose}
+                />
               )}
 
               {/* Events Panel */}
               {activeTab === "events" && (
-                <EventsTab events={student.events} formatDateStr={formatDateStr} />
+                <EventsTab
+                  events={student.events}
+                  formatDateStr={formatDateStr}
+                  role={role}
+                  onClose={onClose}
+                />
               )}
 
               {/* Recruiter Contact Panel */}

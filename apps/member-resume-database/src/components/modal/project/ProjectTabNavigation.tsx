@@ -21,10 +21,9 @@ export default function ProjectTabNavigation({
     icon: React.ComponentType<{ size?: number; className?: string }>;
   }> = [
     { id: "overview", label: "Overview", icon: FolderGit2 },
-    { id: "tools", label: "Tools", icon: Wrench },
+    { id: "tools", label: "Tools & Skills", ariaLabel: "Tools & Skills Stack", icon: Wrench },
     { id: "timeline", label: "Timeline", icon: Calendar },
     { id: "people", label: "Team", icon: Users },
-    { id: "skills", label: "Skills", ariaLabel: "Skills Taught", icon: Sparkles },
     { id: "sponsor", label: "Sponsor", ariaLabel: "Sponsor Benefits", icon: HeartHandshake },
   ];
 
