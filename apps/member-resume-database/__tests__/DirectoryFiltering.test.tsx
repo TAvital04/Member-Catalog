@@ -137,12 +137,16 @@ describe("Directory Filtering & Component Rendering", () => {
     expect(studentHasSkill(studentSkills, "Altium Designer")).toBe(true);
     expect(studentHasSkill(studentSkills, "altium designer")).toBe(true);
     expect(studentHasSkill(studentSkills, "Altium")).toBe(true);
+    expect(studentHasSkill(studentSkills, "Altium Designer 24")).toBe(true);
     expect(studentHasSkill(studentSkills, "Soldering")).toBe(true);
     expect(studentHasSkill(studentSkills, "SMD Soldering")).toBe(true);
+    expect(studentHasSkill(studentSkills, "Surface Mount SMD Soldering (0603 & QFN Packages)")).toBe(true);
     expect(studentHasSkill(studentSkills, "FreeRTOS")).toBe(true);
     expect(studentHasSkill(studentSkills, "freertos")).toBe(true);
     expect(studentHasSkill(studentSkills, "Embedded C")).toBe(true);
     expect(studentHasSkill(studentSkills, "C")).toBe(true);
+    expect(studentHasSkill(studentSkills, "C++ / C")).toBe(true);
+    expect(studentHasSkill(studentSkills, "Bare-metal C++ on ARM Cortex-M Microcontrollers")).toBe(true);
     expect(studentHasSkill(studentSkills, "Rust")).toBe(false);
   });
 

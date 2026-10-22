@@ -112,7 +112,7 @@ export default function PortfolioModal({
             <ModalTabNavigation activeTab={activeTab} setActiveTab={setActiveTab} role={role} />
 
             {/* Tab Content Display */}
-            <div className={`grow pr-1 ${activeTab === "about" ? "overflow-hidden" : "overflow-y-auto"} md:overflow-y-auto`}>
+            <div className={`grow pr-1 ${activeTab === "about" ? "overflow-hidden" : "overflow-y-auto"} ${activeTab === "contact" ? "flex flex-col" : ""} md:overflow-y-auto`}>
               {/* About / Info Panel (Mobile Only) */}
               {activeTab === "about" && (
                 <div className="flex flex-col h-full md:hidden relative overflow-hidden animate-fade-in">

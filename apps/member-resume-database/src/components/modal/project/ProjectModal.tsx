@@ -30,7 +30,7 @@ import { X } from "lucide-react";
 interface ProjectModalProps {
   project: IEEEProject;
   onClose: () => void;
-  onSelectMember?: (memberId: string) => void;
+  onSelectMember?: (memberId: string, name?: string, email?: string) => void;
   initialTab?: ProjectTabType;
   students?: Student[];
   role?: "standard" | "sponsor" | "admin";
@@ -118,6 +118,16 @@ export default function ProjectModal({
               {activeTab === "tools" && (
                 <ProjectToolsTab
                   tools={project.tools}
+                  skills={project.skillsTaught}
+                  students={students}
+                  onClose={onClose}
+                  role={role}
+                />
+              )}
+
+              {/* Skills & Learning Outcomes Tab */}
+              {activeTab === "skills" && (
+                <ProjectSkillsTab
                   skills={project.skillsTaught}
                   students={students}
                   onClose={onClose}

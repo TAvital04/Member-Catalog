@@ -16,7 +16,7 @@ interface SkillsTabProps {
 }
 
 export default function SkillsTab({ student, formatDateStr, onClose, role, canFilter: explicitCanFilter }: SkillsTabProps) {
-  const canFilter = explicitCanFilter ?? (role ? role !== "standard" : true);
+  const canFilter = explicitCanFilter ?? true;
   const leadSkillCount = student.skills.filter((s) => isLeadSkill(s, student)).length;
 
   return (

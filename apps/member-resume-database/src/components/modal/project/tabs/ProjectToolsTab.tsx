@@ -45,7 +45,7 @@ export default function ProjectToolsTab({
             {safeTools.map((tool, idx) => {
               const chipClass =
                 "px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all inline-flex items-center";
-              return canFilter ? (
+              return (
                 <Link
                   key={idx}
                   href={`/?skills=${encodeURIComponent(tool.name)}`}
@@ -55,13 +55,6 @@ export default function ProjectToolsTab({
                 >
                   <span>{tool.name}</span>
                 </Link>
-              ) : (
-                <span
-                  key={idx}
-                  className={`${chipClass} bg-white text-slate-700 border-slate-200 shadow-2xs select-none`}
-                >
-                  {tool.name}
-                </span>
               );
             })}
           </div>
@@ -77,9 +70,7 @@ export default function ProjectToolsTab({
             <Sparkles size={14} className="text-amber-500 shrink-0" />
             <span>Skills & Engineering Competencies ({safeSkills.length})</span>
           </div>
-          {canFilter && (
-            <span className="text-[11px] text-slate-400">Click to filter candidates</span>
-          )}
+          <span className="text-[11px] text-slate-400">Click to filter candidates</span>
         </div>
 
         {safeSkills.length > 0 ? (
@@ -87,7 +78,7 @@ export default function ProjectToolsTab({
             {safeSkills.map((skill, idx) => {
               const chipClass =
                 "px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all inline-flex items-center";
-              return canFilter ? (
+              return (
                 <Link
                   key={idx}
                   href={`/?skills=${encodeURIComponent(skill)}`}
@@ -97,13 +88,6 @@ export default function ProjectToolsTab({
                 >
                   <span>{skill}</span>
                 </Link>
-              ) : (
-                <span
-                  key={idx}
-                  className={`${chipClass} bg-white text-slate-700 border-slate-200 shadow-2xs select-none`}
-                >
-                  {skill}
-                </span>
               );
             })}
           </div>

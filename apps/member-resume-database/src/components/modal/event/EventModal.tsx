@@ -150,12 +150,12 @@ export default function EventModal({
     <div className="flex flex-col gap-5">
       {/* Category & Partner Badges */}
       <div className="flex items-center justify-between gap-2">
-        <span className="bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+        <span className="bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">
           {event.category}
         </span>
         {event.partner && (
-          <span className="bg-amber-50 text-amber-900 border border-amber-200/60 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1">
-            <Building2 size={11} className="text-amber-600" />
+          <span className="bg-amber-50 text-amber-900 border border-amber-200/60 text-[10px] font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider flex items-center gap-1.5">
+            <Building2 size={12} className="text-amber-600" />
             <span>Partner: {event.partner}</span>
           </span>
         )}
@@ -362,26 +362,17 @@ export default function EventModal({
                         )}
                       </div>
                       <div className="flex flex-wrap gap-2">
-                        {eventSkills.map((skill, idx) => {
-                          return canFilter ? (
-                            <Link
-                              key={idx}
-                              href={`/?skills=${encodeURIComponent(skill)}`}
-                              onClick={() => onClose()}
-                              className="inline-flex items-center gap-1.5 text-xs font-medium bg-slate-50 hover:bg-amber-50 text-slate-700 hover:text-amber-900 px-3 py-1.5 rounded-full border border-slate-200 hover:border-amber-300 transition-all cursor-pointer group shadow-2xs"
-                              title={`Filter candidates with skill: ${skill}`}
-                            >
-                              <span>{skill}</span>
-                            </Link>
-                          ) : (
-                            <span
-                              key={idx}
-                              className="inline-flex items-center gap-1.5 text-xs font-medium bg-slate-50 text-slate-700 px-3 py-1.5 rounded-full border border-slate-200 shadow-2xs select-none"
-                            >
-                              <span>{skill}</span>
-                            </span>
-                          );
-                        })}
+                        {eventSkills.map((skill, idx) => (
+                          <Link
+                            key={idx}
+                            href={`/?skills=${encodeURIComponent(skill)}`}
+                            onClick={() => onClose()}
+                            className="inline-flex items-center gap-1.5 text-xs font-medium bg-slate-50 hover:bg-amber-50 text-slate-700 hover:text-amber-900 px-3 py-1.5 rounded-full border border-slate-200 hover:border-amber-300 transition-all cursor-pointer group shadow-2xs"
+                            title={`Filter candidates with skill: ${skill}`}
+                          >
+                            <span>{skill}</span>
+                          </Link>
+                        ))}
                       </div>
                     </div>
                   )}
@@ -426,45 +417,28 @@ export default function EventModal({
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {eventSkills.map((skill, idx) => {
-                        return canFilter ? (
-                          <Link
-                            key={idx}
-                            href={`/?skills=${encodeURIComponent(skill)}`}
-                            onClick={() => onClose()}
-                            className={`${CARD_INTERACTIVE} p-3.5 flex items-center justify-between group`}
-                            title={`Filter candidates with skill: ${skill}`}
-                          >
-                            <div className="min-w-0 pr-2">
-                              <h4 className={`text-xs font-bold truncate ${CARD_TITLE_HOVER}`}>
-                                {skill}
-                              </h4>
-                              <span className="text-[10px] text-slate-500 mt-0.5 block">
-                                Verified Workshop Competency
-                              </span>
-                            </div>
-                            <ArrowRight
-                              size={14}
-                              className="text-slate-400 group-hover:text-amber-500 group-hover:translate-x-0.5 transition-all shrink-0"
-                            />
-                          </Link>
-                        ) : (
-                          <div
-                            key={idx}
-                            className={`${CARD_BASE} p-3.5 flex items-center justify-between select-none`}
-                            title={`Skill: ${skill}`}
-                          >
-                            <div className="min-w-0">
-                              <h4 className="text-xs font-bold text-slate-900 truncate">
-                                {skill}
-                              </h4>
-                              <span className="text-[10px] text-slate-500 mt-0.5 block">
-                                Verified Workshop Competency
-                              </span>
-                            </div>
+                      {eventSkills.map((skill, idx) => (
+                        <Link
+                          key={idx}
+                          href={`/?skills=${encodeURIComponent(skill)}`}
+                          onClick={() => onClose()}
+                          className={`${CARD_INTERACTIVE} p-3.5 flex items-center justify-between group cursor-pointer`}
+                          title={`Filter candidates with skill: ${skill}`}
+                        >
+                          <div className="min-w-0 pr-2">
+                            <h4 className={`text-xs font-bold truncate ${CARD_TITLE_HOVER}`}>
+                              {skill}
+                            </h4>
+                            <span className="text-[10px] text-slate-500 mt-0.5 block">
+                              Verified Workshop Competency
+                            </span>
                           </div>
-                        );
-                      })}
+                          <ArrowRight
+                            size={14}
+                            className="text-slate-400 group-hover:text-amber-500 group-hover:translate-x-0.5 transition-all shrink-0"
+                          />
+                        </Link>
+                      ))}
                     </div>
                   )}
                 </div>

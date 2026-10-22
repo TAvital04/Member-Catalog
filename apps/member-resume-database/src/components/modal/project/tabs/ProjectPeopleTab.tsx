@@ -8,7 +8,7 @@ import { CARD_TITLE_HOVER } from "@/lib/cardStyles";
 
 interface ProjectPeopleTabProps {
   participants: ProjectParticipant[];
-  onSelectMember?: (memberId: string) => void;
+  onSelectMember?: (memberId: string, name?: string, email?: string) => void;
 }
 
 export default function ProjectPeopleTab({ participants = [], onSelectMember }: ProjectPeopleTabProps) {
@@ -34,11 +34,11 @@ export default function ProjectPeopleTab({ participants = [], onSelectMember }: 
                 key={person.memberId}
                 role="button"
                 tabIndex={0}
-                onClick={() => onSelectMember?.(person.memberId)}
+                onClick={() => onSelectMember?.(person.memberId, person.name, person.email)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
-                    onSelectMember?.(person.memberId);
+                    onSelectMember?.(person.memberId, person.name, person.email);
                   }
                 }}
                 aria-label={`View member profile of ${person.name}`}
@@ -50,15 +50,9 @@ export default function ProjectPeopleTab({ participants = [], onSelectMember }: 
                     <h4 className="text-sm font-bold truncate text-slate-900 group-hover:text-amber-800 transition-colors">
                       {person.name}
                     </h4>
-                    <div className="flex items-center gap-1.5 mt-1">
-                      <span
-                        className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md inline-flex items-center gap-1 ${
-                          isDirector
-                            ? "bg-slate-100 text-slate-800 border border-slate-200"
-                            : "bg-slate-50 text-slate-700 border border-slate-200 font-medium"
-                        }`}
-                      >
-                        {isDirector && <Crown size={10} className="text-slate-400" />}
+                    <div className="flex items-center gap-1.5 mt-0.5 text-xs min-w-0">
+                      {isDirector && <Crown size={12} className="text-amber-500 shrink-0" />}
+                      <span className={`truncate ${isDirector ? "font-semibold text-slate-700" : "font-medium text-slate-600"}`}>
                         {person.roleTitle}
                       </span>
                     </div>

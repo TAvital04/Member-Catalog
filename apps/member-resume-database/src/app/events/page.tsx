@@ -17,7 +17,6 @@ import {
   Users,
   Search,
   X,
-  ChevronRight,
   Filter,
   Sparkles,
   Award,
@@ -33,7 +32,7 @@ import EventModal from "@/components/modal/event/EventModal";
 import PortfolioModal from "@/components/modal/PortfolioModal";
 import { IEEEEvent, EventCategory, SAMPLE_IEEE_EVENTS } from "@/data/events";
 import { Student } from "@/data/students";
-import { CARD_INTERACTIVE, CARD_TITLE_HOVER, CARD_ACTION_HOVER } from "@/lib/cardStyles";
+import { CARD_INTERACTIVE, CARD_TITLE_HOVER } from "@/lib/cardStyles";
 
 function IEEEEventsContent() {
   const { theme, toggleTheme } = useThemeManager();
@@ -140,12 +139,42 @@ function IEEEEventsContent() {
   }, [eventsList, selectedCategory, timeFilter, searchQuery, now]);
 
   // Handle member click inside event modal
-  const handleSelectMember = (memberId: string) => {
-    const student = students.find(
-      (s) => s.id === memberId || s.email.toLowerCase().includes(memberId.toLowerCase())
-    );
-    if (student) {
-      setSelectedMemberStudent(student);
+  const handleSelectMember = (memberId?: string, name?: string, email?: string) => {
+    if (!students || students.length === 0) return;
+
+    const cleanId = (memberId || "").toLowerCase().trim();
+    const cleanName = (name || "").toLowerCase().trim();
+    const cleanEmail = (email || "").toLowerCase().trim();
+
+    // 1. Direct ID match
+    let match = cleanId ? students.find((s) => s.id.toLowerCase() === cleanId) : undefined;
+
+    // 2. Direct Email match
+    if (!match && cleanEmail) {
+      match = students.find((s) => s.email.toLowerCase() === cleanEmail);
+    }
+
+    // 3. Direct Name match
+    if (!match && cleanName) {
+      match = students.find((s) => s.name.toLowerCase() === cleanName);
+    }
+
+    // 4. Slug / heuristic match on memberId
+    if (!match && cleanId) {
+      const slugName = cleanId.replace(/^mem-/, "").replace(/^(cand|candidate)-/, "").replace(/[-_]/g, " ");
+      match = students.find((s) => {
+        const sName = s.name.toLowerCase();
+        return (
+          sName === slugName ||
+          sName.includes(slugName) ||
+          slugName.includes(sName) ||
+          s.email.toLowerCase().includes(slugName.replace(/\s+/g, ""))
+        );
+      });
+    }
+
+    if (match) {
+      setSelectedMemberStudent(match);
     }
   };
 
@@ -309,12 +338,12 @@ function IEEEEventsContent() {
                   <div className="space-y-3.5">
                     {/* Category & Partner Badge Header */}
                     <div className="flex items-center justify-between gap-2">
-                      <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 border border-slate-200">
+                      <span className="text-[10px] font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
                         {event.category}
                       </span>
                       {event.partner && (
-                        <span className="text-[10px] font-semibold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200/60 flex items-center gap-1">
-                          <Building2 size={11} />
+                        <span className="text-[10px] font-semibold text-amber-800 bg-amber-50 px-3.5 py-1.5 rounded-full border border-amber-200/60 flex items-center gap-1.5">
+                          <Building2 size={12} />
                           <span className="truncate max-w-[130px]">{event.partner}</span>
                         </span>
                       )}
@@ -348,7 +377,7 @@ function IEEEEventsContent() {
                     </p>
                   </div>
 
-                  {/* Card Footer: Attendees & Action */}
+                  {/* Card Footer: Attendees */}
                   <div className="pt-3.5 border-t border-slate-100 flex items-center justify-between">
                     {/* Attendee Counter */}
                     <div className="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
@@ -358,12 +387,6 @@ function IEEEEventsContent() {
                           ? `${attendees.length} member${attendees.length === 1 ? "" : "s"}`
                           : "Open attendance"}
                       </span>
-                    </div>
-
-                    {/* Action Arrow */}
-                    <div className={`flex items-center gap-1 text-xs font-semibold ${CARD_ACTION_HOVER}`}>
-                      <span>Details</span>
-                      <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
                     </div>
                   </div>
                 </div>

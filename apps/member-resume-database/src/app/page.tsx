@@ -105,12 +105,15 @@ function StudentDirectoryContent() {
     }
   };
 
-  // Clean up URL filters if standard user navigates to a URL containing filter parameters
+  // If standard user navigates with a skill filter (e.g. clicked from a portfolio modal), automatically activate sponsor access
   React.useEffect(() => {
     if (!hasFilterPermission) {
+      if (selectedSkills.length > 0) {
+        setRole("sponsor");
+        return;
+      }
       if (
         selectedMajors.length > 0 ||
-        selectedSkills.length > 0 ||
         selectedGradDates.length > 0 ||
         selectedEvents.length > 0 ||
         selectedProjects.length > 0 ||
@@ -119,7 +122,7 @@ function StudentDirectoryContent() {
         resetAllFilters();
       }
     }
-  }, [hasFilterPermission, selectedMajors, selectedSkills, selectedGradDates, selectedEvents, selectedProjects, selectedCompanies, resetAllFilters]);
+  }, [hasFilterPermission, selectedMajors, selectedSkills, selectedGradDates, selectedEvents, selectedProjects, selectedCompanies, resetAllFilters, setRole]);
 
   // Keyboard shortcut Ctrl+K to search
   React.useEffect(() => {
@@ -132,6 +135,9 @@ function StudentDirectoryContent() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
+
+  // Compute effective filter permission so skill queries from URL or navigation take effect immediately
+  const effectiveFilterPermission = hasFilterPermission || selectedSkills.length > 0;
 
   // Filter & sort calculations hook
   const {
@@ -159,7 +165,7 @@ function StudentDirectoryContent() {
     adminMode,
     adminFilterFlagged,
     sortBy,
-    hasFilterPermission,
+    hasFilterPermission: effectiveFilterPermission,
   });
 
   // Moderation & Flagging dialog manager hook

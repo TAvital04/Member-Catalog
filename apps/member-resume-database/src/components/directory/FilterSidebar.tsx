@@ -10,6 +10,7 @@ import EventsFilter from "./filters/EventsFilter";
 import ProjectsFilter from "./filters/ProjectsFilter";
 import AdminFilters from "./filters/AdminFilters";
 import SponsorLockPanel from "./filters/SponsorLockPanel";
+import { isSkillMatch } from "@/lib/skillMatching";
 
 interface FilterSidebarProps {
   selectedMajors: string[];
@@ -90,8 +91,10 @@ export default function FilterSidebar({
   };
 
   const handleSkillToggle = (skill: string) => {
-    if (selectedSkills.includes(skill)) {
-      setSelectedSkills(selectedSkills.filter((s) => s !== skill));
+    if (selectedSkills.some((s) => s.toLowerCase() === skill.toLowerCase() || isSkillMatch(skill, s))) {
+      setSelectedSkills(
+        selectedSkills.filter((s) => s.toLowerCase() !== skill.toLowerCase() && !isSkillMatch(skill, s))
+      );
     } else {
       setSelectedSkills([...selectedSkills, skill]);
     }

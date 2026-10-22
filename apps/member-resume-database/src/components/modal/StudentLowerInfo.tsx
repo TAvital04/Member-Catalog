@@ -20,6 +20,7 @@ const Linkedin = ({ size = 18, ...props }: React.SVGProps<SVGSVGElement> & { siz
   </svg>
 );
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { findMatchingIeeeProject, isLeadSkill } from "../../lib/rsoAffiliation";
 
@@ -212,16 +213,19 @@ export default function StudentLowerInfo({
               {student.skills.slice(0, 6).map((skill, idx) => {
                 const isLead = isLeadSkill(skill, student);
                 return (
-                  <span
+                  <Link
                     key={idx}
-                    className={`px-2 py-0.5 rounded-lg text-[10.5px] bg-zinc-900 text-zinc-300 font-medium ${
+                    href={`/?skills=${encodeURIComponent(skill)}`}
+                    onClick={() => onClose?.()}
+                    className={`px-2 py-0.5 rounded-lg text-[10.5px] bg-zinc-900 text-zinc-300 hover:text-zinc-100 font-medium transition-all active:scale-95 cursor-pointer shadow-2xs ${
                       isLead
-                        ? "border border-amber-400"
-                        : "border border-zinc-800"
+                        ? "border border-amber-400 hover:border-amber-300 hover:bg-zinc-850"
+                        : "border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-850"
                     }`}
+                    title={isLead ? `Project / Workshop Lead Skill: ${skill} (Click to filter)` : `Filter candidates with skill: ${skill}`}
                   >
                     <span>{skill}</span>
-                  </span>
+                  </Link>
                 );
               })}
               {student.skills.length > 6 && (

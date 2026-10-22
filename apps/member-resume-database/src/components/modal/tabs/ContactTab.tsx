@@ -103,11 +103,12 @@ export default function ContactTab({ student, role }: ContactTabProps) {
   }
 
   return (
-    <div className="flex flex-col gap-4 animate-fade-in">
-      <div className="flex items-center flex-wrap gap-x-1.5 gap-y-1 text-zinc-300 font-semibold text-xs uppercase tracking-wider mb-2">
-        <Mail size={13} className="text-amber-500 shrink-0" />
-        <span>Send Message to</span>
-        <TruncatedText text={student.name} maxLength={35} />
+    <div className="flex flex-col justify-center min-h-full my-auto w-full max-w-lg mx-auto py-2 animate-fade-in">
+      <div className="flex items-center justify-between py-1 mb-2">
+        <div className="flex items-center gap-2 text-slate-900 dark:text-zinc-200 font-bold text-xs uppercase tracking-wider leading-normal min-w-0">
+          <Mail size={14} className="text-zinc-400 shrink-0" />
+          <span className="truncate">Send Message to {student.name}</span>
+        </div>
       </div>
 
       <form onSubmit={handleContactSubmit} className="flex flex-col gap-4">

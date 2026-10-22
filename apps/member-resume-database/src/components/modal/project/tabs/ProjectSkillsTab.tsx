@@ -84,40 +84,30 @@ export default function ProjectSkillsTab({
                       Verified Chapter Competency
                     </span>
                     {matchingCount > 0 ? (
-                      <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 ${canFilter ? "group-hover:bg-amber-100 text-slate-600 group-hover:text-amber-900 transition-colors" : "text-slate-600"} shrink-0 flex items-center gap-1`}>
-                        <Users size={10} className={`text-slate-400 ${canFilter ? "group-hover:text-amber-600" : ""}`} />
+                      <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 group-hover:bg-amber-100 text-slate-600 group-hover:text-amber-900 transition-colors shrink-0 flex items-center gap-1">
+                        <Users size={10} className="text-slate-400 group-hover:text-amber-600" />
                         {matchingCount} candidate{matchingCount === 1 ? "" : "s"}
                       </span>
                     ) : (
-                      canFilter && (
-                        <span className="text-[10px] text-slate-400 group-hover:text-amber-700 font-medium shrink-0">
-                          Filter →
-                        </span>
-                      )
+                      <span className="text-[10px] text-slate-400 group-hover:text-amber-700 font-medium shrink-0">
+                        Filter →
+                      </span>
                     )}
                   </div>
                 </div>
               </>
             );
 
-            return canFilter ? (
+            return (
               <Link
                 key={idx}
                 href={`/?skills=${encodeURIComponent(skill)}`}
                 onClick={() => onClose?.()}
-                className={`${CARD_INTERACTIVE} p-3.5 flex items-start gap-2.5 group`}
+                className={`${CARD_INTERACTIVE} p-3.5 flex items-start gap-2.5 group cursor-pointer`}
                 title={`Filter candidates with skill: ${skill}`}
               >
                 {cardContent}
               </Link>
-            ) : (
-              <div
-                key={idx}
-                className={`${CARD_BASE} p-3.5 flex items-start gap-2.5 select-none`}
-                title={`Skill: ${skill}`}
-              >
-                {cardContent}
-              </div>
             );
           })}
         </div>

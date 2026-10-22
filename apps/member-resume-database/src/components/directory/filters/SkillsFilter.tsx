@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Search } from "lucide-react";
 import CustomCheckbox from "../../common/CustomCheckbox";
 import Tooltip from "../../common/Tooltip";
+import { isSkillMatch } from "@/lib/skillMatching";
 
 interface SkillsFilterProps {
   availableSkills: string[];
@@ -38,7 +39,9 @@ export default function SkillsFilter({
       {/* Flat Skill Tag Chips View - Vertical Scrolling Only */}
       <div className="flex flex-wrap gap-1.5 max-h-44 overflow-y-auto overflow-x-hidden pr-1 py-1 w-full">
         {filteredSkills.map((skill) => {
-          const isSelected = selectedSkills.includes(skill);
+          const isSelected = selectedSkills.some(
+            (s) => s.toLowerCase() === skill.toLowerCase() || isSkillMatch(skill, s)
+          );
           return (
             <button
               key={skill}

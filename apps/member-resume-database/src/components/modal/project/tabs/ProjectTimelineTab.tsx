@@ -16,22 +16,22 @@ export default function ProjectTimelineTab({ timeline = [] }: ProjectTimelineTab
     switch (status) {
       case "completed":
         return (
-          <span className="px-2 py-0.5 rounded-full text-[9.5px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-800 border border-emerald-200/70 flex items-center gap-1">
-            <CheckCircle2 size={10} className="text-emerald-600" />
+          <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-800 border border-emerald-200/70 flex items-center gap-1.5">
+            <CheckCircle2 size={11} className="text-emerald-600" />
             Completed
           </span>
         );
       case "in_progress":
         return (
-          <span className="px-2 py-0.5 rounded-full text-[9.5px] font-bold uppercase tracking-wider bg-slate-100 text-slate-800 border border-slate-300 flex items-center gap-1">
-            <CircleDot size={10} className="text-slate-600" />
+          <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-slate-100 text-slate-800 border border-slate-300 flex items-center gap-1.5">
+            <CircleDot size={11} className="text-slate-600" />
             In Progress
           </span>
         );
       case "upcoming":
         return (
-          <span className="px-2 py-0.5 rounded-full text-[9.5px] font-bold uppercase tracking-wider bg-slate-50 text-slate-600 border border-slate-200 flex items-center gap-1">
-            <Clock size={10} className="text-slate-400" />
+          <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-slate-50 text-slate-600 border border-slate-200 flex items-center gap-1.5">
+            <Clock size={11} className="text-slate-400" />
             Upcoming
           </span>
         );

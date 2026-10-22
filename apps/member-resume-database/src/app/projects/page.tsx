@@ -127,10 +127,49 @@ function IEEEProjectsContent() {
     });
   }, [projects, selectedCategory, searchQuery]);
 
-  const handleSelectMember = (memberId: string) => {
-    const student = students.find((s) => s.id === memberId || s.email.includes(memberId));
-    if (student) {
-      setSelectedMemberStudent(student);
+  const handleSelectMember = (memberId?: string, name?: string, email?: string) => {
+    if (!students || students.length === 0) return;
+
+    const cleanId = (memberId || "").toLowerCase().trim();
+    const cleanName = (name || "").toLowerCase().trim();
+    const cleanEmail = (email || "").toLowerCase().trim();
+
+    // 1. Direct ID match
+    let match = cleanId ? students.find((s) => s.id.toLowerCase() === cleanId) : undefined;
+
+    // 2. Direct Email match
+    if (!match && cleanEmail) {
+      match = students.find((s) => s.email.toLowerCase() === cleanEmail);
+    }
+
+    // 3. Direct Name match
+    if (!match && cleanName) {
+      match = students.find((s) => s.name.toLowerCase() === cleanName);
+    }
+
+    // 4. Slug / heuristic match on memberId (e.g. "mem-elena-rostova" -> "elena rostova")
+    if (!match && cleanId) {
+      const slugName = cleanId.replace(/^mem-/, "").replace(/^(cand|candidate)-/, "").replace(/[-_]/g, " ");
+      match = students.find((s) => {
+        const sName = s.name.toLowerCase();
+        return (
+          sName === slugName ||
+          sName.includes(slugName) ||
+          slugName.includes(sName) ||
+          s.email.toLowerCase().includes(slugName.replace(/\s+/g, ""))
+        );
+      });
+    }
+
+    // 5. Fallback substring match
+    if (!match && cleanId) {
+      match = students.find(
+        (s) => s.email.toLowerCase().includes(cleanId) || cleanId.includes(s.email.toLowerCase())
+      );
+    }
+
+    if (match) {
+      setSelectedMemberStudent(match);
     }
   };
 
@@ -218,20 +257,20 @@ function IEEEProjectsContent() {
                 <div className="flex flex-col gap-4">
                   {/* Header Badges */}
                   <div className="flex items-center justify-between gap-2">
-                    <span className="bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                    <span className="bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">
                       {project.category}
                     </span>
                     <span
-                      className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1 ${
+                      className={`text-[10px] font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider flex items-center gap-1.5 ${
                         project.status === "Completed"
                           ? "bg-emerald-50 text-emerald-800 border border-emerald-200/70"
                           : "bg-slate-100 text-slate-700 border border-slate-200"
                       }`}
                     >
                       {project.status === "Completed" ? (
-                        <CheckCircle2 size={10} className="text-emerald-600" />
+                        <CheckCircle2 size={11} className="text-emerald-600" />
                       ) : (
-                        <Clock size={10} className="text-slate-400" />
+                        <Clock size={11} className="text-slate-400" />
                       )}
                       {project.status}
                     </span>
@@ -264,29 +303,19 @@ function IEEEProjectsContent() {
                         Key Tech Stack ({project.tools.length})
                       </span>
                       <div className="flex flex-wrap gap-1.5">
-                        {project.tools.slice(0, 4).map((tool, idx) =>
-                          hasFilterPermission ? (
-                            <Link
-                              key={idx}
-                              href={`/?skills=${encodeURIComponent(tool.name)}`}
-                              onClick={(e) => e.stopPropagation()}
-                              className="px-2 py-0.5 rounded-lg bg-slate-50 border border-slate-200 hover:border-amber-300 hover:text-amber-900 hover:bg-amber-50/70 text-[10.5px] font-mono font-medium text-slate-700 transition-colors cursor-pointer inline-block"
-                              title={`Filter candidates with skill/tool: ${tool.name}`}
-                            >
-                              {tool.name}
-                            </Link>
-                          ) : (
-                            <span
-                              key={idx}
-                              className="px-2 py-0.5 rounded-lg bg-slate-50 border border-slate-200 text-[10.5px] font-mono font-medium text-slate-700 inline-block select-none"
-                              title={`Tool / Tech: ${tool.name}`}
-                            >
-                              {tool.name}
-                            </span>
-                          )
-                        )}
+                        {project.tools.slice(0, 4).map((tool, idx) => (
+                          <Link
+                            key={idx}
+                            href={`/?skills=${encodeURIComponent(tool.name)}`}
+                            onClick={(e) => e.stopPropagation()}
+                            className="px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 hover:border-amber-300 hover:text-amber-900 hover:bg-amber-50/70 text-[10.5px] font-mono font-medium text-slate-700 transition-colors cursor-pointer inline-block"
+                            title={`Filter candidates with skill/tool: ${tool.name}`}
+                          >
+                            {tool.name}
+                          </Link>
+                        ))}
                         {project.tools.length > 4 && (
-                          <span className="px-2 py-0.5 rounded-lg bg-slate-50 border border-slate-200 text-[10px] text-slate-500">
+                          <span className="px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 text-[10px] text-slate-500">
                             +{project.tools.length - 4} more
                           </span>
                         )}
@@ -320,7 +349,7 @@ function IEEEProjectsContent() {
                             key={part.memberId}
                             onClick={(e) => {
                               e.stopPropagation();
-                              handleSelectMember(part.memberId);
+                              handleSelectMember(part.memberId, part.name, part.email);
                             }}
                             className="flex items-center gap-2 p-1.5 px-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium cursor-pointer hover:border-slate-300 transition-colors"
                           >
@@ -407,8 +436,8 @@ function IEEEProjectsContent() {
             url.searchParams.delete("slug");
             window.history.pushState(null, "", url.pathname + (url.search ? url.search : ""));
           }}
-          onSelectMember={(memberId) => {
-            handleSelectMember(memberId);
+          onSelectMember={(memberId, name, email) => {
+            handleSelectMember(memberId, name, email);
           }}
         />
       )}

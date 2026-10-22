@@ -30,7 +30,7 @@ describe("ProjectModal Component & Interactive Tabs", () => {
     // Click Tools Tab
     const toolsTabButton = screen.getByRole("button", { name: /tools/i });
     fireEvent.click(toolsTabButton);
-    expect(screen.getByText(/Tools, Hardware & Tech Stack/i)).toBeInTheDocument();
+    expect(screen.getByText(/Tools & Tech Stack/i)).toBeInTheDocument();
     expect(screen.getByText("STM32F4 Cortex-M4")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /STM32F4 Cortex-M4/i })).toHaveAttribute(
       "href",
@@ -48,18 +48,8 @@ describe("ProjectModal Component & Interactive Tabs", () => {
     expect(screen.getByText(/Student Team & Contributors/i)).toBeInTheDocument();
     expect(screen.getByText("Alex Rivera")).toBeInTheDocument();
 
-    // Click Skills Taught Tab
-    const skillsTabButton = screen.getByRole("button", { name: /skills taught/i });
-    fireEvent.click(skillsTabButton);
-    expect(screen.getByText(/Skills Taught & Engineering Competencies/i)).toBeInTheDocument();
-    expect(screen.getByText(/Custom 4-Layer PCB Design in KiCAD/i)).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Custom 4-Layer PCB Design in KiCAD/i })).toHaveAttribute(
-      "href",
-      expect.stringContaining("/?skills=")
-    );
-
     // Click Sponsor Benefits Tab
-    const sponsorTabButton = screen.getByRole("button", { name: /sponsor benefits/i });
+    const sponsorTabButton = screen.getByRole("button", { name: /sponsor/i });
     fireEvent.click(sponsorTabButton);
     expect(screen.getByText(/Sponsorship Opportunities & Partner Benefits/i)).toBeInTheDocument();
     expect(screen.getByText(/Branding on Robot Carbon-Fiber Chassis/i)).toBeInTheDocument();
@@ -77,5 +67,27 @@ describe("ProjectModal Component & Interactive Tabs", () => {
     expect(screen.getByPlaceholderText(/e\.g\. Dr\. Jane Smith/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/contact@company\.com/i)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Send Sponsorship Inquiry/i })).toBeInTheDocument();
+  });
+
+  test("renders tools and skills as clickable filter links even in standard role", () => {
+    render(
+      <ProjectModal
+        project={sampleProject}
+        onClose={jest.fn()}
+        initialTab="tools"
+        role="standard"
+      />
+    );
+
+    // Tools are clickable links to member filtering
+    const stm32Link = screen.getByRole("link", { name: /STM32F4 Cortex-M4/i });
+    expect(stm32Link).toHaveAttribute("href", "/?skills=STM32F4%20Cortex-M4");
+
+    const freeRtosLink = screen.getByRole("link", { name: /FreeRTOS/i });
+    expect(freeRtosLink).toHaveAttribute("href", "/?skills=FreeRTOS");
+
+    // Skills are clickable links to member filtering
+    const pcbSkillLink = screen.getByRole("link", { name: /Custom 4-Layer PCB Design in KiCAD/i });
+    expect(pcbSkillLink).toHaveAttribute("href", "/?skills=Custom%204-Layer%20PCB%20Design%20in%20KiCAD");
   });
 });
