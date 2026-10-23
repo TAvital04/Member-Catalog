@@ -1,4 +1,4 @@
-import { members, memberResumes, studentConsents } from "@ieee/db";
+import { members, memberResumes, studentConsents } from "@/db";
 
 describe("Database Schema Integrity & FERPA Model Definitions", () => {
   it("defines members entity with expected fields", () => {

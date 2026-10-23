@@ -7,7 +7,7 @@
  * @returns {Promise<Response>} JSON response containing array of transformed Student domain entities
  */
 
-import { db, members, memberResumes, events, eventAttendees, DENSE_CANDIDATES } from "@ieee/db";
+import { db, members, memberResumes, events, eventAttendees, DENSE_CANDIDATES } from "@/db";
 import { Student } from "@/data/students";
 import { SAMPLE_IEEE_EVENTS } from "@/data/events";
 import { calculateCandidatePoints, calculateRecentPoints } from "@/lib/points";

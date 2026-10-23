@@ -1,6 +1,6 @@
-# UCF Member Resume Database (MRD) — Developer Documentation
+# UCF Member Catalog — Developer Documentation
 
-Welcome to the **UCF Member Resume Database (MRD)** developer guide. This document provides complete technical documentation for setup, architecture, data schemas, design tokens, component organization, state management, and testing workflows.
+Welcome to the **UCF Member Catalog** developer guide. This document provides complete technical documentation for setup, architecture, data schemas, design tokens, component organization, state management, and testing workflows.
 
 ---
 
@@ -11,7 +11,8 @@ Welcome to the **UCF Member Resume Database (MRD)** developer guide. This docume
 | **Framework** | [Next.js 16](https://nextjs.org/) (App Router) | Server-side rendering, routing, and search parameter synchronization |
 | **UI Library** | [React 19](https://react.dev/) | Modular UI component architecture |
 | **Language** | [TypeScript 5](https://www.typescriptlang.org/) | Strict type definitions across student profiles, filters, and moderation workflows |
-| **Styling & Design System** | [Tailwind CSS v4](https://tailwindcss.com/) & Vanilla CSS Tokens | Responsive layout grid, Pegasus Gold theme tokens, and dark mode support |
+| **Styling & Design System** | [Tailwind CSS v4](https://tailwindcss.com/) & Vanilla CSS Tokens | Responsive layout grid and dark mode support |
+| **Database & ORM** | [Drizzle ORM](https://orm.drizzle.team/) & PostgreSQL | Neon Serverless / local PostgreSQL candidate profiles and event schemas |
 | **Icons** | [Lucide React](https://lucide.dev/) | Vector UI iconography |
 | **Testing** | [Jest](https://jestjs.io/) & [React Testing Library](https://testing-library.com/) | Automated unit and component integration testing |
 
@@ -20,32 +21,31 @@ Welcome to the **UCF Member Resume Database (MRD)** developer guide. This docume
 ## 📁 Repository & Project Structure
 
 ```
-Member-Resume-Database/
-├── Data.md                      # Student profile data schema & field specifications
-├── README_DEVELOPERS.md         # Technical documentation for developers (This file)
-├── README_USERS.md              # User showcase & recruiter promotional guide
-├── README_PROGRESS.md           # Progress tracking for Version 1 and Version 2
-└── member-resume-database/      # Main Next.js application workspace
-    ├── __tests__/               # Jest test suite (components, hooks, directory filters)
-    ├── app/                     # Next.js App Router root
-    │   ├── colors.css           # Pegasus Gold & theme design tokens
-    │   ├── globals.css          # Global styling, utility classes & animations
-    │   ├── layout.tsx           # Root application layout wrapper
-    │   └── page.tsx             # Primary directory entry point & controller
-    ├── components/              # Modular UI components
-    │   ├── common/              # Common UI controls (Role switcher, badge components)
-    │   ├── dialogs/             # Moderation dialogs (FlagDialog, ResolveDialog)
-    │   ├── directory/           # Directory controls (Control bar, FilterSidebar, Card/Row views)
-    │   ├── modal/               # Student detail modal (PortfolioModal, StudentUpperInfo, StudentLowerInfo)
-    │   └── timeline/            # Resume timeline renderers (Work experience, education, projects)
-    ├── data/                    # Seed student profile data & badge caching utilities
-    │   └── students.ts          # Candidate profile interfaces & static dataset
-    ├── hooks/                   # Custom React hooks
-    │   └── useDirectoryFilters.ts # Search, filter, and URL search parameter sync hook
-    ├── jest.config.ts           # Jest test runner configuration
-    ├── next.config.ts           # Next.js environment configuration
-    ├── package.json             # NPM dependencies & script runners
-    └── tsconfig.json            # TypeScript configuration
+Member-Catalog/
+├── src/                         # Next.js App Router application
+│   ├── app/                     # Routes: /, /projects, /events, /api/*
+│   │   ├── colors.css           # Theme design tokens
+│   │   ├── globals.css          # Global styling, utility classes & animations
+│   │   ├── layout.tsx           # Root application layout wrapper
+│   │   └── page.tsx             # Primary directory entry point & controller
+│   ├── components/              # Modular UI components
+│   │   ├── common/              # Common UI controls (Role switcher, badge components)
+│   │   ├── dialogs/             # Moderation dialogs (FlagDialog, ResolveDialog)
+│   │   ├── directory/           # Directory controls (Control bar, FilterSidebar, Card/Row views)
+│   │   ├── modal/               # Student detail modal (PortfolioModal, StudentUpperInfo, StudentLowerInfo)
+│   │   └── timeline/            # Resume timeline renderers (Work experience, education, projects)
+│   ├── data/                    # Candidate profiles, events, projects, and sponsors datasets
+│   ├── db/                      # Drizzle ORM client, schemas, and database seed scripts
+│   ├── hooks/                   # Custom React hooks (filters, theme, roles, dialogs)
+│   ├── lib/                     # Utilities (styles, matching, scoring, email)
+│   └── shared/                  # Domain types, point scoring, and form validations
+├── public/                      # Static assets and SVG icons
+├── docs/                        # Architecture and developer documentation
+├── __tests__/                   # Jest unit test suite
+├── jest.config.ts               # Jest test runner configuration
+├── next.config.ts               # Next.js environment configuration
+├── package.json                 # Project dependencies & script runners
+└── tsconfig.json                # TypeScript configuration
 ```
 
 ---
@@ -54,49 +54,46 @@ Member-Resume-Database/
 
 ### 1. Prerequisites
 - **Node.js**: `v18.0.0` or higher
-- **Package Manager**: `npm` (v9+) or `yarn` / `pnpm` / `bun`
+- **Package Manager**: `pnpm` (recommended), `npm`, or `yarn`
 
 ### 2. Installation
-Clone the repository and install dependencies in the `member-resume-database` subfolder:
 
 ```bash
-cd member-resume-database
-npm install
+pnpm install
 ```
 
 ### 3. NPM Scripts
 
 | Command | Action |
 | :--- | :--- |
-| `npm run dev` | Starts the Next.js local development server at `http://localhost:3000` |
-| `npm test` | Executes the Jest unit and integration test suite |
-| `npm run build` | Compiles the production build |
-| `npm run start` | Boots the optimized production server |
-| `npm run lint` | Runs ESLint validation across all TypeScript files |
+| `pnpm dev` | Starts the Next.js local development server at `http://localhost:3001` |
+| `pnpm test` | Executes the Jest unit and integration test suite |
+| `pnpm build` | Compiles the production build |
+| `pnpm start` | Boots the optimized production server |
+| `pnpm db:seed` | Seeds database with candidate records |
 
 ---
 
 ## 📊 Core Data Schema & Models
 
-The data model powering candidate profiles is strictly defined according to `Data.md`. All profile types are typed in TypeScript:
+The data model powering candidate profiles is defined in `src/db/schema.ts` and `src/shared/types.ts`:
 
-### Key Interfaces (`data/students.ts`)
-- **`Student`**: The core profile object representing UCF candidates.
-  - `id`: Unique string identifier.
-  - `name`: Student full name.
-  - `email`: Contact email (hidden/redacted for standard directory views).
-  - `status`: Career search status (`"Seeking Internship"` \| `"Seeking Full-time"` \| `"Employed"`).
-  - `bio`: Brief summary / elevator pitch.
-  - `resumeUrl`: Direct link to hosted resume PDF.
-  - `socialLinks`: List of platform links (`GitHub`, `LinkedIn`, `Portfolio`, etc.).
-  - `education`: Array of degree entries (primary entry prioritizes UCF).
-  - `skills`: Flat array of technical skill strings (`React`, `Python`, `Altium Designer`, etc.).
-  - `experience`: Work experience timeline objects.
-  - `projects`: Project entries with external repository/demo links.
-  - `clubs`: Campus student organization participation (e.g. IEEE, ACM, Hack@UCF).
-  - `certifications`: Industry credentials and certificates.
-  - `flagged`: Boolean flag for moderation filtering.
-  - `flagReason`: Structured reason string if flagged for administrative review.
+### Key Properties (`StudentCandidate`)
+- `id`: Unique identifier.
+- `name`: Student full name.
+- `email`: Contact email (hidden/redacted for standard directory views).
+- `status`: Career search status (`"Seeking Internship"` \| `"Seeking Full-time"` \| `"Employed"`).
+- `bio`: Brief summary / elevator pitch.
+- `resumeLink`: Direct link to hosted resume PDF.
+- `links`: List of platform links (`GitHub`, `LinkedIn`, `Portfolio`, etc.).
+- `education`: Array of degree entries.
+- `skills`: Flat array of technical skill strings (`React`, `Python`, `Altium Designer`, etc.).
+- `workExperiences`: Work experience timeline objects.
+- `projects`: Project entries with external repository/demo links.
+- `clubs`: Campus student organization participation.
+- `certifications`: Industry credentials and certificates.
+- `flagged`: Boolean flag for moderation filtering.
+- `flagReason`: Structured reason string if flagged for administrative review.
 
 ---
 
@@ -105,12 +102,10 @@ The data model powering candidate profiles is strictly defined according to `Dat
 ### 1. State & URL Synchronization (`useDirectoryFilters`)
 Directory state (search query, major, graduation year, career status, and skill tags) is synchronized bidirectionally with browser URL search parameters (`useSearchParams`).
 - Enables deep-linking: Recruiters can bookmark or share specific search result URLs (`?q=React&status=Seeking+Full-time`).
-- Search queries feature a 200ms debounce buffer to eliminate re-render latency during typing.
+- Search queries feature a debounce buffer to eliminate re-render latency during typing.
 
-### 2. Visual Design System (Pegasus Gold Tokens)
-Theme colors are configured in `app/colors.css` using CSS custom properties:
-- `--gold-primary`: Pegasus Gold signature accent color.
-- `--gold-hover`: Dynamic interaction hover states.
+### 2. Visual Design System
+Theme colors and modern aesthetics are styled via Tailwind CSS v4 and CSS tokens:
 - Dark mode compatibility: Tailored background and border contrast variables.
 - Shimmer skeletons: `StudentCardSkeleton` and `FilterSidebarSkeleton` components render during async loading phases.
 
@@ -124,18 +119,18 @@ Theme colors are configured in `app/colors.css` using CSS custom properties:
 - Prevents unauthorized web scraping and candidate spam.
 
 ### 5. Moderation Workflow (`FlagDialog`, `ResolveDialog`)
-- Administrative users can flag profiles with structured reason options (*Broken Link*, *Outdated Info*, *Inappropriate Content*).
+- Administrative users can flag profiles with structured reason options (*Broken Link*, *Outdated Info*, *Inappropriate Content*, *AI Slop*).
 - Toggling flag status updates visibility filters while strictly preserving student schema integrity.
 
 ---
 
 ## 🧪 Testing & Code Quality
 
-Automated tests are located in `member-resume-database/__tests__/`.
+Automated tests are located in `__tests__/`.
 
 ### Running Tests
 ```bash
-npm test
+pnpm test
 ```
 
 ### Test Coverage Highlights

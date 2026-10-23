@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "UCF Member Resume Database | RSO UCF",
+  title: "UCF Member Catalog | RSO UCF",
   description:
     "Browse, filter, and discover verified UCF student resumes, engineering projects, and career portfolios.",
 };

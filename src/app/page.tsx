@@ -2,7 +2,7 @@
 
 /**
  * @file page.tsx — Main Student Directory Page
- * @description Primary entry point for the IEEE UCF Member Resume Database candidate directory.
+ * @description Primary entry point for the IEEE UCF Member Catalog candidate directory.
  * Orchestrates multi-parametric filtering, layout toggling, moderation dialogs, and real-time student profile modals.
  */
 

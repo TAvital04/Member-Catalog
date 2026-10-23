@@ -1,8 +1,8 @@
-# IEEE UCF Member Resume Database & Catalog — Main Idea & System Architecture
+# IEEE UCF Member Catalog — Main Idea & System Architecture
 
 ## Executive Summary
 
-The **IEEE UCF Member Resume Database** is an enterprise-grade, monorepo platform designed for the **Institute of Electrical and Electronics Engineers (IEEE) Student Chapter at the University of Central Florida (UCF)**. 
+The **IEEE UCF Member Catalog** is an enterprise-grade web platform designed for the **Institute of Electrical and Electronics Engineers (IEEE) Student Chapter at the University of Central Florida (UCF)**. 
 
 The primary mission of the platform is to **bridge the gap between UCF engineering talent and top tech/defense recruiters**, replacing static, single-page paper resumes with an interactive, verified digital portfolio catalog. It empowers recruiters and corporate sponsors to discover, evaluate, and recruit candidates based on concrete engineering evidence: hardware projects, open-source code repositories, corporate internship experience, IEEE chapter leadership, and event participation.
 
@@ -19,7 +19,7 @@ The primary mission of the platform is to **bridge the gap between UCF engineeri
 The IEEE UCF Member Catalog provides a **unified, multi-faceted platform** with:
 1. **Interactive Candidate Directory**: Instant multi-parameter filtering across majors, graduation years, skills, employers, and event attendance.
 2. **IEEE Projects Hub (`/projects`)**: Official showcase for chapter engineering projects (*Autonomous Micromouse*, *Solar Knight Racing ESC*, *Quadcopter Swarm*, *Smart Campus IoT*, *PCB Workshop*) with live student rosters.
-3. **Live Profile Management & Sync**: Seamless submission form on the main website (`@ieee/website`) updating the candidate database in real-time.
+3. **Live Profile Management & Sync**: Real-time candidate database and portfolio viewer.
 4. **Sponsor Analytics Specification**: Detailed telemetry and recruitment funnel specification documented in [`ROI_PAGE.md`](./ROI_PAGE.md).
 5. **Merit-Based Contribution & Ranking Engine (`POINTS.md`)**: A transparent point valuation system putting the members who contribute the most to IEEE UCF first in recruiter discovery, elevating verified chapter builders over passive resumes.
 
@@ -51,7 +51,7 @@ Many student organizations simply share a Google Drive folder or static JSON arr
 | **Skill Intersection Engine** | Impossible to find candidates who possess *both* Hardware & Software skills. | **AND / OR Skill Logic**: Filter instantly for candidates with *C++ AND FreeRTOS AND Altium Designer*. |
 | **Proof of Work & Verifiability** | Unverified text bullet points on paper. | **Direct IEEE Project & GitHub Linking**: Verified team rosters (*Micromouse*, *Solar Racing ESC*, *Quadcopter Swarm*). |
 | **Event & Workshop Verification** | Candidate claims attendance verbally. | **Database Event Tracking**: Linked attendance logs (`event_attendees`) verifying hands-on lab participation. |
-| **Data Freshness** | Static snapshot out of date the moment it's saved. | **Live Real-Time Sync**: Candidates update skills, GPA, and projects anytime via `@ieee/website` settings. |
+| **Data Freshness** | Static snapshot out of date the moment it's saved. | **Live Real-Time Sync**: Candidates update skills, GPA, and projects anytime in the catalog database. |
 | **Contextual Categorization** | Flat file list with zero organization. | **Dedicated Specialized Hubs**: Dynamic candidate catalog and official engineering build rosters in `/projects`. |
 | **Access Control & Moderation** | No permissions; anyone can edit/delete files. | **Role-Based Access (RBAC)**: Distinct Standard, Sponsor (flagging & shortlist), and Admin (duplicate resolution) modes. |
 | **Recruiter Actionability** | Copy-pasting emails into separate mail apps. | **In-Platform Recruiter Outreach**: Direct email dispatch simulation, candidate flagging, and portfolio modal viewer. |
@@ -69,29 +69,23 @@ Instead of forcing recruiters to scroll through a raw list, the platform automat
 
 ---
 
-## 🏛️ Monorepo Architecture & Package Structure
-
-The repository is structured as a pnpm workspace monorepo:
+## 🏛️ Application Architecture & Directory Structure
 
 ```
 Member-Catalog/
-├── apps/
-│   ├── member-resume-database/  # Next.js 15 App — Main Recruiter Directory & Projects Hub
-│   │   ├── app/                 # Routes: /, /projects, /api/members
-│   │   ├── components/          # Directory, Modal, Filter, and Layout components
-│   │   ├── hooks/               # State hooks (useDirectoryFilters, useFilteredStudents, useStudentData)
-│   │   └── __tests__/           # Jest unit test suite (10 test suites, 18 tests)
-│   │
-│   └── ieee-website/            # Next.js 15 App — Official Chapter Website & Resume Form
-│       ├── src/app/             # Student dashboard, event calendar, settings (/settings)
-│       ├── src/components/      # MemberResumeForm.tsx submission form
-│       └── src/app/api/member/  # /api/member/resume submission handler
-│
-└── packages/
-    ├── db/                      # Drizzle ORM Schema, PostgreSQL Client, & Seed Scripts
-    │   └── src/                 # schema.ts, seed.ts, client.ts
-    └── shared/                  # Shared TypeScript Types & Zod-style Form Validations
-        └── src/                 # types.ts, validations.ts
+├── src/                         # Next.js App Router application
+│   ├── app/                     # Routes: /, /projects, /events, /api/*
+│   ├── components/              # Directory, Modal, Filter, and Layout components
+│   ├── data/                    # Domain data (students, projects, events, sponsors)
+│   ├── db/                      # Drizzle ORM schema, client connection, seed script
+│   ├── hooks/                   # Custom React hooks (filters, theme, roles, dialogs)
+│   ├── lib/                     # Utilities (styles, matching, scoring, email)
+│   └── shared/                  # Types, validations, and point scoring formulas
+├── public/                      # Static assets and badges
+├── docs/                        # Architecture, data schemas, and developer guides
+├── __tests__/                   # Jest unit test suites
+├── package.json                 # Project dependencies & scripts
+└── tsconfig.json                # TypeScript paths and compiler options
 ```
 
 ---

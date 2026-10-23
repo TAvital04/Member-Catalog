@@ -7,7 +7,7 @@
  * @returns {Promise<Response>} JSON response containing IEEE project entities with participant details
  */
 
-import { db, ieeeProjects, projectParticipants, members, memberResumes } from "@ieee/db";
+import { db, ieeeProjects, projectParticipants, members, memberResumes } from "@/db";
 import { eq, inArray } from "drizzle-orm";
 import { SAMPLE_IEEE_PROJECTS, IEEEProject } from "@/data/projects";
 

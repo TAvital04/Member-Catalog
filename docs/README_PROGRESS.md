@@ -1,6 +1,6 @@
-# 📈 UCF Member Resume Database (MRD) — Version Progress & Roadmap
+# 📈 UCF Member Catalog — Version Progress & Roadmap
 
-This document outlines the evolutionary progress of the **UCF Member Resume Database (MRD)** project, tracking features, architectural decisions, and capabilities delivered across **Version 1** and **Version 2**.
+This document outlines the evolutionary progress of the **UCF Member Catalog** project, tracking features, architectural decisions, and capabilities delivered across **Version 1**, **Version 2**, and the current standalone release.
 
 -------------------
 
@@ -66,21 +66,21 @@ Version 2 incorporates all system polish, architectural optimizations, privacy c
 
 ---
 
-### 🔹 Version 3 — IEEE Website Integration & Data Plumbing (In Progress)
-Version 3 focuses on creating the basic technical plumbing to access and display form data from the main **IEEE Website database**.
+### 🔹 Version 3 — Standalone Root Application & Direct Database Plumbing (Completed ✅)
+Version 3 focused on detaching the Member Catalog from external monorepo dependencies and establishing it as the standalone root application.
 
-#### Core Deliverables & Roadmap for Version 3:
+#### Core Deliverables in Version 3:
 
-#### 🔌 1. Primitive On-Demand Data Fetching
-- Basic database connection allowing MRD to view records stored in the IEEE Website database via a primitive action (e.g., a manual fetch / refresh button).
-- Full continuous updates and automated synchronization routines are deferred to **Version 4**.
+#### 🔌 1. Decoupled Standalone Root
+- Complete detachment from external website monorepo packages.
+- Root-level project configuration and direct script execution (`pnpm dev`, `pnpm build`, `pnpm test`, `pnpm db:seed`).
 
-#### 📐 2. Exact Schema Alignment
-- Direct mapping based on exact data schema parity between the IEEE Website database and Member Resume Database.
+#### 📐 2. Integrated Schema & Shared Models
+- Direct integration of Drizzle ORM schemas, Neon client, and seed dataset in `src/db/`.
+- Domain types, validation logic, and point calculation formulas centralized in `src/shared/`.
 
-#### ⚖️ 3. Unified Database Moderation & Member Dashboard Feedback
-- Moderation fields (flags, flag reasons, visibility status) are stored directly in the shared database.
-- Results from moderation actions performed in MRD are updated in the database and reflected directly in the student's **Member Dashboard** on the IEEE Website.
+#### ⚖️ 3. Unified Moderation Engine
+- Moderation fields (flags, flag reasons, visibility status) and automated email notifications dispatching through Resend.
 
 #### 🛡️ 4. Candidate Privacy Shield
-- Enforces Privacy Shield protections so candidate contact details remain secured when viewed within the MRD recruiter directory.
+- Enforces Privacy Shield protections so candidate contact details remain secured when viewed within standard directory searches.

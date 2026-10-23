@@ -1,6 +1,6 @@
 # Member Profile Form Data Fields
 
-This document lists all the fields, data structures, and validation rules a student needs to fill out in the UCF Member Resume Database submission form.
+This document lists all the fields, data structures, and validation rules a student needs to fill out in the UCF Member Catalog profile submission form.
 
 ---
 
@@ -8,7 +8,7 @@ This document lists all the fields, data structures, and validation rules a stud
 
 | Field Name | Type | Constraints / Requirements | Description |
 | :--- | :--- | :--- | :--- |
-| **Full Name** | String | 1–50 characters, letters/spaces only (no numbers or special characters) | Your display name on the resume database. |
+| **Full Name** | String | 1–50 characters, letters/spaces only (no numbers or special characters) | Your display name on the member catalog. |
 | **Email Address** | String | Valid email address format (preferably `@knights.ucf.edu`) | Used for administrative communications. |
 | **Status** | Select | Must be one of:<br>• `Seeking Internship`<br>• `Seeking Full-time`<br>• `Employed` | Your current career search status. |
 | **Personal Bio** | Text | 1–300 characters | A brief elevator pitch or summary of your engineering interests. |

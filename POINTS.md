@@ -69,7 +69,7 @@ export const memberResumes = pgTable('member_resumes', {
 1. Calculates or retrieves the exact point breakdown for each candidate.
 2. Default sorting: Candidates are automatically ordered by `points DESC` so that the highest contributors appear at the very top of the response payload.
 
-### 4.3 Frontend Directory Integration (`apps/member-resume-database`)
+### 4.3 Frontend Directory Integration
 1. **Backend-Only Scoring**: Points and point breakdowns are calculated and maintained in the backend and database to determine candidate ordering without visually cluttering student cards with raw numerical scores.
 2. **Activity Filter ("Most Active")**: The catalog sorting control exposes this merit-based ranking as the **"Most Active"** filter option (`sortBy = "activity"`), automatically activated by default so the most engaged members are surfaced first.
 3. **Clean Visual Aesthetic**: Candidate cards and portfolio modals remain clean and professional, focusing on verified project affiliations, leadership roles, and technical skills while letting backend activity ranking do the work of elevating top contributors.

@@ -76,15 +76,15 @@ export function useFlagDialogManager({
           }
           setFlagDialog(null);
 
-          const subjectStudent = "[RSO UCF Resume Database] Profile Record Deleted";
-          const bodyStudent = `Hello ${student.name},\n\nYour profile has been permanently deleted from the UCF Member Resume Database by an administrator.\n\nReason / Details:\n"${
+          const subjectStudent = "[RSO UCF Member Catalog] Profile Record Deleted";
+          const bodyStudent = `Hello ${student.name},\n\nYour profile has been permanently deleted from the UCF Member Catalog by an administrator.\n\nReason / Details:\n"${
             student.flagReason || "Administrative review / Profile record deletion"
           }"\n\nIf you believe this was performed in error or would like to re-submit your profile, please contact our administrative team directly at ${ADMIN_EMAIL}.\n\nBest,\nUCF RSO Admin Team`;
 
-          const subjectAdmin = `[MRD Notice] Student Profile Deleted: ${student.name}`;
-          const bodyAdmin = `Hello MRD Administrator,\n\nA student profile record has been deleted from the UCF Member Resume Database.\n\nDeleted Candidate Details:\n- Name: ${student.name}\n- Email: ${student.email}\n- Major: ${student.major}\n- Graduation: ${student.gradDate}\n- Flag/Deletion Reason: "${
+          const subjectAdmin = `[Member Catalog Notice] Student Profile Deleted: ${student.name}`;
+          const bodyAdmin = `Hello Member Catalog Administrator,\n\nA student profile record has been deleted from the UCF Member Catalog.\n\nDeleted Candidate Details:\n- Name: ${student.name}\n- Email: ${student.email}\n- Major: ${student.major}\n- Graduation: ${student.gradDate}\n- Flag/Deletion Reason: "${
             student.flagReason || "Administrative review / Profile record deletion"
-          }"\n- Performed By: Administrator\n\nBest,\nUCF Member Resume Database System`;
+          }"\n- Performed By: Administrator\n\nBest,\nUCF Member Catalog System`;
 
           try {
             await Promise.all([
@@ -169,11 +169,11 @@ export function useFlagDialogManager({
       }
 
       if (targetStudent) {
-        const subjectStudent = "[RSO UCF Resume Database] Profile Flag Resolved";
-        const bodyStudent = `Hello ${targetStudent.name},\n\nGood news! Your candidate profile in the UCF Member Resume Database has been reviewed by an administrator and unflagged.\n\nYour profile is now active and restored to public directory searches.\n\nBest,\nUCF RSO Admin Team`;
+        const subjectStudent = "[RSO UCF Member Catalog] Profile Flag Resolved";
+        const bodyStudent = `Hello ${targetStudent.name},\n\nGood news! Your candidate profile in the UCF Member Catalog has been reviewed by an administrator and unflagged.\n\nYour profile is now active and restored to public directory searches.\n\nBest,\nUCF RSO Admin Team`;
 
-        const subjectAdmin = `[MRD Resolution] Candidate Profile Unflagged: ${targetStudent.name}`;
-        const bodyAdmin = `Hello MRD Administrator,\n\nCandidate profile for ${targetStudent.name} (${targetStudent.email}) has been reviewed and unflagged.\n\nThe profile is now restored to active directory searches.\n\nBest,\nUCF Member Resume Database System`;
+        const subjectAdmin = `[Member Catalog Resolution] Candidate Profile Unflagged: ${targetStudent.name}`;
+        const bodyAdmin = `Hello Member Catalog Administrator,\n\nCandidate profile for ${targetStudent.name} (${targetStudent.email}) has been reviewed and unflagged.\n\nThe profile is now restored to active directory searches.\n\nBest,\nUCF Member Catalog System`;
 
         try {
           await Promise.all([
@@ -251,11 +251,11 @@ export function useFlagDialogManager({
         }
 
         if (studentA) {
-          const subjectAdmin = `[MRD Report] Duplicate Profile Reported: ${studentA.name}`;
-          const bodyAdmin = `Hello MRD Administrator,\n\nA duplicate candidate entry has been reported in the UCF Member Resume Database.\n\nReported Candidate:\n- Name: ${studentA.name}\n- Linked Duplicate Count: ${selectedDuplicateTargetIds.length + 1}\n- Reported By: ${role === "admin" ? "Administrator" : "Directory User"}\n\nThese candidate entries have been flagged under duplicate group "${sharedGroup}" pending your administrative review.\n\nBest,\nUCF Member Resume Database System`;
+          const subjectAdmin = `[Member Catalog Report] Duplicate Profile Reported: ${studentA.name}`;
+          const bodyAdmin = `Hello Member Catalog Administrator,\n\nA duplicate candidate entry has been reported in the UCF Member Catalog.\n\nReported Candidate:\n- Name: ${studentA.name}\n- Linked Duplicate Count: ${selectedDuplicateTargetIds.length + 1}\n- Reported By: ${role === "admin" ? "Administrator" : "Directory User"}\n\nThese candidate entries have been flagged under duplicate group "${sharedGroup}" pending your administrative review.\n\nBest,\nUCF Member Catalog System`;
 
-          const subjectStudent = `[MRD Notice] Duplicate Profile Reported for ${studentA.name}`;
-          const bodyStudent = `Hello ${studentA.name},\n\nA duplicate profile report has been filed regarding your entry in the UCF Member Resume Database.\n\nGroup ID: "${sharedGroup}"\n\nYour profile has been flagged internally for review. If you have questions, please contact our team at ta616249@ucf.edu.\n\nBest,\nUCF Member Resume Database System`;
+          const subjectStudent = `[Member Catalog Notice] Duplicate Profile Reported for ${studentA.name}`;
+          const bodyStudent = `Hello ${studentA.name},\n\nA duplicate profile report has been filed regarding your entry in the UCF Member Catalog.\n\nGroup ID: "${sharedGroup}"\n\nYour profile has been flagged internally for review. If you have questions, please contact our team at ta616249@ucf.edu.\n\nBest,\nUCF Member Catalog System`;
 
           try {
             await Promise.all([
@@ -305,11 +305,11 @@ export function useFlagDialogManager({
 
         const targetStudent = students.find((s) => s.id === studentId);
         if (targetStudent) {
-          const subjectStudent = "RSO UCF Resume Database Profile Flagged (AI Slop)";
+          const subjectStudent = "RSO UCF Member Catalog Profile Flagged (AI Slop)";
           const bodyStudent = `Hello ${targetStudent.name},\n\nYour profile has been flagged by an administrator for AI-generated content / low-quality slop:\n"${flagReasonVal}"\n\nYour profile is currently hidden from public directory searches. Please review and update your profile content. If you believe this is a mistake, contact ta616249@ucf.edu.\n\nBest,\nUCF RSO Admin Team`;
 
-          const subjectAdmin = `[MRD Audit] Profile Flagged for AI Slop: ${targetStudent.name}`;
-          const bodyAdmin = `Hello MRD Administrator,\n\nCandidate ${targetStudent.name} (${targetStudent.email}) has been flagged for AI Slop / low-quality content.\n\nFlag Reason:\n"${flagReasonVal}"\n\nBest,\nUCF Member Resume Database System`;
+          const subjectAdmin = `[Member Catalog Audit] Profile Flagged for AI Slop: ${targetStudent.name}`;
+          const bodyAdmin = `Hello Member Catalog Administrator,\n\nCandidate ${targetStudent.name} (${targetStudent.email}) has been flagged for AI Slop / low-quality content.\n\nFlag Reason:\n"${flagReasonVal}"\n\nBest,\nUCF Member Catalog System`;
 
           try {
             await Promise.all([
@@ -356,11 +356,11 @@ export function useFlagDialogManager({
 
         const targetStudent = students.find((s) => s.id === studentId);
         if (targetStudent) {
-          const subjectAdmin = `[MRD Report] Candidate Profile Flagged: ${targetStudent.name}`;
-          const bodyAdmin = `Hello MRD Administrator,\n\nA student profile has been flagged in the UCF Member Resume Database.\n\nCandidate Details:\n- Name: ${targetStudent.name}\n- Major: ${targetStudent.major}\n- Graduation: ${targetStudent.gradDate}\n- Flag Reason: ${flagReasonVal}\n- Reported By: ${role === "admin" ? "Administrator" : "Directory User"}\n\nThis profile has been flagged internally and hidden from standard directory searches pending your administrative review.\n\nBest,\nUCF Member Resume Database System`;
+          const subjectAdmin = `[Member Catalog Report] Candidate Profile Flagged: ${targetStudent.name}`;
+          const bodyAdmin = `Hello Member Catalog Administrator,\n\nA student profile has been flagged in the UCF Member Catalog.\n\nCandidate Details:\n- Name: ${targetStudent.name}\n- Major: ${targetStudent.major}\n- Graduation: ${targetStudent.gradDate}\n- Flag Reason: ${flagReasonVal}\n- Reported By: ${role === "admin" ? "Administrator" : "Directory User"}\n\nThis profile has been flagged internally and hidden from standard directory searches pending your administrative review.\n\nBest,\nUCF Member Catalog System`;
 
-          const subjectStudent = `[MRD Notice] Your UCF Member Resume Database Profile Has Been Flagged`;
-          const bodyStudent = `Hello ${targetStudent.name},\n\nYour profile in the UCF Member Resume Database has been flagged for administrative review.\n\nReason:\n"${flagReasonVal}"\n\nYour profile is currently pending review by the admin team. If you believe this is a mistake, contact ta616249@ucf.edu.\n\nBest,\nUCF Member Resume Database System`;
+          const subjectStudent = `[Member Catalog Notice] Your UCF Member Catalog Profile Has Been Flagged`;
+          const bodyStudent = `Hello ${targetStudent.name},\n\nYour profile in the UCF Member Catalog has been flagged for administrative review.\n\nReason:\n"${flagReasonVal}"\n\nYour profile is currently pending review by the admin team. If you believe this is a mistake, contact ta616249@ucf.edu.\n\nBest,\nUCF Member Catalog System`;
 
           try {
             await Promise.all([

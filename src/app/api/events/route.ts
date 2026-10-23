@@ -7,7 +7,7 @@
  * @returns {Promise<Response>} JSON response containing array of IEEEEvent domain entities
  */
 
-import { db, events, eventAttendees, members, memberResumes } from "@ieee/db";
+import { db, events, eventAttendees, members, memberResumes } from "@/db";
 import { eq, inArray, desc } from "drizzle-orm";
 import { SAMPLE_IEEE_EVENTS, IEEEEvent, EventCategory } from "@/data/events";
 

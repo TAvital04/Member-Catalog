@@ -19,7 +19,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@ieee/db": ["./src/db"],
+      "@ieee/shared": ["./src/shared"]
     }
   },
   "include": [

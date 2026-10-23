@@ -8,7 +8,8 @@ import { studentHasSkill } from "@/lib/skillMatching";
 import { CARD_INTERACTIVE, CARD_BASE } from "@/lib/cardStyles";
 
 interface ProjectSkillsTabProps {
-  skillsTaught: string[];
+  skillsTaught?: string[];
+  skills?: string[];
   students?: Student[];
   onClose?: () => void;
   role?: "standard" | "sponsor" | "admin";
@@ -16,13 +17,14 @@ interface ProjectSkillsTabProps {
 }
 
 export default function ProjectSkillsTab({
-  skillsTaught = [],
+  skillsTaught,
+  skills,
   students = [],
   onClose,
   role,
   canFilter: explicitCanFilter,
 }: ProjectSkillsTabProps) {
-  const safeSkills = Array.isArray(skillsTaught) ? skillsTaught : [];
+  const safeSkills = Array.isArray(skillsTaught ?? skills) ? (skillsTaught ?? skills)! : [];
   const canFilter = explicitCanFilter ?? (role ? role !== "standard" : true);
 
   return (

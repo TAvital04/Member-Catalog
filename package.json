@@ -2,23 +2,42 @@
   "name": "member-catalog",
   "version": "0.1.0",
   "private": true,
-  "description": "Monorepo repository containing IEEE Website and Member Resume Database applications.",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "description": "UCF IEEE Member Catalog candidate directory and chapter portfolio portal.",
   "scripts": {
-    "dev": "pnpm --recursive run dev",
-    "dev:ieee": "pnpm --filter @ieee/website dev",
-    "dev:resume": "pnpm --filter @ieee/member-resume-database dev",
-    "build": "pnpm --recursive --if-present run build",
-    "build:ieee": "pnpm --filter @ieee/website build",
-    "build:resume": "pnpm --filter @ieee/member-resume-database build",
-    "db:seed": "pnpm --filter @ieee/db db:seed",
-    "lint": "pnpm --recursive --if-present run lint",
-    "test": "pnpm --recursive --if-present run test"
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "test": "jest",
+    "db:seed": "node --import tsx src/db/seed.ts"
   },
-  "engines": {
-    "node": ">=18.0.0"
+  "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
+    "drizzle-orm": "^0.45.2",
+    "lucide-react": "^1.21.0",
+    "next": "16.2.9",
+    "pg": "^8.22.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "resend": "^6.22.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^20",
+    "@types/pg": "^8.20.0",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.9",
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1",
+    "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5"
   }
 }

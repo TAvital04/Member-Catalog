@@ -30,10 +30,10 @@ export default function ContactTab({ student, role }: ContactTabProps) {
         sendDirectEmail({
           to: student.email,
           recipientType: "student",
-          subject: `Inquiry from RSO UCF Resume Database: ${recruiterName}`,
+          subject: `Inquiry from RSO UCF Member Catalog: ${recruiterName}`,
           message:
             `Hello ${student.name},\n\n` +
-            `You have received a new candidate inquiry through the UCF Member Resume Database!\n\n` +
+            `You have received a new candidate inquiry through the UCF Member Catalog!\n\n` +
             `Employer Details:\n- Name: ${recruiterName}\n- Contact Email: ${recruiterEmail}\n\n` +
             `Message:\n${messageText}\n\n` +
             `You can reply directly to this email to get in touch with ${recruiterName} (${recruiterEmail}).`,
@@ -47,11 +47,11 @@ export default function ContactTab({ student, role }: ContactTabProps) {
           subject: `[Confirmation] Your Inquiry to ${student.name} Has Been Delivered`,
           message:
             `Hello ${recruiterName},\n\n` +
-            `Thank you for using the UCF Member Resume Database portal.\n\n` +
+            `Thank you for using the UCF Member Catalog portal.\n\n` +
             `Your candidate inquiry to ${student.name} (${student.email}) has been successfully delivered.\n\n` +
             `Summary of Sent Message:\n"${messageText}"\n\n` +
             `${student.name} has been provided with your contact email (${recruiterEmail}) and will be able to reply directly to you.`,
-          senderName: "UCF Member Resume Database Portal",
+          senderName: "UCF Member Catalog Portal",
           senderEmail: "ieee@ucf.edu",
         }),
       ]);

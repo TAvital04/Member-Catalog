@@ -10,7 +10,7 @@ import {
   validateGraduationYear,
   validateGpa,
   validateMemberResume,
-} from "@ieee/shared";
+} from "@/shared";
 
 describe("Shared Validation Utilities", () => {
   describe("EMAIL_REGEX & validateEmail", () => {

@@ -2,7 +2,7 @@
 
 > **Document Status**: Archived / Future Roadmap Specification  
 > **Location**: Root repository reference (`ROI_PAGE.md`)  
-> **Source Origin**: `apps/member-resume-database/src/app/sponsor-roi/`  
+> **Source Origin**: `src/app/sponsor-roi/`  
 > **Context**: This document captures all architectural concepts, user stories, analytical metrics, recruiting telemetry funnels, and data model prerequisites for the **Sponsor Recruitment & Talent ROI Dashboard**. The page was deferred from active production because the underlying tracking events (impressions, modal clicks, direct recruiter inquiries, resume bundle downloads) are not yet wired to a live backend analytics store.
 
 ---
@@ -151,4 +151,4 @@ When IEEE UCF is ready to reactivate the Sponsor ROI page:
 - [ ] Add event firing hooks to `DirectoryTable`, `StudentCard`, `PortfolioModal`, and external link components.
 - [ ] Implement sponsor authentication and verify corporate domains.
 - [ ] Wire the PDF packet generator using `@react-pdf/renderer` or `pdf-lib`.
-- [ ] Re-create `apps/member-resume-database/src/app/sponsor-roi/page.tsx` connected to live telemetry APIs.
+- [ ] Re-create `src/app/sponsor-roi/page.tsx` connected to live telemetry APIs.

@@ -27,7 +27,7 @@ function initializeDb() {
     return drizzleNeon(sql);
   } else {
     const pool = new Pool({
-      connectionString: connectionString || 'postgresql://postgres:postgres@localhost:5432/ieee-website',
+      connectionString: connectionString || 'postgresql://postgres:postgres@localhost:5432/member-catalog',
     });
     return drizzlePg(pool);
   }

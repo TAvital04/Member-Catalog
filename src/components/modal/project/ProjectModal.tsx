@@ -128,7 +128,7 @@ export default function ProjectModal({
               {/* Skills & Learning Outcomes Tab */}
               {activeTab === "skills" && (
                 <ProjectSkillsTab
-                  skills={project.skillsTaught}
+                  skillsTaught={project.skillsTaught}
                   students={students}
                   onClose={onClose}
                   role={role}
