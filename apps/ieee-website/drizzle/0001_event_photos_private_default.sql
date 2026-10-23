@@ -1,1 +1,0 @@
-ALTER TABLE "event_photos" ALTER COLUMN "visibility" SET DEFAULT 'private';
