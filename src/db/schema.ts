@@ -1,7 +1,7 @@
-import { pgTable, uuid, varchar, text, boolean, jsonb, timestamp, integer } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, varchar, text, boolean, jsonb, timestamp, integer, unique } from 'drizzle-orm/pg-core';
 
 /**
- * Members Table - Unified Core Member Entity across IEEE Monorepo
+ * Members Table - Core Member Identity Entity in UCF IEEE Member Catalog
  */
 export const members = pgTable('members', {
   id: uuid('id').defaultRandom().primaryKey(),
@@ -166,12 +166,18 @@ export const events = pgTable('events', {
 /**
  * Event Attendees Table - Join table linking Members to Events they attended
  */
-export const eventAttendees = pgTable('event_attendees', {
-  id: uuid('id').defaultRandom().primaryKey(),
-  eventId: uuid('event_id').notNull().references(() => events.id, { onDelete: 'cascade' }),
-  memberId: uuid('member_id').notNull().references(() => members.id, { onDelete: 'cascade' }),
-  timestamp: timestamp('timestamp', { withTimezone: true }).defaultNow().notNull(),
-});
+export const eventAttendees = pgTable(
+  'event_attendees',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    eventId: uuid('event_id').notNull().references(() => events.id, { onDelete: 'cascade' }),
+    memberId: uuid('member_id').notNull().references(() => members.id, { onDelete: 'cascade' }),
+    timestamp: timestamp('timestamp', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [
+    unique('event_attendees_event_member_unique').on(table.eventId, table.memberId),
+  ]
+);
 
 /**
  * IEEE Projects Table - Chapter Build Projects & Initiatives
@@ -215,10 +221,16 @@ export const ieeeProjects = pgTable('ieee_projects', {
 /**
  * Project Participants Table - Links Members to IEEE Projects
  */
-export const projectParticipants = pgTable('project_participants', {
-  id: uuid('id').defaultRandom().primaryKey(),
-  projectId: uuid('project_id').notNull().references(() => ieeeProjects.id, { onDelete: 'cascade' }),
-  memberId: uuid('member_id').notNull().references(() => members.id, { onDelete: 'cascade' }),
-  roleTitle: varchar('role_title', { length: 100 }).default('Team Member').notNull(),
-  timestamp: timestamp('timestamp', { withTimezone: true }).defaultNow().notNull(),
-});
+export const projectParticipants = pgTable(
+  'project_participants',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    projectId: uuid('project_id').notNull().references(() => ieeeProjects.id, { onDelete: 'cascade' }),
+    memberId: uuid('member_id').notNull().references(() => members.id, { onDelete: 'cascade' }),
+    roleTitle: varchar('role_title', { length: 100 }).default('Team Member').notNull(),
+    timestamp: timestamp('timestamp', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [
+    unique('project_participants_project_member_unique').on(table.projectId, table.memberId),
+  ]
+);

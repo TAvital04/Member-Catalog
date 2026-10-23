@@ -1,4 +1,12 @@
-import { members, memberResumes, studentConsents } from "@/db";
+import {
+  members,
+  memberResumes,
+  studentConsents,
+  events,
+  eventAttendees,
+  ieeeProjects,
+  projectParticipants,
+} from "@/db";
 
 describe("Database Schema Integrity & FERPA Model Definitions", () => {
   it("defines members entity with expected fields", () => {
@@ -34,5 +42,31 @@ describe("Database Schema Integrity & FERPA Model Definitions", () => {
     expect(studentConsents.resumeDisclosureAuthorized).toBeDefined();
     expect(studentConsents.signatureText).toBeDefined();
     expect(studentConsents.signedAt).toBeDefined();
+  });
+
+  it("defines events and eventAttendees entities for verified attendance tracking", () => {
+    expect(events).toBeDefined();
+    expect(events.id).toBeDefined();
+    expect(events.title).toBeDefined();
+    expect(events.location).toBeDefined();
+    expect(events.startTime).toBeDefined();
+
+    expect(eventAttendees).toBeDefined();
+    expect(eventAttendees.eventId).toBeDefined();
+    expect(eventAttendees.memberId).toBeDefined();
+  });
+
+  it("defines ieeeProjects and projectParticipants entities for chapter project rosters", () => {
+    expect(ieeeProjects).toBeDefined();
+    expect(ieeeProjects.id).toBeDefined();
+    expect(ieeeProjects.title).toBeDefined();
+    expect(ieeeProjects.slug).toBeDefined();
+    expect(ieeeProjects.tools).toBeDefined();
+    expect(ieeeProjects.timeline).toBeDefined();
+
+    expect(projectParticipants).toBeDefined();
+    expect(projectParticipants.projectId).toBeDefined();
+    expect(projectParticipants.memberId).toBeDefined();
+    expect(projectParticipants.roleTitle).toBeDefined();
   });
 });

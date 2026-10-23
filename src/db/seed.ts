@@ -3580,7 +3580,7 @@ export async function seedDatabase() {
       console.log(`  ✓ Linked member ID ${memberId} to ${eventsForMember.length} events`);
     }
 
-    console.log('\n🎉 Monorepo Database & Event Seeding complete!');
+    console.log('\n🎉 Member Catalog Database & Event Seeding complete!');
   } catch (error) {
     console.error('❌ Database seeding failed:', error);
     process.exit(1);
