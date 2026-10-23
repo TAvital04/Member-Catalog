@@ -1,4 +1,4 @@
-import { GET } from "../src/app/api/members/route";
+import { GET } from "@/app/api/members/route";
 
 describe("GET /api/members FERPA Privacy & Redaction Logic", () => {
   it("redacts GPA and unconsented data when caller is unauthenticated", async () => {

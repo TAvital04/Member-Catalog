@@ -1,55 +1,20 @@
-export interface ClubEntry {
-  name: string;
-  title: string;
-  description: string;
-  startDate: string;
-  endDate?: string;
-  current: boolean;
-}
+import type {
+  ClubEntry,
+  EducationEntry,
+  LinkEntry,
+  ProjectEntry,
+  WorkExperienceEntry,
+  CertificationEntry,
+} from "@/shared/types";
 
-export interface EducationEntry {
-  schoolName: string;
-  degreeType: string;
-  major: string;
-  gpa?: number;
-  gpaScale?: number;
-  startDate: string;
-  endDate?: string;
-  current: boolean;
-  description?: string;
-}
-
-export interface LinkEntry {
-  text: string;
-  name: string;
-}
-
-export interface ProjectEntry {
-  name: string;
-  description: string;
-  startDate: string;
-  endDate?: string;
-  current: boolean;
-  projectLinks: string[];
-}
-
-export interface WorkExperienceEntry {
-  name: string;
-  title: string;
-  description: string;
-  startDate: string;
-  endDate?: string;
-  currentJob: boolean;
-}
-
-export interface CertificationEntry {
-  name: string;
-  issuer: string;
-  issueDate: string;
-  expirationDate?: string;
-  credentialId?: string;
-  credentialUrl?: string;
-}
+export type {
+  ClubEntry,
+  EducationEntry,
+  LinkEntry,
+  ProjectEntry,
+  WorkExperienceEntry,
+  CertificationEntry,
+};
 
 export interface EventEntry {
   id: string;
@@ -93,15 +58,8 @@ export interface Student {
   updatedAt?: string;
 }
 
-export interface PointBreakdown {
-  total: number;
-  boardPoints: number;
-  projectLeadPoints: number;
-  universityProjectPoints: number;
-  eventPoints: number;
-  committeePoints: number;
-  details: string[];
-}
+import type { PointBreakdown } from "@/lib/points";
+export type { PointBreakdown };
 
 
 

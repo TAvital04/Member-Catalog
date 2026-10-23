@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import CustomCheckbox from "../../common/CustomCheckbox";
+import CustomCheckbox from "@/components/common/CustomCheckbox";
 
 interface MajorsFilterProps {
   availableMajors: string[];

@@ -1,6 +1,6 @@
 import React from "react";
 import { Compass } from "lucide-react";
-import { Student } from "../../data/students";
+import { Student } from "@/data/students";
 import StudentCard from "./StudentCard";
 import StudentRow from "./StudentRow";
 import StudentCardSkeleton from "./StudentCardSkeleton";

@@ -65,7 +65,10 @@ export function useFlagDialogManager({
         `Are you sure you want to permanently delete ${student.name}'s profile? This action is irreversible and will send notification emails to student and admin.`,
         async () => {
           // Persist deletion to database
-          fetch(`/api/members?id=${encodeURIComponent(id)}`, { method: "DELETE" }).catch((err) =>
+          fetch(`/api/members?id=${encodeURIComponent(id)}`, {
+            method: "DELETE",
+            headers: { "x-user-role": role },
+          }).catch((err) =>
             console.error("Failed to delete member in database:", err)
           );
 

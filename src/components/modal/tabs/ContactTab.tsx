@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { Student } from "../../../data/students";
-import TruncatedText from "../../common/TruncatedText";
+import { Student } from "@/data/students";
+import TruncatedText from "@/components/common/TruncatedText";
 import { Mail, Send, Loader2 } from "lucide-react";
-import { sendDirectEmail } from "../../../lib/email";
+import { sendDirectEmail } from "@/lib/email";
 
 interface ContactTabProps {
   student: Student;

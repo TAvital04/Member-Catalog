@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Student } from "../../data/students";
+import { Student } from "@/data/students";
 
 interface StatusBadgeProps {
   status: Student["status"];

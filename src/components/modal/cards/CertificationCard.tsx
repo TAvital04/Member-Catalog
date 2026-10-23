@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import { CertificationEntry } from "../../../data/students";
+import { CertificationEntry } from "@/data/students";
 import { ExternalLink } from "lucide-react";
+import { getSafeUrl } from "@/shared";
 
 interface CertificationCardProps {
   certification: CertificationEntry;
@@ -21,6 +22,8 @@ export default function CertificationCard({
   const cleanCredId = certification.credentialId
     ? certification.credentialId.replace(/^(Cred ID|Credential ID|ID)\s*/i, "").trim() || certification.credentialId
     : "";
+
+  const safeCredUrl = getSafeUrl(certification.credentialUrl);
 
   return (
     <div className="p-4 rounded-xl bg-zinc-850 border border-zinc-800 flex flex-col gap-2 shadow-sm min-w-0 overflow-hidden">
@@ -50,9 +53,9 @@ export default function CertificationCard({
         )}
       </div>
 
-      {certification.credentialUrl && (
+      {safeCredUrl && (
         <a
-          href={certification.credentialUrl}
+          href={safeCredUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="text-[10px] text-amber-500 hover:text-amber-400 font-medium flex items-center gap-1 mt-1 pt-1.5 border-t border-zinc-800/50"

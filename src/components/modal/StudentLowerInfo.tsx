@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import { Student, getIeeeLeadershipRole } from "../../data/students";
+import { Student, getIeeeLeadershipRole } from "@/data/students";
 import { Globe, AlertTriangle, ShieldCheck, Sparkles, Calendar, Mail, FileText, ExternalLink } from "lucide-react";
+import { getSafeUrl } from "@/shared";
 
 // Custom SVG brand icons since newer lucide-react versions have deprecated them
 const Github = ({ size = 18, ...props }: React.SVGProps<SVGSVGElement> & { size?: number }) => (
@@ -22,7 +23,7 @@ const Linkedin = ({ size = 18, ...props }: React.SVGProps<SVGSVGElement> & { siz
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { findMatchingIeeeProject, isLeadSkill } from "../../lib/rsoAffiliation";
+import { findMatchingIeeeProject, isLeadSkill } from "@/lib/rsoAffiliation";
 
 interface StudentLowerInfoProps {
   student: Student;
@@ -252,10 +253,11 @@ export default function StudentLowerInfo({
               const isGithub = lowerName.includes("github");
               const isLinkedin = lowerName.includes("linkedin");
 
+              const safeLinkUrl = getSafeUrl(link.text) || "#";
               return (
                 <a
                   key={idx}
-                  href={link.text}
+                  href={safeLinkUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-zinc-850 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-xs text-zinc-400 hover:text-zinc-100 transition-all duration-200 shadow-sm hover:shadow active:scale-95 cursor-pointer grow"
@@ -272,7 +274,7 @@ export default function StudentLowerInfo({
 
         {/* View Resume PDF Button */}
         <a
-          href={resumeUrl}
+          href={getSafeUrl(resumeUrl) || "#"}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-100 hover:text-white border border-zinc-700 hover:border-zinc-600 font-bold text-xs transition-all shadow-sm active:scale-98 cursor-pointer group/resume"

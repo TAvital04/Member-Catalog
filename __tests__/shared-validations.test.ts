@@ -10,6 +10,7 @@ import {
   validateGraduationYear,
   validateGpa,
   validateMemberResume,
+  getSafeUrl,
 } from "@/shared";
 
 describe("Shared Validation Utilities", () => {
@@ -39,6 +40,27 @@ describe("Shared Validation Utilities", () => {
       validateUrl(maliciousPayload);
       const elapsed = Date.now() - start;
       expect(elapsed).toBeLessThan(100);
+    });
+  });
+
+  describe("getSafeUrl Sanitization & Protocol Protection", () => {
+    it("preserves valid web URLs", () => {
+      expect(getSafeUrl("https://github.com/test")).toBe("https://github.com/test");
+      expect(getSafeUrl("http://example.com/resume.pdf")).toBe("http://example.com/resume.pdf");
+      expect(getSafeUrl("github.com/profile")).toBe("https://github.com/profile");
+    });
+
+    it("blocks malicious script and data schemes", () => {
+      expect(getSafeUrl("javascript:alert(1)")).toBeNull();
+      expect(getSafeUrl("JAVASCRIPT:document.cookie")).toBeNull();
+      expect(getSafeUrl("data:text/html,<script>alert(1)</script>")).toBeNull();
+      expect(getSafeUrl("vbscript:MsgBox(1)")).toBeNull();
+    });
+
+    it("handles null and undefined gracefully", () => {
+      expect(getSafeUrl(null)).toBeNull();
+      expect(getSafeUrl(undefined)).toBeNull();
+      expect(getSafeUrl("")).toBeNull();
     });
   });
 

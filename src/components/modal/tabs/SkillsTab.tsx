@@ -2,10 +2,10 @@
 
 import React from "react";
 import Link from "next/link";
-import { Student } from "../../../data/students";
+import { Student } from "@/data/students";
 import CertificationCard from "../cards/CertificationCard";
 import { Code, CheckCircle2 } from "lucide-react";
-import { isLeadSkill } from "../../../lib/rsoAffiliation";
+import { isLeadSkill } from "@/lib/rsoAffiliation";
 
 interface SkillsTabProps {
   student: Student;

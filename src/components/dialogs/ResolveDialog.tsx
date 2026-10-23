@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Student } from "../../data/students";
+import { Student } from "@/data/students";
 import { Check, Trash2, CheckSquare, XSquare, X, FlagOff } from "lucide-react";
 
 interface ResolveDialogProps {

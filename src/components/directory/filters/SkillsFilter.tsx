@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import { Search } from "lucide-react";
-import CustomCheckbox from "../../common/CustomCheckbox";
-import Tooltip from "../../common/Tooltip";
+import CustomCheckbox from "@/components/common/CustomCheckbox";
+import Tooltip from "@/components/common/Tooltip";
 import { isSkillMatch } from "@/lib/skillMatching";
 
 interface SkillsFilterProps {

@@ -4,6 +4,7 @@ import React from "react";
 import { IEEEProject } from "@/data/projects";
 import { FolderGit2, GitBranch, ExternalLink, CheckCircle2, Clock } from "lucide-react";
 import CurrentSponsorsSegment from "@/components/common/CurrentSponsorsSegment";
+import { getSafeUrl } from "@/shared";
 
 interface ProjectUpperInfoProps {
   project: IEEEProject;
@@ -88,9 +89,9 @@ export default function ProjectUpperInfo({ project }: ProjectUpperInfoProps) {
       <div className="flex flex-col gap-2 pt-2 border-t border-slate-200">
         <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Project Links</span>
         <div className="flex flex-wrap gap-2">
-          {project.repositoryUrl ? (
+          {getSafeUrl(project.repositoryUrl) ? (
             <a
-              href={project.repositoryUrl}
+              href={getSafeUrl(project.repositoryUrl)!}
               target="_blank"
               rel="noopener noreferrer"
               className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 text-xs font-semibold text-slate-700 hover:text-slate-900 transition-colors flex items-center gap-1.5"
@@ -104,9 +105,9 @@ export default function ProjectUpperInfo({ project }: ProjectUpperInfoProps) {
               <span>No repo linked</span>
             </span>
           )}
-          {project.demoUrl ? (
+          {getSafeUrl(project.demoUrl) ? (
             <a
-              href={project.demoUrl}
+              href={getSafeUrl(project.demoUrl)!}
               target="_blank"
               rel="noopener noreferrer"
               className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 text-xs font-semibold text-slate-700 hover:text-slate-900 transition-colors flex items-center gap-1.5"

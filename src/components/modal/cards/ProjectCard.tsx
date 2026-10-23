@@ -3,9 +3,10 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ProjectEntry, Student } from "../../../data/students";
+import { ProjectEntry, Student } from "@/data/students";
 import { ExternalLink } from "lucide-react";
-import { isRsoProject, findMatchingIeeeProject } from "../../../lib/rsoAffiliation";
+import { isRsoProject, findMatchingIeeeProject } from "@/lib/rsoAffiliation";
+import { getSafeUrl } from "@/shared";
 
 interface ProjectCardProps {
   project: ProjectEntry;
@@ -106,19 +107,22 @@ export default function ProjectCard({
 
       {hasExternalLinks && (
         <div className="flex flex-wrap gap-2 pt-2 border-t border-zinc-800/60">
-          {externalLinks.map((link, lIdx) => (
-            <a
-              key={lIdx}
-              href={link}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className={`external-link-btn flex items-center gap-1.5 text-[10px] font-medium px-2.5 py-1 rounded-md ${btnHoverClass}`}
-            >
-              <ExternalLink size={10} />
-              <span>External Link {lIdx + 1}</span>
-            </a>
-          ))}
+          {externalLinks.map((link, lIdx) => {
+            const safe = getSafeUrl(link) || "#";
+            return (
+              <a
+                key={lIdx}
+                href={safe}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className={`external-link-btn flex items-center gap-1.5 text-[10px] font-medium px-2.5 py-1 rounded-md ${btnHoverClass}`}
+              >
+                <ExternalLink size={10} />
+                <span>External Link {lIdx + 1}</span>
+              </a>
+            );
+          })}
         </div>
       )}
     </div>

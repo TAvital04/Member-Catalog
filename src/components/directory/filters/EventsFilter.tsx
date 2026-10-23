@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import CustomCheckbox from "../../common/CustomCheckbox";
+import CustomCheckbox from "@/components/common/CustomCheckbox";
 import { Search } from "lucide-react";
 
 interface EventsFilterProps {

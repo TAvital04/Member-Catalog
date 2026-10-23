@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Student, getPrimaryEducation } from "../../data/students";
+import { Student, getPrimaryEducation } from "@/data/students";
 import Avatar from "../common/Avatar";
 import { AlertTriangle } from "lucide-react";
 

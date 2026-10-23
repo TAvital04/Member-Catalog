@@ -85,6 +85,32 @@ export function isValidUrlString(urlStr: string): boolean {
   }
 }
 
+/**
+ * Sanitizes and validates external URL strings to defend against javascript:, vbscript:, and data: XSS vectors.
+ * Returns a safe, normalized URL string or null if untrusted/invalid.
+ */
+export function getSafeUrl(url?: string | null): string | null {
+  if (!url || typeof url !== 'string') return null;
+  const trimmed = url.trim();
+  if (!trimmed || trimmed.length > 500) return null;
+  const lower = trimmed.toLowerCase();
+  if (lower.startsWith('javascript:') || lower.startsWith('data:') || lower.startsWith('vbscript:')) {
+    return null;
+  }
+  try {
+    const full = lower.startsWith('http://') || lower.startsWith('https://') || lower.startsWith('mailto:')
+      ? trimmed
+      : `https://${trimmed}`;
+    const parsed = new URL(full);
+    if (parsed.protocol === 'http:' || parsed.protocol === 'https:' || parsed.protocol === 'mailto:') {
+      return parsed.toString();
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // Unicode-aware name regex supporting international characters, accents, hyphens, and apostrophes
 export const NAME_REGEX = /^[\p{L}\s'.-]+$/u;

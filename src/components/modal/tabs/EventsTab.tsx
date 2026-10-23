@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { EventEntry } from "../../../data/students";
+import { EventEntry } from "@/data/students";
 import { Calendar, Clock, Tag } from "lucide-react";
 
 interface EventsTabProps {

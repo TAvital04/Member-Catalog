@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Student } from "../../data/students";
+import { Student } from "@/data/students";
 import { useFocusTrap } from "../common/useFocusTrap";
 import Tooltip from "../common/Tooltip";
 import StudentUpperInfo from "./StudentUpperInfo";

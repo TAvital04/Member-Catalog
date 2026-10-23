@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Student } from "../../data/students";
+import { Student } from "@/data/students";
 import { Search, Check, Trash2, AlertTriangle } from "lucide-react";
 
 interface FlagDialogProps {

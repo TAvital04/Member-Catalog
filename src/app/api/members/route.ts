@@ -304,21 +304,33 @@ export async function GET(request?: Request) {
 
 /**
  * PATCH /api/members — Updates candidate moderation status (flag / unflag / resolve)
+ * Enforces role-based authorization: callers must possess admin or sponsor role.
  */
 export async function PATCH(request: Request) {
   try {
-    const body = await request.json();
-    const { id, flagged, flagReason } = body;
-
-    if (!id) {
-      return Response.json({ success: false, error: "Member resume ID is required" }, { status: 400 });
+    const role = request.headers.get("x-user-role") || "standard";
+    const isAuthorized = role === "admin" || role === "sponsor";
+    if (!isAuthorized) {
+      return Response.json(
+        { success: false, error: "Unauthorized. Admin or sponsor role required." },
+        { status: 403 }
+      );
     }
+
+    const body = await request.json();
+    const { id, flagged, flagReason } = body || {};
+
+    if (!id || typeof id !== "string") {
+      return Response.json({ success: false, error: "Valid member resume ID is required" }, { status: 400 });
+    }
+
+    const cleanReason = typeof flagReason === "string" ? flagReason.trim().slice(0, 300) : null;
 
     await db
       .update(memberResumes)
       .set({
         flagged: Boolean(flagged),
-        flagReason: flagged ? (flagReason || "Flagged for review") : null,
+        flagReason: flagged ? (cleanReason || "Flagged for review") : null,
         updatedAt: new Date(),
       })
       .where(eq(memberResumes.id, id));
@@ -332,14 +344,23 @@ export async function PATCH(request: Request) {
 
 /**
  * DELETE /api/members — Permanently removes candidate profile from database
+ * Enforces strict admin authorization.
  */
 export async function DELETE(request: Request) {
   try {
+    const role = request.headers.get("x-user-role") || "standard";
+    if (role !== "admin") {
+      return Response.json(
+        { success: false, error: "Unauthorized. Admin role required." },
+        { status: 403 }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
 
-    if (!id) {
-      return Response.json({ success: false, error: "Member resume ID is required" }, { status: 400 });
+    if (!id || typeof id !== "string") {
+      return Response.json({ success: false, error: "Valid member resume ID is required" }, { status: 400 });
     }
 
     await db.delete(memberResumes).where(eq(memberResumes.id, id));

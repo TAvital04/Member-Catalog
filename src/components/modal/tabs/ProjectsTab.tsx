@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ProjectEntry, Student } from "../../../data/students";
+import { ProjectEntry, Student } from "@/data/students";
 import ProjectCard from "../cards/ProjectCard";
 import { Sparkles } from "lucide-react";
 

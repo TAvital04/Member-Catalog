@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import CustomRadio from "../../common/CustomRadio";
+import CustomRadio from "@/components/common/CustomRadio";
 
 interface AdminFiltersProps {
   adminFilterFlagged: boolean | null;

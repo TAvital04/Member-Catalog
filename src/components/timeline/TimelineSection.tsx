@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Student } from "../../data/students";
+import { Student } from "@/data/students";
 import TimelineCategory from "./TimelineCategory";
 import TimelineCard from "./TimelineCard";
 import { BookOpen, Award, Briefcase, Flame } from "lucide-react";

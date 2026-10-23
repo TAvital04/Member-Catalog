@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Student, getIeeeLeadershipRole } from "../../data/students";
+import { Student, getIeeeLeadershipRole } from "@/data/students";
 import { ShieldCheck, Award, ChevronRight, UserCheck, Sparkles } from "lucide-react";
 import Avatar from "../common/Avatar";
 import SkillTag from "../common/SkillTag";

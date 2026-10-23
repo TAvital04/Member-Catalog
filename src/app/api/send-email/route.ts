@@ -13,8 +13,17 @@ const RATE_LIMIT_WINDOW_MS = 60 * 1000;
 
 function checkRateLimit(clientIp: string): boolean {
   const now = Date.now();
-  const entry = rateLimitMap.get(clientIp);
 
+  // Prune expired entries to prevent memory accumulation
+  if (rateLimitMap.size > 100) {
+    for (const [ip, item] of rateLimitMap.entries()) {
+      if (now > item.resetTime) {
+        rateLimitMap.delete(ip);
+      }
+    }
+  }
+
+  const entry = rateLimitMap.get(clientIp);
   if (!entry || now > entry.resetTime) {
     rateLimitMap.set(clientIp, { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS });
     return true;
@@ -82,7 +91,7 @@ export async function POST(req: Request) {
     const apiKey = process.env.RESEND_API_KEY;
     if (apiKey) {
       const resend = new Resend(apiKey);
-      const fromAddress = process.env.RESEND_FROM_EMAIL || "RSO UCF Member Database <onboarding@resend.dev>";
+      const fromAddress = process.env.RESEND_FROM_EMAIL || "RSO UCF Member Catalog <onboarding@resend.dev>";
 
       const emailResponse = await resend.emails.send({
         from: fromAddress,

@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import { Student } from "../../data/students";
+import { Student } from "@/data/students";
 import { Calendar, Flag } from "lucide-react";
 import Avatar from "../common/Avatar";
 import TruncatedText from "../common/TruncatedText";
 import Tooltip from "../common/Tooltip";
-import { getCardClasses, CARD_TITLE_HOVER } from "../../lib/cardStyles";
+import { getCardClasses, CARD_TITLE_HOVER } from "@/lib/cardStyles";
 
 interface StudentCardProps {
   student: Student;
