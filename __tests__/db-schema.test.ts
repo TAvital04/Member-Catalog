@@ -7,6 +7,7 @@ import {
   ieeeProjects,
   projectParticipants,
 } from "@/db";
+import { getTableConfig } from "drizzle-orm/pg-core";
 
 describe("Database Schema Integrity & FERPA Model Definitions", () => {
   it("defines members entity with expected fields", () => {
@@ -54,6 +55,14 @@ describe("Database Schema Integrity & FERPA Model Definitions", () => {
     expect(eventAttendees).toBeDefined();
     expect(eventAttendees.eventId).toBeDefined();
     expect(eventAttendees.memberId).toBeDefined();
+
+    // Verify composite unique constraint preventing duplicate event registrations
+    const attendeeConfig = getTableConfig(eventAttendees);
+    const uniqueConstraint = attendeeConfig.uniqueConstraints.find(
+      (c) => c.name === "event_attendees_event_member_unique"
+    );
+    expect(uniqueConstraint).toBeDefined();
+    expect(uniqueConstraint!.columns.map((c) => c.name)).toEqual(["event_id", "member_id"]);
   });
 
   it("defines ieeeProjects and projectParticipants entities for chapter project rosters", () => {
@@ -68,5 +77,13 @@ describe("Database Schema Integrity & FERPA Model Definitions", () => {
     expect(projectParticipants.projectId).toBeDefined();
     expect(projectParticipants.memberId).toBeDefined();
     expect(projectParticipants.roleTitle).toBeDefined();
+
+    // Verify composite unique constraint preventing duplicate project participation
+    const participantConfig = getTableConfig(projectParticipants);
+    const participantConstraint = participantConfig.uniqueConstraints.find(
+      (c) => c.name === "project_participants_project_member_unique"
+    );
+    expect(participantConstraint).toBeDefined();
+    expect(participantConstraint!.columns.map((c) => c.name)).toEqual(["project_id", "member_id"]);
   });
 });

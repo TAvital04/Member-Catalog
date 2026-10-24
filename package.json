@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "eslint",
     "test": "jest",
+    "test:security": "jest __tests__/security-checks.test.ts",
     "db:seed": "node --import tsx src/db/seed.ts"
   },
   "dependencies": {

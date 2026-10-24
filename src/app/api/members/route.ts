@@ -19,7 +19,6 @@ export async function GET(request?: Request) {
     const url = request ? new URL(request.url) : null;
     const role = request?.headers.get("x-user-role") || url?.searchParams.get("role") || "standard";
     const isAuthorizedRecruiter = role === "sponsor" || role === "admin";
-    const isAdmin = role === "admin";
 
     let candidateRows: any[] = [];
 
@@ -239,16 +238,20 @@ export async function GET(request?: Request) {
           bio: row.bio || "",
           skills: memberSkills,
           links: socialLinks,
-          education: [
-            {
-              schoolName: "University of Central Florida",
-              degreeType: "Bachelor of Science",
-              major: row.memberMajor || primaryEdu.major || "Computer Science",
-              startDate: "2022-08-20",
-              endDate: row.memberGradYear ? `May ${row.memberGradYear}` : "May 2026",
-              current: true,
-            },
-          ],
+          education: education.length > 0
+            ? education
+            : [
+                {
+                  schoolName: "University of Central Florida",
+                  degreeType: "Bachelor of Science",
+                  major: row.memberMajor || primaryEdu.major || "Computer Science",
+                  gpa: allowGpaView ? primaryEdu.gpa : undefined,
+                  gpaScale: allowGpaView ? primaryEdu.gpaScale : undefined,
+                  startDate: "2022-08-20",
+                  endDate: row.memberGradYear ? `May ${row.memberGradYear}` : "May 2026",
+                  current: true,
+                },
+              ],
           projects: chapterProjects,
           workExperiences: [],
           clubs: (Array.isArray(row.clubMemberships) ? row.clubMemberships : [])
