@@ -73,7 +73,7 @@ describe("Corporate Sponsors Hub & Initiatives Page", () => {
     const workshopsTab = screen.getByRole("tab", { name: /Workshops & Talks/i });
     fireEvent.click(workshopsTab);
 
-    expect(screen.getByText(/Lockheed Martin Defense Electronics & Radar Systems Tech Talk/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/Lockheed Martin Defense Electronics & Radar Systems Tech Talk/i)[0]).toBeInTheDocument();
 
     // Switch to Student Interactions tab
     const interactionsTab = screen.getByRole("tab", { name: /Interactions/i });

@@ -89,8 +89,50 @@ export default function SponsorDetailView({
     }
   };
 
+  // Scroll to section when tab is clicked
+  const handleTabChange = (tab: SponsorSubTab) => {
+    setActiveTab(tab);
+    if (typeof window !== "undefined") {
+      const target = document.getElementById(`sponsor-section-${tab}`);
+      if (target) {
+        const yOffset = -120; // offset for directory navbar + sticky tabs bar
+        const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        if (process.env.NODE_ENV !== "test" && typeof window.scrollTo === "function") {
+          window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+        }
+      }
+    }
+  };
+
+  // Track active section on scroll to keep sticky tab highlighted
+  React.useEffect(() => {
+    const sectionIds: SponsorSubTab[] = ["initiatives", "projects", "events", "jobs", "skills", "interactions"];
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollPosition = window.scrollY + 140;
+          for (let i = sectionIds.length - 1; i >= 0; i--) {
+            const id = sectionIds[i];
+            const el = document.getElementById(`sponsor-section-${id}`);
+            if (el && el.offsetTop <= scrollPosition) {
+              setActiveTab(id);
+              break;
+            }
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <div className="flex flex-col gap-6 animate-fade-in">
+    <div className="flex flex-col gap-6 animate-fade-in pb-12">
       {/* Back Button */}
       <button
         type="button"
@@ -160,6 +202,87 @@ export default function SponsorDetailView({
           {sponsor.description}
         </p>
 
+        {/* Quick Metrics Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 pt-2 border-t border-slate-100">
+          <button
+            type="button"
+            onClick={() => handleTabChange("initiatives")}
+            className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 text-center transition-all cursor-pointer group"
+          >
+            <span className="block text-base font-black text-slate-900 group-hover:text-amber-600 transition-colors">
+              {sponsor.initiatives.length}
+            </span>
+            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mt-0.5">
+              Initiatives
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleTabChange("projects")}
+            className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 text-center transition-all cursor-pointer group"
+          >
+            <span className="block text-base font-black text-slate-900 group-hover:text-amber-600 transition-colors">
+              {projects.length}
+            </span>
+            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mt-0.5">
+              Projects
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleTabChange("events")}
+            className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 text-center transition-all cursor-pointer group"
+          >
+            <span className="block text-base font-black text-slate-900 group-hover:text-amber-600 transition-colors">
+              {events.length}
+            </span>
+            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mt-0.5">
+              Workshops
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleTabChange("jobs")}
+            className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 text-center transition-all cursor-pointer group"
+          >
+            <span className="block text-base font-black text-slate-900 group-hover:text-amber-600 transition-colors">
+              {jobs.length}
+            </span>
+            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mt-0.5">
+              Open Roles
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleTabChange("skills")}
+            className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 text-center transition-all cursor-pointer group"
+          >
+            <span className="block text-base font-black text-slate-900 group-hover:text-amber-600 transition-colors">
+              {skills.length}
+            </span>
+            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mt-0.5">
+              Key Skills
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleTabChange("interactions")}
+            className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 text-center transition-all cursor-pointer group"
+          >
+            <span className="block text-base font-black text-slate-900 group-hover:text-amber-600 transition-colors">
+              {interactions.length}
+            </span>
+            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mt-0.5">
+              Interactions
+            </span>
+          </button>
+        </div>
+
         {/* Primary Focus Tags */}
         <div className="flex flex-wrap items-center gap-1.5 pt-2 border-t border-slate-100">
           <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mr-1">
@@ -176,137 +299,131 @@ export default function SponsorDetailView({
         </div>
       </div>
 
-      {/* Sub-Navigation Tabs */}
-      <div className="overflow-x-auto pb-1 scrollbar-none">
+      {/* Sticky Quick-Jump Navigation Tabs */}
+      <div className="sticky top-14 md:top-16 z-20 py-2.5 bg-slate-50/95 dark:bg-[#0b0f19]/95 backdrop-blur-md border-b border-slate-200/80 overflow-x-auto scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
         <SegmentedControl
           options={subTabOptions}
           value={activeTab}
-          onChange={setActiveTab}
+          onChange={handleTabChange}
           ariaLabel="Sponsor details section"
         />
       </div>
 
-      {/* Tab Panels */}
-      <div className="min-h-[300px]">
+      {/* Unified All-in-One Scrollable Content Flow */}
+      <div className="flex flex-col gap-10">
         {/* 1. Initiatives & Grants */}
-        {activeTab === "initiatives" && (
+        <section id="sponsor-section-initiatives" className="scroll-mt-32 flex flex-col gap-4">
           <SponsorInitiativesList
             initiatives={sponsor.initiatives}
             sponsorName={sponsor.name}
           />
-        )}
+        </section>
 
         {/* 2. Sponsored Projects */}
-        {activeTab === "projects" && (
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center justify-between">
-              <h3 className="section-title">
-                <FolderGit2 size={16} className="text-amber-500" />
-                <span>Sponsored Hardware Builds & Chapter Projects</span>
-                <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
-                  {projects.length}
-                </span>
-              </h3>
-            </div>
-
-            {projects.length === 0 ? (
-              <EmptyState
-                icon={<FolderGit2 size={32} />}
-                headline="No active sponsored projects"
-                subtext="Currently no active hardware build teams are tagged with this sponsor."
-              />
-            ) : (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                {projects.map((prj) => (
-                  <ProjectCard
-                    key={prj.id}
-                    project={prj}
-                    onOpenModal={(p, tab) => onSelectProject(p, tab)}
-                    onSelectMember={(_, name, email) => {
-                      // find student
-                    }}
-                  />
-                ))}
-              </div>
-            )}
+        <section id="sponsor-section-projects" className="scroll-mt-32 flex flex-col gap-4">
+          <div className="flex items-center justify-between pb-1 border-b border-slate-200/70">
+            <h3 className="section-title">
+              <FolderGit2 size={16} className="text-amber-500 shrink-0" />
+              <span>Sponsored Hardware Builds & Chapter Projects</span>
+              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
+                {projects.length}
+              </span>
+            </h3>
           </div>
-        )}
+
+          {projects.length === 0 ? (
+            <EmptyState
+              icon={<FolderGit2 size={32} />}
+              headline="No active sponsored projects"
+              subtext="Currently no active hardware build teams are tagged with this sponsor."
+            />
+          ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+              {projects.map((prj) => (
+                <ProjectCard
+                  key={prj.id}
+                  project={prj}
+                  onOpenModal={(p, tab) => onSelectProject(p, tab)}
+                  onSelectMember={(_, name, email) => {
+                    // find student
+                  }}
+                />
+              ))}
+            </div>
+          )}
+        </section>
 
         {/* 3. Workshops & Tech Talks */}
-        {activeTab === "events" && (
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center justify-between">
-              <h3 className="section-title">
-                <Calendar size={16} className="text-amber-500" />
-                <span>Partner Tech Talks & Hands-On Workshops</span>
-                <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
-                  {events.length}
-                </span>
-              </h3>
-            </div>
-
-            {events.length === 0 ? (
-              <EmptyState
-                icon={<Calendar size={32} />}
-                headline="No workshops listed"
-                subtext="No previous or upcoming chapter workshops are linked to this corporate sponsor."
-              />
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {events.map((evt) => (
-                  <EventCard
-                    key={evt.id}
-                    event={evt}
-                    onClick={onSelectEvent}
-                    formatDate={formatDate}
-                    formatTime={formatTime}
-                  />
-                ))}
-              </div>
-            )}
+        <section id="sponsor-section-events" className="scroll-mt-32 flex flex-col gap-4">
+          <div className="flex items-center justify-between pb-1 border-b border-slate-200/70">
+            <h3 className="section-title">
+              <Calendar size={16} className="text-amber-500 shrink-0" />
+              <span>Partner Tech Talks & Hands-On Workshops</span>
+              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
+                {events.length}
+              </span>
+            </h3>
           </div>
-        )}
+
+          {events.length === 0 ? (
+            <EmptyState
+              icon={<Calendar size={32} />}
+              headline="No workshops listed"
+              subtext="No previous or upcoming chapter workshops are linked to this corporate sponsor."
+            />
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {events.map((evt) => (
+                <EventCard
+                  key={evt.id}
+                  event={evt}
+                  onClick={onSelectEvent}
+                  formatDate={formatDate}
+                  formatTime={formatTime}
+                />
+              ))}
+            </div>
+          )}
+        </section>
 
         {/* 4. Career Opportunities */}
-        {activeTab === "jobs" && (
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center justify-between">
-              <h3 className="section-title">
-                <Briefcase size={16} className="text-amber-500" />
-                <span>Corporate Job Opportunities & Internships</span>
-                <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
-                  {jobs.length} Positions
-                </span>
-              </h3>
-            </div>
-
-            {jobs.length === 0 ? (
-              <EmptyState
-                icon={<Briefcase size={32} />}
-                headline="No active positions listed"
-                subtext="This partner currently does not have active postings on the IEEE UCF jobs board."
-              />
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {jobs.map((job) => (
-                  <JobCard
-                    key={job.id}
-                    job={job}
-                    hasApplied={false}
-                    onSelectJob={onSelectJob}
-                  />
-                ))}
-              </div>
-            )}
+        <section id="sponsor-section-jobs" className="scroll-mt-32 flex flex-col gap-4">
+          <div className="flex items-center justify-between pb-1 border-b border-slate-200/70">
+            <h3 className="section-title">
+              <Briefcase size={16} className="text-amber-500 shrink-0" />
+              <span>Corporate Job Opportunities & Internships</span>
+              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
+                {jobs.length} Positions
+              </span>
+            </h3>
           </div>
-        )}
+
+          {jobs.length === 0 ? (
+            <EmptyState
+              icon={<Briefcase size={32} />}
+              headline="No active positions listed"
+              subtext="This partner currently does not have active postings on the IEEE UCF jobs board."
+            />
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {jobs.map((job) => (
+                <JobCard
+                  key={job.id}
+                  job={job}
+                  hasApplied={false}
+                  onSelectJob={onSelectJob}
+                />
+              ))}
+            </div>
+          )}
+        </section>
 
         {/* 5. Key Skills & Tools */}
-        {activeTab === "skills" && (
+        <section id="sponsor-section-skills" className="scroll-mt-32 flex flex-col gap-4">
           <div className="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-4">
             <div>
               <h3 className="section-title">
-                <Wrench size={16} className="text-amber-500" />
+                <Wrench size={16} className="text-amber-500 shrink-0" />
                 <span>Associated Technical Skills, Hardware & Tools</span>
                 <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
                   {skills.length} Competencies
@@ -331,16 +448,16 @@ export default function SponsorDetailView({
               ))}
             </div>
           </div>
-        )}
+        </section>
 
         {/* 6. Student Interactions & Engaged Members */}
-        {activeTab === "interactions" && (
+        <section id="sponsor-section-interactions" className="scroll-mt-32 flex flex-col gap-4">
           <SponsorMemberRoster
             interactions={interactions}
             sponsorName={sponsor.name}
             onSelectStudent={onSelectStudent}
           />
-        )}
+        </section>
       </div>
     </div>
   );
