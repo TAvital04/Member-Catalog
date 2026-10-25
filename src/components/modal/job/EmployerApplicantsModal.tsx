@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   X,
   Users,
@@ -13,9 +13,12 @@ import {
   Mail,
   Calendar,
   AlertCircle,
+  GraduationCap,
+  TrendingUp,
 } from "lucide-react";
 import { JobPosting, JobApplication } from "@/data/jobs";
 import { Student } from "@/data/students";
+import CustomDropdown from "@/components/common/CustomDropdown";
 
 interface EmployerApplicantsModalProps {
   job: JobPosting;
@@ -35,6 +38,25 @@ export default function EmployerApplicantsModal({
   onStatusUpdate,
 }: EmployerApplicantsModalProps) {
   const [updatingId, setUpdatingId] = useState<string | null>(null);
+
+  // Major distribution proportions
+  const majorProportions = useMemo(() => {
+    const counts: Record<string, number> = {};
+    applications.forEach((a) => {
+      const major = a.portfolioSnapshot.major || "Other";
+      counts[major] = (counts[major] || 0) + 1;
+    });
+    return Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  }, [applications]);
+
+  // Stage counts
+  const stageCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    applications.forEach((a) => {
+      counts[a.status] = (counts[a.status] || 0) + 1;
+    });
+    return counts;
+  }, [applications]);
 
   const handleStatusChange = async (appId: string, newStatus: JobApplication["status"]) => {
     setUpdatingId(appId);
@@ -111,6 +133,51 @@ export default function EmployerApplicantsModal({
           </div>
         </div>
 
+        {/* Applicant Pool Demographics & Quick Stats Banner */}
+        {applications.length > 0 && (
+          <div className="px-6 py-3.5 bg-slate-100/70 border-b border-slate-200/80 flex flex-wrap items-center justify-between gap-3 text-xs shrink-0">
+            {/* Major Proportions */}
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1">
+                <GraduationCap size={13} className="text-amber-600" />
+                <span>Major Proportion:</span>
+              </span>
+              {majorProportions.map(([major, count]) => {
+                const pct = Math.round((count / applications.length) * 100);
+                return (
+                  <span
+                    key={major}
+                    className="px-2.5 py-0.5 rounded-lg bg-white border border-slate-200/90 text-slate-800 font-semibold shadow-2xs text-[11px]"
+                  >
+                    <strong className="text-slate-900">{major}</strong>: {count} ({pct}%)
+                  </span>
+                );
+              })}
+            </div>
+
+            {/* Pipeline Stage Counts */}
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                Funnel:
+              </span>
+              <div className="flex items-center gap-1 text-[11px] font-bold">
+                <span className="px-2 py-0.5 rounded-md bg-sky-50 text-sky-800 border border-sky-200 shadow-2xs">
+                  {stageCounts["Submitted"] || 0} Sub
+                </span>
+                <span className="px-2 py-0.5 rounded-md bg-amber-50 text-amber-800 border border-amber-200 shadow-2xs">
+                  {stageCounts["Under Review"] || 0} Review
+                </span>
+                <span className="px-2 py-0.5 rounded-md bg-purple-50 text-purple-800 border border-purple-200 shadow-2xs">
+                  {stageCounts["Interviewing"] || 0} Int
+                </span>
+                <span className="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-2xs">
+                  {stageCounts["Offered"] || 0} Off
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Applicant Cards List */}
         <div className="overflow-y-auto p-6 flex flex-col gap-4 flex-1">
           {applications.length === 0 ? (
@@ -162,22 +229,24 @@ export default function EmployerApplicantsModal({
 
                     {/* Status Dropdown */}
                     <div className="flex items-center gap-2">
-                      <select
+                      <CustomDropdown
                         value={app.status}
-                        onChange={(e) =>
-                          handleStatusChange(app.id, e.target.value as any)
-                        }
                         disabled={updatingId === app.id}
-                        className={`text-xs font-bold px-3 py-1.5 rounded-xl border shadow-2xs cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-500 ${getStatusBadgeClass(
-                          app.status
-                        )}`}
-                      >
-                        <option value="Submitted">Status: Submitted</option>
-                        <option value="Under Review">Status: Under Review</option>
-                        <option value="Interviewing">Status: Interviewing</option>
-                        <option value="Offered">Status: Offered</option>
-                        <option value="Declined">Status: Declined</option>
-                      </select>
+                        onChange={(val) =>
+                          handleStatusChange(app.id, val as JobApplication["status"])
+                        }
+                        options={[
+                          { value: "Submitted", label: "Status: Submitted" },
+                          { value: "Under Review", label: "Status: Under Review" },
+                          { value: "Interviewing", label: "Status: Interviewing" },
+                          { value: "Offered", label: "Status: Offered" },
+                          { value: "Declined", label: "Status: Declined" },
+                        ]}
+                        buttonClassName={`text-xs font-bold ${getStatusBadgeClass(app.status)}`}
+                        className="w-44"
+                        align="right"
+                        aria-label="Applicant Status"
+                      />
                     </div>
                   </div>
 

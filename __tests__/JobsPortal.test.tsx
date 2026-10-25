@@ -93,4 +93,34 @@ describe("Jobs Portal Page & Features", () => {
     expect(screen.getByDisplayValue(/Hardware Design & PCB Layout Engineer/i)).toBeInTheDocument();
     expect(screen.getByDisplayValue(/Engineering Partner/i)).toBeInTheDocument();
   });
+
+  it("renders applicant pool analytics with metrics, skills, and funnel stages", async () => {
+    render(<JobsPage />);
+
+    // Switch to employer mode
+    fireEvent.click(screen.getByText(/Employer Portal \(Manage & Post\)/i));
+
+    // Wait for applications data to load
+    await waitFor(() => {
+      expect(screen.getByText(/Applicant Pool Analytics/i)).toBeInTheDocument();
+    });
+
+    // Switch to Analytics sub-tab
+    fireEvent.click(screen.getByText(/Applicant Pool Analytics/i));
+
+    // Verify aggregate analytics dashboard rendered
+    expect(screen.getByText("Applicant Pool Analytics & Demographics")).toBeInTheDocument();
+    expect(screen.getByText("Total Applications")).toBeInTheDocument();
+    expect(screen.getByText(/unique candidates/i)).toBeInTheDocument();
+    expect(screen.getByText("Interview/Offer Rate")).toBeInTheDocument();
+    expect(screen.getByText("Top Degree")).toBeInTheDocument();
+    expect(screen.getByText("Leading Cohort")).toBeInTheDocument();
+    expect(screen.getByText(/Top Technical Skills/i)).toBeInTheDocument();
+    expect(screen.getByText(/Academic Major Breakdown/i)).toBeInTheDocument();
+    expect(screen.getByText(/Recruitment Funnel/i)).toBeInTheDocument();
+
+    // Verify per-job filtering in analytics
+    const postingSelector = screen.getByRole("combobox", { name: "" }) || screen.getByDisplayValue(/All Active Postings/i);
+    expect(postingSelector).toBeInTheDocument();
+  });
 });

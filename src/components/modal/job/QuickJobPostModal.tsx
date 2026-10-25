@@ -16,6 +16,7 @@ import {
   FileText,
 } from "lucide-react";
 import { JobPosting, JOB_TEMPLATES, JobTemplate } from "@/data/jobs";
+import CustomDropdown from "@/components/common/CustomDropdown";
 
 interface QuickJobPostModalProps {
   onClose: () => void;
@@ -289,28 +290,25 @@ export default function QuickJobPostModal({
             </div>
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-bold text-slate-700">Location Type</label>
-              <select
+              <CustomDropdown
                 value={locationType}
-                onChange={(e) => setLocationType(e.target.value as any)}
-                className="text-xs p-2.5 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500"
-              >
-                <option value="On-site">On-site</option>
-                <option value="Hybrid">Hybrid</option>
-                <option value="Remote">Remote</option>
-              </select>
+                onChange={(val) => setLocationType(val as any)}
+                options={["On-site", "Hybrid", "Remote"]}
+                size="md"
+                className="w-full"
+                aria-label="Location Type"
+              />
             </div>
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-bold text-slate-700">Employment Type</label>
-              <select
+              <CustomDropdown
                 value={employmentType}
-                onChange={(e) => setEmploymentType(e.target.value as any)}
-                className="text-xs p-2.5 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500"
-              >
-                <option value="Full-time">Full-time</option>
-                <option value="Internship">Internship</option>
-                <option value="Co-op">Co-op</option>
-                <option value="Part-time">Part-time</option>
-              </select>
+                onChange={(val) => setEmploymentType(val as any)}
+                options={["Full-time", "Internship", "Co-op", "Part-time"]}
+                size="md"
+                className="w-full"
+                aria-label="Employment Type"
+              />
             </div>
           </div>
 

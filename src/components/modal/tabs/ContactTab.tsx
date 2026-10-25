@@ -234,23 +234,20 @@ export default function ContactTab({ student, role }: ContactTabProps) {
               </div>
             </div>
 
-            <div className="pt-2 border-t border-slate-200/70 flex flex-col gap-2">
-              <div className="flex items-center justify-between text-[10px] text-slate-500">
-                <span>Verified UCF Student</span>
-                <button
-                  type="button"
-                  onClick={handleCopyEmail}
-                  className="px-2.5 py-1 rounded-lg bg-slate-200/70 hover:bg-slate-200 text-slate-700 hover:text-slate-900 text-[10.5px] font-semibold transition-all cursor-pointer shadow-2xs active:scale-95 flex items-center gap-1"
-                >
-                  {copiedEmail ? <Check size={11} className="text-emerald-600" /> : <Copy size={11} className="text-slate-500" />}
-                  <span>{copiedEmail ? "Copied!" : "Copy"}</span>
-                </button>
-              </div>
+            <div className="pt-2 border-t border-slate-200/70 grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={handleCopyEmail}
+                className="w-full py-1.5 px-2.5 rounded-lg bg-slate-200/70 hover:bg-slate-200 text-slate-700 hover:text-slate-900 text-[10.5px] font-semibold transition-all cursor-pointer shadow-2xs active:scale-95 flex items-center justify-center gap-1"
+              >
+                {copiedEmail ? <Check size={11} className="text-emerald-600" /> : <Copy size={11} className="text-slate-500" />}
+                <span>{copiedEmail ? "Copied!" : "Copy"}</span>
+              </button>
               <a
                 href={`mailto:${student.email}?subject=${encodeURIComponent(
                   `IEEE UCF Member Inquiry: Career Opportunity for ${student.name}`
                 )}`}
-                className="w-full py-1.5 px-3 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700 hover:text-amber-900 border border-amber-200/60 text-[10.5px] font-bold transition-all cursor-pointer shadow-2xs active:scale-95 flex items-center justify-center gap-1.5 whitespace-nowrap"
+                className="w-full py-1.5 px-2.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700 hover:text-amber-900 border border-amber-200/60 text-[10.5px] font-bold transition-all cursor-pointer shadow-2xs active:scale-95 flex items-center justify-center gap-1.5 whitespace-nowrap"
               >
                 <Mail size={12} />
                 <span>Open Mail</span>
