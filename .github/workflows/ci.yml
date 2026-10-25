@@ -66,8 +66,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run workspace typechecks
-        run: pnpm --recursive --if-present run typecheck
+      - name: Run TypeScript typecheck
+        run: pnpm run typecheck
 
       - name: Run test suite with coverage
         run: pnpm test
@@ -97,7 +97,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build monorepo packages and apps
+      - name: Build Next.js Member Catalog application
         run: pnpm run build
         env:
           NODE_ENV: production

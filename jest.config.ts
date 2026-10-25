@@ -15,8 +15,6 @@ const config: Config = {
   moduleNameMapper: {
     // Handle module aliases configured in tsconfig.json
     "^@/(.*)$": "<rootDir>/src/$1",
-    "^@ieee/db$": "<rootDir>/src/db",
-    "^@ieee/shared$": "<rootDir>/src/shared",
   },
 };
 

@@ -3329,7 +3329,7 @@ export async function seedDatabase() {
         event_id UUID NOT NULL REFERENCES events(id) ON DELETE CASCADE,
         member_id UUID NOT NULL REFERENCES members(id) ON DELETE CASCADE,
         timestamp TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-        CONSTRAINT event_attendee_unique UNIQUE (event_id, member_id)
+        CONSTRAINT event_attendees_event_member_unique UNIQUE (event_id, member_id)
       );
 
       CREATE TABLE IF NOT EXISTS ieee_projects (
@@ -3365,7 +3365,7 @@ export async function seedDatabase() {
         member_id UUID NOT NULL REFERENCES members(id) ON DELETE CASCADE,
         role_title VARCHAR(100) NOT NULL DEFAULT 'Team Member',
         timestamp TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-        CONSTRAINT project_participant_unique UNIQUE (project_id, member_id)
+        CONSTRAINT project_participants_project_member_unique UNIQUE (project_id, member_id)
       );
 
       ALTER TABLE member_resumes ADD COLUMN IF NOT EXISTS main_project_name VARCHAR(255);
