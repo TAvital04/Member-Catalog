@@ -80,7 +80,7 @@ ${message || "No additional notes provided."}`,
         </div>
         <p className="text-xs text-slate-700 leading-relaxed font-sans">
           {sponsorship?.overview ||
-            "Sponsoring this RSO UCF student initiative directly accelerates hands-on engineering development, hardware fabrication, and technical competition participation."}
+            "Sponsoring this IEEE UCF student initiative directly accelerates hands-on engineering development, hardware fabrication, and technical competition participation."}
         </p>
       </div>
 

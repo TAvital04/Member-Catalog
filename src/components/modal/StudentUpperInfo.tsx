@@ -26,14 +26,14 @@ export default function StudentUpperInfo({ student }: StudentUpperInfoProps) {
     <div className="flex flex-col gap-4 w-full min-w-0">
       {/* Moderation Flag Banner Alert */}
       {student.flagged && (
-        <div className="bg-red-500/10 border border-red-500/25 rounded-2xl p-4 text-xs text-red-400 flex items-start gap-2.5 shadow-inner">
-          <AlertTriangle size={15} className="shrink-0 mt-0.5 text-red-500" />
+        <div className="bg-red-500/10 border border-red-500/25 rounded-2xl p-4 text-xs text-red-600 flex items-start gap-2.5 shadow-xs">
+          <AlertTriangle size={15} className="shrink-0 mt-0.5 text-red-600" />
           <div className="min-w-0 grow">
-            <span className="font-extrabold uppercase tracking-wider block text-[10px] mb-1 text-red-500">
+            <span className="font-extrabold uppercase tracking-wider block text-[10px] mb-1 text-red-600">
               Profile Flagged / Reported
             </span>
-            <p className="leading-relaxed font-semibold text-slate-200 text-xs">
-              Reason: <span className="text-red-400 font-normal italic">&ldquo;{student.flagReason || "Under administrative review"}&rdquo;</span>
+            <p className="leading-relaxed font-semibold text-slate-700 text-xs">
+              Reason: <span className="text-red-600 font-normal italic">&ldquo;{student.flagReason || "Under administrative review"}&rdquo;</span>
             </p>
           </div>
         </div>
@@ -43,10 +43,10 @@ export default function StudentUpperInfo({ student }: StudentUpperInfoProps) {
       <div className="flex items-center gap-4 w-full min-w-0">
         <Avatar name={student.name} size="lg" className="shrink-0" />
         <div className="min-w-0 grow flex flex-col gap-0.5">
-          <h2 className="text-xl font-black text-zinc-100 leading-tight whitespace-normal break-words">
+          <h2 className="text-xl font-black text-slate-900 leading-tight whitespace-normal break-words">
             {student.name}
           </h2>
-          <div className="text-sm font-semibold text-zinc-400 leading-snug whitespace-normal break-words mt-0.5">
+          <div className="text-sm font-semibold text-slate-600 leading-snug whitespace-normal break-words mt-0.5">
             {primaryDegree} in {primaryMajor}
           </div>
           {minorEdu && (

@@ -11,11 +11,9 @@ import React, { useState, useEffect, useMemo, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import {
-  FolderGit2,
   GitBranch,
   ExternalLink,
   Users,
-  ArrowLeft,
   CheckCircle2,
   Clock,
   Wrench,
@@ -28,6 +26,7 @@ import { useRoleManager } from "@/hooks/useRoleManager";
 import { useStudentData } from "@/hooks/useStudentData";
 import Avatar from "@/components/common/Avatar";
 import ProjectModal from "@/components/modal/project/ProjectModal";
+import { ProjectTabType } from "@/components/modal/project/ProjectTabNavigation";
 import PortfolioModal from "@/components/modal/PortfolioModal";
 import { CARD_INTERACTIVE, CARD_TITLE_HOVER } from "@/lib/cardStyles";
 import { IEEEProject } from "@/data/projects";
@@ -35,31 +34,50 @@ import { Student } from "@/data/students";
 
 function IEEEProjectsContent() {
   const { theme, toggleTheme } = useThemeManager();
-  const { role, handleRoleChange, hasFilterPermission, isAdmin } = useRoleManager();
+  const { role, handleRoleChange, isAdmin } = useRoleManager();
   const { students } = useStudentData();
   const [projects, setProjects] = useState<IEEEProject[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
-  const [searchQuery, setSearchQuery] = useState<string>("");
 
   const searchParams = useSearchParams();
   const projectParam = searchParams.get("project") || searchParams.get("projectId") || searchParams.get("slug");
   const searchParam = searchParams.get("search") || searchParams.get("q");
 
+  const [searchQuery, setSearchQuery] = useState<string>(() => searchParam || "");
+
   // Modal inspection state
   const [activeModalProject, setActiveModalProject] = useState<IEEEProject | null>(null);
+  const [activeModalTab, setActiveModalTab] = useState<ProjectTabType>("overview");
   const [selectedMemberStudent, setSelectedMemberStudent] = useState<Student | null>(null);
+
+  const handleOpenProjectModal = (project: IEEEProject, tab: ProjectTabType = "overview") => {
+    setActiveModalProject(project);
+    setActiveModalTab(tab);
+    setSelectedMemberStudent(null);
+    const url = new URL(window.location.href);
+    url.searchParams.set("project", project.slug);
+    if (tab !== "overview") {
+      url.searchParams.set("tab", tab);
+    } else {
+      url.searchParams.delete("tab");
+    }
+    window.history.pushState(null, "", url.pathname + (url.search ? url.search : ""));
+  };
 
   useEffect(() => {
     if (searchParam) {
-      setSearchQuery(searchParam);
+      const timer = setTimeout(() => {
+        setSearchQuery(searchParam);
+      }, 0);
+      return () => clearTimeout(timer);
     }
   }, [searchParam]);
 
   useEffect(() => {
     async function fetchProjects() {
       try {
-        const res = await fetch("/api/ieee-projects");
+        const res = await fetch("/api/projects");
         const json = await res.json();
         if (json.success && Array.isArray(json.data)) {
           setProjects(json.data);
@@ -77,22 +95,24 @@ function IEEEProjectsContent() {
   useEffect(() => {
     if (projects.length === 0) return;
 
+    const tabParam = searchParams.get("tab");
+    const validTab = tabParam && ["info", "overview", "tools", "timeline", "people", "skills", "sponsor"].includes(tabParam)
+      ? (tabParam as ProjectTabType)
+      : "overview";
+
+    let targetProject: IEEEProject | undefined;
     if (projectParam) {
       const cleanParam = projectParam.toLowerCase().trim();
-      const match = projects.find(
+      targetProject = projects.find(
         (p) =>
           p.id.toLowerCase() === cleanParam ||
           p.slug.toLowerCase() === cleanParam ||
           p.title.toLowerCase() === cleanParam ||
           p.title.toLowerCase().includes(cleanParam)
       );
-      if (match) {
-        setActiveModalProject(match);
-        setSelectedMemberStudent(null);
-      }
     } else if (searchParam) {
       const cleanSearch = searchParam.toLowerCase().trim();
-      const match = projects.find(
+      targetProject = projects.find(
         (p) =>
           p.id.toLowerCase() === cleanSearch ||
           p.slug.toLowerCase() === cleanSearch ||
@@ -100,12 +120,17 @@ function IEEEProjectsContent() {
           p.title.toLowerCase().includes(cleanSearch) ||
           cleanSearch.includes(p.title.toLowerCase())
       );
-      if (match) {
-        setActiveModalProject(match);
-        setSelectedMemberStudent(null);
-      }
     }
-  }, [projectParam, searchParam, projects]);
+
+    if (targetProject) {
+      const timer = setTimeout(() => {
+        setActiveModalProject(targetProject);
+        setActiveModalTab(validTab);
+        setSelectedMemberStudent(null);
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+  }, [projectParam, searchParam, projects, searchParams]);
 
   const categories = ["All", ...Array.from(new Set(projects.map((p) => p.category)))];
 
@@ -187,8 +212,8 @@ function IEEEProjectsContent() {
 
       {/* Directory Page Header */}
       <DirectoryStatsHeader
-        title="RSO UCF Chapter Projects"
-        description="Explore hands-on hardware builds, autonomous robotics, power inverters, and wireless IoT networks engineered by UCF RSO students."
+        title="IEEE UCF Chapter Projects"
+        description="Explore hands-on hardware builds, autonomous robotics, power inverters, and wireless IoT networks engineered by UCF IEEE students."
       />
 
       {/* Controls Bar: Search & Category Filter */}
@@ -245,11 +270,11 @@ function IEEEProjectsContent() {
                 role="button"
                 tabIndex={0}
                 aria-label={`View project details for ${project.title}`}
-                onClick={() => setActiveModalProject(project)}
+                onClick={() => handleOpenProjectModal(project, "overview")}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
-                    setActiveModalProject(project);
+                    handleOpenProjectModal(project, "overview");
                   }
                 }}
                 className={`${CARD_INTERACTIVE} p-6 flex flex-col justify-between gap-5 relative group focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500`}
@@ -298,10 +323,20 @@ function IEEEProjectsContent() {
                   {/* Tools Preview Tags */}
                   {project.tools && project.tools.length > 0 ? (
                     <div className="flex flex-col gap-1.5">
-                      <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1">
-                        <Wrench size={11} className="text-slate-400" />
-                        Key Tech Stack ({project.tools.length})
-                      </span>
+                      <div className="flex items-center justify-between">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleOpenProjectModal(project, "tools");
+                          }}
+                          className="text-[10px] font-bold text-slate-500 hover:text-amber-500 uppercase tracking-wider flex items-center gap-1 transition-colors cursor-pointer group/stack text-left"
+                          title={`View all ${project.tools.length} tools & skills for ${project.title}`}
+                        >
+                          <Wrench size={11} className="text-slate-400 group-hover/stack:text-amber-500 transition-colors" />
+                          <span>Key Tech Stack ({project.tools.length})</span>
+                        </button>
+                      </div>
                       <div className="flex flex-wrap gap-1.5">
                         {project.tools.slice(0, 4).map((tool, idx) => (
                           <Link
@@ -315,9 +350,18 @@ function IEEEProjectsContent() {
                           </Link>
                         ))}
                         {project.tools.length > 4 && (
-                          <span className="px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 text-[10px] text-slate-500">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleOpenProjectModal(project, "tools");
+                            }}
+                            className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-amber-500/15 border border-slate-200 hover:border-amber-500/40 text-[10.5px] font-medium text-slate-600 hover:text-amber-500 transition-all cursor-pointer active:scale-95 shadow-2xs"
+                            title={`Show all ${project.tools.length} tools & skills for ${project.title}`}
+                            aria-label={`Show more tools and skills for ${project.title}`}
+                          >
                             +{project.tools.length - 4} more
-                          </span>
+                          </button>
                         )}
                       </div>
                     </div>
@@ -428,12 +472,15 @@ function IEEEProjectsContent() {
           project={activeModalProject}
           students={students}
           role={role}
+          initialTab={activeModalTab}
           onClose={() => {
             setActiveModalProject(null);
+            setActiveModalTab("overview");
             const url = new URL(window.location.href);
             url.searchParams.delete("project");
             url.searchParams.delete("projectId");
             url.searchParams.delete("slug");
+            url.searchParams.delete("tab");
             window.history.pushState(null, "", url.pathname + (url.search ? url.search : ""));
           }}
           onSelectMember={(memberId, name, email) => {

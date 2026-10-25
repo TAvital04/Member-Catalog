@@ -86,4 +86,29 @@ describe("Database Schema Integrity & FERPA Model Definitions", () => {
     expect(participantConstraint).toBeDefined();
     expect(participantConstraint!.columns.map((c) => c.name)).toEqual(["project_id", "member_id"]);
   });
+
+  it("defines jobPostings and jobApplications entities for member portfolio applications", () => {
+    const { jobPostings, jobApplications } = require("@/db");
+    expect(jobPostings).toBeDefined();
+    expect(jobPostings.id).toBeDefined();
+    expect(jobPostings.title).toBeDefined();
+    expect(jobPostings.companyName).toBeDefined();
+    expect(jobPostings.skillsRequired).toBeDefined();
+    expect(jobPostings.salaryRange).toBeDefined();
+    expect(jobPostings.status).toBeDefined();
+
+    expect(jobApplications).toBeDefined();
+    expect(jobApplications.jobId).toBeDefined();
+    expect(jobApplications.memberId).toBeDefined();
+    expect(jobApplications.portfolioSnapshot).toBeDefined();
+    expect(jobApplications.status).toBeDefined();
+
+    // Verify composite unique constraint preventing duplicate applications
+    const appConfig = getTableConfig(jobApplications);
+    const appConstraint = appConfig.uniqueConstraints.find(
+      (c) => c.name === "job_applications_job_member_unique"
+    );
+    expect(appConstraint).toBeDefined();
+    expect(appConstraint!.columns.map((c) => c.name)).toEqual(["job_id", "member_id"]);
+  });
 });

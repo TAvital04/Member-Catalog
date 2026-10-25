@@ -43,6 +43,9 @@ describe("Portfolio Modal Link & Tab Rendering", () => {
     );
 
     expect(screen.getAllByText("Test Candidate")[0]).toBeInTheDocument();
+    expect(screen.getAllByText("About")[0]).toBeInTheDocument();
+    expect(screen.getAllByText(sampleStudent.bio)[0]).toBeInTheDocument();
+    expect(screen.queryByText("Chapter Activity")).not.toBeInTheDocument();
   });
 
   test("renders streamlined tabs: Chapter Projects, Events, and Contact", () => {
@@ -97,9 +100,9 @@ describe("Portfolio Modal Link & Tab Rendering", () => {
     expect(queryByText("Direct Candidate Messaging Locked")).not.toBeInTheDocument();
 
     // Recruiter form fields should be available
-    expect(screen.getByPlaceholderText(/e\.g\. Recruiter Name/i)).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/recruiter@company\.com/i)).toBeInTheDocument();
-    expect(getByRole("button", { name: /send direct message/i })).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/e\.g\. Jane Doe/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/jane@company\.com/i)).toBeInTheDocument();
+    expect(getByRole("button", { name: /Submit Direct Outreach Inquiry/i })).toBeInTheDocument();
   });
 
   test("renders View Resume PDF button in modal left panel", () => {

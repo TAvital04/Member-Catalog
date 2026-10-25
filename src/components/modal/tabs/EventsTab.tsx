@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { EventEntry } from "@/data/students";
 import { Calendar, Clock, Tag } from "lucide-react";
+import { CARD_INTERACTIVE, CARD_TITLE_HOVER } from "@/lib/cardStyles";
 
 interface EventsTabProps {
   events?: EventEntry[];
@@ -50,11 +51,17 @@ export default function EventsTab({
 
   return (
     <div className="flex flex-col gap-4 animate-fade-in pt-1 pb-4">
-      <div className="flex items-center justify-between border-b border-slate-200 dark:border-zinc-800 pb-2">
-        <div className="flex items-center gap-2 text-slate-900 dark:text-zinc-200 font-bold text-xs uppercase tracking-wider py-1 leading-normal">
-          <Calendar size={14} className="text-zinc-400 shrink-0" />
-          <span>RSO Chapter Events & Workshops</span>
+      <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider">
+          <Calendar size={14} className="text-amber-600 dark:text-amber-500 shrink-0" />
+          <span>IEEE UCF Chapter Events & Workshops</span>
+          {events.length > 0 && (
+            <span className="bg-amber-50 text-amber-800 border border-amber-200 text-[10px] px-2 py-0.2 rounded-full font-bold">
+              {events.length}
+            </span>
+          )}
         </div>
+        <span className="text-[11px] text-slate-500 font-medium">Verified Attendance & Lab Sessions</span>
       </div>
 
       {events.length > 0 ? (
@@ -62,34 +69,33 @@ export default function EventsTab({
           {events.map((evt, idx) => (
             <div
               key={evt.id || idx}
-              className="p-5 rounded-2xl bg-zinc-850 border border-zinc-800 hover:border-zinc-750 transition-all flex flex-col gap-3 shadow-sm"
+              className={`${CARD_INTERACTIVE} p-4 md:p-5 flex flex-col justify-between gap-3`}
             >
-              <div className="flex justify-between items-center gap-2 border-b border-zinc-800/80 pb-3">
-                <div className="flex items-center gap-2 flex-wrap">
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center justify-between gap-2">
                   {evt.category && (
-                    <span className="text-[9.5px] font-bold uppercase tracking-wider bg-zinc-900 border border-zinc-750 text-zinc-300 px-2.5 py-1 rounded-full shadow-2xs leading-none">
+                    <span className="bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
                       {evt.category}
                     </span>
                   )}
+                  <span className="text-[10px] font-medium text-slate-500 bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-full shrink-0 flex items-center gap-1.5 ml-auto">
+                    <Clock size={11} className="text-slate-400" />
+                    {formatEventDate(evt.startTime)}
+                  </span>
                 </div>
 
-                <span className="text-[10px] font-medium text-zinc-400 bg-zinc-900 border border-zinc-800 px-2.5 py-1 rounded-full shrink-0 flex items-center gap-1.5 leading-none">
-                  <Clock size={11} className="text-zinc-500" />
-                  {formatEventDate(evt.startTime)}
-                </span>
+                <h4 className={`font-bold text-sm md:text-base leading-tight ${CARD_TITLE_HOVER} transition-colors`}>
+                  {evt.title}
+                </h4>
+
+                <p className="text-xs text-slate-600 line-clamp-3 leading-relaxed">
+                  {evt.description}
+                </p>
               </div>
 
-              <h4 className="text-sm font-bold text-zinc-100 leading-snug">
-                {evt.title}
-              </h4>
-
-              <p className="text-xs text-zinc-350 leading-relaxed font-sans">
-                {evt.description}
-              </p>
-
               {evt.skills && evt.skills.length > 0 && (
-                <div className="flex items-center gap-1.5 flex-wrap pt-2 border-t border-zinc-800/80">
-                  <span className="text-[10px] font-semibold text-zinc-500 flex items-center gap-1 mr-1">
+                <div className="pt-2.5 md:pt-3 border-t border-slate-100 flex items-center gap-1.5 flex-wrap">
+                  <span className="text-[10px] font-semibold text-slate-400 flex items-center gap-1 mr-1">
                     <Tag size={10} />
                     Skills Covered:
                   </span>
@@ -99,15 +105,15 @@ export default function EventsTab({
                         key={sIdx}
                         href={`/?skills=${encodeURIComponent(skill)}`}
                         onClick={() => onClose?.()}
-                        className={`text-[10px] font-medium px-2 py-0.5 rounded-md inline-flex items-center ${btnHoverClass}`}
-                        title={`Filter candidate directory by ${skill}`}
+                        className="text-[10.5px] font-semibold px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-slate-700 hover:text-slate-900 transition-all shadow-2xs cursor-pointer active:scale-95"
+                        title={`Filter candidates with skill: ${skill}`}
                       >
-                        {skill}
+                        <span>{skill}</span>
                       </Link>
                     ) : (
                       <span
                         key={sIdx}
-                        className="text-[10px] font-medium bg-zinc-900 border border-zinc-800 text-zinc-300 px-2 py-0.5 rounded-md select-none inline-flex items-center"
+                        className="text-[10.5px] font-semibold px-2 py-0.5 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 select-none shadow-2xs"
                       >
                         {skill}
                       </span>
@@ -119,8 +125,8 @@ export default function EventsTab({
           ))}
         </div>
       ) : (
-        <div className="text-center py-12 border border-dashed border-slate-200 dark:border-zinc-800 rounded-2xl p-6 bg-slate-50/50 dark:bg-zinc-900/40">
-          <p className="text-slate-400 dark:text-zinc-500 text-xs">No RSO event attendance recorded for this member yet.</p>
+        <div className="text-center py-12 bg-white rounded-2xl border border-dashed border-slate-200 p-6 shadow-2xs">
+          <p className="text-slate-500 text-xs">No IEEE UCF event attendance recorded for this member yet.</p>
         </div>
       )}
     </div>

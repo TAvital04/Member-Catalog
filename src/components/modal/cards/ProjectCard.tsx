@@ -1,12 +1,13 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ProjectEntry, Student } from "@/data/students";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Clock } from "lucide-react";
 import { isRsoProject, findMatchingIeeeProject } from "@/lib/rsoAffiliation";
 import { getSafeUrl } from "@/shared";
+
+import { CARD_INTERACTIVE, CARD_TITLE_HOVER } from "@/lib/cardStyles";
 
 interface ProjectCardProps {
   project: ProjectEntry;
@@ -76,9 +77,6 @@ export default function ProjectCard({
   const externalLinks = project.projectLinks?.filter((link) => !link.includes("github.com")) || [];
   const hasExternalLinks = externalLinks.length > 0;
 
-  const btnHoverClass =
-    "transition-all duration-200 border border-zinc-800 hover:border-zinc-700 bg-zinc-950 hover:bg-zinc-800 text-zinc-300 hover:text-zinc-100 shadow-sm hover:shadow active:scale-95 cursor-pointer";
-
   return (
     <div
       onClick={isClickable ? handleCardClick : undefined}
@@ -86,27 +84,33 @@ export default function ProjectCard({
       role={isClickable ? "button" : undefined}
       tabIndex={isClickable ? 0 : undefined}
       aria-label={isClickable ? `View project modal for ${displayName}` : undefined}
-      className={`p-4 rounded-xl transition-all duration-200 flex flex-col gap-2 min-w-0 overflow-hidden bg-zinc-850 border border-zinc-800 shadow-sm ${
-        isClickable
-          ? "cursor-pointer hover:border-zinc-700 hover:bg-zinc-800/80 hover:shadow-md group focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
-          : ""
+      className={`${CARD_INTERACTIVE} p-4 md:p-5 flex flex-col justify-between gap-3 ${
+        isClickable ? "focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none" : ""
       }`}
     >
-      <div className="flex items-center justify-between gap-3 border-b border-zinc-800/60 pb-2">
-        <h5 className="font-extrabold text-xs whitespace-normal break-all [overflow-wrap:anywhere] leading-snug text-zinc-100 group-hover:text-amber-400 transition-colors">
+      <div className="flex flex-col gap-2.5">
+        <div className="flex items-center justify-between gap-2">
+          <span className="bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+            {isRso ? "IEEE UCF Project" : "Technical Build"}
+          </span>
+
+          <span className="text-[10px] font-medium text-slate-500 bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-full shrink-0 flex items-center gap-1.5 leading-none">
+            <Clock size={11} className="text-slate-400" />
+            {formatDateStr(project.startDate)} - {project.current ? "Current" : formatDateStr(project.endDate || "")}
+          </span>
+        </div>
+
+        <h4 className={`font-bold text-sm md:text-base leading-tight ${CARD_TITLE_HOVER} transition-colors`}>
           {displayName}
-        </h5>
-        <span className="text-[9.5px] text-zinc-400 font-semibold bg-zinc-950/80 border border-zinc-800 px-2 py-0.5 rounded-md shrink-0">
-          {formatDateStr(project.startDate)} - {project.current ? "Current" : formatDateStr(project.endDate || "")}
-        </span>
+        </h4>
+
+        <p className="text-xs text-slate-600 line-clamp-3 leading-relaxed">
+          {project.description}
+        </p>
       </div>
 
-      <p className="text-xs text-zinc-300 leading-relaxed whitespace-pre-wrap break-all [overflow-wrap:anywhere] pt-1">
-        {project.description}
-      </p>
-
       {hasExternalLinks && (
-        <div className="flex flex-wrap gap-2 pt-2 border-t border-zinc-800/60">
+        <div className="pt-2.5 md:pt-3 border-t border-slate-100 flex items-center gap-2 flex-wrap">
           {externalLinks.map((link, lIdx) => {
             const safe = getSafeUrl(link) || "#";
             return (
@@ -116,9 +120,9 @@ export default function ProjectCard({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className={`external-link-btn flex items-center gap-1.5 text-[10px] font-medium px-2.5 py-1 rounded-md ${btnHoverClass}`}
+                className="external-link-btn flex items-center gap-1.5 text-[10.5px] font-semibold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-slate-700 hover:text-slate-900 transition-all shadow-2xs cursor-pointer active:scale-95"
               >
-                <ExternalLink size={10} />
+                <ExternalLink size={11} />
                 <span>External Link {lIdx + 1}</span>
               </a>
             );

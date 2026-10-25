@@ -234,3 +234,63 @@ export const projectParticipants = pgTable(
     unique('project_participants_project_member_unique').on(table.projectId, table.memberId),
   ]
 );
+
+/**
+ * Job Postings Table - Corporate Partner & IEEE UCF Job/Internship Opportunities
+ */
+export const jobPostings = pgTable('job_postings', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  title: varchar('title', { length: 255 }).notNull(),
+  slug: varchar('slug', { length: 120 }).notNull().unique(),
+  companyName: varchar('company_name', { length: 255 }).notNull(),
+  companyLogo: varchar('company_logo', { length: 500 }),
+  department: varchar('department', { length: 150 }),
+  location: varchar('location', { length: 255 }).notNull(),
+  locationType: varchar('location_type', { length: 50 }).notNull().default('On-site'), // 'On-site' | 'Hybrid' | 'Remote'
+  employmentType: varchar('employment_type', { length: 50 }).notNull().default('Full-time'), // 'Full-time' | 'Internship' | 'Co-op' | 'Part-time'
+  experienceLevel: varchar('experience_level', { length: 50 }).default('Entry Level'), // 'Internship / Student' | 'Entry Level' | 'Mid Level'
+  salaryRange: varchar('salary_range', { length: 120 }),
+  description: text('description').notNull(),
+  responsibilities: jsonb('responsibilities').$type<string[]>().default([]).notNull(),
+  requirements: jsonb('requirements').$type<string[]>().default([]).notNull(),
+  benefits: jsonb('benefits').$type<string[]>().default([]).notNull(),
+  skillsRequired: jsonb('skills_required').$type<string[]>().default([]).notNull(),
+  employerEmail: varchar('employer_email', { length: 255 }).notNull(),
+  employerWebsite: varchar('employer_website', { length: 500 }),
+  status: varchar('status', { length: 50 }).default('Active').notNull(), // 'Active' | 'Paused' | 'Closed'
+  featured: boolean('featured').default(false).notNull(),
+  active: boolean('active').default(true).notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+/**
+ * Job Applications Table - Direct portfolio-linked applications from chapter members
+ */
+export const jobApplications = pgTable(
+  'job_applications',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    jobId: uuid('job_id').notNull().references(() => jobPostings.id, { onDelete: 'cascade' }),
+    memberId: uuid('member_id').notNull().references(() => members.id, { onDelete: 'cascade' }),
+    status: varchar('status', { length: 50 }).default('Submitted').notNull(), // 'Submitted' | 'Under Review' | 'Interviewing' | 'Offered' | 'Declined'
+    coverNote: text('cover_note'),
+    customResumeUrl: varchar('custom_resume_url', { length: 500 }),
+    portfolioSnapshot: jsonb('portfolio_snapshot').$type<{
+      name: string;
+      email: string;
+      major: string;
+      gradDate: string;
+      skills: string[];
+      mainProjectName?: string;
+      resumePdfUrl?: string;
+      bio?: string;
+    }>(),
+    appliedAt: timestamp('applied_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [
+    unique('job_applications_job_member_unique').on(table.jobId, table.memberId),
+  ]
+);
+

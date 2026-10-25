@@ -107,12 +107,12 @@ export default function PortfolioModal({
           </div>
 
           {/* Right Side Panel: Interactive Tabs */}
-          <div className="w-full md:w-3/5 p-5 md:p-6 pt-12 md:pt-6 flex flex-col h-full relative z-10 bg-white overflow-hidden">
+          <div className="w-full md:w-3/5 p-5 md:p-6 pt-12 md:pt-6 flex flex-col h-full relative z-10 bg-slate-50/70 overflow-hidden">
             {/* Tab Navigation Header */}
             <ModalTabNavigation activeTab={activeTab} setActiveTab={setActiveTab} role={role} />
 
             {/* Tab Content Display */}
-            <div className={`grow pr-1 ${activeTab === "about" ? "overflow-hidden" : "overflow-y-auto"} ${activeTab === "contact" ? "flex flex-col" : ""} md:overflow-y-auto`}>
+            <div className={`grow pr-1 ${activeTab === "about" ? "overflow-hidden" : "overflow-y-auto"} md:overflow-y-auto`}>
               {/* About / Info Panel (Mobile Only) */}
               {activeTab === "about" && (
                 <div className="flex flex-col h-full md:hidden relative overflow-hidden animate-fade-in">
@@ -179,10 +179,10 @@ export default function PortfolioModal({
           <button
             type="button"
             onClick={() => onToggleFlag(student.id)}
-            className={`absolute bottom-6 right-6 z-40 p-3.5 rounded-full shadow-xl transition-all active:scale-90 border cursor-pointer flex items-center justify-center bg-zinc-900/90 border-zinc-800 backdrop-blur-sm group/tooltip ${
+            className={`absolute bottom-6 right-6 z-40 p-3.5 rounded-full shadow-lg transition-all active:scale-90 border cursor-pointer flex items-center justify-center bg-white border-slate-200 backdrop-blur-sm group/tooltip ${
               student.flagged
-                ? "bg-red-500/90 hover:bg-red-600 border-red-500 text-white"
-                : "text-zinc-400 hover:text-red-400 hover:border-red-500/30 hover:bg-zinc-850"
+                ? "bg-red-600 hover:bg-red-700 border-red-600 text-white"
+                : "text-slate-500 hover:text-red-600 hover:border-red-200 hover:bg-red-50"
             }`}
           >
             {student.flagged ? <FlagOff size={18} /> : <Flag size={18} />}

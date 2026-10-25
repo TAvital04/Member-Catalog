@@ -197,7 +197,7 @@ function IEEEEventsContent() {
 
       {/* Directory Page Header */}
       <DirectoryStatsHeader
-        title="RSO UCF Events & Workshops"
+        title="IEEE UCF Events & Workshops"
         description="Explore upcoming and semester technical workshops, general body meetings, industry tech talks with corporate defense and semiconductor partners, hackathons, and verified student attendance records."
       />
 

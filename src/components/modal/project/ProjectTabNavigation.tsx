@@ -49,7 +49,7 @@ export default function ProjectTabNavigation({
 
         {/* Main Tabs */}
         {tabsList.map(({ id, label, ariaLabel, icon: Icon }) => {
-          const isActive = activeTab === id;
+          const isActive = activeTab === id || (id === "tools" && activeTab === "skills");
           return (
             <button
               key={id}

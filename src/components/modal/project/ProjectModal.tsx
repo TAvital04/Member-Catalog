@@ -62,6 +62,10 @@ export default function ProjectModal({
     };
   }, []);
 
+  useEffect(() => {
+    setActiveTab(initialTab);
+  }, [initialTab, project.id]);
+
   return (
     <div
       onClick={onClose}

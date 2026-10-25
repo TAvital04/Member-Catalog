@@ -11,6 +11,9 @@
     "typecheck": "tsc --noEmit",
     "test": "jest",
     "test:security": "jest __tests__/security-checks.test.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
     "db:seed": "node --import tsx src/db/seed.ts"
   },
   "dependencies": {
@@ -33,6 +36,7 @@
     "@types/pg": "^8.20.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "drizzle-kit": "^0.31.11",
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
     "jest": "^30.4.2",

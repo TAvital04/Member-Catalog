@@ -2,8 +2,10 @@
 
 import React from "react";
 import { CertificationEntry } from "@/data/students";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Clock } from "lucide-react";
 import { getSafeUrl } from "@/shared";
+
+import { CARD_INTERACTIVE, CARD_TITLE_HOVER } from "@/lib/cardStyles";
 
 interface CertificationCardProps {
   certification: CertificationEntry;
@@ -26,43 +28,48 @@ export default function CertificationCard({
   const safeCredUrl = getSafeUrl(certification.credentialUrl);
 
   return (
-    <div className="p-4 rounded-xl bg-zinc-850 border border-zinc-800 flex flex-col gap-2 shadow-sm min-w-0 overflow-hidden">
-      <div className="flex justify-between items-start gap-2 border-b border-zinc-800/60 pb-1.5">
-        <span className="text-[9px] text-amber-500 font-extrabold uppercase tracking-wider">
-          CERTIFICATION
-        </span>
-        <span className="text-[9.5px] text-zinc-500 font-semibold bg-zinc-950/80 border border-zinc-800 px-2 py-0.5 rounded-md">
-          {formatDateStr(certification.issueDate)}
-        </span>
-      </div>
+    <div className={`${CARD_INTERACTIVE} p-4 md:p-5 flex flex-col justify-between gap-3 min-w-0 overflow-hidden`}>
+      <div className="flex flex-col gap-2.5">
+        <div className="flex items-center justify-between gap-2">
+          <span className="bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+            Certification
+          </span>
+          <span className="text-[10px] font-medium text-slate-500 bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-full shrink-0 flex items-center gap-1.5 leading-none">
+            <Clock size={11} className="text-slate-400" />
+            {formatDateStr(certification.issueDate)}
+          </span>
+        </div>
 
-      <h5 className="font-extrabold text-zinc-100 text-xs whitespace-normal break-all [overflow-wrap:anywhere] leading-snug">
-        {displayName}
-      </h5>
+        <h4 className={`font-bold text-sm md:text-base leading-tight ${CARD_TITLE_HOVER} transition-colors`}>
+          {displayName}
+        </h4>
 
-      <div className="flex flex-col gap-1 pt-1 border-t border-zinc-800/60">
-        <p className="text-[10.5px] text-zinc-300 whitespace-normal break-all [overflow-wrap:anywhere]">
-          <span className="text-[9px] font-extrabold text-zinc-500 uppercase tracking-wider mr-1.5">ISSUED BY:</span>
-          <span className="font-semibold text-zinc-200">{cleanIssuer}</span>
-        </p>
-        {cleanCredId && (
-          <p className="text-[9.5px] text-zinc-400 font-mono whitespace-normal break-all [overflow-wrap:anywhere]">
-            <span className="font-sans text-[9px] font-extrabold text-zinc-550 uppercase tracking-wider mr-1.5">CREDENTIAL ID:</span>
-            <span>{cleanCredId}</span>
+        <div className="flex flex-col gap-1 text-xs text-slate-600 leading-relaxed font-sans">
+          <p>
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mr-1.5">Issued By:</span>
+            <span className="font-semibold text-slate-800">{cleanIssuer}</span>
           </p>
-        )}
+          {cleanCredId && (
+            <p className="font-mono text-[11px] text-slate-500">
+              <span className="font-sans text-[10px] font-bold text-slate-400 uppercase tracking-wider mr-1.5 font-mono-none">Credential ID:</span>
+              <span>{cleanCredId}</span>
+            </p>
+          )}
+        </div>
       </div>
 
       {safeCredUrl && (
-        <a
-          href={safeCredUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[10px] text-amber-500 hover:text-amber-400 font-medium flex items-center gap-1 mt-1 pt-1.5 border-t border-zinc-800/50"
-        >
-          <ExternalLink size={10} />
-          <span>Verify Credential</span>
-        </a>
+        <div className="pt-2.5 md:pt-3 border-t border-slate-100">
+          <a
+            href={safeCredUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-[10.5px] font-semibold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-slate-700 hover:text-slate-900 transition-all shadow-2xs cursor-pointer active:scale-95"
+          >
+            <ExternalLink size={11} />
+            <span>Verify Credential</span>
+          </a>
+        </div>
       )}
     </div>
   );

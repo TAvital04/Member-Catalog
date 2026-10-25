@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { UserRole } from "@/app/page";
-import { FolderGit2, Users, Calendar, Shield, Award, Sun, Moon } from "lucide-react";
+import { FolderGit2, Users, Calendar, Briefcase, Shield, Award, Sun, Moon } from "lucide-react";
 
 interface DirectoryNavbarProps {
   role?: UserRole;
@@ -40,6 +40,11 @@ export default function DirectoryNavbar({
       href: "/events",
       label: "Events",
       icon: Calendar,
+    },
+    {
+      href: "/jobs",
+      label: "Jobs",
+      icon: Briefcase,
     },
   ];
 
@@ -126,7 +131,7 @@ export default function DirectoryNavbar({
         <div className="flex flex-wrap items-center justify-between w-full md:w-auto gap-4">
           <Link href="/" className="flex items-center group cursor-pointer shrink-0 py-0.5">
             <span className="text-base font-extrabold text-slate-900 tracking-tight group-hover:text-slate-700 transition-colors">
-              RSO UCF
+              IEEE UCF
             </span>
           </Link>
 

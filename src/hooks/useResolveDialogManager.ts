@@ -49,8 +49,8 @@ export function useResolveDialogManager({
   const dispatchUnflagEmails = async (unflaggedStudents: Student[]) => {
     try {
       const emailPromises = unflaggedStudents.flatMap((student) => {
-        const subjectStudent = "[RSO UCF Member Catalog] Profile Flag Resolved";
-        const bodyStudent = `Hello ${student.name},\n\nGood news! Your candidate profile in the UCF Member Catalog has been reviewed by an administrator and unflagged.\n\nYour profile is now active and restored to public directory searches.\n\nBest,\nUCF RSO Admin Team`;
+        const subjectStudent = "[IEEE UCF Member Catalog] Profile Flag Resolved";
+        const bodyStudent = `Hello ${student.name},\n\nGood news! Your candidate profile in the IEEE UCF Member Catalog has been reviewed by an administrator and unflagged.\n\nYour profile is now active and restored to public directory searches.\n\nBest,\nIEEE UCF Admin Team`;
 
         const subjectAdmin = `[Member Catalog Resolution] Candidate Profile Unflagged: ${student.name}`;
         const bodyAdmin = `Hello Member Catalog Administrator,\n\nCandidate profile for ${student.name} (${student.email}) has been reviewed and unflagged.\n\nThe profile is now restored to active directory searches.\n\nBest,\nUCF Member Catalog System`;

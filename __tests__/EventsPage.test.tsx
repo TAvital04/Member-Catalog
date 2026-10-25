@@ -25,7 +25,7 @@ describe("IEEE UCF Events Catalog & EventModal", () => {
   test("renders Events catalog page with header and event cards", async () => {
     render(<IEEEEventsPage />);
 
-    expect(screen.getByText("RSO UCF Events & Workshops")).toBeInTheDocument();
+    expect(screen.getByText("IEEE UCF Events & Workshops")).toBeInTheDocument();
     expect(
       screen.getByText(/Explore upcoming and semester technical workshops/i)
     ).toBeInTheDocument();
