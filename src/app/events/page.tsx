@@ -275,8 +275,8 @@ function IEEEEventsContent() {
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer shrink-0 border ${
                   isSelected
-                    ? "bg-slate-900 text-white border-slate-900 shadow-2xs"
-                    : "bg-white text-slate-600 hover:text-slate-900 border-slate-200 hover:border-slate-300 shadow-2xs"
+                    ? "bg-white text-slate-950 font-bold border-slate-300 shadow-xs"
+                    : "bg-slate-100 text-slate-600 hover:text-slate-900 border-slate-200 hover:border-slate-300 shadow-2xs"
                 }`}
               >
                 {cat}

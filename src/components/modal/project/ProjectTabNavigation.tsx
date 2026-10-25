@@ -43,7 +43,7 @@ export default function ProjectTabNavigation({
           <Info size={14} className={activeTab === "info" ? "text-slate-700" : "text-slate-400"} />
           <span>Info</span>
           {activeTab === "info" && (
-            <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-slate-900 rounded-full"></span>
+            <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-amber-500 rounded-full"></span>
           )}
         </button>
 
@@ -65,7 +65,7 @@ export default function ProjectTabNavigation({
               <Icon size={13} className={isActive ? "text-slate-700" : "text-slate-400"} />
               <span>{label}</span>
               {isActive && (
-                <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-slate-900 rounded-full"></span>
+                <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-amber-500 rounded-full"></span>
               )}
             </button>
           );

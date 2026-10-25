@@ -123,6 +123,19 @@ body {
   background-image: none;
 }
 
+/* Dark Mode Safety: Prevent inverted slate text tokens from causing bright white backgrounds */
+[data-theme="dark"] .bg-slate-900,
+[data-theme="dark"] .hover\:bg-slate-900:hover,
+[data-theme="dark"] .bg-slate-950,
+[data-theme="dark"] .hover\:bg-slate-950:hover {
+  background-color: var(--color-slate-100) !important;
+  color: var(--color-slate-950) !important;
+}
+
+[data-theme="dark"] .border-slate-900 {
+  border-color: var(--color-slate-300) !important;
+}
+
 /* Crisp Clean Card Panels */
 .glass-panel {
   background: var(--glass-bg);

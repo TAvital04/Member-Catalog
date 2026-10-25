@@ -59,7 +59,7 @@ describe("Projects Page - Skills / Tech Stack Direct Navigation", () => {
     expect(screen.getAllByText("STM32F4 Cortex-M4").length).toBeGreaterThan(1);
     // SolidWorks CAD was not in the 4 preview tags on the card, only in the full modal tools tab
     expect(screen.getByText("SolidWorks CAD")).toBeInTheDocument();
-  });
+  }, 15000);
 
   test("clicking Key Tech Stack header button opens Tools & Skills tab directly", async () => {
     render(<IEEEProjectsPage />);

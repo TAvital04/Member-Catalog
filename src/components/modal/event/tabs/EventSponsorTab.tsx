@@ -261,7 +261,7 @@ ${sponsorMessage || "Interested in learning more about corporate workshop sponso
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full sm:w-auto self-end px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 disabled:bg-slate-400 text-white text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer mt-1"
+            className="w-full sm:w-auto self-end px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 disabled:opacity-50 text-slate-950 text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer mt-1"
           >
             <Send size={13} />
             <span>{isSubmitting ? "Submitting Inquiry..." : "Submit Event Sponsorship Inquiry"}</span>

@@ -46,6 +46,7 @@ import EmployerApplicantsModal from "@/components/modal/job/EmployerApplicantsMo
 import EmployerApplicantAnalytics from "@/components/modal/job/EmployerApplicantAnalytics";
 import PortfolioModal from "@/components/modal/PortfolioModal";
 import CustomDropdown from "@/components/common/CustomDropdown";
+import Avatar from "@/components/common/Avatar";
 
 function JobsPageContent() {
   const { theme, toggleTheme } = useThemeManager();
@@ -222,8 +223,8 @@ function JobsPageContent() {
             onClick={() => setPortalMode("member")}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               portalMode === "member"
-                ? "bg-slate-900 text-white shadow-xs"
-                : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/60"
+                ? "bg-white text-slate-950 font-bold shadow-xs border border-slate-200/90"
+                : "text-slate-600 hover:text-slate-900 hover:bg-white/60"
             }`}
           >
             <Users size={14} />
@@ -234,8 +235,8 @@ function JobsPageContent() {
             onClick={() => setPortalMode("employer")}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               portalMode === "employer"
-                ? "bg-slate-900 text-white shadow-xs"
-                : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/60"
+                ? "bg-white text-slate-950 font-bold shadow-xs border border-slate-200/90"
+                : "text-slate-600 hover:text-slate-900 hover:bg-white/60"
             }`}
           >
             <Building2 size={14} />
@@ -255,12 +256,7 @@ function JobsPageContent() {
             {activeStudent && (
               <div className="p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-9 h-9 rounded-full bg-slate-900 text-white font-bold flex items-center justify-center shrink-0 text-xs shadow-xs">
-                    {activeStudent.name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")}
-                  </div>
+                  <Avatar name={activeStudent.name} size="sm" />
                   <div className="min-w-0">
                     <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block leading-none">
                       Applying with Member Portfolio
@@ -328,7 +324,7 @@ function JobsPageContent() {
                       onClick={() => setSelectedEmploymentType(type)}
                       className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer whitespace-nowrap shadow-2xs ${
                         selectedEmploymentType === type
-                          ? "bg-slate-900 text-white border-slate-900 font-bold"
+                          ? "bg-white text-slate-950 font-bold border-slate-300 shadow-xs"
                           : "bg-slate-100 hover:bg-slate-200/80 border-slate-200 text-slate-700"
                       }`}
                     >
@@ -374,7 +370,7 @@ function JobsPageContent() {
                         onClick={() => setSelectedSkill(isSelected ? null : skill)}
                         className={`px-2 py-0.5 rounded-lg text-[10.5px] font-semibold border transition-all cursor-pointer shadow-2xs ${
                           isSelected
-                            ? "bg-slate-900 text-white border-slate-900 font-bold"
+                            ? "bg-amber-500/20 border-amber-500 text-amber-800 dark:text-amber-400 font-bold"
                             : "bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-700"
                         }`}
                       >
@@ -533,7 +529,7 @@ function JobsPageContent() {
               <button
                 type="button"
                 onClick={() => setIsPostJobModalOpen(true)}
-                className="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-all shadow-sm active:scale-98 cursor-pointer flex items-center gap-2"
+                className="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-bold transition-all shadow-sm active:scale-98 cursor-pointer flex items-center gap-2"
               >
                 <Plus size={15} />
                 <span>+ Post New Job Opportunity</span>
@@ -547,11 +543,11 @@ function JobsPageContent() {
                 onClick={() => setEmployerSubTab("postings")}
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                   employerSubTab === "postings"
-                    ? "bg-slate-900 text-white shadow-xs"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/60"
+                    ? "bg-white text-slate-950 font-bold shadow-xs border border-slate-200/90"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-white/60"
                 }`}
               >
-                <Briefcase size={14} className={employerSubTab === "postings" ? "text-amber-400" : ""} />
+                <Briefcase size={14} className={employerSubTab === "postings" ? "text-amber-500" : ""} />
                 <span>Active Postings ({employerJobs.length})</span>
               </button>
               <button
@@ -559,11 +555,11 @@ function JobsPageContent() {
                 onClick={() => setEmployerSubTab("analytics")}
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                   employerSubTab === "analytics"
-                    ? "bg-slate-900 text-white shadow-xs"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/60"
+                    ? "bg-white text-slate-950 font-bold shadow-xs border border-slate-200/90"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-white/60"
                 }`}
               >
-                <BarChart3 size={14} className={employerSubTab === "analytics" ? "text-amber-400" : ""} />
+                <BarChart3 size={14} className={employerSubTab === "analytics" ? "text-amber-500" : ""} />
                 <span>Applicant Pool Analytics ({applicationsList.length})</span>
               </button>
             </div>

@@ -430,7 +430,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
           <button
             type="submit"
             disabled={isSending}
-            className="w-full sm:w-auto self-end px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 disabled:bg-slate-400 text-white font-bold text-xs transition-all shadow-sm active:scale-98 flex items-center justify-center gap-2 cursor-pointer mt-1"
+            className="w-full sm:w-auto self-end px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 disabled:opacity-50 text-slate-950 font-bold text-xs transition-all shadow-sm active:scale-98 flex items-center justify-center gap-2 cursor-pointer mt-1"
           >
             {isSending ? (
               <>

@@ -215,7 +215,7 @@ export default function QuickJobPostModal({
                   onClick={() => handleApplyTemplate(tpl)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer shadow-2xs active:scale-95 ${
                     selectedTemplate === tpl.name
-                      ? "bg-slate-900 text-white border-slate-900 font-bold"
+                      ? "bg-amber-500/20 border-amber-500 text-amber-800 dark:text-amber-300 font-bold"
                       : "bg-slate-100 hover:bg-slate-200/80 text-slate-700 hover:text-slate-900 border-slate-200 hover:border-slate-300"
                   }`}
                 >
@@ -422,7 +422,7 @@ export default function QuickJobPostModal({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold shadow-sm active:scale-98 cursor-pointer flex items-center gap-2 disabled:opacity-50"
+              className="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-bold shadow-sm active:scale-98 cursor-pointer flex items-center gap-2 disabled:opacity-50"
             >
               {isSubmitting ? (
                 <>

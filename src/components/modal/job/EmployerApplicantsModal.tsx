@@ -19,6 +19,7 @@ import {
 import { JobPosting, JobApplication } from "@/data/jobs";
 import { Student } from "@/data/students";
 import CustomDropdown from "@/components/common/CustomDropdown";
+import Avatar from "@/components/common/Avatar";
 
 interface EmployerApplicantsModalProps {
   job: JobPosting;
@@ -208,12 +209,7 @@ export default function EmployerApplicantsModal({
                   {/* Top Bar: Candidate Identity + Status Pill */}
                   <div className="flex items-start justify-between gap-3 flex-wrap">
                     <div className="flex items-start gap-3 min-w-0">
-                      <div className="w-11 h-11 rounded-full bg-slate-900 text-white font-bold flex items-center justify-center shrink-0 text-sm shadow-xs">
-                        {app.portfolioSnapshot.name
-                          .split(" ")
-                          .map((n) => n[0])
-                          .join("")}
-                      </div>
+                      <Avatar name={app.portfolioSnapshot.name} size="sm" />
                       <div className="min-w-0">
                         <h3 className="font-black text-sm text-slate-900 leading-snug">
                           {app.portfolioSnapshot.name}
@@ -319,9 +315,9 @@ export default function EmployerApplicantsModal({
                         <button
                           type="button"
                           onClick={() => onViewPortfolio(student)}
-                          className="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-all shadow-2xs active:scale-95 cursor-pointer flex items-center gap-1.5"
+                          className="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-bold transition-all shadow-2xs active:scale-95 cursor-pointer flex items-center gap-1.5"
                         >
-                          <Sparkles size={12} className="text-amber-400" />
+                          <Sparkles size={12} className="text-slate-950" />
                           <span>Inspect Full Portfolio</span>
                         </button>
                       )}

@@ -241,11 +241,11 @@ export default function StudentLowerInfo({
           href={getSafeUrl(resumeUrl) || "#"}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition-all shadow-sm active:scale-98 cursor-pointer group/resume"
+          className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs transition-all shadow-sm active:scale-98 cursor-pointer group/resume"
         >
-          <FileText size={14} className="text-slate-300 group-hover/resume:text-white transition-colors" />
+          <FileText size={14} className="text-slate-950/80 transition-colors" />
           <span>View Resume PDF</span>
-          <ExternalLink size={12} className="text-slate-400 group-hover/resume:text-slate-200 ml-auto transition-colors" />
+          <ExternalLink size={12} className="text-slate-950/70 ml-auto transition-colors" />
         </a>
 
         {student.flagged && (

@@ -30,7 +30,7 @@ export default function ModalTabNavigation({
       >
         Overview
         {activeTab === "about" && (
-          <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-900 rounded-full"></span>
+          <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 rounded-full"></span>
         )}
       </button>
 
@@ -55,7 +55,7 @@ export default function ModalTabNavigation({
           >
             {label}
             {activeTab === tab && (
-              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-900 rounded-full"></span>
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 rounded-full"></span>
             )}
           </button>
         );

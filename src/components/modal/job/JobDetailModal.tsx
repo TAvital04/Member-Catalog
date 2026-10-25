@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { JobPosting, JobApplication } from "@/data/jobs";
 import { Student } from "@/data/students";
+import Avatar from "@/components/common/Avatar";
 
 interface JobDetailModalProps {
   job: JobPosting;
@@ -289,12 +290,7 @@ export default function JobDetailModal({
                 {/* Candidate Portfolio Snapshot Card */}
                 <div className="p-3.5 rounded-xl bg-white border border-slate-200/90 shadow-2xs flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="w-10 h-10 rounded-full bg-slate-900 text-white font-bold flex items-center justify-center shrink-0 text-sm">
-                      {activeStudent.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </div>
+                    <Avatar name={activeStudent.name} size="sm" />
                     <div className="min-w-0">
                       <h4 className="text-xs font-bold text-slate-900 truncate">
                         {activeStudent.name}
@@ -336,7 +332,7 @@ export default function JobDetailModal({
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition-all shadow-sm active:scale-98 cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
+                  className="w-full py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs transition-all shadow-sm active:scale-98 cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
                 >
                   {isSubmitting ? (
                     <>
