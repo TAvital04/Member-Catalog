@@ -9,7 +9,8 @@ interface AvatarProps {
 }
 
 export default function Avatar({ name, size = "md", className = "" }: AvatarProps) {
-  const getAvatarStyle = (nameStr: string) => {
+  const getAvatarStyle = (nameStr: string = "") => {
+    const safeStr = nameStr || "IEEE";
     const styles = [
       "bg-slate-100 text-slate-700 border border-slate-200",
       "bg-amber-50 text-amber-800 border border-amber-200/60",
@@ -19,8 +20,8 @@ export default function Avatar({ name, size = "md", className = "" }: AvatarProp
       "bg-purple-50 text-purple-800 border border-purple-200/60",
     ];
     let sum = 0;
-    for (let i = 0; i < nameStr.length; i++) {
-      sum += nameStr.charCodeAt(i);
+    for (let i = 0; i < safeStr.length; i++) {
+      sum += safeStr.charCodeAt(i);
     }
     return styles[sum % styles.length];
   };

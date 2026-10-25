@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { UserRole } from "@/app/page";
-import { FolderGit2, Users, Calendar, Briefcase, Shield, Award, Sun, Moon } from "lucide-react";
+import { FolderGit2, Users, Calendar, Briefcase, Shield, Award, Sun, Moon, Building2 } from "lucide-react";
 
 interface DirectoryNavbarProps {
   role?: UserRole;
@@ -45,6 +45,11 @@ export default function DirectoryNavbar({
       href: "/jobs",
       label: "Jobs",
       icon: Briefcase,
+    },
+    {
+      href: "/sponsors",
+      label: "Sponsors",
+      icon: Building2,
     },
   ];
 
