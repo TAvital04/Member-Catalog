@@ -8,21 +8,7 @@
  */
 
 import React, { useState, useEffect, useMemo, Suspense } from "react";
-import Link from "next/link";
-import {
-  Calendar,
-  Clock,
-  MapPin,
-  Building2,
-  Users,
-  Search,
-  X,
-  Filter,
-  Sparkles,
-  Award,
-  Layers,
-  CheckCircle2,
-} from "lucide-react";
+import { Calendar } from "lucide-react";
 import DirectoryNavbar from "@/components/directory/DirectoryNavbar";
 import DirectoryStatsHeader from "@/components/directory/DirectoryStatsHeader";
 import { useThemeManager } from "@/hooks/useThemeManager";
@@ -30,13 +16,15 @@ import { useRoleManager } from "@/hooks/useRoleManager";
 import { useStudentData } from "@/hooks/useStudentData";
 import EventModal from "@/components/modal/event/EventModal";
 import PortfolioModal from "@/components/modal/PortfolioModal";
-import { IEEEEvent, EventCategory, SAMPLE_IEEE_EVENTS } from "@/data/events";
+import EventCard from "@/components/events/EventCard";
+import EventFilters from "@/components/events/EventFilters";
+import EmptyState from "@/components/common/EmptyState";
+import { IEEEEvent, SAMPLE_IEEE_EVENTS } from "@/data/events";
 import { Student } from "@/data/students";
-import { CARD_INTERACTIVE, CARD_TITLE_HOVER } from "@/lib/cardStyles";
 
 function IEEEEventsContent() {
   const { theme, toggleTheme } = useThemeManager();
-  const { role, handleRoleChange, hasFilterPermission, isAdmin } = useRoleManager();
+  const { role, handleRoleChange, isAdmin } = useRoleManager();
   const { students } = useStudentData();
   const [eventsList, setEventsList] = useState<IEEEEvent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -101,11 +89,12 @@ function IEEEEventsContent() {
         minute: "2-digit",
       });
     } catch {
-      return isoString;
+      return "";
     }
   };
 
-  const now = new Date().getTime();
+  // Filter events by search, category, and timeframe
+  const now = useMemo(() => new Date().getTime(), []);
 
   const filteredEvents = useMemo(() => {
     return eventsList.filter((evt) => {
@@ -114,8 +103,8 @@ function IEEEEventsContent() {
         return false;
       }
 
-      // Time filter (upcoming vs past)
-      if (timeFilter !== "all") {
+      // Timeframe filter
+      if (timeFilter !== "all" && evt.startTime) {
         const evtTime = new Date(evt.startTime).getTime();
         if (timeFilter === "upcoming" && evtTime < now) return false;
         if (timeFilter === "past" && evtTime >= now) return false;
@@ -146,20 +135,13 @@ function IEEEEventsContent() {
     const cleanName = (name || "").toLowerCase().trim();
     const cleanEmail = (email || "").toLowerCase().trim();
 
-    // 1. Direct ID match
     let match = cleanId ? students.find((s) => s.id.toLowerCase() === cleanId) : undefined;
-
-    // 2. Direct Email match
     if (!match && cleanEmail) {
       match = students.find((s) => s.email.toLowerCase() === cleanEmail);
     }
-
-    // 3. Direct Name match
     if (!match && cleanName) {
       match = students.find((s) => s.name.toLowerCase() === cleanName);
     }
-
-    // 4. Slug / heuristic match on memberId
     if (!match && cleanId) {
       const slugName = cleanId.replace(/^mem-/, "").replace(/^(cand|candidate)-/, "").replace(/[-_]/g, " ");
       match = students.find((s) => {
@@ -178,13 +160,8 @@ function IEEEEventsContent() {
     }
   };
 
-  // Stats summary counts
-  const totalEvents = eventsList.length;
-  const workshopCount = eventsList.filter((e) => e.category === "Technical Workshop").length;
-  const partnerCount = eventsList.filter((e) => Boolean(e.partner)).length;
-
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900 relative pb-16 overflow-x-hidden">
+    <div className="page-wrapper">
       {/* Primary Header Navbar */}
       <DirectoryNavbar
         role={role}
@@ -202,89 +179,15 @@ function IEEEEventsContent() {
       />
 
       {/* Search & Category Filter Controls */}
-      <section className="max-w-7xl w-full mx-auto px-4 mb-5">
-        <div className="flex flex-col sm:flex-row items-center gap-3 mb-4">
-          {/* Search Box */}
-          <div className="relative w-full grow">
-            <Search size={16} className="absolute left-3.5 top-3.5 text-slate-400 pointer-events-none" />
-            <input
-              type="text"
-              placeholder="Search events by title, partner, topic, or location..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-9 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/10 shadow-2xs transition-all"
-            />
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => setSearchQuery("")}
-                className="absolute right-3 top-3 text-slate-400 hover:text-slate-600 p-0.5 cursor-pointer"
-                aria-label="Clear search"
-              >
-                <X size={15} />
-              </button>
-            )}
-          </div>
-
-          {/* Time Filter Pill */}
-          <div className="flex items-center bg-white border border-slate-200 p-1 rounded-xl shadow-2xs shrink-0 self-end sm:self-auto">
-            <button
-              type="button"
-              onClick={() => setTimeFilter("all")}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                timeFilter === "all"
-                  ? "bg-slate-100 text-slate-900 font-bold"
-                  : "text-slate-500 hover:text-slate-800"
-              }`}
-            >
-              All
-            </button>
-            <button
-              type="button"
-              onClick={() => setTimeFilter("upcoming")}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                timeFilter === "upcoming"
-                  ? "bg-slate-100 text-slate-900 font-bold"
-                  : "text-slate-500 hover:text-slate-800"
-              }`}
-            >
-              Upcoming
-            </button>
-            <button
-              type="button"
-              onClick={() => setTimeFilter("past")}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                timeFilter === "past"
-                  ? "bg-slate-100 text-slate-900 font-bold"
-                  : "text-slate-500 hover:text-slate-800"
-              }`}
-            >
-              Past Sessions
-            </button>
-          </div>
-        </div>
-
-        {/* Category Filter Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-          {categories.map((cat) => {
-            const isSelected = selectedCategory === cat;
-            return (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer shrink-0 border ${
-                  isSelected
-                    ? "bg-white text-slate-950 font-bold border-slate-300 shadow-xs"
-                    : "bg-slate-100 text-slate-600 hover:text-slate-900 border-slate-200 hover:border-slate-300 shadow-2xs"
-                }`}
-              >
-                {cat}
-              </button>
-            );
-          })}
-        </div>
-      </section>
+      <EventFilters
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        categories={categories}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        timeFilter={timeFilter}
+        setTimeFilter={setTimeFilter}
+      />
 
       {/* Events Grid */}
       <main className="max-w-7xl w-full mx-auto px-4">
@@ -305,93 +208,28 @@ function IEEEEventsContent() {
             ))}
           </div>
         ) : filteredEvents.length === 0 ? (
-          <div className="bg-white border border-slate-200/90 rounded-2xl p-12 text-center shadow-xs">
-            <Calendar size={36} className="mx-auto text-slate-300 mb-3" />
-            <h3 className="text-base font-bold text-slate-800 mb-1">No matching events found</h3>
-            <p className="text-xs text-slate-500 max-w-sm mx-auto">
-              Try adjusting your search terms or clearing your category filters to view other chapter
-              events.
-            </p>
-            <button
-              type="button"
-              onClick={() => {
-                setSelectedCategory("All");
-                setSearchQuery("");
-                setTimeFilter("all");
-              }}
-              className="mt-4 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition-colors cursor-pointer"
-            >
-              Reset Filters
-            </button>
-          </div>
+          <EmptyState
+            icon={<Calendar size={32} />}
+            headline="No matching events found"
+            subtext="Try adjusting your search terms or clearing your category filters to view other chapter events."
+            actionLabel="Reset Filters"
+            onAction={() => {
+              setSelectedCategory("All");
+              setSearchQuery("");
+              setTimeFilter("all");
+            }}
+          />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {filteredEvents.map((event) => {
-              const attendees = event.attendees || [];
-
-              return (
-                <div
-                  key={event.id}
-                  onClick={() => setActiveModalEvent(event)}
-                  className={`${CARD_INTERACTIVE} p-6 flex flex-col justify-between group gap-5`}
-                >
-                  <div className="space-y-3.5">
-                    {/* Category & Partner Badge Header */}
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-[10px] font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
-                        {event.category}
-                      </span>
-                      {event.partner && (
-                        <span className="text-[10px] font-semibold text-amber-800 bg-amber-50 px-3.5 py-1.5 rounded-full border border-amber-200/60 flex items-center gap-1.5">
-                          <Building2 size={12} />
-                          <span className="truncate max-w-[130px]">{event.partner}</span>
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Event Title */}
-                    <h3 className={`text-base font-bold leading-snug line-clamp-2 ${CARD_TITLE_HOVER}`}>
-                      {event.title}
-                    </h3>
-
-                    {/* Time & Location Details */}
-                    <div className="space-y-1 text-xs text-slate-500">
-                      <div className="flex items-center gap-1.5 font-semibold text-slate-800">
-                        <Calendar size={13} className="text-amber-600 shrink-0" />
-                        <span>{formatDate(event.startTime)}</span>
-                        {event.startTime && (
-                          <span className="text-slate-400 font-normal">
-                            • {formatTime(event.startTime)}
-                          </span>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-1.5 text-slate-500">
-                        <MapPin size={13} className="text-slate-400 shrink-0" />
-                        <span className="truncate">{event.location}</span>
-                      </div>
-                    </div>
-
-                    {/* Description preview */}
-                    <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
-                      {event.description}
-                    </p>
-                  </div>
-
-                  {/* Card Footer: Attendees */}
-                  <div className="pt-3.5 border-t border-slate-100 flex items-center justify-between">
-                    {/* Attendee Counter */}
-                    <div className="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
-                      <Users size={14} className="text-slate-400" />
-                      <span>
-                        {attendees.length > 0
-                          ? `${attendees.length} member${attendees.length === 1 ? "" : "s"}`
-                          : "Open attendance"}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+            {filteredEvents.map((event) => (
+              <EventCard
+                key={event.id}
+                event={event}
+                onClick={setActiveModalEvent}
+                formatDate={formatDate}
+                formatTime={formatTime}
+              />
+            ))}
           </div>
         )}
       </main>

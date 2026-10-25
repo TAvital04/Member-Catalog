@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./colors.css";
+@import "./design-system.css";
 
 @theme inline {
   --color-zinc-955: var(--zinc-955);

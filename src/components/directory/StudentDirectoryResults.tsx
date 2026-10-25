@@ -4,6 +4,7 @@ import { Student } from "@/data/students";
 import StudentCard from "./StudentCard";
 import StudentRow from "./StudentRow";
 import StudentCardSkeleton from "./StudentCardSkeleton";
+import EmptyState from "@/components/common/EmptyState";
 
 interface StudentDirectoryResultsProps {
   isLoading: boolean;
@@ -74,19 +75,12 @@ export default function StudentDirectoryResults({
   }
 
   return (
-    <div className="flex flex-col items-center justify-center py-20 border border-dashed border-zinc-800 rounded-3xl p-8 bg-zinc-955/40">
-      <Compass size={40} className="text-zinc-600 mb-4 stroke-1 animate-pulse" />
-      <h3 className="font-bold text-zinc-300 text-sm mb-1">No resumes match your criteria</h3>
-      <p className="text-zinc-500 text-xs text-center max-w-sm mb-4">
-        Try loosening your active filters, adjusting the search query, or toggling Admin Edit Mode to check flagged maintenance entries.
-      </p>
-      <button
-        type="button"
-        onClick={onResetAllFilters}
-        className="px-4 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-400 hover:bg-amber-500/20 text-xs font-bold rounded-xl transition-all cursor-pointer"
-      >
-        Reset All Filters
-      </button>
-    </div>
+    <EmptyState
+      icon={<Compass size={36} className="stroke-1" />}
+      headline="No resumes match your criteria"
+      subtext="Try loosening your active filters, adjusting the search query, or toggling Admin Edit Mode to check flagged maintenance entries."
+      actionLabel="Reset All Filters"
+      onAction={onResetAllFilters}
+    />
   );
 }
