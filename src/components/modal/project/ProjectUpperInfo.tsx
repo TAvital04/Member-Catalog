@@ -38,8 +38,8 @@ export default function ProjectUpperInfo({ project }: ProjectUpperInfoProps) {
 
       {/* Project Icon & Title */}
       <div className="flex items-start gap-3.5">
-        <div className="p-3 rounded-2xl bg-slate-100 border border-slate-200 text-slate-500 shadow-2xs shrink-0 mt-0.5">
-          <FolderGit2 size={24} className="stroke-[2]" />
+        <div className="p-3 rounded-2xl bg-slate-100 border border-slate-200 text-amber-500 shadow-2xs shrink-0 mt-0.5">
+          <FolderGit2 size={24} className="stroke-[2] text-amber-500" />
         </div>
         <div className="flex-1 min-w-0">
           <h2 className="text-xl font-black text-slate-900 tracking-tight leading-tight">
@@ -94,9 +94,9 @@ export default function ProjectUpperInfo({ project }: ProjectUpperInfoProps) {
               href={getSafeUrl(project.repositoryUrl)!}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 text-xs font-semibold text-slate-700 hover:text-slate-900 transition-colors flex items-center gap-1.5"
+              className="px-3 py-1.5 rounded-xl bg-white border border-slate-200/90 hover:border-slate-300 text-xs font-semibold text-slate-700 hover:text-slate-900 transition-all shadow-2xs hover:shadow-md hover:-translate-y-0.5 active:scale-95 flex items-center gap-1.5"
             >
-              <GitBranch size={13} className="text-slate-400" />
+              <GitBranch size={13} className="text-slate-700 dark:text-slate-400" />
               <span>GitHub Repo</span>
             </a>
           ) : (
@@ -110,9 +110,9 @@ export default function ProjectUpperInfo({ project }: ProjectUpperInfoProps) {
               href={getSafeUrl(project.demoUrl)!}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 text-xs font-semibold text-slate-700 hover:text-slate-900 transition-colors flex items-center gap-1.5"
+              className="px-3 py-1.5 rounded-xl bg-white border border-slate-200/90 hover:border-slate-300 text-xs font-semibold text-slate-700 hover:text-slate-900 transition-all shadow-2xs hover:shadow-md hover:-translate-y-0.5 active:scale-95 flex items-center gap-1.5"
             >
-              <ExternalLink size={13} className="text-slate-400" />
+              <ExternalLink size={13} className="text-amber-600 dark:text-amber-500" />
               <span>Project Website</span>
             </a>
           ) : (

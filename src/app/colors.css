@@ -225,8 +225,8 @@
   --glass-border: var(--border-subtle);
 
   /* Modal surfaces */
-  --modal-left-bg: #0e1524;
-  --modal-right-bg: #121b2d;
+  --modal-left-bg: rgba(11, 15, 25, 0.70);
+  --modal-right-bg: rgba(11, 15, 25, 0.70);
   --modal-overlay-bg: rgba(7, 11, 19, 0.80);
 
   /* Scrollbar */

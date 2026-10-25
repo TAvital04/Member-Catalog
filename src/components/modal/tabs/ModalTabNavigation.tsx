@@ -17,7 +17,14 @@ export default function ModalTabNavigation({
   const tabsList = ["projects", "skills", "events", "contact"] as const;
 
   return (
-    <div className="flex border-b border-slate-200 mb-5 pb-1 text-xs md:text-sm gap-1 md:gap-2 overflow-x-auto no-scrollbar md:overflow-visible pr-12 md:pr-16 shrink-0">
+    <div
+      onWheel={(e) => {
+        if (e.deltaY !== 0) {
+          e.currentTarget.scrollLeft += e.deltaY;
+        }
+      }}
+      className="flex border-b border-slate-200 mb-5 pb-1 text-xs md:text-sm gap-1 md:gap-2 overflow-x-auto no-scrollbar pr-10 md:pr-12 shrink-0 cursor-default"
+    >
       {/* Mobile Info / Overview Tab */}
       <button
         type="button"

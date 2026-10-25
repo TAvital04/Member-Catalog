@@ -265,19 +265,26 @@ export default function EventModal({
         {/* Scrollable Container Wrapper */}
         <div className="w-full flex flex-col md:flex-row overflow-hidden h-full">
           {/* Left Side Panel: Hero & Quick Stats (Desktop) */}
-          <div className="w-full md:w-2/5 p-6 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col justify-between md:overflow-y-auto overflow-x-hidden relative z-10 bg-modal-left hidden md:flex">
+          <div className="w-full md:w-2/5 p-6 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col justify-between md:overflow-y-auto overflow-x-hidden relative z-10 bg-slate-50/70 hidden md:flex">
             {EventHeroContent}
           </div>
 
           {/* Right Side Panel: Interactive Tabs */}
-          <div className="w-full md:w-3/5 p-5 md:p-6 pt-14 md:pt-6 flex flex-col h-full relative z-10 bg-modal-right overflow-hidden">
+          <div className="w-full md:w-3/5 p-5 md:p-6 pt-12 md:pt-6 flex flex-col h-full relative z-10 bg-slate-50/70 overflow-hidden">
             {/* Standardized Tab Navigation Header */}
-            <div className="flex border-b border-slate-200 mb-5 pb-1 text-xs md:text-sm gap-1 md:gap-2 overflow-x-auto no-scrollbar md:overflow-visible pr-12 md:pr-16 shrink-0">
+            <div
+              onWheel={(e) => {
+                if (e.deltaY !== 0) {
+                  e.currentTarget.scrollLeft += e.deltaY;
+                }
+              }}
+              className="flex border-b border-slate-200 mb-5 pb-1 text-xs md:text-sm gap-1 md:gap-2 overflow-x-auto no-scrollbar pr-10 md:pr-12 shrink-0 cursor-default"
+            >
               {/* Mobile Info Tab */}
               <button
                 type="button"
                 onClick={() => setActiveTab("info")}
-                className={`py-2 px-3 font-bold uppercase tracking-wider relative transition-all md:hidden shrink-0 flex items-center gap-1.5 whitespace-nowrap ${
+                className={`py-2 px-2.5 font-bold uppercase tracking-wider relative transition-all md:hidden shrink-0 flex items-center gap-1.5 whitespace-nowrap ${
                   activeTab === "info"
                     ? "text-slate-900 font-extrabold"
                     : "text-slate-500 hover:text-slate-700 font-semibold"
@@ -291,7 +298,7 @@ export default function EventModal({
               </button>
 
               {/* Main Tabs */}
-              {tabsList.map(({ id, label, ariaLabel, icon: Icon }) => {
+              {tabsList.map(({ id, label, ariaLabel }) => {
                 const isActive = activeTab === id;
                 return (
                   <button
@@ -299,13 +306,12 @@ export default function EventModal({
                     type="button"
                     aria-label={ariaLabel || label}
                     onClick={() => setActiveTab(id)}
-                    className={`py-2 px-2.5 sm:px-3 font-bold uppercase tracking-wider relative transition-all shrink-0 md:shrink md:flex-1 md:text-center flex items-center justify-center gap-1.5 whitespace-nowrap text-xs md:text-xs lg:text-sm ${
+                    className={`py-2 px-2.5 sm:px-3 font-bold uppercase tracking-wider relative transition-all shrink-0 md:shrink md:flex-1 md:text-center whitespace-nowrap text-xs md:text-xs lg:text-sm ${
                       isActive
                         ? "text-slate-900 font-extrabold"
                         : "text-slate-500 hover:text-slate-700 font-semibold"
                     }`}
                   >
-                    <Icon size={14} className={isActive ? "text-amber-500" : "text-slate-400"} />
                     <span>{label}</span>
                     {isActive && (
                       <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 rounded-full"></span>
