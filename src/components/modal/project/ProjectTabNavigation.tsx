@@ -28,49 +28,47 @@ export default function ProjectTabNavigation({
   ];
 
   return (
-    <div className="border-b border-slate-200 mb-5 relative shrink-0">
-      <div className="flex items-center text-xs md:text-sm gap-0.5 sm:gap-1 md:gap-1.5 overflow-x-auto no-scrollbar mr-12 md:mr-14 pb-1">
-        {/* Mobile Info Tab */}
-        <button
-          type="button"
-          onClick={() => setActiveTab("info")}
-          className={`py-2 px-2.5 font-bold uppercase tracking-wider relative transition-all md:hidden shrink-0 flex items-center gap-1.5 whitespace-nowrap ${
-            activeTab === "info"
-              ? "text-slate-900 font-extrabold"
-              : "text-slate-500 hover:text-slate-700 font-medium"
-          }`}
-        >
-          <Info size={14} className={activeTab === "info" ? "text-slate-700" : "text-slate-400"} />
-          <span>Info</span>
-          {activeTab === "info" && (
-            <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-amber-500 rounded-full"></span>
-          )}
-        </button>
+    <div className="flex border-b border-slate-200 mb-5 pb-1 text-xs md:text-sm gap-1 md:gap-2 overflow-x-auto no-scrollbar md:overflow-visible pr-12 md:pr-16 shrink-0">
+      {/* Mobile Info Tab */}
+      <button
+        type="button"
+        onClick={() => setActiveTab("info")}
+        className={`py-2 px-3 font-bold uppercase tracking-wider relative transition-all md:hidden shrink-0 flex items-center gap-1.5 whitespace-nowrap ${
+          activeTab === "info"
+            ? "text-slate-900 font-extrabold"
+            : "text-slate-500 hover:text-slate-700 font-semibold"
+        }`}
+      >
+        <Info size={14} className={activeTab === "info" ? "text-amber-500" : "text-slate-400"} />
+        <span>Info</span>
+        {activeTab === "info" && (
+          <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 rounded-full"></span>
+        )}
+      </button>
 
-        {/* Main Tabs */}
-        {tabsList.map(({ id, label, ariaLabel, icon: Icon }) => {
-          const isActive = activeTab === id || (id === "tools" && activeTab === "skills");
-          return (
-            <button
-              key={id}
-              type="button"
-              aria-label={ariaLabel || label}
-              onClick={() => setActiveTab(id)}
-              className={`py-2 px-2 sm:px-2.5 md:px-3 font-bold uppercase tracking-wider relative transition-all shrink-0 flex items-center justify-center gap-1.5 whitespace-nowrap text-xs md:text-xs lg:text-sm ${
-                isActive
-                  ? "text-slate-900 font-extrabold"
-                  : "text-slate-500 hover:text-slate-700 font-medium"
-              }`}
-            >
-              <Icon size={13} className={isActive ? "text-slate-700" : "text-slate-400"} />
-              <span>{label}</span>
-              {isActive && (
-                <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-amber-500 rounded-full"></span>
-              )}
-            </button>
-          );
-        })}
-      </div>
+      {/* Main Tabs */}
+      {tabsList.map(({ id, label, ariaLabel, icon: Icon }) => {
+        const isActive = activeTab === id || (id === "tools" && activeTab === "skills");
+        return (
+          <button
+            key={id}
+            type="button"
+            aria-label={ariaLabel || label}
+            onClick={() => setActiveTab(id)}
+            className={`py-2 px-2 sm:px-2.5 md:px-3 font-bold uppercase tracking-wider relative transition-all shrink-0 md:shrink md:flex-1 md:text-center flex items-center justify-center gap-1.5 whitespace-nowrap text-xs md:text-xs lg:text-sm ${
+              isActive
+                ? "text-slate-900 font-extrabold"
+                : "text-slate-500 hover:text-slate-700 font-semibold"
+            }`}
+          >
+            <Icon size={13} className={isActive ? "text-amber-500" : "text-slate-400"} />
+            <span>{label}</span>
+            {isActive && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 rounded-full"></span>
+            )}
+          </button>
+        );
+      })}
     </div>
   );
 }

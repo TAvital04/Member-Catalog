@@ -2,8 +2,7 @@
 
 import React, { useState } from "react";
 import { IEEEProject } from "@/data/projects";
-import { CheckCircle2, ShieldCheck, HeartHandshake, Sparkles, Send, Building2, User, Mail, MessageSquare, Award } from "lucide-react";
-import CurrentSponsorsSegment from "@/components/common/CurrentSponsorsSegment";
+import { CheckCircle2, HeartHandshake, Sparkles, Send, Building2, Award } from "lucide-react";
 
 interface ProjectSponsorTabProps {
   project: IEEEProject;
@@ -16,6 +15,7 @@ export default function ProjectSponsorTab({ project }: ProjectSponsorTabProps) {
   const [sponsorName, setSponsorName] = useState("");
   const [sponsorCompany, setSponsorCompany] = useState("");
   const [sponsorEmail, setSponsorEmail] = useState("");
+  const [sponsorTier, setSponsorTier] = useState("Custom Project Grant");
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionStatus, setSubmissionStatus] = useState<"idle" | "success" | "error">("idle");
@@ -38,6 +38,7 @@ export default function ProjectSponsorTab({ project }: ProjectSponsorTabProps) {
 Sponsor: ${sponsorName}
 Organization / Company: ${sponsorCompany || "Individual Sponsor"}
 Contact Email: ${sponsorEmail}
+Sponsorship Interest: ${sponsorTier}
 Message / Partnership Interests:
 ${message || "No additional notes provided."}`,
       };
@@ -62,11 +63,11 @@ ${message || "No additional notes provided."}`,
   };
 
   return (
-    <div className="flex flex-col gap-6 animate-fade-in pt-1 pb-6">
+    <div className="flex flex-col gap-5 animate-fade-in pt-1 pb-4">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-2">
+      <div className="flex items-center justify-between pb-3 border-b border-slate-100">
         <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider py-1 leading-normal min-w-0">
-          <HeartHandshake size={15} className="text-slate-400 shrink-0" />
+          <HeartHandshake size={15} className="text-amber-600 dark:text-amber-500 shrink-0" />
           <span className="hidden sm:inline">Sponsorship Opportunities & Partner Benefits</span>
           <span className="sm:hidden">Sponsor Benefits</span>
         </div>
@@ -75,7 +76,7 @@ ${message || "No additional notes provided."}`,
       {/* Hero Overview */}
       <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col gap-2 shadow-2xs">
         <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
-          <Sparkles size={15} className="text-slate-400" />
+          <Sparkles size={15} className="text-amber-500" />
           <span>Why Partner With This Project?</span>
         </div>
         <p className="text-xs text-slate-700 leading-relaxed font-sans">
@@ -88,7 +89,7 @@ ${message || "No additional notes provided."}`,
       {sponsorship?.benefits && sponsorship.benefits.length > 0 ? (
         <div className="flex flex-col gap-3">
           <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-            <Award size={14} className="text-slate-400" />
+            <Award size={14} className="text-amber-500" />
             Possible Benefits For Your Organization
           </h4>
 
@@ -99,7 +100,7 @@ ${message || "No additional notes provided."}`,
                 className="p-4 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between gap-2.5 shadow-2xs"
               >
                 <div className="flex items-start gap-2.5">
-                  <div className="p-1 rounded-lg bg-slate-100 text-slate-600 border border-slate-200 shrink-0 mt-0.5">
+                  <div className="p-1 rounded-lg bg-amber-50 text-amber-700 border border-amber-200/60 shrink-0 mt-0.5">
                     <CheckCircle2 size={13} />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -115,7 +116,7 @@ ${message || "No additional notes provided."}`,
                 {benefit.category && (
                   <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-500 font-mono">
                     <span>{benefit.category}</span>
-                    {benefit.highlight && <span className="text-slate-800 font-sans font-bold">Featured Perk</span>}
+                    {benefit.highlight && <span className="text-amber-600 font-sans font-bold">Featured Perk</span>}
                   </div>
                 )}
               </div>
@@ -125,7 +126,7 @@ ${message || "No additional notes provided."}`,
       ) : (
         <div className="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-200 flex flex-col gap-1.5 shadow-2xs">
           <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-            <Award size={14} className="text-slate-400" />
+            <Award size={14} className="text-amber-500" />
             Sponsorship Package Pending
           </h4>
           <p className="text-xs text-slate-500 leading-relaxed font-sans">
@@ -135,115 +136,118 @@ ${message || "No additional notes provided."}`,
         </div>
       )}
 
-      {/* Current Chapter Sponsors Segment */}
-      <CurrentSponsorsSegment variant="full" title="Current IEEE UCF Chapter Sponsors" />
-
       {/* Direct Sponsorship Inquiry Form */}
-      <div className="p-5 rounded-2xl bg-white border border-slate-200 flex flex-col gap-4 shadow-2xs">
-        <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-          <div>
-            <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-              <Send size={14} className="text-slate-400" />
-              Inquire to Sponsor This Project
-            </h4>
-            <p className="text-xs text-slate-600 mt-0.5">
-              Connect directly with our student directors and RSO chapter leadership to discuss custom sponsorship, equipment grants, or branding.
-            </p>
-          </div>
+      <div className="p-4 md:p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-4">
+        <div className="flex flex-col gap-1">
+          <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+            <Building2 size={14} className="text-amber-600 dark:text-amber-500 shrink-0" />
+            <span>Inquire to Sponsor This Project</span>
+          </h4>
+          <p className="text-xs text-slate-500">
+            Connect directly with our student directors and RSO chapter leadership to discuss custom sponsorship, equipment grants, or branding.
+          </p>
         </div>
 
         {submissionStatus === "success" ? (
-          <div className="p-6 rounded-2xl bg-emerald-50 border border-emerald-200 text-center flex flex-col items-center gap-2">
-            <CheckCircle2 size={32} className="text-emerald-600" />
-            <h5 className="text-sm font-bold text-slate-900">Inquiry Received</h5>
-            <p className="text-xs text-slate-700 max-w-md">
+          <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2">
+            <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+            <span>
               Thank you for supporting student innovation at UCF! Our project team and corporate relations chairs will respond within 24 hours.
-            </p>
-            <button
-              type="button"
-              onClick={() => setSubmissionStatus("idle")}
-              className="mt-2 text-xs text-slate-900 font-bold underline cursor-pointer"
-            >
-              Submit another message
-            </button>
+            </span>
           </div>
         ) : (
           <form onSubmit={handleSubmitPledge} className="flex flex-col gap-3">
+            {submissionStatus === "error" && (
+              <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs">
+                Failed to submit sponsorship inquiry. Please try again or email ieee@ucf.edu directly.
+              </div>
+            )}
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
-                  Your Full Name *
+              <div className="flex flex-col gap-1">
+                <label className="text-[11px] font-bold text-slate-700">
+                  Your Full Name <span className="text-red-500">*</span>
                 </label>
-                <div className="relative">
-                  <User size={13} className="absolute left-3 top-3 text-slate-400" />
-                  <input
-                    type="text"
-                    required
-                    value={sponsorName}
-                    onChange={(e) => setSponsorName(e.target.value)}
-                    placeholder="e.g. Dr. Jane Smith"
-                    className="w-full pl-9 pr-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-400"
-                  />
-                </div>
+                <input
+                  type="text"
+                  required
+                  value={sponsorName}
+                  onChange={(e) => setSponsorName(e.target.value)}
+                  placeholder="e.g. Dr. Jane Smith"
+                  className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-amber-500 transition-colors"
+                />
               </div>
 
-              <div>
-                <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
+              <div className="flex flex-col gap-1">
+                <label className="text-[11px] font-bold text-slate-700">
                   Company / Organization
                 </label>
-                <div className="relative">
-                  <Building2 size={13} className="absolute left-3 top-3 text-slate-400" />
-                  <input
-                    type="text"
-                    value={sponsorCompany}
-                    onChange={(e) => setSponsorCompany(e.target.value)}
-                    placeholder="e.g. Lockheed Martin, TI, or Independent"
-                    className="w-full pl-9 pr-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-400"
-                  />
-                </div>
+                <input
+                  type="text"
+                  value={sponsorCompany}
+                  onChange={(e) => setSponsorCompany(e.target.value)}
+                  placeholder="e.g. Lockheed Martin, TI, or Independent"
+                  className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-amber-500 transition-colors"
+                />
               </div>
             </div>
 
-            <div>
-              <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
-                Email Address *
-              </label>
-              <div className="relative">
-                <Mail size={13} className="absolute left-3 top-3 text-slate-400" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="flex flex-col gap-1">
+                <label className="text-[11px] font-bold text-slate-700">
+                  Contact Email <span className="text-red-500">*</span>
+                </label>
                 <input
                   type="email"
                   required
                   value={sponsorEmail}
                   onChange={(e) => setSponsorEmail(e.target.value)}
                   placeholder="contact@company.com"
-                  className="w-full pl-9 pr-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-400"
+                  className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-amber-500 transition-colors"
                 />
+              </div>
+
+              <div className="flex flex-col gap-1">
+                <label className="text-[11px] font-bold text-slate-700">
+                  Sponsorship Interest
+                </label>
+                <select
+                  value={sponsorTier}
+                  onChange={(e) => setSponsorTier(e.target.value)}
+                  className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:bg-white focus:outline-none focus:border-amber-500 transition-colors cursor-pointer"
+                >
+                  <option value="Custom Project Grant">Custom Project Grant / Funding</option>
+                  <option value="Hardware & Component Donation">Hardware & Component Donation</option>
+                  <option value="Chassis / Banner Branding">Chassis & Competition Branding</option>
+                  <option value="Technical Mentorship">Technical Mentorship & Advisory</option>
+                  <option value="General Corporate Sponsorship">General Corporate Sponsorship</option>
+                </select>
               </div>
             </div>
 
-            <div>
-              <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
-                How Would You Like to Partner?
+            <div className="flex flex-col gap-1">
+              <label className="text-[11px] font-bold text-slate-700">
+                How Would You Like to Partner? (Optional)
               </label>
               <textarea
                 rows={3}
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Tell us about your interests (e.g., logo placement on robot chassis, sponsoring component fabrication, hosting a tech talk, or lab equipment donation)..."
-                className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-400 resize-none"
+                className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-amber-500 transition-colors resize-none"
               />
             </div>
 
-            <div className="flex items-center justify-between pt-1">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-1">
               <span className="text-[11px] text-slate-500">
-                Routed directly to RSO UCF leadership.
+                Routed directly to IEEE UCF leadership.
               </span>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-900 font-bold text-xs uppercase tracking-wider shadow-2xs active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 disabled:opacity-50 text-slate-950 font-bold text-xs transition-all shadow-sm active:scale-98 flex items-center justify-center gap-2 cursor-pointer"
               >
-                <Send size={13} className="text-slate-400" />
+                <Send size={13} />
                 <span>{isSubmitting ? "Sending..." : "Send Sponsorship Inquiry"}</span>
               </button>
             </div>

@@ -12,7 +12,6 @@ import {
   Users,
 } from "lucide-react";
 import { IEEEEvent } from "@/data/events";
-import CurrentSponsorsSegment from "@/components/common/CurrentSponsorsSegment";
 import { CARD_INTERACTIVE } from "@/lib/cardStyles";
 
 interface EventSponsorTabProps {
@@ -161,8 +160,6 @@ ${sponsorMessage || "Interested in learning more about corporate workshop sponso
         </div>
       </div>
 
-      {/* Current Sponsors Segment in Tab */}
-      <CurrentSponsorsSegment variant="full" title="Current IEEE UCF Chapter Sponsors" />
 
       {/* Direct Event Sponsorship Inquiry Form */}
       <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col gap-4">
