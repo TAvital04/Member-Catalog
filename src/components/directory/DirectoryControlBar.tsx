@@ -163,7 +163,11 @@ export default function DirectoryControlBar({
         <input
           type="text"
           ref={searchInputRef}
-          placeholder="Search by candidate name, skill, coursework, bio (Ctrl+K)..."
+          placeholder={
+            role === "standard"
+              ? "Search by candidate name (Ctrl+K)..."
+              : "Search by candidate name, skill, coursework, bio (Ctrl+K)..."
+          }
           value={localQuery}
           onChange={(e) => setLocalQuery(e.target.value)}
           onKeyDown={(e) => {

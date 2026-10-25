@@ -166,6 +166,7 @@ function StudentDirectoryContent() {
     adminFilterFlagged,
     sortBy,
     hasFilterPermission: effectiveFilterPermission,
+    role,
   });
 
   // Moderation & Flagging dialog manager hook

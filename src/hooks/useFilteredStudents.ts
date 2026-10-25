@@ -13,6 +13,7 @@ import { Student, getPrimaryEducation, getIeeeLeadershipRole } from "@/data/stud
 import { getGradValue } from "@/lib/gradDate";
 import { DirectorySortOption } from "./useDirectoryFilters";
 import { studentHasSkill } from "@/lib/skillMatching";
+import { UserRole } from "./useRoleManager";
 
 interface UseFilteredStudentsProps {
   students: Student[];
@@ -29,6 +30,7 @@ interface UseFilteredStudentsProps {
   adminFilterFlagged: boolean | null;
   sortBy: DirectorySortOption | string;
   hasFilterPermission?: boolean;
+  role?: UserRole;
 }
 
 export function useFilteredStudents({
@@ -46,6 +48,7 @@ export function useFilteredStudents({
   adminFilterFlagged,
   sortBy,
   hasFilterPermission = true,
+  role,
 }: UseFilteredStudentsProps) {
   // Memoize unique metadata for filter selection options
   const { availableMajors, availableSkills, availableGradDates, availableEvents, availableProjects, availableCompanies } = useMemo(() => {
@@ -91,18 +94,27 @@ export function useFilteredStudents({
         if (searchQuery.trim()) {
           const query = searchQuery.toLowerCase();
           const matchesName = student.name.toLowerCase().includes(query);
-          const matchesMajor = student.major.toLowerCase().includes(query);
-          const matchesBio = student.bio.toLowerCase().includes(query);
-          const matchesSkills = student.skills.some((s) => s.toLowerCase().includes(query));
-          const matchesCompany = (student.workExperiences || []).some((w) =>
-            w.name.toLowerCase().includes(query) || w.title.toLowerCase().includes(query)
-          );
-          const matchesProject = (student.projects || []).some((p) =>
-            p.name.toLowerCase().includes(query) || p.description.toLowerCase().includes(query)
-          );
 
-          if (!matchesName && !matchesMajor && !matchesBio && !matchesSkills && !matchesCompany && !matchesProject) {
-            return false;
+          const isStandardView = role === "standard" || (!role && hasFilterPermission === false);
+
+          if (isStandardView) {
+            if (!matchesName) {
+              return false;
+            }
+          } else {
+            const matchesMajor = student.major.toLowerCase().includes(query);
+            const matchesBio = student.bio.toLowerCase().includes(query);
+            const matchesSkills = student.skills.some((s) => s.toLowerCase().includes(query));
+            const matchesCompany = (student.workExperiences || []).some((w) =>
+              w.name.toLowerCase().includes(query) || w.title.toLowerCase().includes(query)
+            );
+            const matchesProject = (student.projects || []).some((p) =>
+              p.name.toLowerCase().includes(query) || p.description.toLowerCase().includes(query)
+            );
+
+            if (!matchesName && !matchesMajor && !matchesBio && !matchesSkills && !matchesCompany && !matchesProject) {
+              return false;
+            }
           }
         }
 

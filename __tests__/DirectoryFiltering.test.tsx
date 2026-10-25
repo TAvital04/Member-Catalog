@@ -240,6 +240,113 @@ describe("Directory Filtering & Component Rendering", () => {
     expect(result.current.filteredStudents[0].id).toBe("std-project");
     expect(result.current.availableProjects).toContain("RSO Smart Campus IoT Beacon");
   });
+
+  test("only filters names when searching in standard view, but matches skills and bio in sponsor view", () => {
+    const studentAlice: Student = {
+      ...sampleStudent,
+      id: "std-alice",
+      name: "Alice Knight",
+      major: "Computer Engineering",
+      bio: "Embedded systems specialist",
+      skills: ["Rust", "Verilog"],
+    };
+    const studentBob: Student = {
+      ...sampleStudent,
+      id: "std-bob",
+      name: "Bob Builder",
+      major: "Electrical Engineering",
+      bio: "Analog circuitry and RF enthusiast",
+      skills: ["Python", "KiCad"],
+    };
+
+    // 1. In standard view, searching for "Python" (a skill) should NOT match Bob because the search bar only filters names
+    const { result: standardSearchSkill } = renderHook(() =>
+      useFilteredStudents({
+        students: [studentAlice, studentBob],
+        searchQuery: "Python",
+        selectedMajors: [],
+        selectedSkills: [],
+        selectedGradDates: [],
+        skillFilterMode: "OR",
+        adminMode: false,
+        adminFilterFlagged: null,
+        sortBy: "points",
+        hasFilterPermission: false,
+        role: "standard",
+      })
+    );
+    expect(standardSearchSkill.current.filteredStudents).toHaveLength(0);
+
+    // 2. In standard view, searching for "Alice" (a name) DOES match Alice
+    const { result: standardSearchName } = renderHook(() =>
+      useFilteredStudents({
+        students: [studentAlice, studentBob],
+        searchQuery: "Alice",
+        selectedMajors: [],
+        selectedSkills: [],
+        selectedGradDates: [],
+        skillFilterMode: "OR",
+        adminMode: false,
+        adminFilterFlagged: null,
+        sortBy: "points",
+        hasFilterPermission: false,
+        role: "standard",
+      })
+    );
+    expect(standardSearchName.current.filteredStudents).toHaveLength(1);
+    expect(standardSearchName.current.filteredStudents[0].id).toBe("std-alice");
+
+    // 3. In sponsor view, searching for "Python" (a skill) DOES match Bob
+    const { result: sponsorSearchSkill } = renderHook(() =>
+      useFilteredStudents({
+        students: [studentAlice, studentBob],
+        searchQuery: "Python",
+        selectedMajors: [],
+        selectedSkills: [],
+        selectedGradDates: [],
+        skillFilterMode: "OR",
+        adminMode: false,
+        adminFilterFlagged: null,
+        sortBy: "points",
+        hasFilterPermission: true,
+        role: "sponsor",
+      })
+    );
+    expect(sponsorSearchSkill.current.filteredStudents).toHaveLength(1);
+    expect(sponsorSearchSkill.current.filteredStudents[0].id).toBe("std-bob");
+  });
+
+  test("renders role-tailored search placeholder in DirectoryControlBar", () => {
+    const { getByPlaceholderText, rerender } = render(
+      <DirectoryControlBar
+        searchQuery=""
+        setSearchQuery={jest.fn()}
+        sortBy="updated"
+        setSortBy={jest.fn()}
+        viewMode="grid"
+        setViewMode={jest.fn()}
+        role="standard"
+        searchInputRef={{ current: null }}
+      />
+    );
+
+    expect(getByPlaceholderText("Search by candidate name (Ctrl+K)...")).toBeInTheDocument();
+
+    rerender(
+      <DirectoryControlBar
+        searchQuery=""
+        setSearchQuery={jest.fn()}
+        sortBy="updated"
+        setSortBy={jest.fn()}
+        viewMode="grid"
+        setViewMode={jest.fn()}
+        role="sponsor"
+        searchInputRef={{ current: null }}
+      />
+    );
+
+    expect(getByPlaceholderText("Search by candidate name, skill, coursework, bio (Ctrl+K)...")).toBeInTheDocument();
+  });
 });
 
 
