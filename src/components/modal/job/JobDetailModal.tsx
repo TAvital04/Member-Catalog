@@ -109,7 +109,7 @@ export default function JobDetailModal({
           onClick={onClose}
           type="button"
           aria-label="Close job details modal"
-          className="absolute top-4 right-4 z-20 p-2 rounded-full bg-white border border-slate-200/90 hover:bg-slate-100 text-slate-500 hover:text-slate-900 transition-all shadow-xs cursor-pointer active:scale-90"
+          className="absolute top-4 right-4 z-20 p-2 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200/90 text-slate-500 hover:text-slate-900 transition-all shadow-xs cursor-pointer active:scale-90"
         >
           <X size={18} />
         </button>
@@ -232,7 +232,7 @@ export default function JobDetailModal({
                       className={`px-2.5 py-1 rounded-lg text-xs font-semibold border shadow-2xs ${
                         isMatch
                           ? "bg-amber-500/15 border-amber-500 text-slate-900 font-bold"
-                          : "bg-white border-slate-200 text-slate-600"
+                          : "bg-slate-100 border-slate-200 text-slate-700"
                       }`}
                     >
                       {skill} {isMatch && "✓"}

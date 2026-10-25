@@ -161,7 +161,7 @@ export default function EmployerApplicantAnalytics({
               }),
             ]}
             className="w-full sm:w-72"
-            buttonClassName="bg-slate-50/80 hover:bg-slate-100 text-xs font-semibold"
+            buttonClassName="bg-slate-100 hover:bg-slate-200/80 border-slate-200 text-slate-800 text-xs font-semibold"
             align="right"
           />
         </div>

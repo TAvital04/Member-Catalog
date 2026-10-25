@@ -145,7 +145,7 @@ export default function CustomDropdown({
         aria-expanded={isOpen}
         aria-label={ariaLabel || prefixLabel}
         onClick={() => !disabled && setIsOpen((prev) => !prev)}
-        className={`w-full flex items-center justify-between border border-slate-200/90 bg-white hover:bg-slate-50/80 text-slate-800 font-semibold shadow-2xs transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-500/20 active:scale-98 disabled:opacity-50 disabled:cursor-not-allowed ${sizeClasses} ${buttonClassName}`}
+        className={`w-full flex items-center justify-between border border-slate-200 bg-slate-100/90 hover:bg-slate-200/80 text-slate-800 font-semibold shadow-2xs transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-500/20 active:scale-98 disabled:opacity-50 disabled:cursor-not-allowed ${sizeClasses} ${buttonClassName}`}
       >
         <div className="flex items-center gap-1.5 min-w-0 flex-1 text-left">
           {icon && <span className="shrink-0 text-slate-400">{icon}</span>}

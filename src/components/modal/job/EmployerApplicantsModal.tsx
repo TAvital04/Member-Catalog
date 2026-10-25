@@ -108,7 +108,7 @@ export default function EmployerApplicantsModal({
           onClick={onClose}
           type="button"
           aria-label="Close applicants modal"
-          className="absolute top-4 right-4 z-20 p-2 rounded-full bg-white border border-slate-200/90 hover:bg-slate-100 text-slate-500 hover:text-slate-900 transition-all shadow-xs cursor-pointer active:scale-90"
+          className="absolute top-4 right-4 z-20 p-2 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200/90 text-slate-500 hover:text-slate-900 transition-all shadow-xs cursor-pointer active:scale-90"
         >
           <X size={18} />
         </button>
@@ -147,7 +147,7 @@ export default function EmployerApplicantsModal({
                 return (
                   <span
                     key={major}
-                    className="px-2.5 py-0.5 rounded-lg bg-white border border-slate-200/90 text-slate-800 font-semibold shadow-2xs text-[11px]"
+                    className="px-2.5 py-0.5 rounded-lg bg-slate-100 border border-slate-200/90 text-slate-800 font-semibold shadow-2xs text-[11px]"
                   >
                     <strong className="text-slate-900">{major}</strong>: {count} ({pct}%)
                   </span>

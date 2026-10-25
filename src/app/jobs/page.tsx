@@ -210,51 +210,41 @@ function JobsPageContent() {
         handleRoleChange={handleRoleChange}
       />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto p-4 md:p-8 flex flex-col gap-6">
-        {/* Header Hero Section */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200/80 pb-6">
-          <div className="flex flex-col gap-1.5">
-            <div className="flex items-center gap-2 text-xs font-bold text-amber-700 uppercase tracking-wider">
-              <Briefcase size={14} className="text-amber-600" />
-              <span>UCF IEEE Career & Engineering Postings</span>
-            </div>
-            <h1 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">
-              Engineering Opportunities Hub
-            </h1>
-            <p className="text-xs md:text-sm text-slate-600 max-w-2xl leading-relaxed">
-              Explore direct internships, co-ops, and full-time roles from top corporate partners.
-              Apply with your verified member portfolio or post opportunities to source top engineering talent.
-            </p>
-          </div>
-
-          {/* Screen Mode Switcher: Member Screen vs Employer Screen */}
-          <div className="flex items-center bg-white p-1 rounded-2xl border border-slate-200/90 shadow-2xs shrink-0 self-start md:self-end">
-            <button
-              type="button"
-              onClick={() => setPortalMode("member")}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                portalMode === "member"
-                  ? "bg-slate-900 text-white shadow-xs"
-                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
-              }`}
-            >
-              <Users size={14} />
-              <span>Member Portal (Browse & Apply)</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setPortalMode("employer")}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                portalMode === "employer"
-                  ? "bg-slate-900 text-white shadow-xs"
-                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
-              }`}
-            >
-              <Building2 size={14} />
-              <span>Employer Portal (Manage & Post)</span>
-            </button>
-          </div>
+      {/* Directory Page Header */}
+      <DirectoryStatsHeader
+        title="Engineering Opportunities Hub"
+        description="Explore direct internships, co-ops, and full-time roles from corporate partners or post opportunities to source top engineering talent."
+      >
+        {/* Screen Mode Switcher: Member Screen vs Employer Screen */}
+        <div className="flex items-center bg-slate-100/90 p-1 rounded-2xl border border-slate-200/90 shadow-2xs shrink-0">
+          <button
+            type="button"
+            onClick={() => setPortalMode("member")}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+              portalMode === "member"
+                ? "bg-slate-900 text-white shadow-xs"
+                : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/60"
+            }`}
+          >
+            <Users size={14} />
+            <span>Member Portal (Browse & Apply)</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setPortalMode("employer")}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+              portalMode === "employer"
+                ? "bg-slate-900 text-white shadow-xs"
+                : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/60"
+            }`}
+          >
+            <Building2 size={14} />
+            <span>Employer Portal (Manage & Post)</span>
+          </button>
         </div>
+      </DirectoryStatsHeader>
+
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 pb-8 flex flex-col gap-6">
 
         {/* ========================================================================= */}
         {/* MEMBER PORTAL VIEW (BROWSE & APPLY WITH PORTFOLIO)                        */}
@@ -294,7 +284,7 @@ function JobsPageContent() {
                       sublabel: `${s.major} • Class of ${s.gradDate}`,
                     }))}
                     className="w-48 sm:w-64"
-                    buttonClassName="bg-slate-50/80 hover:bg-slate-100 text-xs font-semibold"
+                    buttonClassName="bg-slate-100 hover:bg-slate-200/80 border-slate-200 text-slate-800 text-xs font-semibold"
                     align="right"
                     aria-label="Switch Test Candidate"
                   />
@@ -362,7 +352,7 @@ function JobsPageContent() {
                       className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition-all cursor-pointer shadow-2xs ${
                         selectedLocationType === loc
                           ? "bg-amber-500/15 border-amber-500 text-slate-900 font-bold"
-                          : "bg-white border-slate-200 text-slate-600 hover:text-slate-900"
+                          : "bg-slate-100 hover:bg-slate-200/80 border-slate-200 text-slate-700"
                       }`}
                     >
                       {loc}
@@ -557,11 +547,11 @@ function JobsPageContent() {
                 onClick={() => setEmployerSubTab("postings")}
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                   employerSubTab === "postings"
-                    ? "bg-white text-slate-900 shadow-2xs"
-                    : "text-slate-600 hover:text-slate-900"
+                    ? "bg-slate-900 text-white shadow-xs"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/60"
                 }`}
               >
-                <Briefcase size={14} className={employerSubTab === "postings" ? "text-amber-600" : ""} />
+                <Briefcase size={14} className={employerSubTab === "postings" ? "text-amber-400" : ""} />
                 <span>Active Postings ({employerJobs.length})</span>
               </button>
               <button
@@ -569,11 +559,11 @@ function JobsPageContent() {
                 onClick={() => setEmployerSubTab("analytics")}
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                   employerSubTab === "analytics"
-                    ? "bg-white text-slate-900 shadow-2xs"
-                    : "text-slate-600 hover:text-slate-900"
+                    ? "bg-slate-900 text-white shadow-xs"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/60"
                 }`}
               >
-                <BarChart3 size={14} className={employerSubTab === "analytics" ? "text-amber-600" : ""} />
+                <BarChart3 size={14} className={employerSubTab === "analytics" ? "text-amber-400" : ""} />
                 <span>Applicant Pool Analytics ({applicationsList.length})</span>
               </button>
             </div>
@@ -603,7 +593,7 @@ function JobsPageContent() {
                         })),
                       ]}
                       className="w-48 sm:w-60"
-                      buttonClassName="bg-white hover:bg-slate-50 text-xs font-semibold"
+                      buttonClassName="bg-slate-100 hover:bg-slate-200/80 border-slate-200 text-slate-800 text-xs font-semibold"
                       align="left"
                       aria-label="Company Filter"
                     />

@@ -180,7 +180,7 @@ export default function QuickJobPostModal({
           onClick={onClose}
           type="button"
           aria-label="Close job creation modal"
-          className="absolute top-4 right-4 z-20 p-2 rounded-full bg-white border border-slate-200/90 hover:bg-slate-100 text-slate-500 hover:text-slate-900 transition-all shadow-xs cursor-pointer active:scale-90"
+          className="absolute top-4 right-4 z-20 p-2 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200/90 text-slate-500 hover:text-slate-900 transition-all shadow-xs cursor-pointer active:scale-90"
         >
           <X size={18} />
         </button>
@@ -216,7 +216,7 @@ export default function QuickJobPostModal({
                   className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer shadow-2xs active:scale-95 ${
                     selectedTemplate === tpl.name
                       ? "bg-slate-900 text-white border-slate-900 font-bold"
-                      : "bg-white text-slate-700 hover:text-slate-900 border-slate-200 hover:border-slate-300"
+                      : "bg-slate-100 hover:bg-slate-200/80 text-slate-700 hover:text-slate-900 border-slate-200 hover:border-slate-300"
                   }`}
                 >
                   ⚡ {tpl.name}
