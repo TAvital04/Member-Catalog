@@ -285,7 +285,7 @@ export default function QuickJobPostModal({
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 placeholder="e.g. Orlando, FL"
-                className="text-xs p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="text-xs h-[36px] px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </div>
             <div className="flex flex-col gap-1.5">
@@ -294,7 +294,7 @@ export default function QuickJobPostModal({
                 value={locationType}
                 onChange={(val) => setLocationType(val as any)}
                 options={["On-site", "Hybrid", "Remote"]}
-                size="md"
+                variant="input"
                 className="w-full"
                 aria-label="Location Type"
               />
@@ -305,7 +305,7 @@ export default function QuickJobPostModal({
                 value={employmentType}
                 onChange={(val) => setEmploymentType(val as any)}
                 options={["Full-time", "Internship", "Co-op", "Part-time"]}
-                size="md"
+                variant="input"
                 className="w-full"
                 aria-label="Employment Type"
               />

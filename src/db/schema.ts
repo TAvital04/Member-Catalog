@@ -294,3 +294,53 @@ export const jobApplications = pgTable(
   ]
 );
 
+
+/**
+ * Chapter Sponsors Table - Corporate Partners supporting IEEE UCF projects, workshops, and recruiting
+ */
+export const chapterSponsors = pgTable('chapter_sponsors', {
+  id: varchar('id', { length: 64 }).primaryKey(),
+  name: varchar('name', { length: 255 }).notNull().unique(),
+  tier: varchar('tier', { length: 50 }).notNull().default('Gold'), // 'Platinum' | 'Gold' | 'Silver' | 'Partner'
+  tagline: varchar('tagline', { length: 300 }).notNull(),
+  description: text('description').notNull(),
+  logoText: varchar('logo_text', { length: 16 }).notNull(),
+  website: varchar('website', { length: 500 }).notNull(),
+  careersUrl: varchar('careers_url', { length: 500 }).notNull(),
+  contactEmail: varchar('contact_email', { length: 255 }).notNull(),
+  location: varchar('location', { length: 255 }).notNull(),
+  partnerSince: varchar('partner_since', { length: 16 }).notNull(),
+  primaryFocus: jsonb('primary_focus').$type<string[]>().default([]).notNull(),
+  initiatives: jsonb('initiatives')
+    .$type<Array<{
+      title: string;
+      description: string;
+      category: 'Lab & Hardware Grants' | 'Technical Workshops' | 'Recruiting & Careers' | 'Capstone Mentorship';
+      metrics?: string;
+    }>>()
+    .default([])
+    .notNull(),
+  sponsoredProjectSlugs: jsonb('sponsored_project_slugs').$type<string[]>().default([]).notNull(),
+  sponsoredEventSlugs: jsonb('sponsored_event_slugs').$type<string[]>().default([]).notNull(),
+  jobCompanyNames: jsonb('job_company_names').$type<string[]>().default([]).notNull(),
+  keySkills: jsonb('key_skills').$type<string[]>().default([]).notNull(),
+  active: boolean('active').default(true).notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+/**
+ * Portal Users Table - Authenticated RSO Leadership & Corporate Sponsor accounts
+ */
+export const portalUsers = pgTable('portal_users', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  email: varchar('email', { length: 255 }).notNull().unique(),
+  passwordHash: varchar('password_hash', { length: 255 }).notNull(),
+  accountType: varchar('account_type', { length: 50 }).notNull(), // 'rso_leadership' | 'sponsor'
+  displayName: varchar('display_name', { length: 150 }).notNull(),
+  organization: varchar('organization', { length: 255 }).notNull(),
+  sponsorId: varchar('sponsor_id', { length: 64 }),
+  active: boolean('active').default(true).notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+});

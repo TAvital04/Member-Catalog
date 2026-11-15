@@ -19,6 +19,7 @@ interface CustomDropdownProps {
   prefixLabel?: string;
   icon?: React.ReactNode;
   size?: "sm" | "md";
+  variant?: "default" | "input";
   align?: "left" | "right";
   className?: string;
   buttonClassName?: string;
@@ -31,6 +32,7 @@ interface CustomDropdownProps {
 /**
  * Official IEEE UCF Custom Dropdown Component
  * Modern, accessible replacement for native browser `<select>` boxes.
+ * Supports `variant="input"` to match adjacent form `<input>` height, width, and surface colors.
  */
 export default function CustomDropdown({
   value,
@@ -40,6 +42,7 @@ export default function CustomDropdown({
   prefixLabel,
   icon,
   size = "sm",
+  variant = "default",
   align = "left",
   className = "",
   buttonClassName = "",
@@ -108,9 +111,16 @@ export default function CustomDropdown({
   };
 
   const sizeClasses =
-    size === "sm"
-      ? "text-xs px-3 py-1.5 rounded-xl gap-2 min-h-[34px]"
-      : "text-xs px-3.5 py-2.5 rounded-xl gap-2.5 min-h-[40px]";
+    variant === "input"
+      ? "text-xs px-3.5 py-2 rounded-xl gap-2 h-[36px]"
+      : size === "sm"
+      ? "text-xs px-3 py-1.5 rounded-xl gap-2 h-[34px]"
+      : "text-xs px-3.5 py-2 rounded-xl gap-2.5 h-[38px]";
+
+  const surfaceClasses =
+    variant === "input"
+      ? "border border-slate-200 hover:border-slate-300 bg-slate-50 text-slate-900 font-medium focus:ring-2 focus:ring-amber-500"
+      : "border border-slate-200 bg-slate-100/90 hover:bg-slate-200/80 text-slate-800 font-semibold shadow-2xs focus:ring-2 focus:ring-amber-500/20";
 
   const alignClasses = align === "right" ? "right-0" : "left-0";
 
@@ -145,7 +155,7 @@ export default function CustomDropdown({
         aria-expanded={isOpen}
         aria-label={ariaLabel || prefixLabel}
         onClick={() => !disabled && setIsOpen((prev) => !prev)}
-        className={`w-full flex items-center justify-between border border-slate-200 bg-slate-100/90 hover:bg-slate-200/80 text-slate-800 font-semibold shadow-2xs transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-500/20 active:scale-98 disabled:opacity-50 disabled:cursor-not-allowed ${sizeClasses} ${buttonClassName}`}
+        className={`w-full flex items-center justify-between transition-all cursor-pointer focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed ${surfaceClasses} ${sizeClasses} ${buttonClassName}`}
       >
         <div className="flex items-center gap-1.5 min-w-0 flex-1 text-left">
           {icon && <span className="shrink-0 text-slate-400">{icon}</span>}
@@ -154,7 +164,11 @@ export default function CustomDropdown({
               {prefixLabel}
             </span>
           )}
-          <span className="truncate text-slate-900 font-semibold">
+          <span
+            className={`truncate text-slate-900 ${
+              variant === "input" ? "font-medium" : "font-semibold"
+            }`}
+          >
             {selectedOption ? selectedOption.label : placeholder}
           </span>
           {selectedOption?.badge && (
@@ -181,7 +195,7 @@ export default function CustomDropdown({
         <div
           role="listbox"
           aria-label={ariaLabel || prefixLabel || "Options"}
-          className={`absolute top-full mt-1.5 z-50 min-w-full w-max max-w-xs sm:max-w-md bg-white border border-slate-200/90 rounded-2xl shadow-xl p-1.5 max-h-72 overflow-y-auto animate-scale-in focus:outline-none ${alignClasses} ${menuClassName}`}
+          className={`absolute top-full mt-1.5 z-50 w-full min-w-max max-w-xs sm:max-w-md bg-white border border-slate-200/90 rounded-2xl shadow-xl p-1.5 max-h-72 overflow-y-auto animate-scale-in focus:outline-none ${alignClasses} ${menuClassName}`}
         >
           {normalizedOptions.map((opt) => {
             const isSelected = opt.value === value;

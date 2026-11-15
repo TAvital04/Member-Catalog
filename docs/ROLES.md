@@ -63,6 +63,8 @@ CREATE TABLE chapter_sponsors (
 
 ## 3. Recommended Form Implementation Order (One by One)
 
+> **UI Standard for All Forms**: Every dropdown/select field across Forms 1–5 MUST use the themed [`CustomDropdown`](../src/components/common/CustomDropdown.tsx) component (`@/components/common/CustomDropdown`) instead of native browser `<select>` elements.
+
 The five forms below are ordered by **data dependency**—so each form creates the foundational records and lookup options needed by the next form in the sequence:
 
 ```
@@ -95,15 +97,11 @@ Every other part of the catalog references corporate partners: **Events** have a
 #### Fields & Mapping (`chapter_sponsors` + `portal_users`)
 | Field Label | Input Type | Target Column | Validation Rules |
 | :--- | :--- | :--- | :--- |
-| **Company Name** | Text input | `chapter_sponsors.name` | Required, unique (e.g., *Lockheed Martin*) |
-| **Short Name & Logo Initials** | Text inputs | `short_name`, `logo_text` | Required (e.g., *Lockheed*, *LM*) |
+| **Company Name** | Text input | `chapter_sponsors.name` | Required, unique (e.g., *Raytheon Technologies*) |
 | **Partnership Tier** | Select (`Platinum`, `Gold`, `Silver`) | `tier` | Required |
-| **Partner Since (Year)** | Text / Year input | `partner_since` | Required, 4-digit year |
-| **Headquarters / Hub Location** | Text input | `location` | Required (e.g., *Orlando, FL*) |
-| **Tagline** | Text input | `tagline` | Required, 10–160 chars |
-| **Company Overview** | Textarea | `description` | Required, min 30 chars |
-| **Corporate Website & Careers URL** | URL inputs | `website`, `careers_url` | Required, valid `https://` URLs |
-| **Focus Disciplines** | Multi-tag input | `primary_focus` (`jsonb`) | At least 1 engineering discipline tag |
+| **Short Engineering Tagline** | Text input | `tagline` | Required, 10–160 chars |
+| **Corporate Website URL** | URL input | `website` | Required, valid `https://` URL |
+| **Careers Portal URL** | URL input | `careers_url` | Required, valid `https://` URL |
 | **Sponsor Login Email & Temp Password** | Email + Password inputs | `portal_users.email`, `password_hash` | Creates linked `sponsor` login account |
 
 - **API Route**: `POST /api/sponsors` (requires `x-user-role: admin`). Runs a PostgreSQL transaction inserting into `chapter_sponsors` and `portal_users`.
@@ -220,8 +218,8 @@ With Sponsors, Events, Projects, and Jobs all flowing through PostgreSQL, this f
   - [x] Persistent `AuthSession` in [`src/hooks/useRoleManager.ts`](../src/hooks/useRoleManager.ts) and `Sign In` / `Sign Out` controls in [`src/components/directory/DirectoryNavbar.tsx`](../src/components/directory/DirectoryNavbar.tsx).
 - [ ] **Step 1: Database Schema Migration (`src/db/schema.ts`)**
   - [ ] Add `portal_users` and `chapter_sponsors` tables; add `category`, `partner`, `skills`, and `points_awarded` columns to `events`.
-- [ ] **Step 2: Form 1 — RSO Leadership Sponsor Onboarding Form (`/sponsors`)**
-  - [ ] Build `LeadershipSponsorForm.tsx` and `POST /api/sponsors`.
+- [x] **Step 2: Form 1 — RSO Leadership Sponsor Onboarding Form (`/sponsors`) (Completed)**
+  - [x] Build [`LeadershipSponsorForm.tsx`](../src/components/forms/LeadershipSponsorForm.tsx) and `POST /api/sponsors` ([`src/app/api/sponsors/route.ts`](../src/app/api/sponsors/route.ts)).
 - [ ] **Step 3: Form 2 — RSO Leadership Event & Attendance Roster Form (`/events`)**
   - [ ] Build `LeadershipEventForm.tsx` with member attendance multi-select and `POST /api/events`.
 - [ ] **Step 4: Form 3 — RSO Leadership Project & Team Roster Form (`/projects`)**

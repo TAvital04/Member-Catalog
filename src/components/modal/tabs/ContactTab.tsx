@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { sendDirectEmail } from "@/lib/email";
 import { getSafeUrl } from "@/shared";
+import CustomDropdown from "@/components/common/CustomDropdown";
 
 // Custom SVG brand icons for GitHub and LinkedIn to maintain consistent styling without external icon drift
 const GithubIcon = ({ size = 11, ...props }: React.SVGProps<SVGSVGElement> & { size?: number }) => (
@@ -397,22 +398,25 @@ export default function ContactTab({ student, role }: ContactTabProps) {
                 value={recruiterEmail}
                 onChange={(e) => setRecruiterEmail(e.target.value)}
                 placeholder="jane@company.com"
-                className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-amber-500 transition-colors"
+                className="w-full h-[36px] px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-amber-500 transition-colors"
               />
             </div>
             <div className="flex flex-col gap-1">
               <label className="text-[11px] font-bold text-slate-700">Inquiry Interest</label>
-              <select
+              <CustomDropdown
                 value={inquiryTopic}
-                onChange={(e) => setInquiryTopic(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:bg-white focus:outline-none focus:border-amber-500 transition-colors cursor-pointer"
-              >
-                <option value="Full-Time Opportunity">Full-Time Opportunity</option>
-                <option value="Internship Interview">Internship Interview & Recruitment</option>
-                <option value="Project Collaboration">Project Collaboration & Mentorship</option>
-                <option value="Technical Screening">Technical Screening / Coffee Chat</option>
-                <option value="General Recruiter Inquiry">General Recruiter Inquiry</option>
-              </select>
+                onChange={(val) => setInquiryTopic(val)}
+                options={[
+                  { value: "Full-Time Opportunity", label: "Full-Time Opportunity" },
+                  { value: "Internship Interview", label: "Internship Interview & Recruitment" },
+                  { value: "Project Collaboration", label: "Project Collaboration & Mentorship" },
+                  { value: "Technical Screening", label: "Technical Screening / Coffee Chat" },
+                  { value: "General Recruiter Inquiry", label: "General Recruiter Inquiry" },
+                ]}
+                variant="input"
+                className="w-full"
+                aria-label="Inquiry Interest"
+              />
             </div>
           </div>
 

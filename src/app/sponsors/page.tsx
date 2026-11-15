@@ -8,7 +8,7 @@
 
 import React, { useState, useEffect, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { Award, Building2, Search, Users, Sparkles, FolderGit2 } from "lucide-react";
+import { Building2, Plus, Shield } from "lucide-react";
 import DirectoryNavbar from "@/components/directory/DirectoryNavbar";
 import DirectoryStatsHeader from "@/components/directory/DirectoryStatsHeader";
 import { useThemeManager } from "@/hooks/useThemeManager";
@@ -26,9 +26,11 @@ import { Student } from "@/data/students";
 import SponsorCard from "@/components/sponsors/SponsorCard";
 import SponsorDetailView from "@/components/sponsors/SponsorDetailView";
 import SponsorEngagementStats from "@/components/sponsors/SponsorEngagementStats";
+import LeadershipSponsorForm from "@/components/forms/LeadershipSponsorForm";
 import SearchInput from "@/components/common/SearchInput";
 import FilterPills from "@/components/common/FilterPills";
 import EmptyState from "@/components/common/EmptyState";
+import ToastNotification from "@/components/dialogs/ToastNotification";
 import PortfolioModal from "@/components/modal/PortfolioModal";
 import ProjectModal from "@/components/modal/project/ProjectModal";
 import EventModal from "@/components/modal/event/EventModal";
@@ -47,6 +49,8 @@ function SponsorsPageContent() {
   const [selectedSponsorId, setSelectedSponsorId] = useState<string | null>(sponsorParam);
   const [selectedTier, setSelectedTier] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [isSponsorFormOpen, setIsSponsorFormOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Modals inspection state
   const [inspectedStudent, setInspectedStudent] = useState<Student | null>(null);
@@ -54,6 +58,22 @@ function SponsorsPageContent() {
   const [projectTab, setProjectTab] = useState<ProjectTabType>("overview");
   const [inspectedEvent, setInspectedEvent] = useState<IEEEEvent | null>(null);
   const [inspectedJob, setInspectedJob] = useState<JobPosting | null>(null);
+
+  // Fetch sponsors from /api/sponsors on mount
+  useEffect(() => {
+    async function loadSponsors() {
+      try {
+        const res = await fetch("/api/sponsors");
+        const json = await res.json();
+        if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+          setSponsorsList(json.data);
+        }
+      } catch {
+        // Keep CURRENT_CHAPTER_SPONSORS fallback
+      }
+    }
+    loadSponsors();
+  }, []);
 
   // Sync URL search param with selected sponsor
   useEffect(() => {
@@ -98,12 +118,26 @@ function SponsorsPageContent() {
 
   const activeSponsorRelations = useMemo(() => {
     if (!activeSponsor) return null;
-    return getSponsorRelatedData(activeSponsor, SAMPLE_IEEE_PROJECTS, SAMPLE_IEEE_EVENTS, SAMPLE_JOB_POSTINGS, undefined, students);
+    return getSponsorRelatedData(
+      activeSponsor,
+      SAMPLE_IEEE_PROJECTS,
+      SAMPLE_IEEE_EVENTS,
+      SAMPLE_JOB_POSTINGS,
+      undefined,
+      students
+    );
   }, [activeSponsor, students]);
 
   const aggregateInteractions = useMemo(() => {
     return filteredSponsors.flatMap((sponsor) => {
-      const details = getSponsorRelatedData(sponsor, SAMPLE_IEEE_PROJECTS, SAMPLE_IEEE_EVENTS, SAMPLE_JOB_POSTINGS, undefined, students);
+      const details = getSponsorRelatedData(
+        sponsor,
+        SAMPLE_IEEE_PROJECTS,
+        SAMPLE_IEEE_EVENTS,
+        SAMPLE_JOB_POSTINGS,
+        undefined,
+        students
+      );
       return details.interactions;
     });
   }, [filteredSponsors, students]);
@@ -123,6 +157,15 @@ function SponsorsPageContent() {
     window.history.pushState(null, "", url.pathname + (url.search ? url.search : ""));
   };
 
+  const handleSponsorCreated = (newSponsor: ChapterSponsor) => {
+    setSponsorsList((prev) => {
+      const filtered = prev.filter((s) => s.id !== newSponsor.id);
+      return [newSponsor, ...filtered];
+    });
+    setToastMessage(`Onboarded ${newSponsor.name} and provisioned Sponsor login (${newSponsor.contactEmail})`);
+    setTimeout(() => setToastMessage(null), 4500);
+  };
+
   return (
     <div className="page-wrapper font-sans transition-colors duration-200">
       {/* Primary Top Navigation */}
@@ -137,7 +180,18 @@ function SponsorsPageContent() {
       <DirectoryStatsHeader
         title="Corporate Sponsors & Industry Initiatives"
         description="Explore active corporate partners supporting IEEE UCF build projects, technical workshops, equipment grants, recruiting pipelines, and member engagement."
-      />
+      >
+        {isAdmin && (
+          <button
+            type="button"
+            onClick={() => setIsSponsorFormOpen(true)}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-xs transition-all shadow-xs cursor-pointer shrink-0"
+          >
+            <Plus size={14} />
+            <span>Onboard Chapter Sponsor</span>
+          </button>
+        )}
+      </DirectoryStatsHeader>
 
       <main className="max-w-7xl w-full mx-auto px-4 pb-8 flex flex-col gap-6">
         {/* If a sponsor is selected, display their comprehensive Hub */}
@@ -192,7 +246,14 @@ function SponsorsPageContent() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {filteredSponsors.map((sponsor) => {
-                  const details = getSponsorRelatedData(sponsor, SAMPLE_IEEE_PROJECTS, SAMPLE_IEEE_EVENTS, SAMPLE_JOB_POSTINGS, undefined, students);
+                  const details = getSponsorRelatedData(
+                    sponsor,
+                    SAMPLE_IEEE_PROJECTS,
+                    SAMPLE_IEEE_EVENTS,
+                    SAMPLE_JOB_POSTINGS,
+                    undefined,
+                    students
+                  );
                   return (
                     <SponsorCard
                       key={sponsor.id}
@@ -212,6 +273,15 @@ function SponsorsPageContent() {
       </main>
 
       {/* MODALS */}
+      {/* RSO Leadership Form 1: Onboard Chapter Sponsor Modal */}
+      {isSponsorFormOpen && (
+        <LeadershipSponsorForm
+          role={role}
+          onClose={() => setIsSponsorFormOpen(false)}
+          onSponsorCreated={handleSponsorCreated}
+        />
+      )}
+
       {/* Student Portfolio Modal */}
       {inspectedStudent && (
         <PortfolioModal
@@ -256,6 +326,9 @@ function SponsorsPageContent() {
           onApplySuccess={() => {}}
         />
       )}
+
+      {/* Toast Feedback */}
+      <ToastNotification toastMessage={toastMessage} />
     </div>
   );
 }

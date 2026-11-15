@@ -1,48 +1,6 @@
 import { AuthAccountType, AuthSession } from "@/hooks/useRoleManager";
-
-interface PreconfiguredAccount {
-  accountType: AuthAccountType;
-  role: "admin" | "sponsor";
-  email: string;
-  password: string;
-  displayName: string;
-  organization: string;
-}
-
-const PRECONFIGURED_ACCOUNTS: PreconfiguredAccount[] = [
-  {
-    accountType: "rso_leadership",
-    role: "admin",
-    email: "leadership@ieeeucf.org",
-    password: "ieee-ucf-leadership",
-    displayName: "IEEE UCF Executive Board",
-    organization: "IEEE UCF Student Chapter",
-  },
-  {
-    accountType: "rso_leadership",
-    role: "admin",
-    email: "president@ieeeucf.org",
-    password: "ieee-ucf-leadership",
-    displayName: "Chapter President",
-    organization: "IEEE UCF Student Chapter",
-  },
-  {
-    accountType: "sponsor",
-    role: "sponsor",
-    email: "recruiting@lockheedmartin.com",
-    password: "ieee-sponsor-access",
-    displayName: "University Recruiting Partner",
-    organization: "Lockheed Martin",
-  },
-  {
-    accountType: "sponsor",
-    role: "sponsor",
-    email: "talent@ti.com",
-    password: "ieee-sponsor-access",
-    displayName: "Engineering Campus Recruiting",
-    organization: "Texas Instruments",
-  },
-];
+import { getPortalUsers } from "@/lib/portalAuthStore";
+import { db, portalUsers, eq } from "@/db";
 
 export async function POST(request: Request) {
   try {
@@ -73,10 +31,35 @@ export async function POST(request: Request) {
       );
     }
 
-    // Match against preconfigured accounts if email matches, otherwise provision session for valid format
-    const matchedAccount = PRECONFIGURED_ACCOUNTS.find(
+    // 1. Check PostgreSQL portal_users first if database is reachable
+    let matchedAccount = getPortalUsers().find(
       (acc) => acc.email.toLowerCase() === cleanEmail && acc.accountType === accountType
     );
+
+    try {
+      const dbUserRows = await db
+        .select()
+        .from(portalUsers)
+        .where(eq(portalUsers.email, cleanEmail))
+        .limit(1);
+
+      if (dbUserRows && dbUserRows.length > 0) {
+        const dbUser = dbUserRows[0];
+        if (dbUser.accountType === accountType) {
+          matchedAccount = {
+            accountType: dbUser.accountType as AuthAccountType,
+            role: dbUser.accountType === "rso_leadership" ? "admin" : "sponsor",
+            email: dbUser.email,
+            password: dbUser.passwordHash,
+            displayName: dbUser.displayName,
+            organization: dbUser.organization,
+            sponsorId: dbUser.sponsorId || undefined,
+          };
+        }
+      }
+    } catch {
+      // Fallback to in-memory registry when Postgres is unavailable
+    }
 
     if (matchedAccount && matchedAccount.password !== cleanPassword) {
       return Response.json(
