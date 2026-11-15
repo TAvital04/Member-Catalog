@@ -3,7 +3,6 @@
 import React from "react";
 import { Student, getPrimaryEducation } from "@/data/students";
 import Avatar from "../common/Avatar";
-import { AlertTriangle } from "lucide-react";
 
 interface StudentUpperInfoProps {
   student: Student;
@@ -24,21 +23,6 @@ export default function StudentUpperInfo({ student }: StudentUpperInfoProps) {
 
   return (
     <div className="flex flex-col gap-4 w-full min-w-0">
-      {/* Moderation Flag Banner Alert */}
-      {student.flagged && (
-        <div className="bg-red-500/10 border border-red-500/25 rounded-2xl p-4 text-xs text-red-600 flex items-start gap-2.5 shadow-xs">
-          <AlertTriangle size={15} className="shrink-0 mt-0.5 text-red-600" />
-          <div className="min-w-0 grow">
-            <span className="font-extrabold uppercase tracking-wider block text-[10px] mb-1 text-red-600">
-              Profile Flagged / Reported
-            </span>
-            <p className="leading-relaxed font-semibold text-slate-700 text-xs">
-              Reason: <span className="text-red-600 font-normal italic">&ldquo;{student.flagReason || "Under administrative review"}&rdquo;</span>
-            </p>
-          </div>
-        </div>
-      )}
-
       {/* Header info */}
       <div className="flex items-center gap-4 w-full min-w-0">
         <Avatar name={student.name} size="lg" className="shrink-0" />

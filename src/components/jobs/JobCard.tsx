@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Briefcase, MapPin, Sparkles, CheckCircle2 } from "lucide-react";
+import { Briefcase, MapPin, CheckCircle2 } from "lucide-react";
 import { JobPosting, JobApplication } from "@/data/jobs";
 import { CARD_INTERACTIVE, CARD_TITLE_HOVER } from "@/lib/cardStyles";
 
@@ -14,7 +14,7 @@ export interface JobCardProps {
 
 /**
  * JobCard — Reusable Matchy-Matchy Job Posting Card
- * Displays role specifications, partner badges, compensation, skills, and application status.
+ * Displays role specifications, compensation, skills, and application status.
  */
 export default function JobCard({
   job,
@@ -52,12 +52,6 @@ export default function JobCard({
               </h3>
             </div>
           </div>
-
-          {job.featured && (
-            <span className="bg-amber-50 text-amber-800 border border-amber-200 text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 flex items-center gap-0.5">
-              <Sparkles size={10} /> Partner
-            </span>
-          )}
         </div>
 
         {/* Location & Salary pills */}

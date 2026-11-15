@@ -26,6 +26,7 @@ import EventCard from "@/components/events/EventCard";
 import JobCard from "@/components/jobs/JobCard";
 import SponsorInitiativesList from "./SponsorInitiativesList";
 import SponsorMemberRoster from "./SponsorMemberRoster";
+import SponsorEngagementStats from "./SponsorEngagementStats";
 import SegmentedControl from "@/components/common/SegmentedControl";
 import EmptyState from "@/components/common/EmptyState";
 import { ProjectTabType } from "@/components/modal/project/ProjectTabNavigation";
@@ -299,6 +300,12 @@ export default function SponsorDetailView({
         </div>
       </div>
 
+      {/* Interacting Student Demographics & Skill Statistics */}
+      <SponsorEngagementStats
+        interactions={interactions}
+        sponsorName={sponsor.name}
+      />
+
       {/* Sticky Quick-Jump Navigation Tabs */}
       <div className="sticky top-14 md:top-16 z-20 py-2.5 bg-slate-50/95 dark:bg-[#0b0f19]/95 backdrop-blur-md border-b border-slate-200/80 overflow-x-auto scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
         <SegmentedControl
@@ -439,11 +446,10 @@ export default function SponsorDetailView({
                 <Link
                   key={idx}
                   href={`/?skills=${encodeURIComponent(skill)}`}
-                  className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-amber-500/15 border border-slate-200 hover:border-amber-500/40 text-xs font-mono font-medium text-slate-800 hover:text-amber-900 transition-all cursor-pointer shadow-2xs inline-flex items-center gap-1.5"
+                  className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-amber-500/15 border border-slate-200 hover:border-amber-500/40 text-xs font-mono font-medium text-slate-800 hover:text-amber-900 transition-all cursor-pointer shadow-2xs inline-flex items-center"
                   title={`Filter candidates with skill: ${skill}`}
                 >
                   <span>{skill}</span>
-                  <span className="text-[10px] text-slate-400">→</span>
                 </Link>
               ))}
             </div>

@@ -58,21 +58,13 @@ export default function ProjectUpperInfo({ project }: ProjectUpperInfoProps) {
       </div>
 
       {/* Quick Metrics Grid */}
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-2 gap-2">
         <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-center">
           <span className="block text-base font-black text-slate-900 leading-none">
             {project.participants ? project.participants.length : 0}
           </span>
           <span className="text-[9.5px] text-slate-500 font-bold uppercase tracking-wider mt-1 block">
             Team Size
-          </span>
-        </div>
-        <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-center">
-          <span className="block text-base font-black text-slate-900 leading-none">
-            {project.tools ? project.tools.length : 0}
-          </span>
-          <span className="text-[9.5px] text-slate-500 font-bold uppercase tracking-wider mt-1 block">
-            Tools Used
           </span>
         </div>
         <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-center">

@@ -131,11 +131,6 @@ export default function JobDetailModal({
                     • {job.department}
                   </span>
                 )}
-                {job.featured && (
-                  <span className="bg-amber-50 text-amber-800 border border-amber-200 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
-                    <Sparkles size={11} /> Featured Partner
-                  </span>
-                )}
               </div>
               <h2 className="text-xl sm:text-2xl font-black text-slate-900 leading-tight">
                 {job.title}
@@ -253,7 +248,7 @@ export default function JobDetailModal({
               <ul className="space-y-1.5 text-xs text-slate-600">
                 {job.benefits.map((benefit, idx) => (
                   <li key={idx} className="flex items-start gap-2">
-                    <CheckCircle2 size={13} className="text-emerald-600 mt-0.5 shrink-0" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-slate-400 mt-1.5 shrink-0" />
                     <span>{benefit}</span>
                   </li>
                 ))}

@@ -11,7 +11,7 @@ import ProjectsTab from "./tabs/ProjectsTab";
 import SkillsTab from "./tabs/SkillsTab";
 import EventsTab from "./tabs/EventsTab";
 import ContactTab from "./tabs/ContactTab";
-import { X, Flag, FlagOff } from "lucide-react";
+import { X } from "lucide-react";
 
 interface PortfolioModalProps {
   student: Student;
@@ -26,8 +26,6 @@ interface PortfolioModalProps {
 export default function PortfolioModal({
   student,
   onClose,
-  onToggleFlag,
-  onResolve,
   adminMode,
   role = "admin",
   onSelectProject,
@@ -98,7 +96,6 @@ export default function PortfolioModal({
               <StudentLowerInfo
                 student={student}
                 adminMode={adminMode}
-                onResolve={onResolve}
                 onSelectProject={onSelectProject}
                 onClose={onClose}
                 onSelectTab={setActiveTab}
@@ -124,7 +121,6 @@ export default function PortfolioModal({
                       <StudentLowerInfo
                         student={student}
                         adminMode={adminMode}
-                        onResolve={onResolve}
                         onSelectProject={onSelectProject}
                         onClose={onClose}
                         onSelectTab={setActiveTab}
@@ -169,26 +165,9 @@ export default function PortfolioModal({
               {activeTab === "contact" && (
                 <ContactTab student={student} role={role} />
               )}
-
             </div>
           </div>
         </div>
-
-        {/* Floating Action Flag Button in Bottom Right */}
-        {onToggleFlag && !student.flagged && (
-          <button
-            type="button"
-            onClick={() => onToggleFlag(student.id)}
-            className={`absolute bottom-6 right-6 z-40 p-3.5 rounded-full shadow-lg transition-all active:scale-90 border cursor-pointer flex items-center justify-center bg-white border-slate-200 backdrop-blur-sm group/tooltip ${
-              student.flagged
-                ? "bg-red-600 hover:bg-red-700 border-red-600 text-white"
-                : "text-slate-500 hover:text-red-600 hover:border-red-200 hover:bg-red-50"
-            }`}
-          >
-            {student.flagged ? <FlagOff size={18} /> : <Flag size={18} />}
-            <Tooltip content={student.flagged ? "Unflag Profile" : "Flag / Report Profile"} position="top-right" groupClass="group-hover/tooltip:opacity-100" />
-          </button>
-        )}
       </div>
     </div>
   );

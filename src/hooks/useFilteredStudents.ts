@@ -2,7 +2,7 @@
  * @file useFilteredStudents.ts
  * @description Pure calculation hook providing multi-dimensional search, faceted filtering, and sorting
  * across student candidate profiles. Implements boolean skill evaluation (AND vs OR conjunctions),
- * text search across names/bios/skills, attendance event filtering, graduation date matching, and role-based moderation views.
+ * text search across names/bios/skills, attendance event filtering, and graduation date matching.
  *
  * @param {UseFilteredStudentsProps} props - Students array, selected filter predicates, and sort preferences
  * @returns {Student[]} Filtered, ranked array of matching student candidates
@@ -26,8 +26,8 @@ interface UseFilteredStudentsProps {
   selectedCompanies?: string[];
   onlyLeaders?: boolean;
   skillFilterMode: "AND" | "OR";
-  adminMode: boolean;
-  adminFilterFlagged: boolean | null;
+  adminMode?: boolean;
+  adminFilterFlagged?: boolean | null;
   sortBy: DirectorySortOption | string;
   hasFilterPermission?: boolean;
   role?: UserRole;
@@ -44,8 +44,6 @@ export function useFilteredStudents({
   selectedCompanies = [],
   onlyLeaders = false,
   skillFilterMode,
-  adminMode,
-  adminFilterFlagged,
   sortBy,
   hasFilterPermission = true,
   role,
@@ -90,7 +88,6 @@ export function useFilteredStudents({
   const filteredStudents = useMemo(() => {
     return students
       .filter((student) => {
-
         if (searchQuery.trim()) {
           const query = searchQuery.toLowerCase();
           const matchesName = student.name.toLowerCase().includes(query);
@@ -157,13 +154,6 @@ export function useFilteredStudents({
 
           if (onlyLeaders && !getIeeeLeadershipRole(student)) {
             return false;
-          }
-        }
-
-        if (adminMode) {
-          if (adminFilterFlagged !== null) {
-            if (adminFilterFlagged && !student.flagged) return false;
-            if (!adminFilterFlagged && student.flagged) return false;
           }
         }
 
@@ -267,11 +257,13 @@ export function useFilteredStudents({
     selectedSkills,
     selectedGradDates,
     selectedEvents,
+    selectedProjects,
     selectedCompanies,
+    onlyLeaders,
     skillFilterMode,
-    adminMode,
-    adminFilterFlagged,
     sortBy,
+    hasFilterPermission,
+    role,
   ]);
 
   // Calculate summary stats
@@ -296,4 +288,3 @@ export function useFilteredStudents({
     totalSkillsCount,
   };
 }
-

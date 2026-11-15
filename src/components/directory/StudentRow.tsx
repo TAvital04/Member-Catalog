@@ -1,13 +1,10 @@
 "use client";
 
 import React from "react";
-import { Student, getPrimaryEducation } from "@/data/students";
-import { Calendar, Trash2, Flag, Eye } from "lucide-react";
+import { Student } from "@/data/students";
+import { Calendar, Trash2, Eye } from "lucide-react";
 import Avatar from "../common/Avatar";
-import StatusBadge from "../common/StatusBadge";
-import Tooltip from "../common/Tooltip";
 import TruncatedText from "../common/TruncatedText";
-import SkillTag from "../common/SkillTag";
 import { CARD_TITLE_HOVER } from "@/lib/cardStyles";
 
 interface StudentRowProps {
@@ -23,17 +20,13 @@ function StudentRow({
   student,
   onClick,
   adminMode,
-  canFilter,
   onDelete,
-  onToggleFlag,
 }: StudentRowProps) {
   return (
     <div
       onClick={() => onClick(student)}
       data-student-id={student.id}
-      className={`relative group flex flex-col md:flex-row md:items-center justify-between p-3.5 rounded-xl bg-white hover:bg-slate-50 transition-all border shadow-2xs cursor-pointer gap-4 ${
-        student.flagged ? "border-red-300/80 bg-red-50/15 hover:border-red-400" : "border-slate-200 hover:border-slate-300"
-      }`}
+      className="relative group flex flex-col md:flex-row md:items-center justify-between p-3.5 rounded-xl bg-white hover:bg-slate-50 transition-all border border-slate-200 hover:border-slate-300 shadow-2xs cursor-pointer gap-4"
     >
       {/* Left: Avatar & Personal Info */}
       <div className="flex items-center gap-3 min-w-[240px]">
@@ -67,34 +60,10 @@ function StudentRow({
         </div>
       </div>
 
-      {/* Right: Actions and Status */}
-      <div className="flex items-center gap-3 min-w-[200px] justify-between md:justify-end">
-        {/* Flagged Notice */}
-        <div className="flex flex-col items-start md:items-end gap-1">
-          {student.flagged && (
-            <span
-              className="text-[9.5px] font-bold text-red-700 bg-red-50 border border-red-200 px-2 py-0.5 rounded-full inline-flex items-center gap-1 shrink-0"
-              title={`Flag Reason: ${student.flagReason || "Under review"}`}
-            >
-              <Flag size={9} className="fill-current text-red-500 shrink-0" />
-              <span>Flagged</span>
-            </span>
-          )}
-        </div>
-
-        {/* Action column */}
+      {/* Right: Actions */}
+      <div className="flex items-center gap-3 min-w-[100px] justify-end">
         <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
           <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5">
-            {/* Flag Profile Button */}
-            {onToggleFlag && (
-              <button
-                onClick={() => onToggleFlag(student.id)}
-                className="p-1 rounded bg-slate-100 border border-slate-200 hover:border-red-300 text-slate-500 hover:text-red-600 transition-all cursor-pointer relative group/tooltip"
-              >
-                <Flag size={11} />
-                <Tooltip content="Flag / Report Profile" groupClass="group-hover/tooltip:opacity-100" />
-              </button>
-            )}
             {/* Delete Button in Admin Mode */}
             {adminMode && onDelete && (
               <button

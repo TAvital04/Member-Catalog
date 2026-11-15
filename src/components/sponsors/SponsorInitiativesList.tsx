@@ -7,7 +7,7 @@ import { CARD_BASE } from "@/lib/cardStyles";
 
 export interface SponsorInitiativesListProps {
   initiatives: SponsorInitiative[];
-  sponsorName: string;
+  sponsorName?: string;
 }
 
 /**
@@ -15,7 +15,6 @@ export interface SponsorInitiativesListProps {
  */
 export default function SponsorInitiativesList({
   initiatives,
-  sponsorName,
 }: SponsorInitiativesListProps) {
   const getCategoryIcon = (category: SponsorInitiative["category"]) => {
     switch (category) {
@@ -41,9 +40,6 @@ export default function SponsorInitiativesList({
             {initiatives.length} Programs
           </span>
         </h3>
-        <span className="text-xs text-slate-500">
-          Supported by {sponsorName}
-        </span>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

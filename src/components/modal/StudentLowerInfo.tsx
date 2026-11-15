@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Student, getIeeeLeadershipRole } from "@/data/students";
-import { Globe, AlertTriangle, ShieldCheck, Sparkles, Calendar, Mail, FileText, ExternalLink } from "lucide-react";
+import { Globe, ShieldCheck, Sparkles, Calendar, Mail, FileText, ExternalLink } from "lucide-react";
 import { getSafeUrl } from "@/shared";
 
 // Custom SVG brand icons since newer lucide-react versions have deprecated them
@@ -247,39 +247,6 @@ export default function StudentLowerInfo({
           <span>View Resume PDF</span>
           <ExternalLink size={12} className="text-slate-950/70 ml-auto transition-colors" />
         </a>
-
-        {student.flagged && (
-          <div className="rounded-2xl border border-red-200 bg-red-50/40 p-4 shadow-2xs">
-            <h3 className="text-[10px] font-bold text-red-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-              <AlertTriangle size={13} className="text-red-600" />
-              <span>{adminMode ? "Admin Moderation" : "Moderation Warning"}</span>
-            </h3>
-            <div className="flex flex-col gap-2.5">
-              <div>
-                <span className="font-extrabold uppercase tracking-wider block text-[10px] text-red-600">
-                  {student.duplicateGroup
-                    ? "Profile Duplicate Flagged"
-                    : student.flagReason && /ai|slop|generated|chatgpt/i.test(student.flagReason)
-                    ? "Profile AI Slop Flagged"
-                    : "Profile Flagged / Reported"}
-                </span>
-                <p className="text-xs text-slate-700 mt-1 leading-relaxed">
-                  <span className="font-bold text-slate-800">Reason:</span>{" "}
-                  <span className="italic text-red-700/90">&ldquo;{student.flagReason || (student.duplicateGroup ? `Duplicate group: ${student.duplicateGroup}` : "Under administrative review")}&rdquo;</span>
-                </p>
-              </div>
-              {onResolve && adminMode && (
-                <button
-                  type="button"
-                  onClick={() => onResolve(student)}
-                  className="w-full py-2 px-3 rounded-xl bg-red-600 hover:bg-red-700 active:scale-95 text-white font-bold text-xs transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
-                >
-                  <span>Resolve Issue</span>
-                </button>
-              )}
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

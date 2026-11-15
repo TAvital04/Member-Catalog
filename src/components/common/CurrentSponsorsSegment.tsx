@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { Building2, ExternalLink, Award } from "lucide-react";
-import { CURRENT_CHAPTER_SPONSORS, ChapterSponsor } from "@/data/sponsors";
+import { Building2, ExternalLink } from "lucide-react";
+import { CURRENT_CHAPTER_SPONSORS } from "@/data/sponsors";
 import { CARD_HOVER_EFFECT } from "@/lib/cardStyles";
 
 interface CurrentSponsorsSegmentProps {
@@ -63,9 +63,6 @@ export default function CurrentSponsorsSegment({
           <Building2 size={14} className="text-amber-500" />
           <span>{title}</span>
         </h4>
-        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
-          Official Industry Partners
-        </span>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
@@ -75,21 +72,21 @@ export default function CurrentSponsorsSegment({
             href={sponsor.website}
             target="_blank"
             rel="noopener noreferrer"
-            className={`p-3 rounded-2xl bg-white border border-slate-200/90 flex flex-col justify-between gap-2 text-left group ${CARD_HOVER_EFFECT}`}
+            className={`p-3 rounded-2xl bg-white border border-slate-200/90 flex items-center justify-between gap-2 text-left group ${CARD_HOVER_EFFECT}`}
             title={`Visit ${sponsor.name}`}
           >
-            <div className="flex items-start justify-between gap-1.5">
-              <span className="text-xs font-bold text-slate-900 group-hover:text-amber-800 transition-colors">
+            <div className="min-w-0 pr-1.5">
+              <span className="text-xs font-bold text-slate-900 group-hover:text-amber-800 transition-colors block truncate">
                 {sponsor.name}
               </span>
+              <p className="text-[10.5px] text-slate-500 leading-snug mt-0.5">
+                {sponsor.tagline}
+              </p>
             </div>
-            <p className="text-[10.5px] text-slate-500 leading-snug">
-              {sponsor.tagline}
-            </p>
-            <div className="flex items-center justify-between pt-1 border-t border-slate-100 text-[10px] text-slate-400 group-hover:text-amber-600 transition-colors">
-              <span>Official Partner</span>
-              <ExternalLink size={11} />
-            </div>
+            <ExternalLink
+              size={11}
+              className="text-slate-300 group-hover:text-amber-600 transition-colors shrink-0"
+            />
           </a>
         ))}
       </div>

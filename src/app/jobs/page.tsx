@@ -436,7 +436,6 @@ function JobsPageContent() {
           onClose={() => setInspectedStudent(null)}
           adminMode={true}
           role="admin"
-          onToggleFlag={() => {}}
         />
       )}
     </div>

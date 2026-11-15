@@ -40,8 +40,6 @@ export async function GET(request?: Request) {
           projects: memberResumes.projects,
           clubMemberships: memberResumes.clubMemberships,
           certifications: memberResumes.certifications,
-          flagged: memberResumes.flagged,
-          flagReason: memberResumes.flagReason,
           mainProjectName: memberResumes.mainProjectName,
           ferpaConsentSigned: memberResumes.ferpaConsentSigned,
           shareGpaWithRecruiters: memberResumes.shareGpaWithRecruiters,
@@ -75,8 +73,8 @@ export async function GET(request?: Request) {
           projects: c.projects,
           clubMemberships: c.clubMemberships,
           certifications: c.certifications,
-          flagged: Boolean(c.flagged),
-          flagReason: c.flagReason || undefined,
+          flagged: false,
+          flagReason: undefined,
           mainProjectName: (c.projects && c.projects[0]) ? c.projects[0].projectName : undefined,
           ferpaConsentSigned: true,
           shareGpaWithRecruiters: true,
@@ -271,8 +269,8 @@ export async function GET(request?: Request) {
           degree: "Bachelor of Science",
           gradDate: row.memberGradYear ? `May ${row.memberGradYear}` : "May 2026",
           status: "Employed",
-          flagged: Boolean(row.flagged),
-          flagReason: row.flagReason || undefined,
+          flagged: false,
+          flagReason: undefined,
           mainProjectName: row.mainProjectName || undefined,
           points,
           recentPoints,
@@ -306,8 +304,7 @@ export async function GET(request?: Request) {
 }
 
 /**
- * PATCH /api/members — Updates candidate moderation status (flag / unflag / resolve)
- * Enforces role-based authorization: callers must possess admin or sponsor role.
+ * PATCH /api/members — Deprecated moderation endpoint (retained for backward compatibility)
  */
 export async function PATCH(request: Request) {
   try {
@@ -321,24 +318,13 @@ export async function PATCH(request: Request) {
     }
 
     const body = await request.json();
-    const { id, flagged, flagReason } = body || {};
+    const { id } = body || {};
 
     if (!id || typeof id !== "string") {
       return Response.json({ success: false, error: "Valid member resume ID is required" }, { status: 400 });
     }
 
-    const cleanReason = typeof flagReason === "string" ? flagReason.trim().slice(0, 300) : null;
-
-    await db
-      .update(memberResumes)
-      .set({
-        flagged: Boolean(flagged),
-        flagReason: flagged ? (cleanReason || "Flagged for review") : null,
-        updatedAt: new Date(),
-      })
-      .where(eq(memberResumes.id, id));
-
-    return Response.json({ success: true, message: "Member status updated successfully" });
+    return Response.json({ success: true, message: "Profile flagging is deprecated" });
   } catch (error: any) {
     console.error("[API Error] Failed to update member status:", error);
     return Response.json({ success: false, error: error?.message || "Failed to update member status" }, { status: 500 });

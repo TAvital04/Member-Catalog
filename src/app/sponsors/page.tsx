@@ -25,6 +25,7 @@ import { JobPosting, SAMPLE_JOB_POSTINGS } from "@/data/jobs";
 import { Student } from "@/data/students";
 import SponsorCard from "@/components/sponsors/SponsorCard";
 import SponsorDetailView from "@/components/sponsors/SponsorDetailView";
+import SponsorEngagementStats from "@/components/sponsors/SponsorEngagementStats";
 import SearchInput from "@/components/common/SearchInput";
 import FilterPills from "@/components/common/FilterPills";
 import EmptyState from "@/components/common/EmptyState";
@@ -100,6 +101,13 @@ function SponsorsPageContent() {
     return getSponsorRelatedData(activeSponsor, SAMPLE_IEEE_PROJECTS, SAMPLE_IEEE_EVENTS, SAMPLE_JOB_POSTINGS, undefined, students);
   }, [activeSponsor, students]);
 
+  const aggregateInteractions = useMemo(() => {
+    return filteredSponsors.flatMap((sponsor) => {
+      const details = getSponsorRelatedData(sponsor, SAMPLE_IEEE_PROJECTS, SAMPLE_IEEE_EVENTS, SAMPLE_JOB_POSTINGS, undefined, students);
+      return details.interactions;
+    });
+  }, [filteredSponsors, students]);
+
   const handleSelectSponsor = (sponsor: ChapterSponsor) => {
     setSelectedSponsorId(sponsor.id);
     const url = new URL(window.location.href);
@@ -166,6 +174,9 @@ function SponsorsPageContent() {
               />
             </section>
 
+            {/* Aggregate Interacting Student & Talent Statistics */}
+            <SponsorEngagementStats interactions={aggregateInteractions} />
+
             {/* Results Grid */}
             {filteredSponsors.length === 0 ? (
               <EmptyState
@@ -208,7 +219,6 @@ function SponsorsPageContent() {
           onClose={() => setInspectedStudent(null)}
           adminMode={isAdmin}
           role={role}
-          onToggleFlag={() => {}}
         />
       )}
 

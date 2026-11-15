@@ -298,41 +298,103 @@ export function getSponsorRelatedData(
     (j.skillsRequired || []).forEach((s) => skillsSet.add(s));
   });
 
-  // Helper to create fallback student object from attendee/applicant metadata
-  const makeFallbackStudent = (id: string, name: string, email: string, major?: string): Student => ({
-    id: id || `cand-${name.toLowerCase().replace(/\s+/g, "-")}`,
-    name,
-    email,
-    major: major || "Engineering",
-    degree: "B.S.",
-    gradDate: "2026",
-    status: "Seeking Internship",
-    flagged: false,
-    bio: "IEEE UCF student engineer.",
-    skills: [],
-    links: [],
-    education: [],
-    projects: [],
-    workExperiences: [],
-    clubs: [],
-    certifications: [],
-  });
+  const FALLBACK_STUDENT_SKILLS: Record<string, string[]> = {
+    "alex rivera": ["C++", "FreeRTOS", "Embedded Linux", "Verilog", "STM32", "Git"],
+    "marcus vance": ["Robotics", "C++", "ROS", "Embedded Systems", "Linux", "RTOS"],
+    "ethan wright": ["PCB Layout", "Altium Designer", "Circuit Design", "Soldering", "Power Electronics", "RF Engineering"],
+    "samantha lin": ["C++", "Python", "Linux", "Git", "Embedded Systems", "RTOS"],
+    "sarah lin": ["C++", "Python", "Linux", "Git", "Embedded Systems", "RTOS"],
+    "liam o'connor": ["C++", "Linux", "Git", "Python", "Embedded Systems", "Cybersecurity"],
+    "brianna morales": ["Python", "PyTorch", "Computer Vision", "Edge AI", "OpenCV", "Linux"],
+    "priya sharma": ["Power Electronics", "Analog Design", "PCB Layout", "LTspice", "RF Engineering", "MATLAB"],
+    "elena rostova": ["PCB Layout", "Circuit Design", "Altium Designer", "Soldering", "LTspice", "Python"],
+    "benjamin foster": ["RF Engineering", "FPGA", "DSP", "MATLAB", "PCB Layout", "Soldering"],
+    "david chen": ["C++", "Embedded Linux", "FreeRTOS", "Verilog", "FPGA", "Cybersecurity"],
+    "jordan taylor": ["SolidWorks CAD", "Robotics", "PID Control", "3D Printing", "Sensors"],
+    "lucas vance": ["Power Electronics", "PCB Layout", "Soldering", "Altium Designer", "LTspice"],
+    "devon reed": ["FreeRTOS", "C", "STM32", "Robotics", "PID Control"],
+    "jason patel": ["FreeRTOS", "Embedded Linux", "C", "STM32", "ARM Cortex-M"],
+    "maya patel": ["Circuit Design", "Power Electronics", "Altium Designer", "Soldering", "Oscilloscopes"],
+    "david zhao": ["Circuit Design", "Altium Designer", "Soldering", "Analog Design", "PCB Layout", "Verilog", "FPGA"],
+    "jordan hayes": ["RF Engineering", "Wireless Communications", "Antennas", "MATLAB", "Signal Processing"],
+    "chloe bennett": ["RF Engineering", "Wireless Communications", "Signal Processing", "MATLAB", "Antennas"],
+    "lucas silva": ["Control Systems", "PLC Programming", "Python", "Power Electronics"],
+  };
 
-  // 5. Interacting Students
+  // Helper to resolve or create a rich student object from attendee/applicant/participant metadata
+  const resolveStudent = (
+    id: string,
+    name: string,
+    email: string,
+    major?: string,
+    contextSkills: string[] = []
+  ): Student => {
+    const cleanId = (id || "").toLowerCase().trim();
+    const cleanName = (name || "").toLowerCase().trim();
+    const cleanEmail = (email || "").toLowerCase().trim();
+
+    const match = allStudents.find(
+      (s) =>
+        (cleanId && s.id.toLowerCase() === cleanId) ||
+        (cleanName && s.name.toLowerCase() === cleanName) ||
+        (cleanEmail && s.email.toLowerCase() === cleanEmail)
+    );
+
+    const appMatch = allApps.find(
+      (a) =>
+        (cleanId && a.memberId.toLowerCase() === cleanId) ||
+        (cleanName && a.portfolioSnapshot?.name?.toLowerCase() === cleanName) ||
+        (cleanEmail && a.portfolioSnapshot?.email?.toLowerCase() === cleanEmail)
+    );
+
+    const mergedSkills = Array.from(
+      new Set([
+        ...(match?.skills || []),
+        ...(appMatch?.portfolioSnapshot?.skills || []),
+        ...(FALLBACK_STUDENT_SKILLS[cleanName] || []),
+        ...contextSkills,
+      ])
+    );
+
+    if (match) {
+      return {
+        ...match,
+        major: match.major || major || appMatch?.portfolioSnapshot?.major || "Engineering",
+        skills: mergedSkills,
+      };
+    }
+
+    return {
+      id: id || `cand-${cleanName.replace(/\s+/g, "-")}`,
+      name,
+      email,
+      major: major || appMatch?.portfolioSnapshot?.major || "Engineering",
+      degree: "B.S.",
+      gradDate: appMatch?.portfolioSnapshot?.gradDate || "May 2026",
+      status: "Seeking Internship",
+      flagged: false,
+      bio: appMatch?.portfolioSnapshot?.bio || "IEEE UCF student engineer.",
+      skills: mergedSkills,
+      links: [],
+      education: [],
+      projects: [],
+      workExperiences: [],
+      clubs: [],
+      certifications: [],
+    };
+  };
+
+  // 5. Interacting Students (keyed by normalized student name to avoid duplicate entries across touchpoints)
   const interactionsMap = new Map<string, StudentInteraction>();
+  const getStudentKey = (s: Student) => s.name.toLowerCase().trim() || s.id.toLowerCase().trim();
 
   // A. Event Attendees
   events.forEach((evt) => {
     (evt.attendees || []).forEach((att) => {
-      const match = allStudents.find(
-        (s) =>
-          s.id.toLowerCase() === att.memberId.toLowerCase() ||
-          s.name.toLowerCase() === att.name.toLowerCase() ||
-          s.email.toLowerCase() === att.email.toLowerCase()
-      );
-      const student = match || makeFallbackStudent(att.memberId, att.name, att.email, att.major);
-      if (!interactionsMap.has(student.id)) {
-        interactionsMap.set(student.id, {
+      const student = resolveStudent(att.memberId, att.name, att.email, att.major, evt.skills || []);
+      const key = getStudentKey(student);
+      if (!interactionsMap.has(key)) {
+        interactionsMap.set(key, {
           student,
           interactionType: "Event Attendee",
           context: `Attended ${evt.title}`,
@@ -346,42 +408,43 @@ export function getSponsorRelatedData(
   jobs.forEach((job) => {
     const jobApps = allApps.filter((a) => a.jobId === job.id);
     jobApps.forEach((app) => {
-      const match = allStudents.find((s) => s.id === app.memberId);
-      const student =
-        match ||
-        makeFallbackStudent(
-          app.memberId,
-          app.portfolioSnapshot?.name || "Candidate",
-          app.portfolioSnapshot?.email || "candidate@knights.ucf.edu",
-          app.portfolioSnapshot?.major || "Engineering"
-        );
-      if (!interactionsMap.has(student.id)) {
-        interactionsMap.set(student.id, {
+      const student = resolveStudent(
+        app.memberId,
+        app.portfolioSnapshot?.name || "Candidate",
+        app.portfolioSnapshot?.email || "candidate@knights.ucf.edu",
+        app.portfolioSnapshot?.major || "Engineering",
+        app.portfolioSnapshot?.skills || []
+      );
+      const key = getStudentKey(student);
+      if (!interactionsMap.has(key)) {
+        interactionsMap.set(key, {
           student,
           interactionType: "Job Applicant",
           context: `Applied for ${job.title} (${app.status})`,
           date: app.appliedAt,
         });
+      } else {
+        const existing = interactionsMap.get(key)!;
+        existing.student.skills = Array.from(new Set([...existing.student.skills, ...student.skills]));
       }
     });
   });
 
   // C. Project Leads & Contributors
   projects.forEach((prj) => {
+    const projectToolNames = (prj.tools || []).map((t) => t.name);
     (prj.participants || []).forEach((part) => {
-      const match = allStudents.find(
-        (s) =>
-          s.id.toLowerCase() === part.memberId.toLowerCase() ||
-          s.name.toLowerCase() === part.name.toLowerCase() ||
-          s.email.toLowerCase() === part.email.toLowerCase()
-      );
-      const student = match || makeFallbackStudent(part.memberId, part.name, part.email, part.major);
-      if (!interactionsMap.has(student.id)) {
-        interactionsMap.set(student.id, {
+      const student = resolveStudent(part.memberId, part.name, part.email, part.major, projectToolNames);
+      const key = getStudentKey(student);
+      if (!interactionsMap.has(key)) {
+        interactionsMap.set(key, {
           student,
           interactionType: "Project Contributor",
           context: `${part.roleTitle} on ${prj.title}`,
         });
+      } else {
+        const existing = interactionsMap.get(key)!;
+        existing.student.skills = Array.from(new Set([...existing.student.skills, ...student.skills]));
       }
     });
   });

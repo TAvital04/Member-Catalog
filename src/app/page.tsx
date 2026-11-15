@@ -3,7 +3,7 @@
 /**
  * @file page.tsx — Main Student Directory Page
  * @description Primary entry point for the IEEE UCF Member Catalog candidate directory.
- * Orchestrates multi-parametric filtering, layout toggling, moderation dialogs, and real-time student profile modals.
+ * Orchestrates multi-parametric filtering, layout toggling, and real-time student profile modals.
  */
 
 import React, { useState, useRef, Suspense } from "react";
@@ -13,7 +13,6 @@ import { useThemeManager } from "@/hooks/useThemeManager";
 import { useStudentData } from "@/hooks/useStudentData";
 import { useFilteredStudents } from "@/hooks/useFilteredStudents";
 import { useFlagDialogManager } from "@/hooks/useFlagDialogManager";
-import { useResolveDialogManager } from "@/hooks/useResolveDialogManager";
 
 import FilterSidebar from "@/components/directory/FilterSidebar";
 import FilterSidebarSkeleton from "@/components/directory/FilterSidebarSkeleton";
@@ -25,8 +24,6 @@ import DirectoryStatsHeader from "@/components/directory/DirectoryStatsHeader";
 import DirectoryControlBar from "@/components/directory/DirectoryControlBar";
 import ActiveFiltersBar from "@/components/directory/ActiveFiltersBar";
 import ConfirmDialog from "@/components/dialogs/ConfirmDialog";
-import ResolveDialog from "@/components/dialogs/ResolveDialog";
-import FlagDialog from "@/components/dialogs/FlagDialog";
 import ToastNotification from "@/components/dialogs/ToastNotification";
 import { Shield } from "lucide-react";
 import { useRoleManager, UserRole } from "@/hooks/useRoleManager";
@@ -56,8 +53,6 @@ function StudentDirectoryContent() {
     setSelectedCompanies,
     skillFilterMode,
     setSkillFilterMode,
-    adminFilterFlagged,
-    setAdminFilterFlagged,
     sortBy,
     setSortBy,
     resetAllFilters,
@@ -163,60 +158,20 @@ function StudentDirectoryContent() {
     onlyLeaders: onlyLeadersFilter,
     skillFilterMode,
     adminMode,
-    adminFilterFlagged,
+    adminFilterFlagged: null,
     sortBy,
     hasFilterPermission: effectiveFilterPermission,
     role,
   });
 
-  // Moderation & Flagging dialog manager hook
-  const {
-    flagDialog,
-    setFlagDialog,
-    flagReasonInput,
-    setFlagReasonInput,
-    flagReportType,
-    setFlagReportType,
-    duplicateSearchQuery,
-    setDuplicateSearchQuery,
-    selectedDuplicateTargetIds,
-    setSelectedDuplicateTargetIds,
-    adminFlagChoice,
-    setAdminFlagChoice,
-    flagDialogRef,
-    handleDeleteStudent,
-    handleToggleFlagStudent,
-    handleConfirmFlagAction,
-  } = useFlagDialogManager({
+  // Admin profile deletion handler
+  const { handleDeleteStudent } = useFlagDialogManager({
     students,
     setStudents,
     selectedStudent,
     setSelectedStudent,
     adminMode,
     role,
-    showConfirm,
-    setToastMessage,
-  });
-
-  // Duplicate Resolution dialog manager hook
-  const {
-    resolveDialogStudent,
-    setResolveDialogStudent,
-    selectedDuplicateIds,
-    setSelectedDuplicateIds,
-    resolveDialogRef,
-    handleOpenResolveDialog,
-    handleResolveKeepAll,
-    handleResolveRemoveAll,
-    handleResolveKeepSelection,
-    handleResolveRemoveSelection,
-    handleResolveUnflag,
-    handleResolveDelete,
-  } = useResolveDialogManager({
-    students,
-    setStudents,
-    selectedStudent,
-    setSelectedStudent,
     showConfirm,
     setToastMessage,
   });
@@ -228,14 +183,6 @@ function StudentDirectoryContent() {
   const removeEventFilter = (evtTitle: string) => setSelectedEvents(selectedEvents.filter((e) => e !== evtTitle));
   const removeProjectFilter = (projName: string) => setSelectedProjects(selectedProjects.filter((p) => p !== projName));
   const removeCompanyFilter = (company: string) => setSelectedCompanies(selectedCompanies.filter((c) => c !== company));
-
-  const handleCompanyToggle = (company: string) => {
-    if (selectedCompanies.includes(company)) {
-      setSelectedCompanies(selectedCompanies.filter((c) => c !== company));
-    } else {
-      setSelectedCompanies([...selectedCompanies, company]);
-    }
-  };
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900 relative pb-16 overflow-x-hidden">
@@ -302,8 +249,6 @@ function StudentDirectoryContent() {
             skillFilterMode={skillFilterMode}
             setSkillFilterMode={setSkillFilterMode}
             adminMode={adminMode}
-            adminFilterFlagged={adminFilterFlagged}
-            setAdminFilterFlagged={setAdminFilterFlagged}
             availableMajors={availableMajors}
             availableSkills={availableSkills}
             availableGradDates={availableGradDates}
@@ -344,7 +289,6 @@ function StudentDirectoryContent() {
             canFilter={hasFilterPermission}
             onSelectStudent={setSelectedStudent}
             onDeleteStudent={handleDeleteStudent}
-            onToggleFlagStudent={handleToggleFlagStudent}
             onResetAllFilters={resetAllFilters}
           />
         </div>
@@ -355,48 +299,10 @@ function StudentDirectoryContent() {
         <PortfolioModal
           student={selectedStudent}
           onClose={() => setSelectedStudent(null)}
-          onToggleFlag={handleToggleFlagStudent}
-          onResolve={handleOpenResolveDialog}
           adminMode={adminMode}
           role={role}
         />
       )}
-
-      {/* Resolve Issue Dialog Overlay */}
-      <ResolveDialog
-        resolveDialogStudent={resolveDialogStudent}
-        onClose={() => setResolveDialogStudent(null)}
-        students={students}
-        selectedDuplicateIds={selectedDuplicateIds}
-        setSelectedDuplicateIds={setSelectedDuplicateIds}
-        handleResolveKeepAll={handleResolveKeepAll}
-        handleResolveRemoveAll={handleResolveRemoveAll}
-        handleResolveKeepSelection={handleResolveKeepSelection}
-        handleResolveRemoveSelection={handleResolveRemoveSelection}
-        handleResolveUnflag={handleResolveUnflag}
-        handleResolveDelete={handleResolveDelete}
-        resolveDialogRef={resolveDialogRef}
-      />
-
-      {/* Custom Flagging Dialogue Modal */}
-      <FlagDialog
-        flagDialog={flagDialog}
-        onClose={() => setFlagDialog(null)}
-        adminFlagChoice={adminFlagChoice}
-        setAdminFlagChoice={setAdminFlagChoice}
-        flagReportType={flagReportType}
-        setFlagReportType={setFlagReportType}
-        flagReasonInput={flagReasonInput}
-        setFlagReasonInput={setFlagReasonInput}
-        duplicateSearchQuery={duplicateSearchQuery}
-        setDuplicateSearchQuery={setDuplicateSearchQuery}
-        selectedDuplicateTargetIds={selectedDuplicateTargetIds}
-        setSelectedDuplicateTargetIds={setSelectedDuplicateTargetIds}
-        students={students}
-        handleConfirmFlagAction={handleConfirmFlagAction}
-        handleDeleteStudent={handleDeleteStudent}
-        flagDialogRef={flagDialogRef}
-      />
 
       {/* Action feedback toast */}
       <ToastNotification toastMessage={toastMessage} />

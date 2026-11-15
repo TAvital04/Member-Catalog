@@ -13,8 +13,8 @@ interface StudentDirectoryResultsProps {
   adminMode: boolean;
   canFilter?: boolean;
   onSelectStudent: (student: Student | null) => void;
-  onDeleteStudent: (id: string) => void;
-  onToggleFlagStudent: (id: string) => void;
+  onDeleteStudent?: (id: string) => void;
+  onToggleFlagStudent?: (id: string) => void;
   onResetAllFilters: () => void;
 }
 
@@ -26,7 +26,6 @@ export default function StudentDirectoryResults({
   canFilter,
   onSelectStudent,
   onDeleteStudent,
-  onToggleFlagStudent,
   onResetAllFilters,
 }: StudentDirectoryResultsProps) {
   if (isLoading) {
@@ -50,7 +49,6 @@ export default function StudentDirectoryResults({
               onClick={onSelectStudent}
               adminMode={adminMode}
               canFilter={canFilter}
-              onToggleFlag={onToggleFlagStudent}
             />
           ))}
         </div>
@@ -67,7 +65,6 @@ export default function StudentDirectoryResults({
             adminMode={adminMode}
             canFilter={canFilter}
             onDelete={onDeleteStudent}
-            onToggleFlag={onToggleFlagStudent}
           />
         ))}
       </div>
@@ -78,7 +75,7 @@ export default function StudentDirectoryResults({
     <EmptyState
       icon={<Compass size={36} className="stroke-1" />}
       headline="No resumes match your criteria"
-      subtext="Try loosening your active filters, adjusting the search query, or toggling Admin Edit Mode to check flagged maintenance entries."
+      subtext="Try loosening your active filters or adjusting the search query."
       actionLabel="Reset All Filters"
       onAction={onResetAllFilters}
     />

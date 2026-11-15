@@ -102,7 +102,7 @@ export default function DirectoryNavbar({
             ? "bg-white text-slate-950 shadow-xs border border-slate-200/90 font-bold"
             : "text-slate-500 hover:text-slate-900 hover:bg-white/50"
         }`}
-        title="Admin maintenance mode — unlocks moderation, flags, and list view"
+        title="Admin maintenance mode — unlocks moderation and list view"
       >
         <Shield
           size={13}

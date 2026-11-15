@@ -1,14 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import { Filter, RotateCcw, ShieldAlert } from "lucide-react";
+import { Filter, RotateCcw } from "lucide-react";
 import FilterDropdown from "./FilterDropdown";
 import MajorsFilter from "./filters/MajorsFilter";
 import SkillsFilter, { SkillModeSelector } from "./filters/SkillsFilter";
 import GradDatesFilter from "./filters/GradDatesFilter";
 import EventsFilter from "./filters/EventsFilter";
 import ProjectsFilter from "./filters/ProjectsFilter";
-import AdminFilters from "./filters/AdminFilters";
 import SponsorLockPanel from "./filters/SponsorLockPanel";
 import { isSkillMatch } from "@/lib/skillMatching";
 
@@ -27,11 +26,11 @@ interface FilterSidebarProps {
   setSelectedCompanies?: (companies: string[]) => void;
   skillFilterMode: "AND" | "OR";
   setSkillFilterMode: (mode: "AND" | "OR") => void;
-  
-  // Admin filters
-  adminMode: boolean;
-  adminFilterFlagged: boolean | null;
-  setAdminFilterFlagged: (flagged: boolean | null) => void;
+
+  // Admin filters (deprecated flagging)
+  adminMode?: boolean;
+  adminFilterFlagged?: boolean | null;
+  setAdminFilterFlagged?: (flagged: boolean | null) => void;
 
   // Available metadata
   availableMajors: string[];
@@ -60,9 +59,6 @@ export default function FilterSidebar({
   setSelectedProjects = () => {},
   skillFilterMode,
   setSkillFilterMode,
-  adminMode,
-  adminFilterFlagged,
-  setAdminFilterFlagged,
   availableMajors,
   availableSkills,
   availableGradDates,
@@ -72,15 +68,14 @@ export default function FilterSidebar({
   role = "admin",
   onResetAll,
 }: FilterSidebarProps) {
-  const [activeDropdown, setActiveDropdown] = useState<"major" | "skill" | "grad" | "event" | "project" | "company" | "admin" | null>(null);
-  
+  const [activeDropdown, setActiveDropdown] = useState<"major" | "skill" | "grad" | "event" | "project" | "company" | null>(null);
+
   const activeFiltersCount =
     selectedMajors.length +
     selectedSkills.length +
     selectedGradDates.length +
     selectedEvents.length +
-    selectedProjects.length +
-    (adminFilterFlagged !== null ? 1 : 0);
+    selectedProjects.length;
 
   const handleMajorToggle = (major: string) => {
     if (selectedMajors.includes(major)) {
@@ -134,7 +129,6 @@ export default function FilterSidebar({
       setSelectedEvents([]);
       setSelectedProjects([]);
       setSkillFilterMode("OR");
-      setAdminFilterFlagged(null);
     }
     setActiveDropdown(null);
   };
@@ -246,27 +240,6 @@ export default function FilterSidebar({
               layout="top"
             />
           </FilterDropdown>
-
-          {adminMode && (
-            <FilterDropdown
-              title="Admin Controls"
-              isOpen={activeDropdown === "admin"}
-              onToggle={() => setActiveDropdown(activeDropdown === "admin" ? null : "admin")}
-              isActive={adminFilterFlagged !== null}
-              layout="top"
-              themeColor="red"
-              widthClass="w-[calc(100vw-2.5rem)] max-w-[280px] md:w-64"
-            >
-              <div className="flex flex-col gap-1.5 w-full">
-                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-0.5">Flagged Status</span>
-                <AdminFilters
-                  adminFilterFlagged={adminFilterFlagged}
-                  setAdminFilterFlagged={setAdminFilterFlagged}
-                  layout="top"
-                />
-              </div>
-            </FilterDropdown>
-          )}
         </div>
 
         <button
@@ -294,7 +267,7 @@ export default function FilterSidebar({
               </span>
             )}
           </div>
-          
+
           <button
             onClick={resetAllFilters}
             className="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-800 transition-colors cursor-pointer font-medium"
@@ -303,25 +276,6 @@ export default function FilterSidebar({
             <span>Reset All</span>
           </button>
         </div>
-
-        {adminMode && (
-          <div className="border-b border-slate-100 pb-4">
-            <FilterDropdown
-              title="Flagged Status"
-              isOpen={true}
-              onToggle={() => {}}
-              isActive={adminFilterFlagged !== null}
-              layout="side"
-              headerAction={<ShieldAlert size={15} className="text-red-500" />}
-            >
-              <AdminFilters
-                adminFilterFlagged={adminFilterFlagged}
-                setAdminFilterFlagged={setAdminFilterFlagged}
-                layout="side"
-              />
-            </FilterDropdown>
-          </div>
-        )}
 
         <div className="border-b border-slate-100 pb-4">
           <FilterDropdown
