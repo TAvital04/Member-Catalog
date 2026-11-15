@@ -49,34 +49,40 @@ describe("Directory Filtering & Component Rendering", () => {
     expect(screen.getByText("Test Candidate")).toBeInTheDocument();
   });
 
-  test("renders DirectoryNavbar with permission levels switch and handles role changes", () => {
+  test("renders DirectoryNavbar with Sign In link for standard users and role badge + Sign Out when authenticated", () => {
     const handleRoleChange = jest.fn();
 
-    const { getAllByText } = render(
+    const { getAllByText, rerender } = render(
       <DirectoryNavbar
         role="standard"
         handleRoleChange={handleRoleChange}
       />
     );
 
-    // Verify switch contains Standard, Sponsor, and Admin
-    const standardButtons = getAllByText("Standard");
-    const sponsorButtons = getAllByText("Sponsor");
-    const adminButtons = getAllByText("Admin");
-    expect(standardButtons.length).toBeGreaterThan(0);
-    expect(sponsorButtons.length).toBeGreaterThan(0);
-    expect(adminButtons.length).toBeGreaterThan(0);
+    // Unauthenticated standard view shows Sign In link to /login
+    const signInLinks = getAllByText("Sign In");
+    expect(signInLinks.length).toBeGreaterThan(0);
 
-    // Click Sponsor switch button
-    fireEvent.click(sponsorButtons[0]);
-    expect(handleRoleChange).toHaveBeenCalledWith("sponsor");
+    // Authenticated Sponsor view shows Sponsor badge and Sign Out button
+    rerender(
+      <DirectoryNavbar
+        role="sponsor"
+        handleRoleChange={handleRoleChange}
+      />
+    );
+    expect(getAllByText("Sponsor").length).toBeGreaterThan(0);
 
-    // Click Admin switch button
-    fireEvent.click(adminButtons[0]);
-    expect(handleRoleChange).toHaveBeenCalledWith("admin");
+    // Authenticated RSO Leadership (admin) view shows RSO Leadership badge and Sign Out
+    rerender(
+      <DirectoryNavbar
+        role="admin"
+        handleRoleChange={handleRoleChange}
+      />
+    );
+    expect(getAllByText("RSO Leadership").length).toBeGreaterThan(0);
 
-    // Click Standard switch button
-    fireEvent.click(standardButtons[0]);
+    const signOutButtons = screen.getAllByRole("button", { name: /Sign out/i });
+    fireEvent.click(signOutButtons[0]);
     expect(handleRoleChange).toHaveBeenCalledWith("standard");
   });
 
