@@ -19,6 +19,7 @@ import {
 import { sendDirectEmail } from "@/lib/email";
 import { getSafeUrl } from "@/shared";
 import CustomDropdown from "@/components/common/CustomDropdown";
+import Tooltip from "@/components/common/Tooltip";
 
 // Custom SVG brand icons for GitHub and LinkedIn to maintain consistent styling without external icon drift
 const GithubIcon = ({ size = 11, ...props }: React.SVGProps<SVGSVGElement> & { size?: number }) => (
@@ -193,7 +194,6 @@ export default function ContactTab({ student, role }: ContactTabProps) {
       {/* Section Header */}
       <div className="flex items-center justify-between pb-3 border-b border-slate-100">
         <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider">
-          <Mail size={14} className="text-amber-600 dark:text-amber-500 shrink-0" />
           <span>Direct Candidate Outreach</span>
         </div>
         <div className="flex items-center gap-2">
@@ -209,8 +209,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
       {/* Verified Channels Card */}
       <div className="p-4 md:p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-3.5">
         <div className="flex items-center justify-between">
-          <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-            <ShieldCheck size={14} className="text-amber-600 dark:text-amber-500 shrink-0" />
+          <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
             <span>Verified Channels & Profiles</span>
           </h4>
           <span className="text-[11px] text-slate-500 font-sans hidden sm:inline">
@@ -336,8 +335,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
       {/* Direct Candidate Inquiry Form */}
       <div className="p-4 md:p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-4">
         <div className="flex flex-col gap-1">
-          <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-            <Building2 size={14} className="text-amber-600 dark:text-amber-500" />
+          <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
             <span>Connect with {student.name}</span>
           </h4>
           <p className="text-xs text-slate-500">
@@ -360,7 +358,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
           </div>
         )}
 
-        <form onSubmit={handleContactSubmit} className="flex flex-col gap-3">
+        <form onSubmit={handleContactSubmit} noValidate className="flex flex-col gap-3">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="flex flex-col gap-1">
               <label className="text-[11px] font-bold text-slate-700">
@@ -368,7 +366,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
               </label>
               <input
                 type="text"
-                required
+                aria-required="true"
                 value={recruiterName}
                 onChange={(e) => setRecruiterName(e.target.value)}
                 placeholder="e.g. Jane Doe"
@@ -393,8 +391,9 @@ export default function ContactTab({ student, role }: ContactTabProps) {
                 Work Email <span className="text-red-500">*</span>
               </label>
               <input
-                type="email"
-                required
+                type="text"
+                inputMode="email"
+                aria-required="true"
                 value={recruiterEmail}
                 onChange={(e) => setRecruiterEmail(e.target.value)}
                 placeholder="jane@company.com"

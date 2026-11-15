@@ -298,36 +298,38 @@ export function getSponsorRelatedData(
     (j.skillsRequired || []).forEach((s) => skillsSet.add(s));
   });
 
-  const FALLBACK_STUDENT_SKILLS: Record<string, string[]> = {
-    "alex rivera": ["C++", "FreeRTOS", "Embedded Linux", "Verilog", "STM32", "Git"],
-    "marcus vance": ["Robotics", "C++", "ROS", "Embedded Systems", "Linux", "RTOS"],
-    "ethan wright": ["PCB Layout", "Altium Designer", "Circuit Design", "Soldering", "Power Electronics", "RF Engineering"],
-    "samantha lin": ["C++", "Python", "Linux", "Git", "Embedded Systems", "RTOS"],
-    "sarah lin": ["C++", "Python", "Linux", "Git", "Embedded Systems", "RTOS"],
-    "liam o'connor": ["C++", "Linux", "Git", "Python", "Embedded Systems", "Cybersecurity"],
-    "brianna morales": ["Python", "PyTorch", "Computer Vision", "Edge AI", "OpenCV", "Linux"],
-    "priya sharma": ["Power Electronics", "Analog Design", "PCB Layout", "LTspice", "RF Engineering", "MATLAB"],
-    "elena rostova": ["PCB Layout", "Circuit Design", "Altium Designer", "Soldering", "LTspice", "Python"],
-    "benjamin foster": ["RF Engineering", "FPGA", "DSP", "MATLAB", "PCB Layout", "Soldering"],
-    "david chen": ["C++", "Embedded Linux", "FreeRTOS", "Verilog", "FPGA", "Cybersecurity"],
-    "jordan taylor": ["SolidWorks CAD", "Robotics", "PID Control", "3D Printing", "Sensors"],
-    "lucas vance": ["Power Electronics", "PCB Layout", "Soldering", "Altium Designer", "LTspice"],
-    "devon reed": ["FreeRTOS", "C", "STM32", "Robotics", "PID Control"],
-    "jason patel": ["FreeRTOS", "Embedded Linux", "C", "STM32", "ARM Cortex-M"],
-    "maya patel": ["Circuit Design", "Power Electronics", "Altium Designer", "Soldering", "Oscilloscopes"],
-    "david zhao": ["Circuit Design", "Altium Designer", "Soldering", "Analog Design", "PCB Layout", "Verilog", "FPGA"],
-    "jordan hayes": ["RF Engineering", "Wireless Communications", "Antennas", "MATLAB", "Signal Processing"],
-    "chloe bennett": ["RF Engineering", "Wireless Communications", "Signal Processing", "MATLAB", "Antennas"],
-    "lucas silva": ["Control Systems", "PLC Programming", "Python", "Power Electronics"],
+  // Precompute workshop-earned skills per student from SAMPLE_IEEE_EVENTS (Technical Workshops only)
+  // A member only has their skills updated if they attend a workshop for it — never from projects or manual entry.
+  const workshopSkillsByStudent = new Map<string, Set<string>>();
+  const addWorkshopSkillsForKey = (key: string, skillsToAdd: string[]) => {
+    const cleanKey = (key || "").toLowerCase().trim();
+    if (!cleanKey) return;
+    const set = workshopSkillsByStudent.get(cleanKey) || new Set<string>();
+    skillsToAdd.forEach((sk) => {
+      if (sk) set.add(sk);
+    });
+    workshopSkillsByStudent.set(cleanKey, set);
   };
 
-  // Helper to resolve or create a rich student object from attendee/applicant/participant metadata
+  allEvents
+    .filter((evt) => evt.category === "Technical Workshop")
+    .forEach((evt) => {
+      const wSkills = evt.skills || [];
+      (evt.attendees || []).forEach((att) => {
+        if (att.memberId) addWorkshopSkillsForKey(att.memberId, wSkills);
+        if (att.name) addWorkshopSkillsForKey(att.name, wSkills);
+        if (att.email) addWorkshopSkillsForKey(att.email, wSkills);
+      });
+    });
+
+  // Helper to resolve or create a rich student object from attendee/applicant/participant metadata.
+  // Skills are populated strictly from workshop attendance (never from projects, job applications, or manual entry).
   const resolveStudent = (
     id: string,
     name: string,
     email: string,
     major?: string,
-    contextSkills: string[] = []
+    workshopSkills: string[] = []
   ): Student => {
     const cleanId = (id || "").toLowerCase().trim();
     const cleanName = (name || "").toLowerCase().trim();
@@ -347,12 +349,17 @@ export function getSponsorRelatedData(
         (cleanEmail && a.portfolioSnapshot?.email?.toLowerCase() === cleanEmail)
     );
 
+    const attendedWorkshopSkills = [
+      ...(workshopSkillsByStudent.get(cleanId) || []),
+      ...(workshopSkillsByStudent.get(cleanName) || []),
+      ...(workshopSkillsByStudent.get(cleanEmail) || []),
+      ...workshopSkills,
+    ];
+
     const mergedSkills = Array.from(
       new Set([
         ...(match?.skills || []),
-        ...(appMatch?.portfolioSnapshot?.skills || []),
-        ...(FALLBACK_STUDENT_SKILLS[cleanName] || []),
-        ...contextSkills,
+        ...attendedWorkshopSkills,
       ])
     );
 
@@ -388,10 +395,11 @@ export function getSponsorRelatedData(
   const interactionsMap = new Map<string, StudentInteraction>();
   const getStudentKey = (s: Student) => s.name.toLowerCase().trim() || s.id.toLowerCase().trim();
 
-  // A. Event Attendees
+  // A. Event Attendees (Only Technical Workshops grant skills to attendees)
   events.forEach((evt) => {
+    const workshopSkills = evt.category === "Technical Workshop" ? evt.skills || [] : [];
     (evt.attendees || []).forEach((att) => {
-      const student = resolveStudent(att.memberId, att.name, att.email, att.major, evt.skills || []);
+      const student = resolveStudent(att.memberId, att.name, att.email, att.major, workshopSkills);
       const key = getStudentKey(student);
       if (!interactionsMap.has(key)) {
         interactionsMap.set(key, {
@@ -404,7 +412,7 @@ export function getSponsorRelatedData(
     });
   });
 
-  // B. Job Applicants
+  // B. Job Applicants (Do not merge manual portfolioSnapshot.skills; only workshop-verified skills apply)
   jobs.forEach((job) => {
     const jobApps = allApps.filter((a) => a.jobId === job.id);
     jobApps.forEach((app) => {
@@ -413,7 +421,7 @@ export function getSponsorRelatedData(
         app.portfolioSnapshot?.name || "Candidate",
         app.portfolioSnapshot?.email || "candidate@knights.ucf.edu",
         app.portfolioSnapshot?.major || "Engineering",
-        app.portfolioSnapshot?.skills || []
+        []
       );
       const key = getStudentKey(student);
       if (!interactionsMap.has(key)) {
@@ -423,18 +431,14 @@ export function getSponsorRelatedData(
           context: `Applied for ${job.title} (${app.status})`,
           date: app.appliedAt,
         });
-      } else {
-        const existing = interactionsMap.get(key)!;
-        existing.student.skills = Array.from(new Set([...existing.student.skills, ...student.skills]));
       }
     });
   });
 
-  // C. Project Leads & Contributors
+  // C. Project Leads & Contributors (Projects do NOT update a member's skills; pass [] for workshopSkills)
   projects.forEach((prj) => {
-    const projectToolNames = (prj.tools || []).map((t) => t.name);
     (prj.participants || []).forEach((part) => {
-      const student = resolveStudent(part.memberId, part.name, part.email, part.major, projectToolNames);
+      const student = resolveStudent(part.memberId, part.name, part.email, part.major, []);
       const key = getStudentKey(student);
       if (!interactionsMap.has(key)) {
         interactionsMap.set(key, {
@@ -442,9 +446,6 @@ export function getSponsorRelatedData(
           interactionType: "Project Contributor",
           context: `${part.roleTitle} on ${prj.title}`,
         });
-      } else {
-        const existing = interactionsMap.get(key)!;
-        existing.student.skills = Array.from(new Set([...existing.student.skills, ...student.skills]));
       }
     });
   });

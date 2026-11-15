@@ -226,7 +226,7 @@ export default function DirectoryControlBar({
               type="button"
               onClick={handleToggleReverse}
               id="directory-sort-reverse-toggle"
-              className={`p-1.5 rounded-lg transition-colors cursor-pointer relative group ${
+              className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
                 isReversed
                   ? "bg-slate-100 text-slate-800 hover:bg-slate-200 border border-slate-200"
                   : "text-slate-400 hover:text-slate-700 hover:bg-slate-100"
@@ -234,13 +234,6 @@ export default function DirectoryControlBar({
               aria-label="Reverse sort order"
             >
               <ArrowUpDown size={14} />
-              <Tooltip
-                content={
-                  isReversed
-                    ? "Reversed order active (Click to flip)"
-                    : "Reverse sort order (Click to flip)"
-                }
-              />
             </button>
           </div>
 
@@ -390,26 +383,26 @@ export default function DirectoryControlBar({
             <button
               type="button"
               onClick={() => setViewMode("grid")}
-              className={`p-1.5 rounded-lg transition-all relative group cursor-pointer ${
+              aria-label="Grid Card View"
+              className={`p-1.5 rounded-lg transition-all cursor-pointer ${
                 viewMode === "grid"
                   ? "bg-slate-100 text-slate-900"
                   : "text-slate-400 hover:text-slate-700"
               }`}
             >
               <LayoutGrid size={15} />
-              <Tooltip content="Grid Card View" />
             </button>
             <button
               type="button"
               onClick={() => setViewMode("list")}
-              className={`p-1.5 rounded-lg transition-all relative group cursor-pointer ${
+              aria-label="Compact Row View"
+              className={`p-1.5 rounded-lg transition-all cursor-pointer ${
                 viewMode === "list"
                   ? "bg-slate-100 text-slate-900"
                   : "text-slate-400 hover:text-slate-700"
               }`}
             >
               <List size={15} />
-              <Tooltip content="Compact Row View" />
             </button>
           </div>
         )}

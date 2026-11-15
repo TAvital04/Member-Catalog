@@ -54,7 +54,6 @@ export default function ProjectTimelineTab({ timeline = [] }: ProjectTimelineTab
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider py-1 leading-normal">
-          <Calendar size={14} className="text-slate-400 shrink-0" />
           <span>Project Roadmap & Sprint Milestones ({safeTimeline.length})</span>
         </div>
       </div>

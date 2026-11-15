@@ -11,6 +11,7 @@ import {
   Wrench,
 } from "lucide-react";
 import Avatar from "@/components/common/Avatar";
+import Tooltip from "@/components/common/Tooltip";
 import { IEEEProject } from "@/data/projects";
 import { ProjectTabType } from "@/components/modal/project/ProjectTabNavigation";
 import { CARD_INTERACTIVE, CARD_TITLE_HOVER } from "@/lib/cardStyles";
@@ -96,9 +97,7 @@ export default function ProjectCard({
                   onOpenModal(project, "tools");
                 }}
                 className="text-[10px] font-bold text-slate-500 hover:text-amber-500 uppercase tracking-wider flex items-center gap-1 transition-colors cursor-pointer group/stack text-left"
-                title={`View all ${project.tools.length} tools & skills for ${project.title}`}
               >
-                <Wrench size={11} className="text-slate-400 group-hover/stack:text-amber-500 transition-colors" />
                 <span>Key Tech Stack ({project.tools.length})</span>
               </button>
             </div>
@@ -109,9 +108,8 @@ export default function ProjectCard({
                   href={`/?skills=${encodeURIComponent(tool.name)}`}
                   onClick={(e) => e.stopPropagation()}
                   className="px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 hover:border-amber-300 hover:text-amber-900 hover:bg-amber-50/70 text-[10.5px] font-mono font-medium text-slate-700 transition-colors cursor-pointer inline-block"
-                  title={`Filter candidates with skill/tool: ${tool.name}`}
                 >
-                  {tool.name}
+                  <span>{tool.name}</span>
                 </Link>
               ))}
               {project.tools.length > 4 && (
@@ -122,10 +120,9 @@ export default function ProjectCard({
                     onOpenModal(project, "tools");
                   }}
                   className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-amber-500/15 border border-slate-200 hover:border-amber-500/40 text-[10.5px] font-medium text-slate-600 hover:text-amber-500 transition-all cursor-pointer active:scale-95 shadow-2xs"
-                  title={`Show all ${project.tools.length} tools & skills for ${project.title}`}
                   aria-label={`Show more tools and skills for ${project.title}`}
                 >
-                  +{project.tools.length - 4} more
+                  <span>+{project.tools.length - 4} more</span>
                 </button>
               )}
             </div>
@@ -133,7 +130,6 @@ export default function ProjectCard({
         ) : (
           <div className="flex flex-col gap-1">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
-              <Wrench size={11} className="text-slate-400" />
               Key Tech Stack (0)
             </span>
             <p className="text-xs text-slate-400 italic">
@@ -146,7 +142,6 @@ export default function ProjectCard({
         <div className="flex flex-col gap-2 pt-2 border-t border-slate-100">
           <div className="flex items-center justify-between text-[11px] font-bold text-slate-500 uppercase tracking-wider">
             <span className="flex items-center gap-1">
-              <Users size={12} className="text-slate-400" />
               Team Roster ({project.participants ? project.participants.length : 0})
             </span>
           </div>
@@ -191,17 +186,14 @@ export default function ProjectCard({
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="p-2 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 text-slate-500 hover:text-slate-800 transition-colors"
-              title="GitHub Repository"
+              aria-label="GitHub Repository"
+              className="px-2.5 py-1.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors"
             >
-              <GitBranch size={14} />
+              GitHub Repo
             </a>
           ) : (
-            <span
-              className="p-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-300 cursor-not-allowed"
-              title="Repository not provided"
-            >
-              <GitBranch size={14} />
+            <span className="px-2.5 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium text-slate-300 cursor-not-allowed">
+              No Repo
             </span>
           )}
 
@@ -211,17 +203,14 @@ export default function ProjectCard({
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="p-2 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 text-slate-500 hover:text-slate-800 transition-colors"
-              title="Live Demo"
+              aria-label="Live Demo"
+              className="px-2.5 py-1.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors"
             >
-              <ExternalLink size={14} />
+              Live Demo
             </a>
           ) : (
-            <span
-              className="p-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-300 cursor-not-allowed"
-              title="Live demo not provided"
-            >
-              <ExternalLink size={14} />
+            <span className="px-2.5 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium text-slate-300 cursor-not-allowed">
+              No Demo
             </span>
           )}
         </div>

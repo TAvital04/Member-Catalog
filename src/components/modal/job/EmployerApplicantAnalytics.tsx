@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { JobPosting, JobApplication } from "@/data/jobs";
 import CustomDropdown from "@/components/common/CustomDropdown";
+import Tooltip from "@/components/common/Tooltip";
 
 interface EmployerApplicantAnalyticsProps {
   jobs: JobPosting[];
@@ -123,18 +124,13 @@ export default function EmployerApplicantAnalytics({
     <div className="flex flex-col gap-6 animate-fade-in">
       {/* Top Controller Bar */}
       <div className="p-4 md:p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-2.5">
-          <div className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-700 shrink-0">
-            <BarChart3 size={18} />
-          </div>
-          <div>
-            <h3 className="text-sm font-black text-slate-900 leading-tight">
-              Applicant Pool Analytics & Demographics
-            </h3>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Live aggregate metrics on member skills, academic distribution, and pipeline velocity.
-            </p>
-          </div>
+        <div>
+          <h3 className="text-sm font-black text-slate-900 leading-tight">
+            Applicant Pool Analytics & Demographics
+          </h3>
+          <p className="text-xs text-slate-500 mt-0.5">
+            Live aggregate metrics on member skills, academic distribution, and pipeline velocity.
+          </p>
         </div>
 
         {/* Role Selector Filter */}
@@ -240,7 +236,6 @@ export default function EmployerApplicantAnalytics({
         <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-4">
           <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
             <div className="flex items-center gap-2">
-              <GraduationCap size={15} className="text-amber-600" />
               <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                 Academic Major Breakdown
               </h4>
@@ -267,10 +262,11 @@ export default function EmployerApplicantAnalytics({
                   return (
                     <div
                       key={major}
-                      title={`${major}: ${count} (${percent}%)`}
                       style={{ width: `${percent}%` }}
-                      className={`${colors[idx % colors.length]} h-full transition-all duration-500`}
-                    />
+                      className={`relative group/tooltip ${colors[idx % colors.length]} h-full transition-all duration-500`}
+                    >
+                      <Tooltip content={`${major}: ${count} (${percent}%)`} position="top" />
+                    </div>
                   );
                 })}
               </div>
@@ -327,7 +323,6 @@ export default function EmployerApplicantAnalytics({
         <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-4">
           <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
             <div className="flex items-center gap-2">
-              <Sparkles size={14} className="text-amber-600" />
               <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                 Top Technical Skills
               </h4>
@@ -367,7 +362,6 @@ export default function EmployerApplicantAnalytics({
         <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-4">
           <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
             <div className="flex items-center gap-2">
-              <TrendingUp size={14} className="text-purple-600" />
               <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                 Recruitment Funnel Stages
               </h4>
@@ -438,7 +432,6 @@ export default function EmployerApplicantAnalytics({
         <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-4">
           <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
             <div className="flex items-center gap-2">
-              <Award size={15} className="text-emerald-600" />
               <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                 Graduation Class Standings
               </h4>
@@ -474,9 +467,8 @@ export default function EmployerApplicantAnalytics({
       <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-3">
         <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
           <div className="flex items-center gap-2">
-            <FolderGit2 size={15} className="text-amber-600" />
             <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-              Verified Chapter Projects Represented by Applicants
+              Chapter Projects Represented by Applicants
             </h4>
           </div>
           <span className="text-[11px] text-slate-500">Hands-on Collegiate Engineering Experience</span>

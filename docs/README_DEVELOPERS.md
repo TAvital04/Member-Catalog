@@ -87,7 +87,7 @@ The data model powering candidate profiles is defined in `src/db/schema.ts` and 
 - `resumeLink`: Direct link to hosted resume PDF.
 - `links`: List of platform links (`GitHub`, `LinkedIn`, `Portfolio`, etc.).
 - `education`: Array of degree entries.
-- `skills`: Flat array of technical skill strings (`React`, `Python`, `Altium Designer`, etc.).
+- `skills`: Flat array of technical skill strings (`React`, `Python`, `Altium Designer`, etc.), populated exclusively from chapter workshops that the member attended (never from manual entry or project participation).
 - `workExperiences`: Work experience timeline objects.
 - `projects`: Project entries with external repository/demo links.
 - `clubs`: Campus student organization participation.

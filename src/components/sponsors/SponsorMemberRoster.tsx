@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { Users, Calendar, Briefcase, FolderGit2, ArrowRight } from "lucide-react";
+import { Users, Calendar, Briefcase, FolderGit2 } from "lucide-react";
 import Avatar from "@/components/common/Avatar";
+import Tooltip from "@/components/common/Tooltip";
 import { StudentInteraction } from "@/data/sponsors";
 import { Student } from "@/data/students";
 import { CARD_INTERACTIVE } from "@/lib/cardStyles";
@@ -61,7 +62,6 @@ export default function SponsorMemberRoster({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h3 className="section-title">
-            <Users size={16} className="text-amber-500" />
             <span>Engaged Members & Candidate Interactions</span>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
               {interactions.length} Students
@@ -131,11 +131,11 @@ export default function SponsorMemberRoster({
               </div>
 
               <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
-                <span className="truncate pr-2 font-medium" title={context}>
-                  {context}
+                <span className="truncate pr-2 font-medium">
+                  <span>{context}</span>
                 </span>
                 <span className="text-amber-800 font-bold shrink-0 flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform">
-                  Portfolio <ArrowRight size={11} />
+                  Portfolio
                 </span>
               </div>
             </div>

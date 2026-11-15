@@ -122,7 +122,6 @@ export default function ProjectCard({
                 onClick={(e) => e.stopPropagation()}
                 className="external-link-btn flex items-center gap-1.5 text-[10.5px] font-semibold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-slate-700 hover:text-slate-900 transition-all shadow-2xs cursor-pointer active:scale-95"
               >
-                <ExternalLink size={11} />
                 <span>External Link {lIdx + 1}</span>
               </a>
             );

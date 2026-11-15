@@ -46,9 +46,8 @@ export default function SkillsFilter({
             <button
               key={skill}
               type="button"
-              title={skill}
               onClick={() => onSkillToggle(skill)}
-              className={`relative group/tooltip hover:z-50 px-2 py-1 rounded-lg text-[11px] font-medium transition-all flex items-center gap-1.5 select-none cursor-pointer max-w-full ${
+              className={`px-2 py-1 rounded-lg text-[11px] font-medium transition-all flex items-center gap-1.5 select-none cursor-pointer max-w-full ${
                 isSelected
                   ? "bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-sm"
                   : "bg-zinc-900/90 text-zinc-400 border border-zinc-800 hover:text-zinc-200 hover:border-zinc-700"
@@ -58,7 +57,6 @@ export default function SkillsFilter({
                 <CustomCheckbox checked={isSelected} />
               </div>
               <span className="truncate max-w-full">{skill}</span>
-              <Tooltip content={`Filter: ${skill}`} position="top" />
             </button>
           );
         })}
@@ -84,26 +82,24 @@ export function SkillModeSelector({
       <button
         type="button"
         onClick={() => setSkillFilterMode("OR")}
-        className={`px-1.5 py-0.5 rounded transition-all relative group ${
+        className={`px-1.5 py-0.5 rounded transition-all ${
           skillFilterMode === "OR"
             ? "bg-zinc-800 text-amber-400 font-bold"
             : "text-zinc-550 hover:text-zinc-300"
         }`}
       >
         OR
-        <Tooltip content="Match ANY selected skill" />
       </button>
       <button
         type="button"
         onClick={() => setSkillFilterMode("AND")}
-        className={`px-1.5 py-0.5 rounded transition-all relative group ${
+        className={`px-1.5 py-0.5 rounded transition-all ${
           skillFilterMode === "AND"
             ? "bg-zinc-800 text-amber-400 font-bold"
             : "text-zinc-550 hover:text-zinc-300"
         }`}
       >
         AND
-        <Tooltip content="Match ALL selected skills" />
       </button>
     </div>
   );

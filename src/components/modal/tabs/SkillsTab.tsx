@@ -4,7 +4,6 @@ import React from "react";
 import Link from "next/link";
 import { Student } from "@/data/students";
 import CertificationCard from "../cards/CertificationCard";
-import { Code, CheckCircle2 } from "lucide-react";
 import { isLeadSkill } from "@/lib/rsoAffiliation";
 
 interface SkillsTabProps {
@@ -25,13 +24,12 @@ export default function SkillsTab({ student, formatDateStr, onClose, role, canFi
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between pb-3 border-b border-slate-100">
           <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider">
-            <Code size={14} className="text-amber-600 dark:text-amber-500 shrink-0" />
             <span>Skills & Tech Stack</span>
             <span className="bg-amber-50 text-amber-800 border border-amber-200 text-[10px] px-2 py-0.2 rounded-full font-bold">
               {student.skills.length}
             </span>
           </div>
-          <span className="text-[11px] text-slate-500 font-medium">Verified Member Skillset</span>
+          <span className="text-[11px] text-slate-500 font-medium">Workshop Attendance</span>
         </div>
 
         {/* Lead Skill Filter Legend & Status */}
@@ -39,10 +37,10 @@ export default function SkillsTab({ student, formatDateStr, onClose, role, canFi
           {leadSkillCount > 0 ? (
             <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-semibold text-[10.5px] bg-amber-50 text-amber-800 border border-amber-300">
               <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0"></span>
-              <span>Gold Border = Project / Workshop Lead</span>
+              <span>Gold Border = Workshop Lead</span>
             </span>
           ) : (
-            <span className="text-slate-400">Core Engineering Competencies</span>
+            <span className="text-slate-400">Earned Exclusively via Chapter Workshops</span>
           )}
           {canFilter && (
             <span className="text-slate-400 font-medium">Click to filter candidates</span>
@@ -62,7 +60,6 @@ export default function SkillsTab({ student, formatDateStr, onClose, role, canFi
                 href={`/?skills=${encodeURIComponent(skill)}`}
                 onClick={() => onClose?.()}
                 className={`text-xs px-3 py-1.5 rounded-lg transition-all duration-200 active:scale-95 cursor-pointer ${chipClasses}`}
-                title={isLead ? `Project / Workshop Lead Skill: ${skill} (Click to filter)` : `Filter candidates with skill: ${skill}`}
               >
                 <span>{skill}</span>
               </Link>
@@ -70,7 +67,6 @@ export default function SkillsTab({ student, formatDateStr, onClose, role, canFi
               <span
                 key={skill}
                 className={`text-xs px-3 py-1.5 rounded-lg select-none ${chipClasses}`}
-                title={isLead ? `Project / Workshop Lead Skill: ${skill}` : `Skill: ${skill}`}
               >
                 <span>{skill}</span>
               </span>
@@ -83,8 +79,7 @@ export default function SkillsTab({ student, formatDateStr, onClose, role, canFi
       <div className="flex flex-col gap-3 pt-2">
         <div className="flex items-center justify-between pb-3 border-b border-slate-100">
           <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider">
-            <CheckCircle2 size={14} className="text-amber-600 dark:text-amber-500 shrink-0" />
-            <span>Certifications & Verified Credentials</span>
+            <span>Certifications & Credentials</span>
             {student.certifications && student.certifications.length > 0 && (
               <span className="bg-amber-50 text-amber-800 border border-amber-200 text-[10px] px-2 py-0.2 rounded-full font-bold">
                 {student.certifications.length}

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Building2, Plus, Clock, Users, ChevronRight } from "lucide-react";
+import { Building2, Plus, Clock, Users } from "lucide-react";
 import CustomDropdown from "@/components/common/CustomDropdown";
 import { JobPosting, JobApplication } from "@/data/jobs";
 import { CARD_INTERACTIVE, CARD_TITLE_HOVER } from "@/lib/cardStyles";
@@ -35,18 +35,13 @@ export default function EmployerJobPostings({
     <div className="flex flex-col gap-6">
       {/* Employer Action & Stats Bar */}
       <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-700 font-black text-sm flex items-center justify-center shrink-0 shadow-2xs">
-            <Building2 size={20} />
-          </div>
-          <div>
-            <h2 className="text-base font-black text-slate-900">
-              Employer Hiring Dashboard
-            </h2>
-            <p className="text-xs text-slate-500">
-              Manage active corporate engineering postings and inspect applicant portfolios.
-            </p>
-          </div>
+        <div>
+          <h2 className="text-base font-black text-slate-900">
+            Employer Hiring Dashboard
+          </h2>
+          <p className="text-xs text-slate-500">
+            Manage active corporate engineering postings and inspect applicant portfolios.
+          </p>
         </div>
 
         {/* + Post New Job Button */}
@@ -168,7 +163,6 @@ export default function EmployerJobPostings({
                 <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 group-hover:bg-amber-50 group-hover:border-amber-300/80 border border-slate-200 text-slate-900 group-hover:text-amber-800 text-xs font-bold transition-all shadow-2xs">
                   <Users size={13} className="text-slate-500 group-hover:text-amber-600 transition-colors" />
                   <span>Review Applicants ({jobApps.length})</span>
-                  <ChevronRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
                 </div>
               </div>
             </div>

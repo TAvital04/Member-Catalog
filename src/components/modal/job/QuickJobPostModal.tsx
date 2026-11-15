@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { JobPosting, JOB_TEMPLATES, JobTemplate } from "@/data/jobs";
 import CustomDropdown from "@/components/common/CustomDropdown";
+import Tooltip from "@/components/common/Tooltip";
 
 interface QuickJobPostModalProps {
   onClose: () => void;
@@ -188,23 +189,21 @@ export default function QuickJobPostModal({
         {/* Modal Header */}
         <div className="p-6 border-b border-slate-200/80 bg-slate-50/70 shrink-0">
           <div className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
-            <Building2 size={14} className="text-amber-600" />
             <span>Employer Fast-Track Portal</span>
           </div>
           <h2 className="text-xl sm:text-2xl font-black text-slate-900 leading-tight">
             Post an Engineering Opportunity
           </h2>
           <p className="text-xs text-slate-500 mt-1">
-            Pick a quick 1-click template or enter role specs to source verified IEEE UCF candidates.
+            Pick a quick 1-click template or enter role specs to source IEEE UCF candidates.
           </p>
         </div>
 
         {/* Scrollable Form */}
-        <form onSubmit={handleSubmit} className="overflow-y-auto p-6 flex flex-col gap-5 flex-1">
+        <form onSubmit={handleSubmit} noValidate className="overflow-y-auto p-6 flex flex-col gap-5 flex-1">
           {/* Quick Templates Bar */}
           <div className="p-4 rounded-xl bg-amber-50/60 border border-amber-200/80 flex flex-col gap-2 shadow-2xs">
             <div className="flex items-center gap-1.5 text-xs font-bold text-slate-900">
-              <Sparkles size={14} className="text-amber-600" />
               <span>1-Click Role Presets (Fill in Seconds)</span>
             </div>
             <div className="flex flex-wrap gap-2 pt-1">
@@ -213,13 +212,12 @@ export default function QuickJobPostModal({
                   key={tpl.name}
                   type="button"
                   onClick={() => handleApplyTemplate(tpl)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer shadow-2xs active:scale-95 ${
-                    selectedTemplate === tpl.name
-                      ? "bg-amber-500/20 border-amber-500 text-amber-800 dark:text-amber-300 font-bold"
-                      : "bg-slate-100 hover:bg-slate-200/80 text-slate-700 hover:text-slate-900 border-slate-200 hover:border-slate-300"
-                  }`}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer shadow-2xs active:scale-95 ${selectedTemplate === tpl.name
+                    ? "bg-amber-500/20 border-amber-500 text-amber-800 dark:text-amber-300 font-bold"
+                    : "bg-slate-100 hover:bg-slate-200/80 text-slate-700 hover:text-slate-900 border-slate-200 hover:border-slate-300"
+                    }`}
                 >
-                  ⚡ {tpl.name}
+                  {tpl.name}
                 </button>
               ))}
             </div>
@@ -231,22 +229,23 @@ export default function QuickJobPostModal({
               <label className="text-xs font-bold text-slate-700">Company Name *</label>
               <input
                 type="text"
-                required
+                aria-required="true"
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
                 placeholder="e.g. Lockheed Martin, TI, or Startup Inc."
-                className="text-xs p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full text-xs p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </div>
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-bold text-slate-700">Recruiter Email *</label>
               <input
-                type="email"
-                required
+                type="text"
+                inputMode="email"
+                aria-required="true"
                 value={employerEmail}
                 onChange={(e) => setEmployerEmail(e.target.value)}
                 placeholder="recruiting@company.com"
-                className="text-xs p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full text-xs p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </div>
           </div>
@@ -257,11 +256,11 @@ export default function QuickJobPostModal({
               <label className="text-xs font-bold text-slate-700">Job Title *</label>
               <input
                 type="text"
-                required
+                aria-required="true"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g. Embedded Firmware Engineer"
-                className="text-xs p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full text-xs p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </div>
             <div className="flex flex-col gap-1.5">
@@ -335,11 +334,10 @@ export default function QuickJobPostModal({
                     key={skill}
                     type="button"
                     onClick={() => toggleSkill(skill)}
-                    className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer shadow-2xs ${
-                      isSelected
-                        ? "bg-amber-500/15 border border-amber-500 text-slate-900 font-bold"
-                        : "bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-600"
-                    }`}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer shadow-2xs ${isSelected
+                      ? "bg-amber-500/15 border border-amber-500 text-slate-900 font-bold"
+                      : "bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-600"
+                      }`}
                   >
                     {skill} {isSelected && "✓"}
                   </button>
@@ -370,12 +368,12 @@ export default function QuickJobPostModal({
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-bold text-slate-700">Role Description *</label>
             <textarea
-              required
+              aria-required="true"
               rows={3}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Overview of the mission, day-to-day work, and impact of the role..."
-              className="text-xs p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none font-sans"
+              className="w-full text-xs p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none font-sans"
             />
           </div>
 

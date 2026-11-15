@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import { IEEEProject } from "@/data/projects";
 import { CheckCircle2, HeartHandshake, Sparkles, Send, Building2, Award } from "lucide-react";
+import CustomDropdown from "@/components/common/CustomDropdown";
+import Tooltip from "@/components/common/Tooltip";
 
 interface ProjectSponsorTabProps {
   project: IEEEProject;
@@ -67,7 +69,6 @@ ${message || "No additional notes provided."}`,
       {/* Header */}
       <div className="flex items-center justify-between pb-3 border-b border-slate-100">
         <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider py-1 leading-normal min-w-0">
-          <HeartHandshake size={15} className="text-amber-600 dark:text-amber-500 shrink-0" />
           <span className="hidden sm:inline">Sponsorship Opportunities & Partner Benefits</span>
           <span className="sm:hidden">Sponsor Benefits</span>
         </div>
@@ -76,7 +77,6 @@ ${message || "No additional notes provided."}`,
       {/* Hero Overview */}
       <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col gap-2 shadow-2xs">
         <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
-          <Sparkles size={15} className="text-amber-500" />
           <span>Why Partner With This Project?</span>
         </div>
         <p className="text-xs text-slate-700 leading-relaxed font-sans">
@@ -88,8 +88,7 @@ ${message || "No additional notes provided."}`,
       {/* Sponsor Benefits Grid */}
       {sponsorship?.benefits && sponsorship.benefits.length > 0 ? (
         <div className="flex flex-col gap-3">
-          <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-            <Award size={14} className="text-amber-500" />
+          <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
             Possible Benefits For Your Organization
           </h4>
 
@@ -125,8 +124,7 @@ ${message || "No additional notes provided."}`,
         </div>
       ) : (
         <div className="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-200 flex flex-col gap-1.5 shadow-2xs">
-          <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-            <Award size={14} className="text-amber-500" />
+          <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
             Sponsorship Package Pending
           </h4>
           <p className="text-xs text-slate-500 leading-relaxed font-sans">
@@ -139,8 +137,7 @@ ${message || "No additional notes provided."}`,
       {/* Direct Sponsorship Inquiry Form */}
       <div className="p-4 md:p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-4">
         <div className="flex flex-col gap-1">
-          <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-            <Building2 size={14} className="text-amber-600 dark:text-amber-500 shrink-0" />
+          <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
             <span>Inquire to Sponsor This Project</span>
           </h4>
           <p className="text-xs text-slate-500">
@@ -156,7 +153,7 @@ ${message || "No additional notes provided."}`,
             </span>
           </div>
         ) : (
-          <form onSubmit={handleSubmitPledge} className="flex flex-col gap-3">
+          <form onSubmit={handleSubmitPledge} noValidate className="flex flex-col gap-3">
             {submissionStatus === "error" && (
               <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs">
                 Failed to submit sponsorship inquiry. Please try again or email ieee@ucf.edu directly.
@@ -170,7 +167,7 @@ ${message || "No additional notes provided."}`,
                 </label>
                 <input
                   type="text"
-                  required
+                  aria-required="true"
                   value={sponsorName}
                   onChange={(e) => setSponsorName(e.target.value)}
                   placeholder="e.g. Dr. Jane Smith"
@@ -198,8 +195,9 @@ ${message || "No additional notes provided."}`,
                   Contact Email <span className="text-red-500">*</span>
                 </label>
                 <input
-                  type="email"
-                  required
+                  type="text"
+                  inputMode="email"
+                  aria-required="true"
                   value={sponsorEmail}
                   onChange={(e) => setSponsorEmail(e.target.value)}
                   placeholder="contact@company.com"
@@ -211,17 +209,20 @@ ${message || "No additional notes provided."}`,
                 <label className="text-[11px] font-bold text-slate-700">
                   Sponsorship Interest
                 </label>
-                <select
+                <CustomDropdown
                   value={sponsorTier}
-                  onChange={(e) => setSponsorTier(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:bg-white focus:outline-none focus:border-amber-500 transition-colors cursor-pointer"
-                >
-                  <option value="Custom Project Grant">Custom Project Grant / Funding</option>
-                  <option value="Hardware & Component Donation">Hardware & Component Donation</option>
-                  <option value="Chassis / Banner Branding">Chassis & Competition Branding</option>
-                  <option value="Technical Mentorship">Technical Mentorship & Advisory</option>
-                  <option value="General Corporate Sponsorship">General Corporate Sponsorship</option>
-                </select>
+                  onChange={(val) => setSponsorTier(val)}
+                  options={[
+                    { value: "Custom Project Grant", label: "Custom Project Grant / Funding" },
+                    { value: "Hardware & Component Donation", label: "Hardware & Component Donation" },
+                    { value: "Chassis / Banner Branding", label: "Chassis & Competition Branding" },
+                    { value: "Technical Mentorship", label: "Technical Mentorship & Advisory" },
+                    { value: "General Corporate Sponsorship", label: "General Corporate Sponsorship" },
+                  ]}
+                  variant="input"
+                  className="w-full"
+                  aria-label="Sponsorship Interest"
+                />
               </div>
             </div>
 

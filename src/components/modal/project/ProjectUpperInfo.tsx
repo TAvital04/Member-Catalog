@@ -36,25 +36,20 @@ export default function ProjectUpperInfo({ project }: ProjectUpperInfoProps) {
         </span>
       </div>
 
-      {/* Project Icon & Title */}
-      <div className="flex items-start gap-3.5">
-        <div className="p-3 rounded-2xl bg-slate-100 border border-slate-200 text-amber-500 shadow-2xs shrink-0 mt-0.5">
-          <FolderGit2 size={24} className="stroke-[2] text-amber-500" />
-        </div>
-        <div className="flex-1 min-w-0">
-          <h2 className="text-xl font-black text-slate-900 tracking-tight leading-tight">
-            {project.title}
-          </h2>
-          {project.tagline ? (
-            <p className="text-xs text-slate-800 font-medium mt-1 leading-snug">
-              {project.tagline}
-            </p>
-          ) : (
-            <p className="text-xs text-slate-400 italic mt-1 leading-snug">
-              Tagline not provided
-            </p>
-          )}
-        </div>
+      {/* Project Title */}
+      <div className="flex flex-col">
+        <h2 className="text-xl font-black text-slate-900 tracking-tight leading-tight">
+          {project.title}
+        </h2>
+        {project.tagline ? (
+          <p className="text-xs text-slate-800 font-medium mt-1 leading-snug">
+            {project.tagline}
+          </p>
+        ) : (
+          <p className="text-xs text-slate-400 italic mt-1 leading-snug">
+            Tagline not provided
+          </p>
+        )}
       </div>
 
       {/* Quick Metrics Grid */}
@@ -88,12 +83,10 @@ export default function ProjectUpperInfo({ project }: ProjectUpperInfoProps) {
               rel="noopener noreferrer"
               className="px-3 py-1.5 rounded-xl bg-white border border-slate-200/90 hover:border-slate-300 text-xs font-semibold text-slate-700 hover:text-slate-900 transition-all shadow-2xs hover:shadow-md hover:-translate-y-0.5 active:scale-95 flex items-center gap-1.5"
             >
-              <GitBranch size={13} className="text-slate-700 dark:text-slate-400" />
               <span>GitHub Repo</span>
             </a>
           ) : (
             <span className="px-3 py-1.5 rounded-xl bg-slate-50/60 border border-slate-200 text-xs font-medium text-slate-400 flex items-center gap-1.5 cursor-not-allowed italic">
-              <GitBranch size={13} className="text-slate-300" />
               <span>No repo linked</span>
             </span>
           )}
@@ -104,12 +97,10 @@ export default function ProjectUpperInfo({ project }: ProjectUpperInfoProps) {
               rel="noopener noreferrer"
               className="px-3 py-1.5 rounded-xl bg-white border border-slate-200/90 hover:border-slate-300 text-xs font-semibold text-slate-700 hover:text-slate-900 transition-all shadow-2xs hover:shadow-md hover:-translate-y-0.5 active:scale-95 flex items-center gap-1.5"
             >
-              <ExternalLink size={13} className="text-amber-600 dark:text-amber-500" />
               <span>Project Website</span>
             </a>
           ) : (
             <span className="px-3 py-1.5 rounded-xl bg-slate-50/60 border border-slate-200 text-xs font-medium text-slate-400 flex items-center gap-1.5 cursor-not-allowed italic">
-              <ExternalLink size={13} className="text-slate-300" />
               <span>No demo deployed</span>
             </span>
           )}

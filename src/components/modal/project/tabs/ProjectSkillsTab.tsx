@@ -2,10 +2,11 @@
 
 import React from "react";
 import Link from "next/link";
-import { Sparkles, CheckCircle2, GraduationCap, Trophy, ArrowRight, Users } from "lucide-react";
+import { Sparkles, CheckCircle2, GraduationCap, Trophy, Users } from "lucide-react";
 import { Student } from "@/data/students";
 import { studentHasSkill } from "@/lib/skillMatching";
 import { CARD_INTERACTIVE, CARD_BASE } from "@/lib/cardStyles";
+import Tooltip from "@/components/common/Tooltip";
 
 interface ProjectSkillsTabProps {
   skillsTaught?: string[];
@@ -32,7 +33,6 @@ export default function ProjectSkillsTab({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider py-1 leading-normal">
-          <Sparkles size={14} className="text-amber-500 shrink-0" />
           <span>Skills Taught & Engineering Competencies ({safeSkills.length})</span>
         </div>
         {canFilter && (
@@ -42,9 +42,6 @@ export default function ProjectSkillsTab({
 
       {/* Intro Banner */}
       <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-start gap-3 shadow-2xs">
-        <div className="p-2.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-500 shrink-0">
-          <GraduationCap size={18} />
-        </div>
         <div>
           <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
             Hands-on Learning Pipeline
@@ -74,16 +71,10 @@ export default function ProjectSkillsTab({
                     <span className={`text-xs font-bold text-slate-900 ${canFilter ? "group-hover:text-amber-800 transition-colors" : ""} leading-snug truncate`}>
                       {skill}
                     </span>
-                    {canFilter && (
-                      <ArrowRight
-                        size={12}
-                        className="text-slate-300 group-hover:text-amber-500 group-hover:translate-x-0.5 transition-all shrink-0"
-                      />
-                    )}
                   </div>
                   <div className="flex items-center justify-between gap-2 mt-1">
                     <span className="text-[10px] text-slate-500 font-medium truncate">
-                      Verified Chapter Competency
+                      Chapter Competency
                     </span>
                     {matchingCount > 0 ? (
                       <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 group-hover:bg-amber-100 text-slate-600 group-hover:text-amber-900 transition-colors shrink-0 flex items-center gap-1">
@@ -92,7 +83,7 @@ export default function ProjectSkillsTab({
                       </span>
                     ) : (
                       <span className="text-[10px] text-slate-400 group-hover:text-amber-700 font-medium shrink-0">
-                        Filter →
+                        Filter
                       </span>
                     )}
                   </div>
@@ -106,7 +97,6 @@ export default function ProjectSkillsTab({
                 href={`/?skills=${encodeURIComponent(skill)}`}
                 onClick={() => onClose?.()}
                 className={`${CARD_INTERACTIVE} p-3.5 flex items-start gap-2.5 group cursor-pointer`}
-                title={`Filter candidates with skill: ${skill}`}
               >
                 {cardContent}
               </Link>
@@ -118,7 +108,7 @@ export default function ProjectSkillsTab({
           <Sparkles size={24} className="text-slate-300 mx-auto mb-2" />
           <h4 className="text-sm font-bold text-slate-800">Skills Not Listed Yet</h4>
           <p className="text-slate-500 text-xs mt-1">
-            Learning outcomes and verified competencies have not been published for this project.
+            Learning outcomes and competencies have not been published for this project.
           </p>
         </div>
       )}

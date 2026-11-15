@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 import { IEEEEvent } from "@/data/events";
 import { CARD_INTERACTIVE } from "@/lib/cardStyles";
+import CustomDropdown from "@/components/common/CustomDropdown";
+import Tooltip from "@/components/common/Tooltip";
 
 interface EventSponsorTabProps {
   event: IEEEEvent;
@@ -51,7 +53,6 @@ Sponsor: ${sponsorName}
 Organization / Company: ${sponsorCompany || "Individual / Independent Sponsor"}
 Contact Email: ${sponsorEmail}
 Desired Tier / Package: ${sponsorTier}
-Date: ${event.startTime ? new Date(event.startTime).toLocaleDateString() : "TBD"}
 
 Note / Message:
 ${sponsorMessage || "Interested in learning more about corporate workshop sponsorship opportunities."}`,
@@ -85,7 +86,7 @@ ${sponsorMessage || "Interested in learning more about corporate workshop sponso
       tag: "Branding & Direct Engagement",
     },
     {
-      title: "Verified Student Resume Book",
+      title: "Student Resume Book",
       description: "Gain direct access to attendee portfolio profiles, GitHub repositories, and resumes.",
       tag: "Recruitment Pipeline",
     },
@@ -106,7 +107,6 @@ ${sponsorMessage || "Interested in learning more about corporate workshop sponso
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-2">
         <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider py-1 leading-normal min-w-0">
-          <HeartHandshake size={15} className="text-amber-500 shrink-0" />
           <span>Sponsor This Workshop & Event</span>
         </div>
         <span className="text-[11px] text-slate-500 font-medium">IEEE UCF Corporate Partnerships</span>
@@ -115,7 +115,6 @@ ${sponsorMessage || "Interested in learning more about corporate workshop sponso
       {/* Hero Overview */}
       <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col gap-2 shadow-2xs">
         <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
-          <Sparkles size={15} className="text-amber-500" />
           <span>Why Sponsor {event.title}?</span>
         </div>
         <p className="text-xs text-slate-700 leading-relaxed font-sans">
@@ -127,8 +126,7 @@ ${sponsorMessage || "Interested in learning more about corporate workshop sponso
 
       {/* Event Sponsorship Benefits Grid */}
       <div className="flex flex-col gap-3">
-        <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-          <Award size={14} className="text-amber-500" />
+        <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
           <span>Sponsorship Opportunities & Partner Benefits</span>
         </h4>
 
@@ -164,8 +162,7 @@ ${sponsorMessage || "Interested in learning more about corporate workshop sponso
       {/* Direct Event Sponsorship Inquiry Form */}
       <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col gap-4">
         <div className="flex flex-col gap-1">
-          <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-            <Building2 size={14} className="text-amber-500" />
+          <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
             <span>Connect With Our Corporate Relations Team</span>
           </h4>
           <p className="text-xs text-slate-500">
@@ -188,7 +185,7 @@ ${sponsorMessage || "Interested in learning more about corporate workshop sponso
           </div>
         )}
 
-        <form onSubmit={handleSubmitInquiry} className="flex flex-col gap-3">
+        <form onSubmit={handleSubmitInquiry} noValidate className="flex flex-col gap-3">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="flex flex-col gap-1">
               <label className="text-[11px] font-bold text-slate-700">
@@ -196,7 +193,7 @@ ${sponsorMessage || "Interested in learning more about corporate workshop sponso
               </label>
               <input
                 type="text"
-                required
+                aria-required="true"
                 value={sponsorName}
                 onChange={(e) => setSponsorName(e.target.value)}
                 placeholder="e.g. Jane Doe"
@@ -221,8 +218,9 @@ ${sponsorMessage || "Interested in learning more about corporate workshop sponso
                 Work Email <span className="text-red-500">*</span>
               </label>
               <input
-                type="email"
-                required
+                type="text"
+                inputMode="email"
+                aria-required="true"
                 value={sponsorEmail}
                 onChange={(e) => setSponsorEmail(e.target.value)}
                 placeholder="jane@company.com"
@@ -231,16 +229,19 @@ ${sponsorMessage || "Interested in learning more about corporate workshop sponso
             </div>
             <div className="flex flex-col gap-1">
               <label className="text-[11px] font-bold text-slate-700">Sponsorship Interest</label>
-              <select
+              <CustomDropdown
                 value={sponsorTier}
-                onChange={(e) => setSponsorTier(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:bg-white focus:outline-none focus:border-amber-500 transition-colors cursor-pointer"
-              >
-                <option value="Workshop Co-Host">Workshop Co-Host & Mentorship</option>
-                <option value="Lab Equipment & Materials Sponsor">Lab Equipment & Materials Sponsor</option>
-                <option value="Catering & Food Sponsor">Catering & Food Sponsor</option>
-                <option value="Semester Corporate Partner">Semester Corporate Partner</option>
-              </select>
+                onChange={(val) => setSponsorTier(val)}
+                options={[
+                  { value: "Workshop Co-Host", label: "Workshop Co-Host & Mentorship" },
+                  { value: "Lab Equipment & Materials Sponsor", label: "Lab Equipment & Materials Sponsor" },
+                  { value: "Catering & Food Sponsor", label: "Catering & Food Sponsor" },
+                  { value: "Semester Corporate Partner", label: "Semester Corporate Partner" },
+                ]}
+                variant="input"
+                className="w-full"
+                aria-label="Sponsorship Interest"
+              />
             </div>
           </div>
 

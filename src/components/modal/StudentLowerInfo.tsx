@@ -24,6 +24,7 @@ const Linkedin = ({ size = 18, ...props }: React.SVGProps<SVGSVGElement> & { siz
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { findMatchingIeeeProject, isLeadSkill } from "@/lib/rsoAffiliation";
+import Tooltip from "@/components/common/Tooltip";
 
 interface StudentLowerInfoProps {
   student: Student;
@@ -85,7 +86,6 @@ export default function StudentLowerInfo({
         <div className="flex flex-col gap-2.5 shrink-0">
           {leadershipRole && (
             <div className="bg-white border border-slate-200/90 rounded-xl px-3.5 py-2.5 text-xs font-bold flex items-center gap-2.5 shadow-2xs">
-              <ShieldCheck size={16} className="text-slate-400 shrink-0" />
               <div>
                 <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block leading-none mb-1">IEEE UCF Chapter Leadership</span>
                 <span className="leading-tight font-extrabold text-slate-900">{leadershipRole}</span>
@@ -118,18 +118,14 @@ export default function StudentLowerInfo({
               aria-label={`View project modal for ${student.mainProjectName}`}
               className="bg-white hover:border-slate-300 border border-slate-200/90 rounded-xl px-3.5 py-2.5 text-xs font-bold flex items-center justify-between gap-2.5 shadow-2xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer active:scale-95 group"
             >
-              <div className="flex items-center gap-2.5 min-w-0">
-                <Sparkles size={16} className="text-slate-400 group-hover:text-amber-800 transition-colors shrink-0" />
-                <div className="min-w-0">
-                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block leading-none mb-1 flex items-center gap-1">
-                    Primary IEEE Project Affiliation
-                  </span>
-                  <span className="leading-tight font-extrabold text-slate-900 group-hover:text-amber-800 transition-colors truncate block">
-                    {student.mainProjectName}
-                  </span>
-                </div>
+              <div className="min-w-0">
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block leading-none mb-1">
+                  Primary IEEE Project Affiliation
+                </span>
+                <span className="leading-tight font-extrabold text-slate-900 group-hover:text-amber-800 transition-colors truncate block">
+                  {student.mainProjectName}
+                </span>
               </div>
-              <ExternalLink size={12} className="text-slate-400 group-hover:text-amber-800 group-hover:translate-x-0.5 transition-all shrink-0 ml-1" />
             </div>
           )}
         </div>
@@ -170,7 +166,7 @@ export default function StudentLowerInfo({
                   onClick={() => onSelectTab("skills")}
                   className="text-[10px] font-semibold text-slate-500 hover:text-amber-800 transition-colors cursor-pointer"
                 >
-                  See more →
+                  See more
                 </button>
               )}
             </div>
@@ -187,7 +183,6 @@ export default function StudentLowerInfo({
                         ? "bg-amber-50/40 hover:bg-amber-100/60 border-2 border-amber-500 text-slate-900 font-bold"
                         : "bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-slate-700 hover:text-slate-900"
                     }`}
-                    title={isLead ? `Project / Workshop Lead Skill: ${skill} (Click to filter)` : `Filter candidates with skill: ${skill}`}
                   >
                     <span>{skill}</span>
                   </Link>
@@ -198,9 +193,8 @@ export default function StudentLowerInfo({
                   type="button"
                   onClick={() => onSelectTab?.("skills")}
                   className="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-[10px] font-semibold text-slate-600 hover:text-amber-800 transition-all cursor-pointer active:scale-95 shadow-2xs"
-                  title="View all skills in the Skills tab"
                 >
-                  +{student.skills.length - 6} more
+                  <span>+{student.skills.length - 6} more</span>
                 </button>
               )}
             </div>
@@ -245,7 +239,6 @@ export default function StudentLowerInfo({
         >
           <FileText size={14} className="text-slate-950/80 transition-colors" />
           <span>View Resume PDF</span>
-          <ExternalLink size={12} className="text-slate-950/70 ml-auto transition-colors" />
         </a>
       </div>
     </div>

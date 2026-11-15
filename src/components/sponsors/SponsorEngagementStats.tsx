@@ -4,6 +4,7 @@ import React, { useMemo } from "react";
 import Link from "next/link";
 import { GraduationCap, TrendingUp, TrendingDown, BarChart3 } from "lucide-react";
 import { StudentInteraction } from "@/data/sponsors";
+import Tooltip from "@/components/common/Tooltip";
 
 export interface SponsorEngagementStatsProps {
   interactions: StudentInteraction[];
@@ -94,7 +95,6 @@ export default function SponsorEngagementStats({
     <section className="flex flex-col gap-4" aria-label="Sponsor Student Interaction Statistics">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h3 className="section-title">
-          <BarChart3 size={16} className="text-amber-500 shrink-0" />
           <span>
             {sponsorName
               ? `${sponsorName} — Interacting Student & Talent Statistics`
@@ -111,7 +111,6 @@ export default function SponsorEngagementStats({
         <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-4">
           <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
             <div className="flex items-center gap-2">
-              <GraduationCap size={15} className="text-amber-600 shrink-0" />
               <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                 Majors of Interacting Students
               </h4>
@@ -129,10 +128,11 @@ export default function SponsorEngagementStats({
                 return (
                   <div
                     key={major}
-                    title={`${major}: ${count} (${percent}%)`}
                     style={{ width: `${percent}%` }}
-                    className={`${barColors[idx % barColors.length]} h-full transition-all duration-500`}
-                  />
+                    className={`relative group/tooltip ${barColors[idx % barColors.length]} h-full transition-all duration-500`}
+                  >
+                    <Tooltip content={`${major}: ${count} (${percent}%)`} position="top" />
+                  </div>
                 );
               })}
             </div>
@@ -170,7 +170,6 @@ export default function SponsorEngagementStats({
         <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-4">
           <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
             <div className="flex items-center gap-2">
-              <TrendingUp size={15} className="text-emerald-600 shrink-0" />
               <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                 Top Skills of Their People
               </h4>
@@ -190,9 +189,8 @@ export default function SponsorEngagementStats({
                       <Link
                         href={`/?skills=${encodeURIComponent(skill)}`}
                         className="text-slate-800 hover:text-amber-600 font-bold truncate transition-colors"
-                        title={`Filter candidates with skill: ${skill}`}
                       >
-                        {skill}
+                        <span>{skill}</span>
                       </Link>
                       <span className="text-slate-500 text-[11px] shrink-0 font-medium">
                         <strong className="text-slate-900 font-bold">{count}</strong>{" "}
@@ -216,7 +214,6 @@ export default function SponsorEngagementStats({
         <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-4">
           <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
             <div className="flex items-center gap-2">
-              <TrendingDown size={15} className="text-amber-600 shrink-0" />
               <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                 Lowest Skills of Their People
               </h4>
@@ -236,9 +233,8 @@ export default function SponsorEngagementStats({
                       <Link
                         href={`/?skills=${encodeURIComponent(skill)}`}
                         className="text-slate-800 hover:text-amber-600 font-bold truncate transition-colors"
-                        title={`Filter candidates with skill: ${skill}`}
                       >
-                        {skill}
+                        <span>{skill}</span>
                       </Link>
                       <span className="text-slate-500 text-[11px] shrink-0 font-medium">
                         <strong className="text-slate-900 font-bold">{count}</strong>{" "}

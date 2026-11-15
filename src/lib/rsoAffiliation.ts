@@ -3,33 +3,20 @@ import { SAMPLE_IEEE_PROJECTS } from "@/data/projects";
 import { SAMPLE_IEEE_EVENTS, IEEEEvent } from "@/data/events";
 
 /**
- * Pre-computed lowercased lookup sets for official RSO chapter projects, tools, and skills.
+ * Pre-computed lowercased lookup sets for official RSO chapter projects and workshop skills.
+ * Member skills are updated exclusively from attending workshops (not from projects or manual entry).
  */
 const RSO_TOOLS_AND_SKILLS = new Set<string>();
 const RSO_PROJECT_TITLES = new Set<string>();
 
-// 1. Ingest all official tools and skills taught across all RSO chapter build projects
+// 1. Ingest official RSO chapter build project titles (for project affiliation matching only)
 SAMPLE_IEEE_PROJECTS.forEach((proj) => {
   RSO_PROJECT_TITLES.add(proj.title.toLowerCase().trim());
-  if (Array.isArray(proj.tools)) {
-    proj.tools.forEach((tool) => {
-      if (tool && tool.name) {
-        RSO_TOOLS_AND_SKILLS.add(tool.name.toLowerCase().trim());
-      }
-    });
-  }
-  if (Array.isArray(proj.skillsTaught)) {
-    proj.skillsTaught.forEach((skill) => {
-      if (skill) {
-        RSO_TOOLS_AND_SKILLS.add(skill.toLowerCase().trim());
-      }
-    });
-  }
 });
 
-// 2. Ingest all skills taught in RSO chapter workshops and technical events
+// 2. Ingest all skills taught in RSO chapter Technical Workshops
 SAMPLE_IEEE_EVENTS.forEach((evt: IEEEEvent) => {
-  if (Array.isArray(evt.skills)) {
+  if ((!evt.category || evt.category === "Technical Workshop") && Array.isArray(evt.skills)) {
     evt.skills.forEach((skill: string) => {
       if (skill) {
         RSO_TOOLS_AND_SKILLS.add(skill.toLowerCase().trim());
@@ -191,77 +178,15 @@ export function isRsoSkill(skill: string, student?: Student): boolean {
 
 /**
  * Checks whether a candidate gained or demonstrated a skill specifically as a
- * workshop or project lead (e.g. Project Director, Firmware Lead, Workshop Coordinator),
- * as opposed to attending solely as a general participant/member.
+ * workshop lead (e.g. Workshop Coordinator, Technical Committee Chair),
+ * as opposed to attending solely as a general workshop participant.
+ * Skills are awarded exclusively from workshops (never from projects or manual entry).
  */
 export function isLeadSkill(skill: string, student?: Student): boolean {
   if (!skill || !student) return false;
   const sLower = skill.toLowerCase().trim();
 
-  // 1. Check if student is a lead on any official chapter project
-  const leadProjectSkills = new Set<string>();
-
-  // A. Check SAMPLE_IEEE_PROJECTS participants
-  SAMPLE_IEEE_PROJECTS.forEach((proj) => {
-    const isLeadInProject = proj.participants?.some((part) => {
-      const match =
-        part.memberId?.toLowerCase() === student.id?.toLowerCase() ||
-        part.email?.toLowerCase() === student.email?.toLowerCase() ||
-        part.name?.toLowerCase() === student.name?.toLowerCase();
-      if (!match) return false;
-
-      const role = (part.roleTitle || "").toLowerCase();
-      return (
-        role.includes("lead") ||
-        role.includes("director") ||
-        role.includes("chair") ||
-        role.includes("head") ||
-        role.includes("coordinator") ||
-        role.includes("principal") ||
-        role.includes("architect")
-      );
-    });
-
-    if (isLeadInProject) {
-      if (Array.isArray(proj.tools)) {
-        proj.tools.forEach((t) => t?.name && leadProjectSkills.add(t.name.toLowerCase().trim()));
-      }
-      if (Array.isArray(proj.skillsTaught)) {
-        proj.skillsTaught.forEach((st) => st && leadProjectSkills.add(st.toLowerCase().trim()));
-      }
-    }
-  });
-
-  // B. Check student's resume project entries
-  if (Array.isArray(student.projects)) {
-    student.projects.forEach((p) => {
-      const text = `${p.name || ""} ${p.description || ""}`.toLowerCase();
-      const isLead =
-        text.includes("director") ||
-        text.includes("project lead") ||
-        text.includes("team lead") ||
-        text.includes("lead engineer") ||
-        text.includes("firmware lead") ||
-        text.includes("hardware lead") ||
-        text.includes("software lead") ||
-        text.includes("led ") ||
-        text.includes("leading ");
-
-      if (isLead) {
-        const matched = findMatchingIeeeProject(p, student);
-        if (matched) {
-          if (Array.isArray(matched.tools)) {
-            matched.tools.forEach((t) => t?.name && leadProjectSkills.add(t.name.toLowerCase().trim()));
-          }
-          if (Array.isArray(matched.skillsTaught)) {
-            matched.skillsTaught.forEach((st) => st && leadProjectSkills.add(st.toLowerCase().trim()));
-          }
-        }
-      }
-    });
-  }
-
-  // 2. Check if student is a workshop lead, workshop coordinator, or technical committee chair
+  // Check if student is a workshop lead, workshop coordinator, or technical committee chair
   const leadWorkshopSkills = new Set<string>();
   const clubs = student.clubs || [];
   const isWorkshopOrCommitteeLead = clubs.some((c) => {
@@ -279,7 +204,7 @@ export function isLeadSkill(skill: string, student?: Student): boolean {
     );
   });
 
-  if (isWorkshopOrCommitteeLead || leadProjectSkills.size > 0) {
+  if (isWorkshopOrCommitteeLead) {
     clubs.forEach((c) => {
       const text = `${c.title || ""} ${c.description || ""}`.toLowerCase();
       if (text.includes("hardware") || text.includes("pcb")) {
@@ -302,18 +227,23 @@ export function isLeadSkill(skill: string, student?: Student): boolean {
       }
     });
 
-    // Universal project / workshop leadership competencies
-    ["project management", "leadership", "technical communication", "system architecture"].forEach((s) =>
-      leadWorkshopSkills.add(s)
-    );
+    // Also include skills from workshops the student attended while serving as a workshop/committee lead
+    if (Array.isArray(student.events)) {
+      student.events
+        .filter((evt) => !evt.category || evt.category === "Technical Workshop")
+        .forEach((evt) => {
+          (evt.skills || []).forEach((sk) => {
+            if (sk) leadWorkshopSkills.add(sk.toLowerCase().trim());
+          });
+        });
+    }
   }
 
-  // 3. Match against collected lead project & workshop skills
-  if (leadProjectSkills.has(sLower) || leadWorkshopSkills.has(sLower)) {
+  if (leadWorkshopSkills.has(sLower)) {
     return true;
   }
 
-  for (const lSkill of Array.from(leadProjectSkills).concat(Array.from(leadWorkshopSkills))) {
+  for (const lSkill of Array.from(leadWorkshopSkills)) {
     if (matchesSkill(sLower, lSkill) || matchesSkill(lSkill, sLower)) {
       return true;
     }

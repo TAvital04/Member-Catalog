@@ -83,7 +83,7 @@ export default function ActiveFiltersBar({
       {selectedSkills.map((skill) => (
         <span
           key={skill}
-          className="relative group/tooltip hover:z-50 flex items-center gap-1 bg-amber-50 border border-amber-200 text-amber-900 font-semibold px-2.5 py-0.5 rounded-lg shadow-2xs animate-fade-in cursor-help"
+          className="flex items-center gap-1 bg-amber-50 border border-amber-200 text-amber-900 font-semibold px-2.5 py-0.5 rounded-lg shadow-2xs animate-fade-in"
         >
           <span>{skill}</span>
           <button
@@ -92,14 +92,13 @@ export default function ActiveFiltersBar({
           >
             ×
           </button>
-          <Tooltip content={`Skill: ${skill}`} position="top" />
         </span>
       ))}
 
       {selectedEvents.map((evtTitle) => (
         <span
           key={evtTitle}
-          className="relative group/tooltip hover:z-50 flex items-center gap-1 bg-sky-50 border border-sky-200 text-sky-900 font-medium px-2.5 py-0.5 rounded-lg shadow-2xs animate-fade-in cursor-help"
+          className="flex items-center gap-1 bg-sky-50 border border-sky-200 text-sky-900 font-medium px-2.5 py-0.5 rounded-lg shadow-2xs animate-fade-in"
         >
           <span>{evtTitle}</span>
           <button
@@ -108,14 +107,13 @@ export default function ActiveFiltersBar({
           >
             ×
           </button>
-          <Tooltip content={`Event: ${evtTitle}`} position="top" />
         </span>
       ))}
 
       {selectedProjects.map((projectName) => (
         <span
           key={projectName}
-          className="relative group/tooltip hover:z-50 flex items-center gap-1 bg-indigo-50 border border-indigo-200 text-indigo-900 font-medium px-2.5 py-0.5 rounded-lg shadow-2xs animate-fade-in cursor-help"
+          className="flex items-center gap-1 bg-indigo-50 border border-indigo-200 text-indigo-900 font-medium px-2.5 py-0.5 rounded-lg shadow-2xs animate-fade-in"
         >
           <span>{projectName}</span>
           <button
@@ -124,14 +122,13 @@ export default function ActiveFiltersBar({
           >
             ×
           </button>
-          <Tooltip content={`Project: ${projectName}`} position="top" />
         </span>
       ))}
 
       {selectedCompanies.map((comp) => (
         <span
           key={comp}
-          className="relative group/tooltip hover:z-50 flex items-center gap-1 bg-emerald-50 border border-emerald-200 text-emerald-900 font-medium px-2.5 py-0.5 rounded-lg shadow-2xs animate-fade-in cursor-help"
+          className="flex items-center gap-1 bg-emerald-50 border border-emerald-200 text-emerald-900 font-medium px-2.5 py-0.5 rounded-lg shadow-2xs animate-fade-in"
         >
           <span>{comp}</span>
           <button
@@ -140,7 +137,6 @@ export default function ActiveFiltersBar({
           >
             ×
           </button>
-          <Tooltip content={`Employer: ${comp}`} position="top" />
         </span>
       ))}
 

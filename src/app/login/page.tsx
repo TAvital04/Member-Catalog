@@ -18,7 +18,6 @@ import {
   Building2,
   Eye,
   EyeOff,
-  ArrowRight,
   CheckCircle2,
   AlertCircle,
   LogOut,
@@ -29,6 +28,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import DirectoryNavbar from "@/components/directory/DirectoryNavbar";
+import Tooltip from "@/components/common/Tooltip";
 import { useThemeManager } from "@/hooks/useThemeManager";
 import { useRoleManager, AuthAccountType } from "@/hooks/useRoleManager";
 
@@ -68,6 +68,12 @@ function LoginPageContent() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
+
+    if (!email.trim() || !password.trim()) {
+      setErrorMessage("Please fill out both email and password.");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -109,7 +115,6 @@ function LoginPageContent() {
         {/* Page Header */}
         <div className="text-center max-w-2xl mx-auto flex flex-col gap-2">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-700 text-[11px] font-bold uppercase tracking-wider self-center">
-            <Sparkles size={12} />
             <span>IEEE UCF Portal Authentication</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
@@ -151,7 +156,6 @@ function LoginPageContent() {
                 className="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs transition-all shadow-2xs flex items-center gap-1.5"
               >
                 <span>Go to Directory</span>
-                <ArrowRight size={13} />
               </Link>
               <button
                 type="button"
@@ -185,22 +189,11 @@ function LoginPageContent() {
               }`}
             >
               <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-3">
-                  <div
-                    className={`w-10 h-10 rounded-xl flex items-center justify-center border ${
-                      selectedRole === "rso_leadership"
-                        ? "bg-amber-500/15 border-amber-500/30 text-amber-600"
-                        : "bg-slate-100 border-slate-200 text-slate-500"
-                    }`}
-                  >
-                    <Shield size={18} />
-                  </div>
-                  <div>
-                    <h2 className="text-sm font-black text-slate-900">RSO Leadership</h2>
-                    <span className="text-[11px] text-slate-500 font-medium">
-                      Executive Board, Project Leads & Directors
-                    </span>
-                  </div>
+                <div>
+                  <h2 className="text-sm font-black text-slate-900">RSO Leadership</h2>
+                  <span className="text-[11px] text-slate-500 font-medium">
+                    Executive Board, Project Leads & Directors
+                  </span>
                 </div>
                 <span
                   className={`w-4 h-4 rounded-full border flex items-center justify-center ${
@@ -247,22 +240,11 @@ function LoginPageContent() {
               }`}
             >
               <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-3">
-                  <div
-                    className={`w-10 h-10 rounded-xl flex items-center justify-center border ${
-                      selectedRole === "sponsor"
-                        ? "bg-amber-500/15 border-amber-500/30 text-amber-600"
-                        : "bg-slate-100 border-slate-200 text-slate-500"
-                    }`}
-                  >
-                    <Award size={18} />
-                  </div>
-                  <div>
-                    <h2 className="text-sm font-black text-slate-900">Sponsor</h2>
-                    <span className="text-[11px] text-slate-500 font-medium">
-                      Corporate Partners & University Recruiters
-                    </span>
-                  </div>
+                <div>
+                  <h2 className="text-sm font-black text-slate-900">Sponsor</h2>
+                  <span className="text-[11px] text-slate-500 font-medium">
+                    Corporate Partners & University Recruiters
+                  </span>
                 </div>
                 <span
                   className={`w-4 h-4 rounded-full border flex items-center justify-center ${
@@ -302,26 +284,22 @@ function LoginPageContent() {
 
             <form
               onSubmit={handleSubmit}
+              noValidate
               className="p-6 sm:p-7 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-5"
             >
               {/* Role Header Inside Form */}
               <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/25 text-amber-600 flex items-center justify-center">
-                    {selectedRole === "rso_leadership" ? <Shield size={18} /> : <Award size={18} />}
-                  </div>
-                  <div>
-                    <h3 className="text-base font-black text-slate-900">
-                      {selectedRole === "rso_leadership"
-                        ? "RSO Leadership Sign In"
-                        : "Corporate Sponsor Sign In"}
-                    </h3>
-                    <p className="text-xs text-slate-500">
-                      {selectedRole === "rso_leadership"
-                        ? "Authenticate with your IEEE UCF officer credentials"
-                        : "Authenticate with your partner organization account"}
-                    </p>
-                  </div>
+                <div>
+                  <h3 className="text-base font-black text-slate-900">
+                    {selectedRole === "rso_leadership"
+                      ? "RSO Leadership Sign In"
+                      : "Corporate Sponsor Sign In"}
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    {selectedRole === "rso_leadership"
+                      ? "Authenticate with your IEEE UCF officer credentials"
+                      : "Authenticate with your partner organization account"}
+                  </p>
                 </div>
               </div>
 
@@ -337,8 +315,9 @@ function LoginPageContent() {
                   <Mail size={15} className="text-slate-400 absolute left-3.5 pointer-events-none" />
                   <input
                     id="login-email"
-                    type="email"
-                    required
+                    type="text"
+                    inputMode="email"
+                    aria-required="true"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={
@@ -389,7 +368,7 @@ function LoginPageContent() {
                   <input
                     id="login-password"
                     type={showPassword ? "text" : "password"}
-                    required
+                    aria-required="true"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter your password"
@@ -427,7 +406,6 @@ function LoginPageContent() {
                     ? "Sign In as RSO Leadership"
                     : "Sign In as Corporate Sponsor"}
                 </span>
-                <ArrowRight size={15} />
               </button>
 
               {/* Demo Helper Footer */}

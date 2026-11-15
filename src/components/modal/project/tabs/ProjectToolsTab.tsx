@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ProjectTool } from "@/data/projects";
 import { Student } from "@/data/students";
 import { Wrench, Sparkles } from "lucide-react";
+import Tooltip from "@/components/common/Tooltip";
 
 interface ProjectToolsTabProps {
   tools: ProjectTool[];
@@ -32,7 +33,6 @@ export default function ProjectToolsTab({
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider py-1 leading-normal">
-            <Wrench size={14} className="text-amber-500 shrink-0" />
             <span>Tools & Tech Stack ({safeTools.length})</span>
           </div>
           {canFilter && (
@@ -51,7 +51,6 @@ export default function ProjectToolsTab({
                   href={`/?skills=${encodeURIComponent(tool.name)}`}
                   onClick={() => onClose?.()}
                   className={`${chipClass} bg-white text-slate-800 border-slate-200 hover:border-amber-400 hover:text-amber-900 hover:bg-amber-50/60 shadow-2xs cursor-pointer active:scale-95`}
-                  title={`Filter candidates with tool: ${tool.name}`}
                 >
                   <span>{tool.name}</span>
                 </Link>
@@ -67,7 +66,6 @@ export default function ProjectToolsTab({
       <div className="flex flex-col gap-3 border-t border-slate-200 pt-5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider py-1 leading-normal">
-            <Sparkles size={14} className="text-amber-500 shrink-0" />
             <span>Skills & Engineering Competencies ({safeSkills.length})</span>
           </div>
           <span className="text-[11px] text-slate-400">Click to filter candidates</span>
@@ -84,7 +82,6 @@ export default function ProjectToolsTab({
                   href={`/?skills=${encodeURIComponent(skill)}`}
                   onClick={() => onClose?.()}
                   className={`${chipClass} bg-white text-slate-800 border-slate-200 hover:border-amber-400 hover:text-amber-900 hover:bg-amber-50/60 shadow-2xs cursor-pointer active:scale-95`}
-                  title={`Filter candidates with skill: ${skill}`}
                 >
                   <span>{skill}</span>
                 </Link>

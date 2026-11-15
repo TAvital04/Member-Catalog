@@ -80,10 +80,10 @@ export default function ProjectModal({
         <button
           onClick={onClose}
           type="button"
-          className="absolute top-4 right-4 z-50 p-2 rounded-full bg-slate-100 border border-slate-200 hover:bg-slate-200 text-slate-500 hover:text-slate-900 transition-all shadow-sm active:scale-90 group/tooltip cursor-pointer"
+          aria-label="Close project modal"
+          className="absolute top-4 right-4 z-50 p-2 rounded-full bg-slate-100 border border-slate-200 hover:bg-slate-200 text-slate-500 hover:text-slate-900 transition-all shadow-sm active:scale-90 cursor-pointer"
         >
           <X size={18} />
-          <Tooltip content="Close Project Modal" position="bottom-right" groupClass="group-hover/tooltip:opacity-100" />
         </button>
 
         {/* Scrollable Container Wrapper */}

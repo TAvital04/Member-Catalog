@@ -221,6 +221,17 @@ body {
   background: var(--scrollbar-thumb-hover);
 }
 
+.scrollbar-none,
+.no-scrollbar {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.scrollbar-none::-webkit-scrollbar,
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+}
+
 /* Circuit pattern background decoration (Disabled for clean minimal aesthetic) */
 .circuit-overlay {
   display: none;

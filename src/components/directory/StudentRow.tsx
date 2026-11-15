@@ -5,6 +5,7 @@ import { Student } from "@/data/students";
 import { Calendar, Trash2, Eye } from "lucide-react";
 import Avatar from "../common/Avatar";
 import TruncatedText from "../common/TruncatedText";
+import Tooltip from "../common/Tooltip";
 import { CARD_TITLE_HOVER } from "@/lib/cardStyles";
 
 interface StudentRowProps {
@@ -68,12 +69,10 @@ function StudentRow({
             {adminMode && onDelete && (
               <button
                 onClick={() => onDelete(student.id)}
-                className="p-1 rounded bg-slate-100 border border-slate-200 hover:bg-red-50 hover:border-red-300 text-slate-500 hover:text-red-600 transition-all cursor-pointer relative group/tooltip"
+                aria-label="Delete Profile"
+                className="p-1 rounded bg-slate-100 border border-slate-200 hover:bg-red-50 hover:border-red-300 text-slate-500 hover:text-red-600 transition-all cursor-pointer"
               >
                 <Trash2 size={11} />
-                <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 group-hover/tooltip:opacity-100 transition-opacity bg-zinc-955 text-zinc-100 border border-zinc-700/90 text-[10px] px-2.5 py-1.5 rounded-lg shadow-xl whitespace-nowrap z-50 leading-none font-sans font-semibold">
-                  Delete Profile
-                </span>
               </button>
             )}
             <div className="flex items-center justify-center p-1 bg-amber-50 border border-amber-200 rounded text-amber-700">

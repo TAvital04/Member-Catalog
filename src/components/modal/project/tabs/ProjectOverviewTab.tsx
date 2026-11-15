@@ -2,7 +2,7 @@
 
 import React from "react";
 import { IEEEProject } from "@/data/projects";
-import { FolderGit2, Target, Lightbulb, Compass, ArrowRight } from "lucide-react";
+import { FolderGit2, Target, Lightbulb, Compass } from "lucide-react";
 import { ProjectTabType } from "../ProjectTabNavigation";
 import { CARD_TITLE_HOVER } from "@/lib/cardStyles";
 
@@ -21,14 +21,12 @@ export default function ProjectOverviewTab({ project, onNavigateTab }: ProjectOv
     <div className="flex flex-col gap-5 animate-fade-in pt-1 pb-4">
       {/* Section Header */}
       <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider py-1 leading-normal">
-        <FolderGit2 size={14} className="text-slate-400 shrink-0" />
         <span>Project Mission & Technical Overview</span>
       </div>
 
       {/* Main Narrative Description */}
       <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 shadow-2xs">
-        <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-          <Lightbulb size={13} className="text-slate-400" />
+        <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">
           The Challenge & Vision
         </h3>
         <p className="text-xs md:text-sm text-slate-700 leading-relaxed font-sans whitespace-pre-line">
@@ -40,8 +38,7 @@ export default function ProjectOverviewTab({ project, onNavigateTab }: ProjectOv
       {currentMilestone ? (
         <div className="p-4 rounded-2xl bg-slate-100 border border-slate-200 flex flex-col gap-2 shadow-2xs">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
-              <Compass size={13} className="animate-spin text-slate-400" style={{ animationDuration: "12s" }} />
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-800">
               Current Sprint Focus ({currentMilestone.date})
             </span>
             <button
@@ -50,7 +47,6 @@ export default function ProjectOverviewTab({ project, onNavigateTab }: ProjectOv
               className="text-[11px] font-bold text-slate-800 hover:text-slate-900 flex items-center gap-1 cursor-pointer"
             >
               <span>View full timeline</span>
-              <ArrowRight size={11} className="text-slate-400" />
             </button>
           </div>
           <h4 className="text-sm font-bold text-slate-900">{currentMilestone.title}</h4>
@@ -68,7 +64,6 @@ export default function ProjectOverviewTab({ project, onNavigateTab }: ProjectOv
             className="text-[11px] font-bold text-slate-700 hover:text-slate-900 flex items-center gap-1 cursor-pointer shrink-0"
           >
             <span>Timeline</span>
-            <ArrowRight size={11} className="text-slate-400" />
           </button>
         </div>
       )}
@@ -81,7 +76,6 @@ export default function ProjectOverviewTab({ project, onNavigateTab }: ProjectOv
         >
           <div className={`flex items-center justify-between text-xs font-bold ${CARD_TITLE_HOVER}`}>
             <span>Hardware & Software Stack</span>
-            <ArrowRight size={13} className="text-slate-400 group-hover:text-amber-600 dark:group-hover:text-amber-400 group-hover:translate-x-1 transition-all" />
           </div>
           <p className="text-[11px] text-slate-500 mt-1">
             {tools.length > 0
@@ -96,7 +90,6 @@ export default function ProjectOverviewTab({ project, onNavigateTab }: ProjectOv
         >
           <div className={`flex items-center justify-between text-xs font-bold ${CARD_TITLE_HOVER}`}>
             <span>Member Learning Outcomes</span>
-            <ArrowRight size={13} className="text-slate-400 group-hover:text-amber-600 dark:group-hover:text-amber-400 group-hover:translate-x-1 transition-all" />
           </div>
           <p className="text-[11px] text-slate-500 mt-1">
             {skillsTaught.length > 0

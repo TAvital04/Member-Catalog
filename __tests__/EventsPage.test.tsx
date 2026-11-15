@@ -77,11 +77,11 @@ describe("IEEE UCF Events Catalog & EventModal", () => {
       />
     );
 
-    // Verify modal header and overview
+    // Verify modal header and overview (and ensure time/location are not displayed)
     expect(
       screen.getByText("Hands-On PCB Design & Altium Workshop")
     ).toBeInTheDocument();
-    expect(screen.getByText("RSO Innovation Lab (ENG2 135)")).toBeInTheDocument();
+    expect(screen.queryByText("RSO Innovation Lab (ENG2 135)")).not.toBeInTheDocument();
     expect(screen.getByText("Skills & Key Topics Covered")).toBeInTheDocument();
 
     // Switch to Attending Members tab

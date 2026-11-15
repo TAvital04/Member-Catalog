@@ -1,15 +1,15 @@
 "use client";
 
 import React from "react";
-import { Calendar, MapPin, Building2, Users } from "lucide-react";
+import { Building2, Users } from "lucide-react";
 import { IEEEEvent } from "@/data/events";
 import { CARD_INTERACTIVE, CARD_TITLE_HOVER } from "@/lib/cardStyles";
 
 export interface EventCardProps {
   event: IEEEEvent;
   onClick: (event: IEEEEvent) => void;
-  formatDate: (iso: string) => string;
-  formatTime: (iso?: string) => string;
+  formatDate?: (iso: string) => string;
+  formatTime?: (iso?: string) => string;
 }
 
 /**
@@ -19,8 +19,6 @@ export interface EventCardProps {
 export default function EventCard({
   event,
   onClick,
-  formatDate,
-  formatTime,
 }: EventCardProps) {
   const attendees = event.attendees || [];
 
@@ -47,23 +45,6 @@ export default function EventCard({
         <h3 className={`text-base font-bold leading-snug line-clamp-2 ${CARD_TITLE_HOVER}`}>
           {event.title}
         </h3>
-
-        {/* Time & Location Details */}
-        <div className="space-y-1 text-xs text-slate-500">
-          <div className="flex items-center gap-1.5 font-semibold text-slate-800">
-            <Calendar size={13} className="text-amber-600 shrink-0" />
-            <span>{formatDate(event.startTime)}</span>
-            {event.startTime && (
-              <span className="text-slate-400 font-normal">
-                • {formatTime(event.startTime)}
-              </span>
-            )}
-          </div>
-          <div className="flex items-center gap-1.5 text-slate-500">
-            <MapPin size={13} className="text-slate-400 shrink-0" />
-            <span className="truncate">{event.location}</span>
-          </div>
-        </div>
 
         {/* Description preview */}
         <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">

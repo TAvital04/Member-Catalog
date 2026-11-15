@@ -206,28 +206,21 @@ export async function GET(request?: Request) {
             projectLinks: p.projectLinks || [],
           }));
 
-        // Extract skills acquired based on the events that the member attended
-        const eventSkills: string[] = [];
-        candidateEvents.forEach((evt: any) => {
-          if (Array.isArray(evt.skills)) {
-            evt.skills.forEach((sk: string) => {
-              const clean = typeof sk === "string" ? sk.trim() : "";
-              if (clean && !eventSkills.some((s) => s.toLowerCase() === clean.toLowerCase())) {
-                eventSkills.push(clean);
-              }
-            });
-          }
-        });
-
-        // Merge event skills with any explicit resume skills, prioritizing event-verified skills
-        const resumeSkills: string[] = Array.isArray(row.skills) ? row.skills : [];
-        const memberSkills = [...eventSkills];
-        resumeSkills.forEach((sk: string) => {
-          const clean = typeof sk === "string" ? sk.trim() : "";
-          if (clean && !memberSkills.some((s) => s.toLowerCase() === clean.toLowerCase())) {
-            memberSkills.push(clean);
-          }
-        });
+        // Extract skills acquired exclusively from Technical Workshops that the member attended
+        // (Skills are never populated from projects, manual entry, or non-workshop events)
+        const memberSkills: string[] = [];
+        candidateEvents
+          .filter((evt: any) => !evt.category || evt.category === "Technical Workshop")
+          .forEach((evt: any) => {
+            if (Array.isArray(evt.skills)) {
+              evt.skills.forEach((sk: string) => {
+                const clean = typeof sk === "string" ? sk.trim() : "";
+                if (clean && !memberSkills.some((s) => s.toLowerCase() === clean.toLowerCase())) {
+                  memberSkills.push(clean);
+                }
+              });
+            }
+          });
 
         return {
           id: row.id,

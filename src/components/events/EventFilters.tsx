@@ -41,7 +41,7 @@ export default function EventFilters({
         <SearchInput
           value={searchQuery}
           onChange={setSearchQuery}
-          placeholder="Search events by title, partner, topic, or location..."
+          placeholder="Search events by title, partner, or topic..."
           className="grow"
         />
 

@@ -29,6 +29,7 @@ import SponsorMemberRoster from "./SponsorMemberRoster";
 import SponsorEngagementStats from "./SponsorEngagementStats";
 import SegmentedControl from "@/components/common/SegmentedControl";
 import EmptyState from "@/components/common/EmptyState";
+import Tooltip from "@/components/common/Tooltip";
 import { ProjectTabType } from "@/components/modal/project/ProjectTabNavigation";
 
 export interface SponsorDetailViewProps {
@@ -184,7 +185,6 @@ export default function SponsorDetailView({
               className="btn-base btn-md btn-secondary-surface flex-1 sm:flex-none"
             >
               <span>Corporate Website</span>
-              <ExternalLink size={12} />
             </a>
             <a
               href={sponsor.careersUrl}
@@ -193,7 +193,6 @@ export default function SponsorDetailView({
               className="btn-base btn-md btn-primary-amber flex-1 sm:flex-none"
             >
               <span>Explore Careers</span>
-              <ExternalLink size={12} />
             </a>
           </div>
         </div>
@@ -330,7 +329,6 @@ export default function SponsorDetailView({
         <section id="sponsor-section-projects" className="scroll-mt-32 flex flex-col gap-4">
           <div className="flex items-center justify-between pb-1 border-b border-slate-200/70">
             <h3 className="section-title">
-              <FolderGit2 size={16} className="text-amber-500 shrink-0" />
               <span>Sponsored Hardware Builds & Chapter Projects</span>
               <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
                 {projects.length}
@@ -364,7 +362,6 @@ export default function SponsorDetailView({
         <section id="sponsor-section-events" className="scroll-mt-32 flex flex-col gap-4">
           <div className="flex items-center justify-between pb-1 border-b border-slate-200/70">
             <h3 className="section-title">
-              <Calendar size={16} className="text-amber-500 shrink-0" />
               <span>Partner Tech Talks & Hands-On Workshops</span>
               <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
                 {events.length}
@@ -397,7 +394,6 @@ export default function SponsorDetailView({
         <section id="sponsor-section-jobs" className="scroll-mt-32 flex flex-col gap-4">
           <div className="flex items-center justify-between pb-1 border-b border-slate-200/70">
             <h3 className="section-title">
-              <Briefcase size={16} className="text-amber-500 shrink-0" />
               <span>Corporate Job Opportunities & Internships</span>
               <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
                 {jobs.length} Positions
@@ -430,7 +426,6 @@ export default function SponsorDetailView({
           <div className="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-4">
             <div>
               <h3 className="section-title">
-                <Wrench size={16} className="text-amber-500 shrink-0" />
                 <span>Associated Technical Skills, Hardware & Tools</span>
                 <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
                   {skills.length} Competencies
@@ -447,7 +442,6 @@ export default function SponsorDetailView({
                   key={idx}
                   href={`/?skills=${encodeURIComponent(skill)}`}
                   className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-amber-500/15 border border-slate-200 hover:border-amber-500/40 text-xs font-mono font-medium text-slate-800 hover:text-amber-900 transition-all cursor-pointer shadow-2xs inline-flex items-center"
-                  title={`Filter candidates with skill: ${skill}`}
                 >
                   <span>{skill}</span>
                 </Link>

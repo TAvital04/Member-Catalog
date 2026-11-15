@@ -19,7 +19,6 @@ export default function ProjectPeopleTab({ participants = [], onSelectMember }: 
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider py-1 leading-normal">
-          <Users size={14} className="text-slate-400 shrink-0" />
           <span>Student Team & Contributors ({safeParticipants.length})</span>
         </div>
       </div>

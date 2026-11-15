@@ -47,7 +47,7 @@ export default function TruncatedText({
         content={text}
         position="custom"
         groupClass="group-hover/tooltip:opacity-100 group-hover/tooltip:pointer-events-auto transition-all duration-200"
-        className={`bg-zinc-950/95 border border-zinc-700/80 text-zinc-100 text-[11px] px-3.5 py-2 rounded-xl shadow-2xl z-[100] leading-relaxed font-sans font-medium text-left whitespace-normal max-w-[280px] sm:max-w-[360px] w-max backdrop-blur-md pointer-events-none ${alignmentClasses} ${placementClasses}`}
+        className={`text-[11px] px-3.5 py-2 rounded-xl z-[100] leading-relaxed font-sans font-semibold text-left whitespace-normal max-w-[280px] sm:max-w-[360px] w-max pointer-events-none ${alignmentClasses} ${placementClasses}`}
         style={{
           wordBreak: "break-word",
           overflowWrap: "break-word",

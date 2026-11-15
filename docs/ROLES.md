@@ -63,7 +63,9 @@ CREATE TABLE chapter_sponsors (
 
 ## 3. Recommended Form Implementation Order (One by One)
 
-> **UI Standard for All Forms**: Every dropdown/select field across Forms 1–5 MUST use the themed [`CustomDropdown`](../src/components/common/CustomDropdown.tsx) component (`@/components/common/CustomDropdown`) instead of native browser `<select>` elements.
+> **UI Standard for All Forms & Components**:
+> - Every dropdown/select field across Forms 1–5 (and the rest of the application) MUST use the themed [`CustomDropdown`](../src/components/common/CustomDropdown.tsx) component (`@/components/common/CustomDropdown`) instead of native browser `<select>` elements.
+> - Every mouse hover tooltip across Forms 1–5 (and the rest of the application) MUST use the themed [`Tooltip`](../src/components/common/Tooltip.tsx) component (`@/components/common/Tooltip`) instead of native HTML `title="..."` attributes or native browser validation tooltips (`required` / `type="email"` without `noValidate`). All forms must use `noValidate` and `aria-required="true"` (with React submit validation) so the browser never shows a `"Please fill out this field"` tooltip on hover. Do not show hover tooltips on form inputs, modal close (`X`) buttons, or skill chips/links.
 
 The five forms below are ordered by **data dependency**—so each form creates the foundational records and lookup options needed by the next form in the sequence:
 
@@ -114,21 +116,19 @@ Every other part of the catalog references corporate partners: **Events** have a
 **Component Target**: `src/components/forms/LeadershipEventForm.tsx`
 
 #### Why Implement This Second
-Because manual student profile input is deprecated, **Events are the primary source of candidate skills and chapter activity points** (see [`src/app/api/members/route.ts`](../src/app/api/members/route.ts)). Implementing Event creation alongside an **Attendance Roster selector** immediately allows RSO Leadership to credit members with workshop skills and points, while linking industry tech talks to the Sponsors created in Form 1.
+A member's skills are updated **exclusively when they attend a workshop for that skill**—never from projects, manual entry, or non-workshop events (see [`src/app/api/members/route.ts`](../src/app/api/members/route.ts)). Implementing Workshop/Event creation alongside an **Attendance Roster selector** immediately allows RSO Leadership to credit attending members with workshop-verified skills and chapter points, while linking industry tech talks to the Sponsors created in Form 1.
 
 #### Fields & Mapping (`events` + `event_attendees`)
 | Field Label | Input Type | Target Column | Validation Rules |
 | :--- | :--- | :--- | :--- |
 | **Event Title** | Text input | `events.title` | Required, 5–150 chars |
 | **Category** | Select (`Technical Workshop`, `Industry Tech Talk`, `General Body Meeting`, `Competition & Hackathon`, `Career & Networking`, `Special Event & Tour`) | `events.category` | Required |
-| **Location / Lab Room** | Text input | `events.location` | Required (e.g., *HEC 101* or *TI Innovation Lab*) |
-| **Start & End Date/Time** | Datetime pickers | `start_time`, `end_time` | Required; `end_time > start_time` |
 | **Description & Abstract** | Textarea | `events.description` | Required, min 25 chars |
 | **Corporate Partner Host** | Select dropdown (populated from `chapter_sponsors`) | `events.partner` | Optional |
-| **Skills Awarded to Attendees** | Multi-tag skill input | `events.skills` (`jsonb`) | Automatically added to every attending student's portfolio |
+| **Workshop Skills Awarded to Attendees** | Multi-tag skill input (applicable only when Category is `Technical Workshop`) | `events.skills` (`jsonb`) | Automatically added to every attending member's profile exclusively when Category is `Technical Workshop` |
 | **Chapter Points Awarded** | Number input | `events.points_awarded` | Defaults to `15` points |
 | **RSVP Link & Requires Dues** | URL input + Checkbox | `rsvp_link`, `requires_dues` | Optional |
-| **Attending Members Roster** | Searchable multi-select of `members` (or CSV email paste) | `event_attendees (event_id, member_id)` | Inserts join rows into `event_attendees` |
+| **Attending Members Roster** | Searchable multi-select of `members` (or CSV email paste) | `event_attendees (event_id, member_id)` | Inserts join rows into `event_attendees` (triggers workshop skill attribution for `Technical Workshop` events) |
 
 - **API Route**: `POST /api/events` & `PUT /api/events/[id]/attendees` (requires `x-user-role: admin`). Inserts the event and bulk-upserts `event_attendees` rows in a single PostgreSQL transaction.
 
@@ -140,7 +140,7 @@ Because manual student profile input is deprecated, **Events are the primary sou
 **Component Target**: `src/components/forms/LeadershipProjectForm.tsx`
 
 #### Why Implement This Third
-Projects are the second major pillar of candidate portfolios and point calculations (`projectLeadPoints` and `universityProjectPoints`). Implementing this right after Form 2 lets you reuse the **Member Roster Selector** component (to assign `Project Lead` vs `Team Member` in `project_participants`) and the **Sponsor Selector** (from Form 1), while introducing structured `JSONB` list builders for project milestones and tools.
+Projects are the second major pillar of candidate portfolios and point calculations (`projectLeadPoints` and `universityProjectPoints`), though **projects never update a member's skills** (member skills come strictly from attending workshops in Form 2). Implementing this right after Form 2 lets you reuse the **Member Roster Selector** component (to assign `Project Lead` vs `Team Member` in `project_participants`) and the **Sponsor Selector** (from Form 1), while introducing structured `JSONB` list builders for project milestones and tools.
 
 #### Fields & Mapping (`ieee_projects` + `project_participants`)
 | Field Label | Input Type | Target Column | Validation Rules |
@@ -151,8 +151,7 @@ Projects are the second major pillar of candidate portfolios and point calculati
 | **Short Tagline** | Text input | `tagline` | Required, 10–200 chars |
 | **Technical Overview** | Textarea | `description` | Required, min 40 chars |
 | **GitHub Repo & Project Website** | URL inputs | `repository_url`, `demo_url` | Optional, valid `https://` URLs |
-| **Skills Taught** | Multi-tag skill input | `skills_taught` (`jsonb`) | At least 1 engineering skill |
-| **Hardware & Software Tools** | Dynamic row builder (`name`, `category`) | `tools` (`jsonb`) | Optional array of tool objects |
+| **Hardware & Software Tools** | Dynamic row builder (`name`, `category`) | `tools` (`jsonb`) | Optional array of tool objects displayed on the project page (does not modify member skills) |
 | **Milestone Timeline** | Dynamic row builder (`date`, `title`, `description`, `status`) | `timeline` (`jsonb`) | At least 1 milestone entry |
 | **Sponsorship Funding & Needs** | Number + text inputs (`fundingGoal`, `currentFunding`, `needsDescription`) | `sponsorship_info` (`jsonb`) | Optional |
 | **Project Team & Leads Roster** | Searchable member selector with role (`Project Lead` or `Team Member`) | `project_participants (project_id, member_id, role_title)` | Inserts team roster rows into `project_participants` |

@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { ChapterSponsor } from "@/data/sponsors";
 import CustomDropdown from "@/components/common/CustomDropdown";
+import Tooltip from "@/components/common/Tooltip";
 
 export interface LeadershipSponsorFormProps {
   role: "standard" | "sponsor" | "admin";
@@ -42,6 +43,24 @@ export default function LeadershipSponsorForm({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
+
+    if (
+      !name.trim() ||
+      !tagline.trim() ||
+      !website.trim() ||
+      !careersUrl.trim() ||
+      !contactEmail.trim() ||
+      !sponsorLoginPassword.trim()
+    ) {
+      setErrorMessage("Please fill out all required fields before submitting.");
+      return;
+    }
+
+    if (!contactEmail.includes("@")) {
+      setErrorMessage("Please enter a valid recruiting email address.");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -100,13 +119,9 @@ export default function LeadershipSponsorForm({
 
         {/* Modal Header */}
         <div className="p-6 border-b border-slate-200/80 bg-slate-50/70 flex items-center gap-3.5 shrink-0 pr-12">
-          <div className="w-11 h-11 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-600 flex items-center justify-center shrink-0">
-            <Building2 size={20} />
-          </div>
           <div>
             <div className="flex items-center gap-2">
               <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-700">
-                <Shield size={10} />
                 <span>RSO Leadership • Form 1</span>
               </span>
             </div>
@@ -120,7 +135,7 @@ export default function LeadershipSponsorForm({
         </div>
 
         {/* Scrollable Form Body */}
-        <form onSubmit={handleSubmit} className="overflow-y-auto p-6 flex flex-col gap-6 flex-1">
+        <form onSubmit={handleSubmit} noValidate className="overflow-y-auto p-6 flex flex-col gap-6 flex-1">
           {/* Section 1: Core Company Identity */}
           <div className="flex flex-col gap-4">
             <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-2">
@@ -138,7 +153,7 @@ export default function LeadershipSponsorForm({
                 <input
                   id="sponsor-name"
                   type="text"
-                  required
+                  aria-required="true"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Raytheon Technologies"
@@ -179,7 +194,7 @@ export default function LeadershipSponsorForm({
               <input
                 id="sponsor-tagline"
                 type="text"
-                required
+                aria-required="true"
                 value={tagline}
                 onChange={(e) => setTagline(e.target.value)}
                 placeholder="e.g. Defense Radar, Avionics & Precision Guidance Systems"
@@ -200,7 +215,7 @@ export default function LeadershipSponsorForm({
                   <input
                     id="sponsor-website"
                     type="text"
-                    required
+                    aria-required="true"
                     value={website}
                     onChange={(e) => setWebsite(e.target.value)}
                     placeholder="https://www.rtx.com"
@@ -221,7 +236,7 @@ export default function LeadershipSponsorForm({
                   <input
                     id="sponsor-careers-url"
                     type="text"
-                    required
+                    aria-required="true"
                     value={careersUrl}
                     onChange={(e) => setCareersUrl(e.target.value)}
                     placeholder="https://careers.rtx.com"
@@ -235,7 +250,6 @@ export default function LeadershipSponsorForm({
           {/* Section 2: Sponsor Login Provisioning */}
           <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/90 flex flex-col gap-3.5">
             <div className="flex items-center gap-2">
-              <Award size={15} className="text-amber-600" />
               <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                 2. Provision Sponsor Portal Login Credentials
               </h3>
@@ -258,8 +272,9 @@ export default function LeadershipSponsorForm({
                   <Mail size={14} className="text-slate-400 absolute left-3 pointer-events-none" />
                   <input
                     id="sponsor-email"
-                    type="email"
-                    required
+                    type="text"
+                    inputMode="email"
+                    aria-required="true"
                     value={contactEmail}
                     onChange={(e) => setContactEmail(e.target.value)}
                     placeholder="recruiting@rtx.com"
@@ -280,7 +295,7 @@ export default function LeadershipSponsorForm({
                   <input
                     id="sponsor-password"
                     type="text"
-                    required
+                    aria-required="true"
                     value={sponsorLoginPassword}
                     onChange={(e) => setSponsorLoginPassword(e.target.value)}
                     placeholder="ieee-sponsor-access"

@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { ChapterSponsor } from "@/data/sponsors";
 import { CARD_INTERACTIVE, CARD_TITLE_HOVER } from "@/lib/cardStyles";
+import Tooltip from "@/components/common/Tooltip";
 
 export interface SponsorCardProps {
   sponsor: ChapterSponsor;
@@ -119,25 +120,25 @@ export default function SponsorCard({
       <div className="pt-3.5 border-t border-slate-100 flex items-center justify-between gap-2 text-xs">
         <div className="flex items-center gap-3 text-slate-500 text-[11px] font-medium">
           {projectCount > 0 && (
-            <span className="flex items-center gap-1" title={`${projectCount} Sponsored Projects`}>
+            <span className="flex items-center gap-1">
               <FolderGit2 size={13} className="text-slate-400" />
               <span>{projectCount} projects</span>
             </span>
           )}
           {eventCount > 0 && (
-            <span className="flex items-center gap-1" title={`${eventCount} Sponsored Workshops/Talks`}>
+            <span className="flex items-center gap-1">
               <Calendar size={13} className="text-slate-400" />
               <span>{eventCount} workshops</span>
             </span>
           )}
           {jobCount > 0 && (
-            <span className="flex items-center gap-1" title={`${jobCount} Active Career Opportunities`}>
+            <span className="flex items-center gap-1">
               <Briefcase size={13} className="text-slate-400" />
               <span>{jobCount} jobs</span>
             </span>
           )}
           {interactionCount > 0 && (
-            <span className="flex items-center gap-1" title={`${interactionCount} Student Interactions`}>
+            <span className="flex items-center gap-1">
               <Users size={13} className="text-slate-400" />
               <span>{interactionCount} members</span>
             </span>
@@ -145,7 +146,7 @@ export default function SponsorCard({
         </div>
 
         <span className="text-xs font-bold text-slate-800 group-hover:text-amber-800 transition-colors">
-          View Hub →
+          View Hub
         </span>
       </div>
     </div>

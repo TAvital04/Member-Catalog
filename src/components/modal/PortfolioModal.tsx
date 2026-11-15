@@ -79,10 +79,9 @@ export default function PortfolioModal({
           onClick={onClose}
           type="button"
           aria-label="Close candidate portfolio modal"
-          className="absolute top-4 right-4 z-50 p-2 rounded-full bg-slate-100 border border-slate-200 hover:bg-slate-200 text-slate-500 hover:text-slate-900 transition-all shadow-xs active:scale-90 group/tooltip focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none cursor-pointer"
+          className="absolute top-4 right-4 z-50 p-2 rounded-full bg-slate-100 border border-slate-200 hover:bg-slate-200 text-slate-500 hover:text-slate-900 transition-all shadow-xs active:scale-90 focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none cursor-pointer"
         >
           <X size={18} />
-          <Tooltip content="Close Modal" position="bottom-right" groupClass="group-hover/tooltip:opacity-100" />
         </button>
 
         {/* Scrollable Container Wrapper */}

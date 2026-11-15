@@ -106,6 +106,19 @@ export function getSeededEventsForCandidate(candidate: any, index: number): Even
     }
   }
 
+  // 3. Guarantee every candidate has attended at least 2 Technical Workshops so their skills are workshop-verified
+  const workshopEvents = SAMPLE_IEEE_EVENTS.filter((e) => e.category === "Technical Workshop");
+  let attendedWorkshopsCount = matchedEvents.filter((e) => e.category === "Technical Workshop").length;
+  if (attendedWorkshopsCount < 2 && workshopEvents.length > 0) {
+    for (let i = 0; i < workshopEvents.length && attendedWorkshopsCount < 2; i++) {
+      const candidateWorkshop = workshopEvents[(index + i) % workshopEvents.length];
+      if (!matchedEvents.some((e) => e.id === candidateWorkshop.id)) {
+        matchedEvents.push(candidateWorkshop);
+        attendedWorkshopsCount++;
+      }
+    }
+  }
+
   // Sort events chronologically (newest first)
   matchedEvents.sort((a, b) => new Date(b.startTime).getTime() - new Date(a.startTime).getTime());
 

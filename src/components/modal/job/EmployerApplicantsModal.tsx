@@ -20,6 +20,7 @@ import { JobPosting, JobApplication } from "@/data/jobs";
 import { Student } from "@/data/students";
 import CustomDropdown from "@/components/common/CustomDropdown";
 import Avatar from "@/components/common/Avatar";
+import Tooltip from "@/components/common/Tooltip";
 
 interface EmployerApplicantsModalProps {
   job: JobPosting;
@@ -117,7 +118,6 @@ export default function EmployerApplicantsModal({
         {/* Modal Header */}
         <div className="p-6 border-b border-slate-200/80 bg-slate-50/70 shrink-0">
           <div className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
-            <Users size={14} className="text-amber-600" />
             <span>Applicant Roster</span>
           </div>
           <h2 className="text-xl sm:text-2xl font-black text-slate-900 leading-tight">
@@ -256,11 +256,10 @@ export default function EmployerApplicantsModal({
                       return (
                         <span
                           key={idx}
-                          className={`px-2 py-0.5 rounded-lg text-[10.5px] font-semibold border shadow-2xs ${
-                            isMatch
-                              ? "bg-amber-500/15 border-amber-500 text-slate-900 font-bold"
-                              : "bg-slate-100 border-slate-200 text-slate-600"
-                          }`}
+                          className={`px-2 py-0.5 rounded-lg text-[10.5px] font-semibold border shadow-2xs ${isMatch
+                            ? "bg-amber-500/15 border-amber-500 text-slate-900 font-bold"
+                            : "bg-slate-100 border-slate-200 text-slate-600"
+                            }`}
                         >
                           {skill} {isMatch && "✓"}
                         </span>
@@ -307,7 +306,6 @@ export default function EmployerApplicantsModal({
                         >
                           <FileText size={12} className="text-emerald-600" />
                           <span>Resume PDF</span>
-                          <ExternalLink size={11} className="text-slate-400" />
                         </a>
                       )}
 

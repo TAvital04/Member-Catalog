@@ -21,6 +21,7 @@ import {
 import { JobPosting, JobApplication } from "@/data/jobs";
 import { Student } from "@/data/students";
 import Avatar from "@/components/common/Avatar";
+import Tooltip from "@/components/common/Tooltip";
 
 interface JobDetailModalProps {
   job: JobPosting;
@@ -211,8 +212,7 @@ export default function JobDetailModal({
           {job.skillsRequired && job.skillsRequired.length > 0 && (
             <div className="flex flex-col gap-2 p-4 rounded-xl bg-slate-50 border border-slate-200/90 shadow-2xs">
               <div className="flex items-center justify-between">
-                <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-                  <Sparkles size={13} className="text-amber-600" />
+                <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                   <span>Technical Skills Match</span>
                 </h3>
                 <span className="text-[11px] font-semibold text-slate-600">
@@ -231,7 +231,7 @@ export default function JobDetailModal({
                           : "bg-slate-100 border-slate-200 text-slate-700"
                       }`}
                     >
-                      {skill} {isMatch && "✓"}
+                      {skill}
                     </span>
                   );
                 })}
@@ -260,13 +260,12 @@ export default function JobDetailModal({
           <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/90 shadow-2xs flex flex-col gap-4">
             <div className="flex items-center justify-between border-b border-slate-200/70 pb-3">
               <div className="flex items-center gap-2">
-                <ShieldCheck size={16} className="text-amber-600" />
                 <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                   Apply With Your IEEE Portfolio
                 </h3>
               </div>
               <span className="text-[11px] text-slate-500 font-medium">
-                Verified Member Fast-Track
+                Member Fast-Track
               </span>
             </div>
 
@@ -276,7 +275,7 @@ export default function JobDetailModal({
                 <div>
                   <h4 className="font-bold text-sm">Application Submitted!</h4>
                   <p className="mt-0.5 text-emerald-800">
-                    Your full engineering portfolio and verified credentials have been transmitted directly to {job.companyName}&apos;s university recruiting team.
+                    Your full engineering portfolio and credentials have been transmitted directly to {job.companyName}&apos;s university recruiting team.
                   </p>
                 </div>
               </div>
