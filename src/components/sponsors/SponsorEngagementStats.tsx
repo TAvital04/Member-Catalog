@@ -2,7 +2,7 @@
 
 import React, { useMemo } from "react";
 import Link from "next/link";
-import { GraduationCap, TrendingUp, TrendingDown, BarChart3 } from "lucide-react";
+import { GraduationCap, BarChart3 } from "lucide-react";
 import { StudentInteraction } from "@/data/sponsors";
 import Tooltip from "@/components/common/Tooltip";
 

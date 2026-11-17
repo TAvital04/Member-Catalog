@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { UserRole } from "@/app/page";
 import Tooltip from "../common/Tooltip";
-import { Search, X, LayoutGrid, List, ChevronDown, Check, ArrowUpDown } from "lucide-react";
+import { Search, X, LayoutGrid, List, ChevronDown, Check } from "lucide-react";
 import { DirectorySortOption } from "@/hooks/useDirectoryFilters";
 
 interface DirectoryControlBarProps {
@@ -226,14 +226,14 @@ export default function DirectoryControlBar({
               type="button"
               onClick={handleToggleReverse}
               id="directory-sort-reverse-toggle"
-              className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
+              className={`px-2 py-1 rounded-lg text-[10px] font-bold tracking-wider transition-colors cursor-pointer border ${
                 isReversed
-                  ? "bg-slate-100 text-slate-800 hover:bg-slate-200 border border-slate-200"
-                  : "text-slate-400 hover:text-slate-700 hover:bg-slate-100"
+                  ? "bg-black text-white border-black"
+                  : "bg-white text-neutral-600 hover:text-black border-neutral-300"
               }`}
               aria-label="Reverse sort order"
             >
-              <ArrowUpDown size={14} />
+              {isReversed ? "DESC" : "ASC"}
             </button>
           </div>
 

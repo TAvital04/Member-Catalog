@@ -172,7 +172,7 @@ export default function DirectoryNavbar({
         </div>
 
         {/* Mobile / Tablet navigation links: Dedicated second row below xl so items never collide or get cut off */}
-        <div className="flex xl:hidden items-center gap-1 overflow-x-auto w-full pt-0.5 scrollbar-none no-scrollbar">
+        <div className="flex xl:hidden items-center flex-wrap gap-1 w-full pt-0.5">
           {navLinks.map((item) => {
             const Icon = item.icon;
             const isActive = pathname === item.href;

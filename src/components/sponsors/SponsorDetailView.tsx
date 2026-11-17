@@ -14,7 +14,6 @@ import {
   Sparkles,
   Wrench,
   Mail,
-  ArrowLeft,
 } from "lucide-react";
 import { ChapterSponsor, SponsorDetailedRelations } from "@/data/sponsors";
 import { Student } from "@/data/students";
@@ -136,7 +135,6 @@ export default function SponsorDetailView({
         onClick={onBack}
         className="btn-base btn-sm btn-ghost-surface self-start text-xs font-bold"
       >
-        <ArrowLeft size={14} />
         <span>Back to All Chapter Sponsors</span>
       </button>
 

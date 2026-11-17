@@ -6,11 +6,9 @@ import {
   Users,
   GraduationCap,
   Sparkles,
-  TrendingUp,
   CheckCircle2,
   Clock,
   Briefcase,
-  ChevronDown,
   Building2,
   FolderGit2,
   Award,
@@ -182,7 +180,7 @@ export default function EmployerApplicantAnalytics({
         {/* Tile 2: Pipeline Conversion Rate */}
         <div className="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col justify-between gap-1">
           <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1">
-            <TrendingUp size={12} className="text-black" />
+            <Award size={12} className="text-black" />
             <span>Interview/Offer Rate</span>
           </span>
           <div className="flex items-baseline gap-2 mt-1">

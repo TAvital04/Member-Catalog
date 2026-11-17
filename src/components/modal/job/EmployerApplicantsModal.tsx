@@ -7,14 +7,12 @@ import {
   CheckCircle2,
   FileText,
   ExternalLink,
-  ChevronDown,
   Sparkles,
   Briefcase,
   Mail,
   Calendar,
   AlertCircle,
   GraduationCap,
-  TrendingUp,
 } from "lucide-react";
 import { JobPosting, JobApplication } from "@/data/jobs";
 import { Student } from "@/data/students";
