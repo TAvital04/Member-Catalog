@@ -31,17 +31,17 @@ export default function TimelineCard({
 }: TimelineCardProps) {
   const themeClasses = {
     purple: {
-      hoverBorder: "hover:border-black",
+      hoverBorder: "",
       textBadge: "text-black",
       textGpa: "text-neutral-700",
     },
     blue: {
-      hoverBorder: "hover:border-black",
+      hoverBorder: "",
       textBadge: "text-black",
       textGpa: "text-neutral-700",
     },
     amber: {
-      hoverBorder: "hover:border-black",
+      hoverBorder: "",
       textBadge: "text-black",
       textGpa: "text-neutral-700",
     },
@@ -50,7 +50,7 @@ export default function TimelineCard({
   const displayDate = `${formatDateStr(startDate)} - ${current ? "Present" : formatDateStr(endDate)}`;
 
   return (
-    <div className={`p-4 rounded-xl bg-zinc-850 border border-zinc-800 ${themeClasses.hoverBorder} transition-all flex flex-col gap-2 shadow-sm min-w-0 overflow-hidden`}>
+    <div className={`p-4 rounded-xl bg-zinc-850 border border-zinc-800 ${themeClasses.hoverBorder} flex flex-col gap-2 shadow-sm min-w-0 overflow-hidden`}>
       <div className="flex justify-between items-start gap-2 border-b border-zinc-800/60 pb-1.5">
         <span className={`text-[9px] font-extrabold uppercase tracking-wider ${themeClasses.textBadge}`}>
           {themeColor === "purple" ? "ROLE / POSITION" : "INSTITUTION"}

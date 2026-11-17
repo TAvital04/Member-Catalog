@@ -63,7 +63,7 @@ export default function ProjectSkillsTab({
 
             const cardContent = (
               <>
-                <div className={`p-1 rounded-lg bg-neutral-100 text-black border border-neutral-300 shrink-0 mt-0.5 ${canFilter ? "group-hover:border-black transition-colors" : ""}`}>
+                <div className="p-1 rounded-lg bg-neutral-100 text-black border border-neutral-300 shrink-0 mt-0.5">
                   <CheckCircle2 size={13} />
                 </div>
                 <div className="flex-1 min-w-0">

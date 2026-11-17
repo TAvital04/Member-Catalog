@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 @import "./colors.css";
 @import "./design-system.css";
 
@@ -117,6 +118,10 @@
   --font-mono: var(--font-geist-mono), monospace;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   background-color: var(--background);
   color: var(--foreground);
@@ -146,22 +151,32 @@ body {
 
 .glass-panel-hover:hover {
   background: var(--glass-bg);
-  border-color: #cbd5e1;
-  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
-  transform: translateY(-2px);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Consistent Card Interactive Hover Across All Pages */
+/* Consistent Card Interactive Hover Across All Pages - Static with pointer */
 .card-hover {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
 }
 
-.card-hover:hover {
-  border-color: #cbd5e1;
-  box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.06);
-  transform: translateY(-2px);
+/* Universal Static Interactive Elements — No hover lifts, scale springs, or glow animations */
+button,
+[role="button"],
+a,
+.btn-base {
+  transform: none !important;
+  transition: none !important;
+}
+
+button:hover,
+button:active,
+[role="button"]:hover,
+[role="button"]:active,
+a:hover,
+a:active,
+.btn-base:hover,
+.btn-base:active {
+  transform: none !important;
+  box-shadow: none !important;
 }
 
 /* Shimmer Loading Animations */

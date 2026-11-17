@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { X, Loader2, Sparkles, AlertCircle, Plus } from "lucide-react";
-import { IEEEEvent, EventCategory } from "@/data/events";
+import { X, Loader2, Sparkles, AlertCircle, Plus, Users } from "lucide-react";
+import { IEEEEvent, EventCategory, EventAttendee } from "@/data/events";
 import { Student } from "@/data/students";
 import { CURRENT_CHAPTER_SPONSORS } from "@/data/sponsors";
 import { canAwardSkills } from "@/lib/skills";
@@ -30,6 +30,7 @@ export default function LeadershipEventForm({
   role,
   onClose,
   onEventCreated,
+  students = [],
 }: LeadershipEventFormProps) {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState<EventCategory>("Technical Workshop");
@@ -38,11 +39,48 @@ export default function LeadershipEventForm({
   const [requiresDues, setRequiresDues] = useState(false);
 
   // Workshop skills state
-  const [skills, setSkills] = useState<string[]>(["PCB Layout", "Altium Designer"]);
+  const [skills, setSkills] = useState<string[]>([]);
   const [newSkillInput, setNewSkillInput] = useState("");
+
+  // Event leads state
+  const [leads, setLeads] = useState<EventAttendee[]>([]);
+  const [selectedStudentId, setSelectedStudentId] = useState("");
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  // Available students for event lead selection
+  const studentOptions = useMemo(() => {
+    const assignedIds = new Set(leads.map((l) => l.memberId));
+    return (students || [])
+      .filter((s) => !assignedIds.has(s.id))
+      .map((s) => ({
+        value: s.id,
+        label: `${s.name} (${s.major || "Engineering"})`,
+      }));
+  }, [students, leads]);
+
+  const handleAddLead = () => {
+    if (!selectedStudentId) return;
+    const match = (students || []).find((s) => s.id === selectedStudentId);
+    if (!match) return;
+
+    setLeads((prev) => [
+      ...prev,
+      {
+        memberId: match.id,
+        name: match.name,
+        email: match.email,
+        major: match.major || "Engineering",
+        role: "Lead",
+      },
+    ]);
+    setSelectedStudentId("");
+  };
+
+  const handleRemoveLead = (memberId: string) => {
+    setLeads((prev) => prev.filter((l) => l.memberId !== memberId));
+  };
 
   // Partner dropdown options
   const partnerOptions = useMemo(() => {
@@ -107,7 +145,8 @@ export default function LeadershipEventForm({
           skills: canAwardSkills(category) ? skills : [],
           pointsAwarded: STANDARD_CHAPTER_POINTS,
           requiresDues,
-          attendees: [],
+          attendees: leads,
+          leads,
         }),
       });
 
@@ -321,6 +360,65 @@ export default function LeadershipEventForm({
                 This event is categorized as a {category}. Only <strong>Technical Workshops</strong> award technical skills to attending members.
               </p>
             )}
+          </div>
+
+          {/* Section 3: Event Leads */}
+          <div className="space-y-4">
+            <div className="flex items-center justify-between border-b border-neutral-200 pb-2">
+              <h3 className="text-xs font-bold text-black uppercase tracking-wider flex items-center gap-1.5">
+                <Users size={14} />
+                <span>3. Event Leads ({leads.length})</span>
+              </h3>
+              <span className="text-[10.5px] text-neutral-500 font-medium">Assign chapter leads</span>
+            </div>
+
+            <div className="space-y-2">
+              {leads.length === 0 ? (
+                <div className="p-4 rounded-lg bg-neutral-50 border border-dashed border-neutral-200 text-center text-xs text-neutral-500">
+                  No event leads assigned yet. Select candidates below to assign leads.
+                </div>
+              ) : (
+                <div className="flex flex-wrap gap-2">
+                  {leads.map((lead) => (
+                    <div
+                      key={lead.memberId}
+                      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white border border-neutral-300 text-xs"
+                    >
+                      <span className="font-bold text-black">{lead.name}</span>
+                      <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-neutral-100 text-neutral-700">
+                        Lead
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveLead(lead.memberId)}
+                        aria-label={`Remove lead ${lead.name}`}
+                        className="text-neutral-400 hover:text-black cursor-pointer ml-1"
+                      >
+                        <X size={12} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
+              <CustomDropdown
+                value={selectedStudentId}
+                onChange={(val) => setSelectedStudentId(val)}
+                options={studentOptions.length > 0 ? studentOptions : [{ value: "", label: "All candidates assigned" }]}
+                className="flex-1 min-w-[200px]"
+              />
+              <button
+                type="button"
+                onClick={handleAddLead}
+                disabled={!selectedStudentId}
+                className="px-3.5 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200 disabled:opacity-40 border border-neutral-300 text-black text-xs font-bold transition-all cursor-pointer flex items-center gap-1 shrink-0"
+              >
+                <Plus size={14} />
+                <span>Assign Lead</span>
+              </button>
+            </div>
           </div>
 
           {errorMessage && (

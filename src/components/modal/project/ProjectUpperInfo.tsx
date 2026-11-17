@@ -2,7 +2,6 @@
 
 import React from "react";
 import { IEEEProject } from "@/data/projects";
-import { CheckCircle2, Clock } from "lucide-react";
 import CurrentSponsorsSegment from "@/components/common/CurrentSponsorsSegment";
 import { getSafeUrl } from "@/shared";
 
@@ -15,24 +14,16 @@ export default function ProjectUpperInfo({ project }: ProjectUpperInfoProps) {
 
   return (
     <div className="flex flex-col gap-5">
-      {/* Category & Status Badges */}
-      <div className="flex items-center justify-between gap-2">
-        <span className="bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">
-          {project.category}
-        </span>
-        <span
-          className={`text-[10px] font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider flex items-center gap-1.5 ${
-            project.status === "Completed"
-              ? "bg-neutral-100 text-black border border-neutral-300 font-bold"
-              : "bg-slate-100 text-slate-700 border border-slate-200"
-          }`}
-        >
-          {project.status === "Completed" ? (
-            <CheckCircle2 size={11} className="text-black" />
-          ) : (
-            <Clock size={11} className="text-slate-400" />
-          )}
-          {project.status}
+      {/* Status Badge */}
+      <div className="flex items-center gap-2">
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-neutral-100 border border-neutral-200 text-neutral-800">
+          <span
+            className={`w-1.5 h-1.5 rounded-full shrink-0 ${
+              project.status === "Completed" ? "bg-black" : "bg-emerald-500"
+            }`}
+            aria-hidden="true"
+          />
+          <span>{project.status}</span>
         </span>
       </div>
 
@@ -81,7 +72,7 @@ export default function ProjectUpperInfo({ project }: ProjectUpperInfoProps) {
               href={getSafeUrl(project.repositoryUrl)!}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-1.5 rounded-xl bg-white border border-slate-200/90 hover:border-slate-300 text-xs font-semibold text-slate-700 hover:text-slate-900 transition-all shadow-2xs hover:shadow-md hover:-translate-y-0.5 active:scale-95 flex items-center gap-1.5"
+              className="px-3 py-1.5 rounded-xl bg-white border border-slate-200/90 hover:bg-neutral-100 text-xs font-semibold text-slate-700 hover:text-slate-900 cursor-pointer shadow-2xs flex items-center gap-1.5"
             >
               <span>GitHub Repo</span>
             </a>
@@ -95,7 +86,7 @@ export default function ProjectUpperInfo({ project }: ProjectUpperInfoProps) {
               href={getSafeUrl(project.demoUrl)!}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-1.5 rounded-xl bg-white border border-slate-200/90 hover:border-slate-300 text-xs font-semibold text-slate-700 hover:text-slate-900 transition-all shadow-2xs hover:shadow-md hover:-translate-y-0.5 active:scale-95 flex items-center gap-1.5"
+              className="px-3 py-1.5 rounded-xl bg-white border border-slate-200/90 hover:bg-neutral-100 text-xs font-semibold text-slate-700 hover:text-slate-900 cursor-pointer shadow-2xs flex items-center gap-1.5"
             >
               <span>Project Website</span>
             </a>

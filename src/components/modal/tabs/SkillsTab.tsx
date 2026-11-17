@@ -51,15 +51,15 @@ export default function SkillsTab({ student, formatDateStr, onClose, role, canFi
           {student.skills.map((skill) => {
             const isLead = isLeadSkill(skill, student);
             const chipClasses = isLead
-              ? "bg-neutral-100 hover:bg-neutral-200 border-2 border-black text-black font-bold shadow-2xs"
-              : "bg-white hover:bg-neutral-100 border border-neutral-300 text-black font-semibold shadow-2xs";
+              ? "bg-neutral-100 border-2 border-black text-black font-bold shadow-2xs"
+              : "bg-white border border-neutral-300 text-black font-semibold shadow-2xs";
 
             return canFilter ? (
               <Link
                 key={skill}
                 href={`/?skills=${encodeURIComponent(skill)}`}
                 onClick={() => onClose?.()}
-                className={`text-xs px-3 py-1.5 rounded-lg transition-all duration-200 active:scale-95 cursor-pointer ${chipClasses}`}
+                className={`text-xs px-3 py-1.5 rounded-lg cursor-pointer ${chipClasses}`}
               >
                 <span>{skill}</span>
               </Link>

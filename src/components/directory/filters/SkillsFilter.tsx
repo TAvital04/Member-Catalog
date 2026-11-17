@@ -47,10 +47,10 @@ export default function SkillsFilter({
               key={skill}
               type="button"
               onClick={() => onSkillToggle(skill)}
-              className={`px-2 py-1 rounded-lg text-[11px] font-medium transition-all flex items-center gap-1.5 select-none cursor-pointer max-w-full ${
+              className={`px-2 py-1 rounded-lg text-[11px] font-medium flex items-center gap-1.5 select-none cursor-pointer max-w-full ${
                 isSelected
                   ? "bg-black text-white border border-black shadow-sm"
-                  : "bg-zinc-900/90 text-zinc-400 border border-zinc-800 hover:text-zinc-200 hover:border-zinc-700"
+                  : "bg-zinc-900/90 text-zinc-400 border border-zinc-800 hover:text-zinc-200"
               }`}
             >
               <div className="shrink-0">

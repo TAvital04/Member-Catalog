@@ -22,10 +22,10 @@ export function Chip({
   return (
     <button
       type="button"
-      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all duration-150 cursor-pointer select-none active:scale-95 shadow-2xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-black ${
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold cursor-pointer select-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-black ${
         isSelected
           ? "bg-black text-white border border-black font-bold"
-          : "bg-white hover:bg-neutral-100 text-black border border-neutral-300 hover:border-black"
+          : "bg-white text-black border border-neutral-300"
       } ${className}`.trim()}
       {...props}
     >

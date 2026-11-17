@@ -245,7 +245,7 @@ export default function FilterSidebar({
         <button
           type="button"
           onClick={resetAllFilters}
-          className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-800 transition-colors py-1.5 px-3 rounded-xl hover:bg-slate-50 justify-center shrink-0 cursor-pointer font-semibold"
+          className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-800 transition-colors py-1.5 px-3 rounded-xl justify-center shrink-0 cursor-pointer font-semibold"
         >
           <RotateCcw size={12} className="text-slate-400" />
           <span>Reset</span>

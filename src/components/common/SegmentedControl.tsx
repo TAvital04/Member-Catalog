@@ -32,7 +32,7 @@ export default function SegmentedControl<T extends string>({
     <div
       role="tablist"
       aria-label={ariaLabel}
-      className={`segmented-group ${className}`}
+      className={`inline-flex items-center p-1 bg-white border border-neutral-300 rounded-2xl gap-1 shadow-2xs ${className}`}
     >
       {options.map((opt) => {
         const isActive = opt.value === value;
@@ -43,8 +43,10 @@ export default function SegmentedControl<T extends string>({
             role="tab"
             aria-selected={isActive}
             onClick={() => onChange(opt.value)}
-            className={`segmented-tab ${
-              isActive ? "segmented-tab-active" : "segmented-tab-inactive"
+            className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold cursor-pointer select-none ${
+              isActive
+                ? "bg-black text-white font-bold border border-black shadow-xs"
+                : "bg-transparent text-neutral-700 border border-transparent"
             }`}
           >
             {opt.icon && <span className="inline-flex shrink-0">{opt.icon}</span>}
@@ -53,8 +55,8 @@ export default function SegmentedControl<T extends string>({
               <span
                 className={`ml-1 px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
                   isActive
-                    ? "bg-amber-500/20 text-amber-800 dark:text-amber-400"
-                    : "bg-slate-200 text-slate-600"
+                    ? "bg-neutral-800 text-white"
+                    : "bg-neutral-100 text-neutral-600 border border-neutral-200"
                 }`}
               >
                 {opt.badge}

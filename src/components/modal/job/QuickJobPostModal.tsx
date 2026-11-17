@@ -181,7 +181,7 @@ export default function QuickJobPostModal({
           onClick={onClose}
           type="button"
           aria-label="Close job creation modal"
-          className="absolute top-4 right-4 z-20 p-2 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200/90 text-slate-500 hover:text-slate-900 transition-all shadow-xs cursor-pointer active:scale-90"
+          className="absolute top-4 right-4 z-20 p-2 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200/90 text-slate-500 hover:text-slate-900 cursor-pointer"
         >
           <X size={18} />
         </button>
@@ -212,7 +212,7 @@ export default function QuickJobPostModal({
                   key={tpl.name}
                   type="button"
                   onClick={() => handleApplyTemplate(tpl)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer shadow-2xs active:scale-95 ${selectedTemplate === tpl.name
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold border cursor-pointer shadow-2xs ${selectedTemplate === tpl.name
                     ? "bg-black text-white border-black font-bold"
                     : "bg-white hover:bg-neutral-200 text-black border-neutral-300"
                     }`}
@@ -420,7 +420,7 @@ export default function QuickJobPostModal({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-5 py-2.5 rounded-xl bg-black hover:bg-neutral-800 text-white text-xs font-bold shadow-sm active:scale-98 cursor-pointer flex items-center gap-2 disabled:opacity-50"
+              className="px-5 py-2.5 rounded-xl bg-black hover:bg-neutral-800 text-white text-xs font-bold cursor-pointer flex items-center gap-2 disabled:opacity-50"
             >
               {isSubmitting ? (
                 <>

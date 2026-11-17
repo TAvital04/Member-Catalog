@@ -12,7 +12,7 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const variantStyles: Record<NonNullable<CardProps["variant"]>, string> = {
   interactive:
-    "bg-white border border-neutral-300 hover:border-black rounded-xl transition-all duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-black",
+    "bg-white border border-neutral-300 rounded-xl cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-black",
   flat: "bg-neutral-50 border border-neutral-200 rounded-xl",
   elevated: "bg-white border border-neutral-300 rounded-xl shadow-sm",
   subcard: "bg-neutral-100 border border-neutral-200 rounded-lg",

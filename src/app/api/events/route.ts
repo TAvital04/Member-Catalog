@@ -179,6 +179,7 @@ export async function POST(request: Request) {
       rsvpLink,
       requiresDues = false,
       attendees = [],
+      leads = [],
     } = body || {};
 
     if (!title || !description) {
@@ -243,7 +244,8 @@ export async function POST(request: Request) {
       rsvpLink: rsvpLink ? String(rsvpLink).trim() : undefined,
       requiresDues: Boolean(requiresDues),
       active: true,
-      attendees: Array.isArray(attendees) ? attendees : [],
+      attendees: Array.isArray(attendees) && attendees.length > 0 ? attendees : (Array.isArray(leads) ? leads : []),
+      leads: Array.isArray(leads) ? leads : [],
     };
 
     // Attempt PostgreSQL database write if connected

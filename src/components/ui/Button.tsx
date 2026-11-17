@@ -14,11 +14,11 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 const variantStyles: Record<NonNullable<ButtonProps["variant"]>, string> = {
-  primary: "bg-black hover:bg-neutral-800 text-white border border-black shadow-xs",
-  secondary: "bg-neutral-100 hover:bg-neutral-200 text-black border border-neutral-300 shadow-2xs",
-  outline: "bg-white hover:bg-neutral-100 text-black border border-neutral-300 hover:border-black shadow-2xs",
-  ghost: "bg-transparent hover:bg-neutral-100 text-black border border-transparent",
-  danger: "bg-white hover:bg-neutral-100 text-black border border-black hover:bg-black hover:text-white",
+  primary: "bg-black text-white border border-black",
+  secondary: "bg-neutral-100 text-black border border-neutral-300",
+  outline: "bg-white text-black border border-neutral-300",
+  ghost: "bg-transparent text-black border border-transparent",
+  danger: "bg-white text-black border border-black",
 };
 
 const sizeStyles: Record<NonNullable<ButtonProps["size"]>, string> = {
@@ -40,7 +40,7 @@ export function Button({
 }: ButtonProps) {
   return (
     <button
-      className={`inline-flex items-center justify-center font-bold transition-all duration-150 cursor-pointer active:scale-98 select-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-black disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 ${variantStyles[variant]} ${sizeStyles[size]} ${className}`.trim()}
+      className={`inline-flex items-center justify-center font-bold cursor-pointer select-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-black disabled:opacity-50 disabled:cursor-not-allowed ${variantStyles[variant]} ${sizeStyles[size]} ${className}`.trim()}
       disabled={disabled || isLoading}
       {...props}
     >

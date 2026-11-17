@@ -51,7 +51,7 @@ export default function FilterDropdown({
         className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all select-none shadow-2xs cursor-pointer ${
           isActive
             ? "bg-black border-black text-white font-bold"
-            : "bg-white border-neutral-300 text-black hover:bg-neutral-100"
+            : "bg-white border-neutral-300 text-black"
         }`}
       >
         <span>{title}</span>

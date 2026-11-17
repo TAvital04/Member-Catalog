@@ -94,9 +94,9 @@ export default function FlagDialog({
               <button
                 type="button"
                 onClick={() => setAdminFlagChoice("flag")}
-                className="flex flex-col items-center justify-center gap-3 p-5 rounded-2xl border border-zinc-800 bg-zinc-955/40 hover:bg-zinc-850 hover:border-zinc-700 transition-all text-center cursor-pointer group"
+                className="flex flex-col items-center justify-center gap-3 p-5 rounded-2xl border border-zinc-800 bg-zinc-955/40 hover:bg-zinc-850 hover:border-zinc-700 text-center cursor-pointer group"
               >
-                <span className="p-2 rounded-xl bg-amber-500/10 text-amber-500 border border-amber-500/20 group-hover:scale-105 transition-transform">
+                <span className="p-2 rounded-xl bg-amber-500/10 text-amber-500 border border-amber-500/20">
                   <AlertTriangle size={18} />
                 </span>
                 <span className="text-xs font-bold text-zinc-200">Flag & Report Profile</span>
@@ -110,9 +110,9 @@ export default function FlagDialog({
                 onClick={() => {
                   handleDeleteStudent(flagDialog.studentId);
                 }}
-                className="flex flex-col items-center justify-center gap-3 p-5 rounded-2xl border border-zinc-800 bg-zinc-955/40 hover:bg-red-500/10 hover:border-red-900/40 transition-all text-center cursor-pointer group"
+                className="flex flex-col items-center justify-center gap-3 p-5 rounded-2xl border border-zinc-800 bg-zinc-955/40 hover:bg-red-500/10 hover:border-red-900/40 text-center cursor-pointer group"
               >
-                <span className="p-2 rounded-xl bg-red-500/10 text-red-500 border border-red-500/20 group-hover:scale-105 transition-transform">
+                <span className="p-2 rounded-xl bg-red-500/10 text-red-500 border border-red-500/20">
                   <Trash2 size={18} />
                 </span>
                 <span className="text-xs font-bold text-zinc-200">Delete Profile Immediately</span>

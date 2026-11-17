@@ -11,6 +11,15 @@ export interface SponsorEngagementStatsProps {
   sponsorName?: string;
 }
 
+function formatFractionalPercent(count: number, total: number): string {
+  if (total === 0) return "0%";
+  const pct = (count / total) * 100;
+  if (Number.isInteger(pct)) {
+    return `${pct}%`;
+  }
+  return `${pct.toFixed(1)}%`;
+}
+
 /**
  * SponsorEngagementStats — Displays academic major distribution, top skills,
  * and lowest (least common) skills among students who interacted with a sponsor's
@@ -122,16 +131,17 @@ export default function SponsorEngagementStats({
 
           {/* Composite Proportion Bar */}
           {majorStats.length > 0 && (
-            <div className="w-full h-2.5 rounded-full bg-slate-100 overflow-hidden flex">
+            <div className="w-full h-2.5 rounded-full bg-neutral-100 border border-neutral-300 overflow-hidden flex">
               {majorStats.map(([major, count], idx) => {
-                const percent = Math.round((count / totalStudents) * 100);
+                const fraction = count / totalStudents;
+                const percent = formatFractionalPercent(count, totalStudents);
                 return (
                   <div
                     key={major}
-                    style={{ width: `${percent}%` }}
-                    className={`relative group/tooltip ${barColors[idx % barColors.length]} h-full transition-all duration-500`}
+                    style={{ width: `${fraction * 100}%`, flexGrow: count }}
+                    className={`relative group/tooltip ${barColors[idx % barColors.length]} h-full`}
                   >
-                    <Tooltip content={`${major}: ${count} (${percent}%)`} position="top" />
+                    <Tooltip content={`${major}: ${count}/${totalStudents} (${percent})`} position="top" />
                   </div>
                 );
               })}
@@ -140,7 +150,8 @@ export default function SponsorEngagementStats({
 
           <div className="flex flex-col gap-3">
             {majorStats.map(([major, count], idx) => {
-              const percent = Math.round((count / totalStudents) * 100);
+              const fraction = count / totalStudents;
+              const percent = formatFractionalPercent(count, totalStudents);
               return (
                 <div key={major} className="flex flex-col gap-1 text-xs">
                   <div className="flex items-center justify-between font-semibold gap-2">
@@ -151,13 +162,13 @@ export default function SponsorEngagementStats({
                       <span className="text-slate-800 font-bold truncate">{major}</span>
                     </div>
                     <span className="text-slate-500 text-[11px] shrink-0 font-medium">
-                      <strong className="text-slate-900 font-bold">{count}</strong> ({percent}%)
+                      <strong className="text-slate-900 font-bold">{count}/{totalStudents}</strong> ({percent})
                     </span>
                   </div>
-                  <div className="w-full h-1.5 rounded-full bg-slate-100 overflow-hidden">
+                  <div className="w-full h-2 rounded-full bg-neutral-100 border border-neutral-200 overflow-hidden">
                     <div
-                      className={`h-full rounded-full ${barColors[idx % barColors.length]} transition-all duration-500`}
-                      style={{ width: `${percent}%` }}
+                      className={`h-full rounded-full ${barColors[idx % barColors.length]}`}
+                      style={{ width: `${fraction * 100}%` }}
                     />
                   </div>
                 </div>
@@ -182,7 +193,8 @@ export default function SponsorEngagementStats({
               <p className="text-xs text-slate-400 italic">No skill data available.</p>
             ) : (
               topSkills.map(([skill, count]) => {
-                const percent = Math.round((count / totalStudents) * 100);
+                const fraction = count / totalStudents;
+                const percent = formatFractionalPercent(count, totalStudents);
                 return (
                   <div key={skill} className="flex flex-col gap-1 text-xs">
                     <div className="flex items-center justify-between font-semibold gap-2">
@@ -193,14 +205,14 @@ export default function SponsorEngagementStats({
                         <span>{skill}</span>
                       </Link>
                       <span className="text-slate-500 text-[11px] shrink-0 font-medium">
-                        <strong className="text-slate-900 font-bold">{count}</strong>{" "}
-                        {count === 1 ? "person" : "people"} ({percent}%)
+                        <strong className="text-slate-900 font-bold">{count}/{totalStudents}</strong>{" "}
+                        {count === 1 ? "student" : "students"} ({percent})
                       </span>
                     </div>
-                    <div className="w-full h-1.5 rounded-full bg-slate-100 overflow-hidden">
+                    <div className="w-full h-2 rounded-full bg-neutral-100 border border-neutral-200 overflow-hidden">
                       <div
-                        className="h-full rounded-full bg-black transition-all duration-500"
-                        style={{ width: `${percent}%` }}
+                        className="h-full rounded-full bg-neutral-800"
+                        style={{ width: `${fraction * 100}%` }}
                       />
                     </div>
                   </div>
@@ -226,7 +238,8 @@ export default function SponsorEngagementStats({
               <p className="text-xs text-slate-400 italic">No skill data available.</p>
             ) : (
               lowestSkills.map(([skill, count]) => {
-                const percent = Math.round((count / totalStudents) * 100);
+                const fraction = count / totalStudents;
+                const percent = formatFractionalPercent(count, totalStudents);
                 return (
                   <div key={skill} className="flex flex-col gap-1 text-xs">
                     <div className="flex items-center justify-between font-semibold gap-2">
@@ -237,14 +250,14 @@ export default function SponsorEngagementStats({
                         <span>{skill}</span>
                       </Link>
                       <span className="text-slate-500 text-[11px] shrink-0 font-medium">
-                        <strong className="text-slate-900 font-bold">{count}</strong>{" "}
-                        {count === 1 ? "person" : "people"} ({percent}%)
+                        <strong className="text-slate-900 font-bold">{count}/{totalStudents}</strong>{" "}
+                        {count === 1 ? "student" : "students"} ({percent})
                       </span>
                     </div>
-                    <div className="w-full h-1.5 rounded-full bg-slate-100 overflow-hidden">
+                    <div className="w-full h-2 rounded-full bg-neutral-100 border border-neutral-200 overflow-hidden">
                       <div
-                        className="h-full rounded-full bg-black transition-all duration-500"
-                        style={{ width: `${percent}%` }}
+                        className="h-full rounded-full bg-neutral-800"
+                        style={{ width: `${fraction * 100}%` }}
                       />
                     </div>
                   </div>

@@ -180,7 +180,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
             href="https://www.ieeeucf.com/sponsorships"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto px-6 py-3 bg-black hover:bg-neutral-800 text-white font-extrabold rounded-xl text-xs tracking-wider uppercase transition-all shadow-md active:scale-95 flex items-center justify-center cursor-pointer"
+            className="w-full sm:w-auto px-6 py-3 bg-black text-white font-extrabold rounded-xl text-xs tracking-wider uppercase flex items-center justify-center cursor-pointer"
           >
             Learn More About Sponsoring
           </a>
@@ -238,7 +238,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
               <button
                 type="button"
                 onClick={handleCopyEmail}
-                className="w-full py-1.5 px-2.5 rounded-lg bg-slate-200/70 hover:bg-slate-200 text-slate-700 hover:text-slate-900 text-[10.5px] font-semibold transition-all cursor-pointer shadow-2xs active:scale-95 flex items-center justify-center gap-1"
+                className="w-full py-1.5 px-2.5 rounded-lg bg-slate-200/70 text-slate-700 text-[10.5px] font-semibold cursor-pointer shadow-2xs flex items-center justify-center gap-1"
               >
                 {copiedEmail ? <Check size={11} className="text-black" /> : <Copy size={11} className="text-slate-500" />}
                 <span>{copiedEmail ? "Copied!" : "Copy"}</span>
@@ -247,7 +247,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
                 href={`mailto:${student.email}?subject=${encodeURIComponent(
                   `IEEE UCF Member Inquiry: Career Opportunity for ${student.name}`
                 )}`}
-                className="w-full py-1.5 px-2.5 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-black border border-neutral-300 text-[10.5px] font-bold transition-all cursor-pointer shadow-2xs active:scale-95 flex items-center justify-center gap-1.5 whitespace-nowrap"
+                className="w-full py-1.5 px-2.5 rounded-lg bg-neutral-100 text-black border border-neutral-300 text-[10.5px] font-bold cursor-pointer shadow-2xs flex items-center justify-center gap-1.5 whitespace-nowrap"
               >
                 <Mail size={12} />
                 <span>Open Mail</span>
@@ -278,7 +278,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
                     href={getSafeUrl(linkedinLink) || "#"}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-2.5 py-1.5 rounded-lg bg-slate-200/70 hover:bg-slate-200 text-slate-700 font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs active:scale-95 text-[10.5px]"
+                    className="px-2.5 py-1.5 rounded-lg bg-slate-200/70 text-slate-700 font-semibold flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs text-[10.5px]"
                   >
                     <LinkedinIcon size={11} className="text-black shrink-0" />
                     <span className="truncate whitespace-nowrap">LinkedIn</span>
@@ -289,7 +289,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
                     href={getSafeUrl(githubLink) || "#"}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-2.5 py-1.5 rounded-lg bg-slate-200/70 hover:bg-slate-200 text-slate-700 font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs active:scale-95 text-[10.5px]"
+                    className="px-2.5 py-1.5 rounded-lg bg-slate-200/70 text-slate-700 font-semibold flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs text-[10.5px]"
                   >
                     <GithubIcon size={11} className="text-black shrink-0" />
                     <span className="truncate whitespace-nowrap">GitHub</span>
@@ -300,7 +300,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
                     href={getSafeUrl(portfolioLink) || "#"}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`px-2.5 py-1.5 rounded-lg bg-slate-200/70 hover:bg-slate-200 text-slate-700 font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs active:scale-95 text-[10.5px] ${
+                    className={`px-2.5 py-1.5 rounded-lg bg-slate-200/70 text-slate-700 font-semibold flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs text-[10.5px] ${
                       !resumeUrl && !githubLink ? "col-span-2" : ""
                     }`}
                   >
@@ -313,7 +313,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
                     href={getSafeUrl(resumeUrl) || "#"}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`px-2.5 py-1.5 rounded-lg bg-slate-200/70 hover:bg-slate-200 text-slate-700 font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs active:scale-95 text-[10.5px] ${
+                    className={`px-2.5 py-1.5 rounded-lg bg-slate-200/70 text-slate-700 font-semibold flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs text-[10.5px] ${
                       !portfolioLink && !linkedinLink ? "col-span-2" : ""
                     }`}
                   >
@@ -433,7 +433,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
           <button
             type="submit"
             disabled={isSending}
-            className="w-full sm:w-auto self-end px-5 py-2.5 rounded-xl bg-black hover:bg-neutral-800 disabled:opacity-50 text-white font-bold text-xs transition-all shadow-sm active:scale-98 flex items-center justify-center gap-2 cursor-pointer mt-1"
+            className="w-full sm:w-auto self-end px-5 py-2.5 rounded-xl bg-black disabled:opacity-50 text-white font-bold text-xs flex items-center justify-center gap-2 cursor-pointer mt-1"
           >
             {isSending ? (
               <>

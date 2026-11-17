@@ -84,7 +84,7 @@ export default function IEEELeadershipSection({
               <div
                 key={leader.id}
                 onClick={() => onSelectStudent(leader)}
-                className="p-4 rounded-lg border border-neutral-200 bg-white hover:border-black transition-colors cursor-pointer flex flex-col justify-between gap-3 group relative"
+                className="p-4 rounded-lg border border-neutral-200 bg-white cursor-pointer flex flex-col justify-between gap-3 group relative"
               >
                 <div className="flex flex-col gap-2.5">
                   {/* Top Avatar & Name */}

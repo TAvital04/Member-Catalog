@@ -116,13 +116,13 @@ export default function StudentLowerInfo({
                 }
               }}
               aria-label={`View project modal for ${student.mainProjectName}`}
-              className="bg-white hover:border-black border border-neutral-300 rounded-xl px-3.5 py-2.5 text-xs font-bold flex items-center justify-between gap-2.5 shadow-2xs transition-all duration-200 cursor-pointer active:scale-95 group"
+              className="bg-white border border-neutral-300 rounded-xl px-3.5 py-2.5 text-xs font-bold flex items-center justify-between gap-2.5 shadow-2xs cursor-pointer group"
             >
               <div className="min-w-0">
                 <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider block leading-none mb-1">
                   Primary IEEE Project Affiliation
                 </span>
-                <span className="leading-tight font-extrabold text-black group-hover:text-black transition-colors truncate block">
+                <span className="leading-tight font-extrabold text-black truncate block">
                   {student.mainProjectName}
                 </span>
               </div>
@@ -178,10 +178,10 @@ export default function StudentLowerInfo({
                     key={idx}
                     href={`/?skills=${encodeURIComponent(skill)}`}
                     onClick={() => onClose?.()}
-                    className={`px-2 py-0.5 rounded-lg text-[10.5px] font-semibold transition-all active:scale-95 cursor-pointer shadow-2xs ${
+                    className={`px-2 py-0.5 rounded-lg text-[10.5px] font-semibold cursor-pointer shadow-2xs ${
                       isLead
-                        ? "bg-neutral-100 hover:bg-neutral-200 border-2 border-black text-black font-bold"
-                        : "bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-black"
+                        ? "bg-neutral-100 border-2 border-black text-black font-bold"
+                        : "bg-neutral-100 border border-neutral-300 text-black"
                     }`}
                   >
                     <span>{skill}</span>
@@ -192,7 +192,7 @@ export default function StudentLowerInfo({
                 <button
                   type="button"
                   onClick={() => onSelectTab?.("skills")}
-                  className="px-2 py-0.5 rounded-lg bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-[10px] font-semibold text-black transition-all cursor-pointer active:scale-95 shadow-2xs"
+                  className="px-2 py-0.5 rounded-lg bg-neutral-100 border border-neutral-300 text-[10px] font-semibold text-black cursor-pointer shadow-2xs"
                 >
                   <span>+{student.skills.length - 6} more</span>
                 </button>
@@ -218,7 +218,7 @@ export default function StudentLowerInfo({
                   href={safeLinkUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-white hover:border-black border border-neutral-300 text-xs font-semibold text-black transition-all duration-200 shadow-2xs active:scale-95 cursor-pointer grow"
+                  className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-white border border-neutral-300 text-xs font-semibold text-black cursor-pointer grow shadow-2xs"
                 >
                   {isGithub && <Github size={13} className="text-black" />}
                   {isLinkedin && <Linkedin size={13} className="text-black" />}
@@ -235,9 +235,9 @@ export default function StudentLowerInfo({
           href={getSafeUrl(resumeUrl) || "#"}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-black hover:bg-neutral-800 text-white font-bold text-xs transition-all shadow-sm active:scale-98 cursor-pointer group/resume"
+          className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-black text-white font-bold text-xs cursor-pointer group/resume"
         >
-          <FileText size={14} className="text-white transition-colors" />
+          <FileText size={14} className="text-white" />
           <span>View Resume PDF</span>
         </a>
       </div>

@@ -82,7 +82,7 @@ export default function DirectoryNavbar({
     >
       <Link
         href="/login"
-        className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg bg-white text-black border border-neutral-300 font-bold transition-all cursor-pointer hover:border-black"
+        className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg bg-white text-black border border-neutral-300 font-bold cursor-pointer"
       >
         {isRsoLeadership ? (
           <Shield size={13} className="text-black" />
@@ -95,7 +95,7 @@ export default function DirectoryNavbar({
       <button
         type="button"
         onClick={handleSignOut}
-        className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-neutral-600 hover:text-black hover:bg-neutral-100 transition-all cursor-pointer"
+        className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-neutral-600 cursor-pointer"
         aria-label="Sign out"
       >
         <LogOut size={13} />
@@ -105,11 +105,7 @@ export default function DirectoryNavbar({
   ) : (
     <Link
       href="/login"
-      className={`flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer shrink-0 border ${
-        pathname === "/login"
-          ? "bg-black text-white border-black"
-          : "bg-black hover:bg-neutral-800 text-white border-black"
-      }`}
+      className="flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer shrink-0 border bg-black text-white border-black"
     >
       <LogIn size={13} className="text-white" />
       <span>Sign In</span>
@@ -120,7 +116,7 @@ export default function DirectoryNavbar({
     <button
       type="button"
       onClick={toggleTheme}
-      className="flex items-center justify-center p-2 rounded-lg bg-white hover:bg-neutral-100 border border-neutral-300 hover:border-black text-black transition-all cursor-pointer shrink-0"
+      className="flex items-center justify-center p-2 rounded-lg bg-white border border-neutral-300 text-black cursor-pointer shrink-0"
       aria-label="Toggle color theme"
     >
       {theme === "dark" ? (
@@ -151,10 +147,10 @@ export default function DirectoryNavbar({
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md transition-all cursor-pointer whitespace-nowrap ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md cursor-pointer whitespace-nowrap select-none ${
                     isActive
                       ? "bg-black text-white font-bold border border-black"
-                      : "text-neutral-700 hover:text-black hover:bg-white"
+                      : "text-neutral-700 font-semibold border border-transparent"
                   }`}
                 >
                   <Icon size={14} className={isActive ? "text-white" : "text-neutral-600"} />
@@ -180,10 +176,10 @@ export default function DirectoryNavbar({
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs transition-all whitespace-nowrap shrink-0 ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs whitespace-nowrap shrink-0 cursor-pointer select-none ${
                   isActive
                     ? "bg-black text-white font-bold border border-black"
-                    : "text-neutral-700 hover:bg-neutral-100 hover:text-black"
+                    : "text-neutral-700 font-semibold border border-transparent"
                 }`}
               >
                 <Icon size={13} className={isActive ? "text-white" : "text-neutral-600"} />

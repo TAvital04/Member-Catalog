@@ -84,6 +84,17 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
+    const userRole = request.headers.get("x-user-role") || "standard";
+    if (userRole !== "sponsor" && userRole !== "admin") {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Unauthorized: Only Corporate Sponsors or RSO Leadership may post engineering opportunities.",
+        },
+        { status: 403 }
+      );
+    }
+
     const body = await request.json();
 
     if (!body.title || !body.companyName || !body.description || !body.employerEmail) {

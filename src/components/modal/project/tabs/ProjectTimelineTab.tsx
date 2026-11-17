@@ -72,7 +72,7 @@ export default function ProjectTimelineTab({ timeline = [] }: ProjectTimelineTab
             <div key={idx} className="relative group">
               {/* Timeline Node Marker */}
               <div
-                className={`absolute -left-6 top-1.5 w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${getMarkerClass(
+                className={`absolute -left-6 top-1.5 w-5 h-5 rounded-full border-2 flex items-center justify-center ${getMarkerClass(
                   item.status
                 )}`}
               >
@@ -80,7 +80,7 @@ export default function ProjectTimelineTab({ timeline = [] }: ProjectTimelineTab
               </div>
 
               {/* Milestone Card */}
-              <div className="p-4 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 shadow-2xs flex flex-col gap-2 group">
+              <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col gap-2 group">
                 <div className="flex items-center justify-between gap-2">
                   <span className="text-[11px] font-mono font-bold text-slate-700 bg-slate-50 px-2 py-0.5 rounded-md border border-slate-200">
                     {item.date}

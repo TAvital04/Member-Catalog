@@ -16,7 +16,7 @@ export interface ProjectParticipant {
 
 export interface ProjectTool {
   name: string;
-  category: "Embedded & Firmware" | "Hardware & PCB" | "Software & AI" | "CAD & Fabrication" | "Lab & Test Equipment" | "Other";
+  category?: string;
   icon?: string;
 }
 
@@ -45,8 +45,8 @@ export interface IEEEProject {
   slug: string;
   tagline?: string;
   description: string;
-  category: string;
-  status: "Active" | "Completed" | "In Development";
+  category?: string;
+  status: "Active" | "Completed";
   repositoryUrl?: string;
   demoUrl?: string;
   bannerUrl?: string;
@@ -641,7 +641,7 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
     tagline: "Multi-frequency electrical bio-impedance measurement wristband for non-invasive hydration and vital sign telemetry.",
     description: "A battery-powered wearable monitoring physiological hydration and muscle impedance fluctuations using Analog Devices AD5940 AFE and Nordic nRF52840 BLE SoC. Form-factor optimized for athletic training and remote medical monitoring.",
     category: "Hardware",
-    status: "In Development",
+    status: "Active",
     active: true,
     tools: [
       { name: "Analog Devices AD5940 AFE", category: "Hardware & PCB" },
@@ -674,7 +674,7 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
     slug: "auv-thruster-controller",
     description: "Submersible multi-thruster driver board featuring waterproof potted enclosures, current sensing, and ROS2 motor control nodes for autonomous underwater navigation and depth holding.",
     category: "Robotics",
-    status: "In Development",
+    status: "Active",
     repositoryUrl: "https://github.com/ieee-ucf/auv-thruster-control",
     active: true,
     tools: [],
@@ -798,7 +798,7 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
     slug: "subghz-long-range-rover-telemetry-link",
     description: "Ruggedized 915MHz frequency-hopping telemetry module providing continuous 10km line-of-sight command, control, and sensor telemetry for outdoor robotics competition trials.",
     category: "IoT & Networking",
-    status: "In Development",
+    status: "Active",
     active: true,
     tools: [],
     timeline: [],

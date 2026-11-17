@@ -71,7 +71,7 @@ export default function ProjectOverviewTab({ project, onNavigateTab }: ProjectOv
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
         <div
           onClick={() => onNavigateTab("tools")}
-          className="p-3.5 rounded-xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group shadow-2xs"
+          className="p-3.5 rounded-xl bg-white border border-slate-200 cursor-pointer group shadow-2xs"
         >
           <div className={`flex items-center justify-between text-xs font-bold ${CARD_TITLE_HOVER}`}>
             <span>Hardware & Software Stack</span>
@@ -85,7 +85,7 @@ export default function ProjectOverviewTab({ project, onNavigateTab }: ProjectOv
 
         <div
           onClick={() => onNavigateTab("skills")}
-          className="p-3.5 rounded-xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group shadow-2xs"
+          className="p-3.5 rounded-xl bg-white border border-slate-200 cursor-pointer group shadow-2xs"
         >
           <div className={`flex items-center justify-between text-xs font-bold ${CARD_TITLE_HOVER}`}>
             <span>Member Learning Outcomes</span>

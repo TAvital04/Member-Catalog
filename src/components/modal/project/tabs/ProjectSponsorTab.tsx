@@ -96,7 +96,7 @@ ${message || "No additional notes provided."}`,
             {sponsorship.benefits.map((benefit, idx) => (
               <div
                 key={idx}
-                className="p-4 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between gap-2.5 shadow-2xs"
+                className="p-4 rounded-2xl border border-slate-200 bg-white flex flex-col justify-between gap-2.5 shadow-2xs"
               >
                 <div className="flex items-start gap-2.5">
                   <div className="p-1 rounded-lg bg-neutral-100 text-black border border-neutral-300 shrink-0 mt-0.5">
@@ -246,7 +246,7 @@ ${message || "No additional notes provided."}`,
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-black hover:bg-neutral-800 disabled:opacity-50 text-white font-bold text-xs transition-all shadow-sm active:scale-98 flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-black hover:bg-neutral-800 disabled:opacity-50 text-white font-bold text-xs flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Send size={13} />
                 <span>{isSubmitting ? "Sending..." : "Send Sponsorship Inquiry"}</span>

@@ -81,7 +81,7 @@ export default function ProjectModal({
           onClick={onClose}
           type="button"
           aria-label="Close project modal"
-          className="absolute top-4 right-4 z-50 p-2 rounded-full bg-slate-100 border border-slate-200 hover:bg-slate-200 text-slate-500 hover:text-slate-900 transition-all shadow-sm active:scale-90 cursor-pointer"
+          className="absolute top-4 right-4 z-50 p-2 rounded-full bg-slate-100 border border-slate-200 hover:bg-slate-200 text-slate-500 hover:text-slate-900 cursor-pointer"
         >
           <X size={18} />
         </button>

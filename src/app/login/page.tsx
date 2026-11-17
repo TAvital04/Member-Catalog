@@ -182,10 +182,10 @@ function LoginPageContent() {
               type="button"
               onClick={() => handleSelectRoleCard("rso_leadership")}
               aria-pressed={selectedRole === "rso_leadership"}
-              className={`w-full text-left p-5 rounded-2xl border transition-all cursor-pointer flex flex-col gap-3 ${
+              className={`w-full text-left p-5 rounded-2xl border cursor-pointer flex flex-col gap-3 ${
                 selectedRole === "rso_leadership"
                   ? "bg-white border-black ring-2 ring-black/10 shadow-sm"
-                  : "bg-white border-neutral-300 hover:border-black shadow-2xs"
+                  : "bg-white border-neutral-300 shadow-2xs"
               }`}
             >
               <div className="flex items-center justify-between gap-2">
@@ -233,10 +233,10 @@ function LoginPageContent() {
               type="button"
               onClick={() => handleSelectRoleCard("sponsor")}
               aria-pressed={selectedRole === "sponsor"}
-              className={`w-full text-left p-5 rounded-2xl border transition-all cursor-pointer flex flex-col gap-3 ${
+              className={`w-full text-left p-5 rounded-2xl border cursor-pointer flex flex-col gap-3 ${
                 selectedRole === "sponsor"
                   ? "bg-white border-black ring-2 ring-black/10 shadow-sm"
-                  : "bg-white border-neutral-300 hover:border-black shadow-2xs"
+                  : "bg-white border-neutral-300 shadow-2xs"
               }`}
             >
               <div className="flex items-center justify-between gap-2">

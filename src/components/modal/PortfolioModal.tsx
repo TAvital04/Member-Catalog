@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Student } from "@/data/students";
+import { Student, EventEntry } from "@/data/students";
 import { useFocusTrap } from "../common/useFocusTrap";
 import Tooltip from "../common/Tooltip";
 import StudentUpperInfo from "./StudentUpperInfo";
@@ -11,6 +11,9 @@ import ProjectsTab from "./tabs/ProjectsTab";
 import SkillsTab from "./tabs/SkillsTab";
 import EventsTab from "./tabs/EventsTab";
 import ContactTab from "./tabs/ContactTab";
+import EventModal from "./event/EventModal";
+import { IEEEEvent } from "@/data/events";
+import { findMatchingIeeeEvent } from "@/lib/rsoAffiliation";
 import { X } from "lucide-react";
 
 interface PortfolioModalProps {
@@ -21,6 +24,8 @@ interface PortfolioModalProps {
   adminMode?: boolean;
   role?: "standard" | "sponsor" | "admin";
   onSelectProject?: (projectSlugOrId: string) => void;
+  onSelectEvent?: (event: EventEntry | IEEEEvent) => void;
+  allStudents?: Student[];
 }
 
 export default function PortfolioModal({
@@ -29,9 +34,28 @@ export default function PortfolioModal({
   adminMode,
   role = "admin",
   onSelectProject,
+  onSelectEvent,
+  allStudents,
 }: PortfolioModalProps) {
+  const [currentStudent, setCurrentStudent] = useState<Student>(student);
   const [activeTab, setActiveTab] = useState<TabType>("about");
+  const [activeEventModal, setActiveEventModal] = useState<IEEEEvent | null>(null);
   const focusTrapRef = useFocusTrap(true, onClose);
+
+  useEffect(() => {
+    setCurrentStudent(student);
+  }, [student]);
+
+  const handleSelectEvent = (evt: EventEntry) => {
+    if (onSelectEvent) {
+      onSelectEvent(evt);
+      return;
+    }
+    const matched = findMatchingIeeeEvent(evt);
+    if (matched) {
+      setActiveEventModal(matched);
+    }
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -62,15 +86,16 @@ export default function PortfolioModal({
   };
 
   return (
-    <div
-      onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center p-0 md:p-4 bg-modal-overlay backdrop-blur-md cursor-pointer"
-    >
+    <>
+      <div
+        onClick={onClose}
+        className="fixed inset-0 z-50 flex items-center justify-center p-0 md:p-4 bg-modal-overlay backdrop-blur-md cursor-pointer"
+      >
       <div
         ref={focusTrapRef}
         role="dialog"
         aria-modal="true"
-        aria-label={`${student.name} - Engineering Portfolio`}
+        aria-label={`${currentStudent.name} - Engineering Portfolio`}
         onClick={(e) => e.stopPropagation()}
         className="relative w-full max-w-5xl h-full md:h-[80vh] rounded-none md:rounded-3xl bg-white border-0 md:border border-neutral-300 shadow-2xl flex flex-col max-h-screen md:max-h-[85vh] animate-scale-in cursor-default overflow-hidden"
       >
@@ -79,7 +104,7 @@ export default function PortfolioModal({
           onClick={onClose}
           type="button"
           aria-label="Close candidate portfolio modal"
-          className="absolute top-4 right-4 z-50 p-2 rounded-full bg-neutral-100 border border-neutral-300 hover:bg-neutral-200 text-black transition-all shadow-xs active:scale-90 focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none cursor-pointer"
+          className="absolute top-4 right-4 z-50 p-2 rounded-full bg-neutral-100 border border-neutral-300 text-black focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none cursor-pointer"
         >
           <X size={18} />
         </button>
@@ -89,11 +114,11 @@ export default function PortfolioModal({
           {/* Left Side Panel: Profile Hero & Desktop Metadata */}
           <div className="w-full md:w-2/5 p-6 border-b md:border-b-0 md:border-r border-neutral-200 flex flex-col h-full overflow-hidden relative z-10 bg-neutral-50 hidden md:flex">
             <div className="pb-5 border-b border-neutral-200 shrink-0">
-              <StudentUpperInfo student={student} adminMode={adminMode} />
+              <StudentUpperInfo student={currentStudent} adminMode={adminMode} />
             </div>
             <div className="flex-1 flex flex-col min-h-0 overflow-y-auto overflow-x-hidden pt-5 pb-1 pr-1 w-full">
               <StudentLowerInfo
-                student={student}
+                student={currentStudent}
                 adminMode={adminMode}
                 onSelectProject={onSelectProject}
                 onClose={onClose}
@@ -114,11 +139,11 @@ export default function PortfolioModal({
                 <div className="flex flex-col h-full md:hidden relative overflow-hidden animate-fade-in">
                   <div className="grow overflow-y-auto pb-8 pr-1 flex flex-col min-h-full">
                     <div className="pb-5 border-b border-slate-200 shrink-0">
-                      <StudentUpperInfo student={student} adminMode={adminMode} />
+                      <StudentUpperInfo student={currentStudent} adminMode={adminMode} />
                     </div>
                     <div className="flex-1 flex flex-col min-h-0 pt-5 w-full">
                       <StudentLowerInfo
-                        student={student}
+                        student={currentStudent}
                         adminMode={adminMode}
                         onSelectProject={onSelectProject}
                         onClose={onClose}
@@ -132,9 +157,9 @@ export default function PortfolioModal({
               {/* Projects Panel */}
               {activeTab === "projects" && (
                 <ProjectsTab
-                  projects={student.projects}
+                  projects={currentStudent.projects}
                   formatDateStr={formatDateStr}
-                  student={student}
+                  student={currentStudent}
                   onSelectProject={onSelectProject}
                   onCloseModal={onClose}
                 />
@@ -143,7 +168,7 @@ export default function PortfolioModal({
               {/* Skills Panel */}
               {activeTab === "skills" && (
                 <SkillsTab
-                  student={student}
+                  student={currentStudent}
                   formatDateStr={formatDateStr}
                   role={role}
                   onClose={onClose}
@@ -153,21 +178,43 @@ export default function PortfolioModal({
               {/* Events Panel */}
               {activeTab === "events" && (
                 <EventsTab
-                  events={student.events}
+                  events={currentStudent.events}
                   formatDateStr={formatDateStr}
                   role={role}
                   onClose={onClose}
+                  onSelectEvent={handleSelectEvent}
                 />
               )}
 
               {/* Recruiter Contact Panel */}
               {activeTab === "contact" && (
-                <ContactTab student={student} role={role} />
+                <ContactTab student={currentStudent} role={role} />
               )}
             </div>
           </div>
         </div>
       </div>
     </div>
-  );
+
+    {activeEventModal && (
+      <EventModal
+        event={activeEventModal}
+        role={role}
+        onClose={() => setActiveEventModal(null)}
+        students={allStudents}
+        onSelectMember={(memberId) => {
+          if (allStudents && allStudents.length > 0) {
+            const found = allStudents.find(
+              (s) => s.id === memberId || s.name.toLowerCase() === memberId.toLowerCase()
+            );
+            if (found) {
+              setCurrentStudent(found);
+              setActiveEventModal(null);
+            }
+          }
+        }}
+      />
+    )}
+  </>
+);
 }

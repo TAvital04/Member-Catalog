@@ -4,7 +4,7 @@ import React from "react";
 
 export default function StudentCardSkeleton() {
   return (
-    <div className="relative rounded-2xl glass-panel p-4 md:p-5 flex flex-col justify-between h-[185px] md:h-[215px] border border-[var(--border-subtle)]">
+    <div className="relative rounded-2xl glass-panel p-4 md:p-5 flex flex-col justify-between h-[195px] sm:h-[220px] border border-[var(--border-subtle)]">
       {/* Top Section */}
       <div className="flex flex-col gap-2.5">
         <div className="flex items-start justify-between min-w-0">

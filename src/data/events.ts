@@ -40,6 +40,7 @@ export interface IEEEEvent {
   flyerUrl?: string;
   rsvpLink?: string;
   attendees: EventAttendee[];
+  leads?: EventAttendee[];
   learningOutcomes?: string[];
   requiresDues?: boolean;
   active?: boolean;

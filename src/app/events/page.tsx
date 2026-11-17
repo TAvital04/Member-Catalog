@@ -8,6 +8,7 @@
  */
 
 import React, { useState, useEffect, useMemo, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { Calendar, Plus, CheckCircle2, X } from "lucide-react";
 import DirectoryNavbar from "@/components/directory/DirectoryNavbar";
 import DirectoryStatsHeader from "@/components/directory/DirectoryStatsHeader";
@@ -22,6 +23,7 @@ import EventFilters from "@/components/events/EventFilters";
 import EmptyState from "@/components/common/EmptyState";
 import { IEEEEvent, SAMPLE_IEEE_EVENTS } from "@/data/events";
 import { Student } from "@/data/students";
+import { findMatchingIeeeEvent } from "@/lib/rsoAffiliation";
 
 function IEEEEventsContent() {
   const { theme, toggleTheme } = useThemeManager();
@@ -34,10 +36,46 @@ function IEEEEventsContent() {
   const [timeFilter, setTimeFilter] = useState<"all" | "upcoming" | "past">("all");
 
   // Modal inspection states
+  const searchParams = useSearchParams();
+  const eventParam = searchParams.get("event") || searchParams.get("eventId") || searchParams.get("slug");
+
   const [activeModalEvent, setActiveModalEvent] = useState<IEEEEvent | null>(null);
   const [selectedMemberStudent, setSelectedMemberStudent] = useState<Student | null>(null);
   const [isEventFormOpen, setIsEventFormOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const handleOpenEventModal = (event: IEEEEvent) => {
+    setActiveModalEvent(event);
+    setSelectedMemberStudent(null);
+    const url = new URL(window.location.href);
+    url.searchParams.set("event", event.slug);
+    window.history.pushState(null, "", url.pathname + (url.search ? url.search : ""));
+  };
+
+  const handleCloseEventModal = () => {
+    setActiveModalEvent(null);
+    const url = new URL(window.location.href);
+    url.searchParams.delete("event");
+    url.searchParams.delete("eventId");
+    url.searchParams.delete("slug");
+    window.history.pushState(null, "", url.pathname + (url.search ? url.search : ""));
+  };
+
+  useEffect(() => {
+    if (eventsList.length === 0 || !eventParam) return;
+    const cleanParam = eventParam.toLowerCase().trim();
+    const matched = eventsList.find(
+      (e) =>
+        e.id.toLowerCase() === cleanParam ||
+        e.slug.toLowerCase() === cleanParam ||
+        e.title.toLowerCase() === cleanParam ||
+        e.title.toLowerCase().includes(cleanParam) ||
+        cleanParam.includes(e.title.toLowerCase())
+    );
+    if (matched) {
+      setActiveModalEvent(matched);
+    }
+  }, [eventsList, eventParam]);
 
   const handleEventCreated = (newEvent: IEEEEvent) => {
     setEventsList((prev) => [newEvent, ...prev]);
@@ -265,7 +303,7 @@ function IEEEEventsContent() {
               <EventCard
                 key={event.id}
                 event={event}
-                onClick={setActiveModalEvent}
+                onClick={handleOpenEventModal}
                 formatDate={formatDate}
                 formatTime={formatTime}
               />
@@ -279,7 +317,7 @@ function IEEEEventsContent() {
         <EventModal
           event={activeModalEvent}
           role={role}
-          onClose={() => setActiveModalEvent(null)}
+          onClose={handleCloseEventModal}
           onSelectMember={handleSelectMember}
           students={students}
         />
@@ -303,6 +341,14 @@ function IEEEEventsContent() {
           adminMode={isAdmin}
           role={role}
           onToggleFlag={() => { }}
+          allStudents={students}
+          onSelectEvent={(evt) => {
+            setSelectedMemberStudent(null);
+            const matched = findMatchingIeeeEvent(typeof evt === "string" ? evt : evt.title || evt.id, eventsList);
+            if (matched) {
+              handleOpenEventModal(matched);
+            }
+          }}
         />
       )}
     </div>

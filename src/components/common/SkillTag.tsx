@@ -49,9 +49,9 @@ export default function SkillTag({
       : false;
 
   const variantClasses = {
-    card: "text-[10px] font-medium bg-neutral-100 border border-neutral-300 text-black px-2 py-0.5 rounded hover:border-black hover:bg-neutral-200 transition-colors",
-    row: "text-[10px] font-medium bg-neutral-100 border border-neutral-300 text-black px-2 py-0.5 rounded hover:border-black hover:bg-neutral-200 transition-colors",
-    modal: "text-xs font-medium bg-neutral-100 border border-neutral-300 text-black px-2.5 py-1 rounded hover:border-black hover:bg-neutral-200 transition-colors",
+    card: "text-[10px] font-medium bg-neutral-100 border border-neutral-300 text-black px-2 py-0.5 rounded hover:bg-neutral-200",
+    row: "text-[10px] font-medium bg-neutral-100 border border-neutral-300 text-black px-2 py-0.5 rounded hover:bg-neutral-200",
+    modal: "text-xs font-medium bg-neutral-100 border border-neutral-300 text-black px-2.5 py-1 rounded hover:bg-neutral-200",
   }[variant];
 
   const pillContent = (

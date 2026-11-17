@@ -64,7 +64,7 @@ export default function CertificationCard({
             href={safeCredUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-[10.5px] font-semibold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-slate-700 hover:text-slate-900 transition-all shadow-2xs cursor-pointer active:scale-95"
+            className="inline-flex items-center gap-1.5 text-[10.5px] font-semibold px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 cursor-pointer shadow-2xs"
           >
             <span>Verify Credential</span>
           </a>

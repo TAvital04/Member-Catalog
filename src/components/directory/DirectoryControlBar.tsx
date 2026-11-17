@@ -379,15 +379,15 @@ export default function DirectoryControlBar({
 
         {/* Grid vs List View (Admin only) */}
         {role === "admin" && (
-          <div className="flex items-center bg-white border border-slate-200 p-1 rounded-xl gap-0.5 shadow-2xs">
+          <div className="flex items-center bg-white border border-neutral-300 p-1 rounded-xl gap-0.5 shadow-2xs">
             <button
               type="button"
               onClick={() => setViewMode("grid")}
               aria-label="Grid Card View"
-              className={`p-1.5 rounded-lg transition-all cursor-pointer ${
+              className={`p-1.5 rounded-lg cursor-pointer ${
                 viewMode === "grid"
-                  ? "bg-slate-100 text-slate-900"
-                  : "text-slate-400 hover:text-slate-700"
+                  ? "bg-black text-white"
+                  : "bg-transparent text-neutral-500"
               }`}
             >
               <LayoutGrid size={15} />
@@ -396,10 +396,10 @@ export default function DirectoryControlBar({
               type="button"
               onClick={() => setViewMode("list")}
               aria-label="Compact Row View"
-              className={`p-1.5 rounded-lg transition-all cursor-pointer ${
+              className={`p-1.5 rounded-lg cursor-pointer ${
                 viewMode === "list"
-                  ? "bg-slate-100 text-slate-900"
-                  : "text-slate-400 hover:text-slate-700"
+                  ? "bg-black text-white"
+                  : "bg-transparent text-neutral-500"
               }`}
             >
               <List size={15} />

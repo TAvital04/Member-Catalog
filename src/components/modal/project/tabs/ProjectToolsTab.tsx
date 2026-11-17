@@ -44,13 +44,13 @@ export default function ProjectToolsTab({
           <div className="flex flex-wrap gap-2 p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
             {safeTools.map((tool, idx) => {
               const chipClass =
-                "px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all inline-flex items-center";
+                "px-3 py-1.5 rounded-xl text-xs font-semibold border inline-flex items-center";
               return (
                 <Link
                   key={idx}
                   href={`/?skills=${encodeURIComponent(tool.name)}`}
                   onClick={() => onClose?.()}
-                  className={`${chipClass} bg-white text-black border-neutral-300 hover:border-black hover:bg-neutral-100 shadow-2xs cursor-pointer active:scale-95`}
+                  className={`${chipClass} bg-white text-black border-neutral-300 hover:bg-neutral-100 shadow-2xs cursor-pointer`}
                 >
                   <span>{tool.name}</span>
                 </Link>
@@ -75,13 +75,13 @@ export default function ProjectToolsTab({
           <div className="flex flex-wrap gap-2 p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
             {safeSkills.map((skill, idx) => {
               const chipClass =
-                "px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all inline-flex items-center";
+                "px-3 py-1.5 rounded-xl text-xs font-semibold border inline-flex items-center";
               return (
                 <Link
                   key={idx}
                   href={`/?skills=${encodeURIComponent(skill)}`}
                   onClick={() => onClose?.()}
-                  className={`${chipClass} bg-white text-black border-neutral-300 hover:border-black hover:bg-neutral-100 shadow-2xs cursor-pointer active:scale-95`}
+                  className={`${chipClass} bg-white text-black border-neutral-300 hover:bg-neutral-100 shadow-2xs cursor-pointer`}
                 >
                   <span>{skill}</span>
                 </Link>

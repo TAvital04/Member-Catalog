@@ -185,7 +185,7 @@ function StudentDirectoryContent() {
   const removeCompanyFilter = (company: string) => setSelectedCompanies(selectedCompanies.filter((c) => c !== company));
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900 relative pb-16 overflow-x-hidden">
+    <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900 relative pb-16">
       {/* Admin Mode active banner indicator */}
       {adminMode && (
         <div className="bg-red-50 border-b border-red-200 py-2 px-4 text-center text-xs text-red-700 font-bold tracking-wide flex items-center justify-center gap-2 shadow-2xs">
@@ -301,6 +301,7 @@ function StudentDirectoryContent() {
           onClose={() => setSelectedStudent(null)}
           adminMode={adminMode}
           role={role}
+          allStudents={students}
         />
       )}
 

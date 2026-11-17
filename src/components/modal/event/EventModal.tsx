@@ -174,7 +174,7 @@ export default function EventModal({
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center p-0 md:p-4 bg-modal-overlay backdrop-blur-md cursor-pointer animate-fade-in"
+      className="fixed inset-0 z-[60] flex items-center justify-center p-0 md:p-4 bg-modal-overlay backdrop-blur-md cursor-pointer animate-fade-in"
     >
       <div
         role="dialog"
@@ -188,7 +188,7 @@ export default function EventModal({
           onClick={onClose}
           type="button"
           aria-label="Close event modal"
-          className="absolute top-4 right-4 z-50 p-2 rounded-full bg-slate-100 border border-slate-200 hover:bg-slate-200 text-slate-500 hover:text-slate-900 transition-all shadow-sm active:scale-90 cursor-pointer"
+          className="absolute top-4 right-4 z-50 p-2 rounded-full bg-slate-100 border border-slate-200 text-slate-700 cursor-pointer"
         >
           <X size={18} />
         </button>
@@ -215,7 +215,7 @@ export default function EventModal({
               <button
                 type="button"
                 onClick={() => setActiveTab("info")}
-                className={`py-2 px-2.5 font-bold uppercase tracking-wider relative transition-all md:hidden shrink-0 flex items-center gap-1.5 whitespace-nowrap ${
+                className={`py-2 px-2.5 font-bold uppercase tracking-wider relative md:hidden shrink-0 flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
                   activeTab === "info"
                     ? "text-black font-extrabold"
                     : "text-neutral-500 hover:text-black font-semibold"
@@ -237,7 +237,7 @@ export default function EventModal({
                     type="button"
                     aria-label={ariaLabel || label}
                     onClick={() => setActiveTab(id)}
-                    className={`py-2 px-2.5 sm:px-3 font-bold uppercase tracking-wider relative transition-all shrink-0 md:shrink md:flex-1 md:text-center whitespace-nowrap text-xs md:text-xs lg:text-sm ${
+                    className={`py-2 px-2.5 sm:px-3 font-bold uppercase tracking-wider relative shrink-0 md:shrink md:flex-1 md:text-center whitespace-nowrap text-xs md:text-xs lg:text-sm cursor-pointer ${
                       isActive
                         ? "text-black font-extrabold"
                         : "text-neutral-500 hover:text-black font-semibold"
@@ -300,7 +300,7 @@ export default function EventModal({
                             key={idx}
                             href={`/?skills=${encodeURIComponent(skill)}`}
                             onClick={() => onClose()}
-                            className="inline-flex items-center gap-1.5 text-xs font-medium bg-neutral-100 hover:bg-neutral-200 text-black px-3 py-1.5 rounded-full border border-neutral-300 hover:border-black transition-all cursor-pointer group shadow-2xs"
+                            className="inline-flex items-center gap-1.5 text-xs font-medium bg-neutral-100 text-black px-3 py-1.5 rounded-full border border-neutral-300 cursor-pointer shadow-2xs"
                           >
                             <span>{skill}</span>
                           </Link>
@@ -312,10 +312,10 @@ export default function EventModal({
                   {/* Shortcut to Attending Members */}
                   <div
                     onClick={() => setActiveTab("attendees")}
-                    className="p-4 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer shadow-2xs flex items-center justify-between group mt-1"
+                    className="p-4 rounded-2xl bg-white border border-slate-200 cursor-pointer shadow-2xs flex items-center justify-between mt-1"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-xl bg-neutral-100 text-black group-hover:bg-neutral-200 transition-colors">
+                      <div className="p-2 rounded-xl bg-neutral-100 text-black">
                         <Users size={16} />
                       </div>
                       <div>

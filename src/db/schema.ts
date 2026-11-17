@@ -188,7 +188,7 @@ export const ieeeProjects = pgTable('ieee_projects', {
   slug: varchar('slug', { length: 64 }).notNull().unique(),
   tagline: varchar('tagline', { length: 300 }),
   description: text('description').notNull(),
-  category: varchar('category', { length: 100 }).notNull(), // 'Robotics' | 'Embedded Systems' | 'Software' | 'Power' | 'AI'
+  category: varchar('category', { length: 100 }),
   status: varchar('status', { length: 50 }).notNull().default('Active'), // 'Active' | 'Completed' | 'In Development'
   repositoryUrl: varchar('repository_url', { length: 500 }),
   demoUrl: varchar('demo_url', { length: 500 }),

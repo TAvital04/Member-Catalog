@@ -41,12 +41,12 @@ export default function ProjectPeopleTab({ participants = [], onSelectMember }: 
                   }
                 }}
                 aria-label={`View member profile of ${person.name}`}
-                className="p-5 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between gap-3.5 shadow-2xs group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-black"
+                className="p-5 rounded-2xl bg-white border border-slate-200 flex flex-col justify-between gap-3.5 shadow-2xs group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-black"
               >
                 <div className="flex items-center gap-3.5">
                   <Avatar name={person.name} size="md" className="shrink-0" />
                   <div className="flex-1 min-w-0">
-                    <h4 className="text-sm font-bold truncate text-slate-900 group-hover:text-black transition-colors">
+                    <h4 className="text-sm font-bold truncate text-slate-900 group-hover:text-black">
                       {person.name}
                     </h4>
                     <div className="flex items-center gap-1.5 mt-0.5 text-xs min-w-0">

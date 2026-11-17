@@ -66,7 +66,7 @@ export default function ResolveDialog({
               <button
                 type="button"
                 onClick={onClose}
-                className="p-2 rounded-full bg-zinc-855 border border-zinc-800 text-zinc-400 hover:text-zinc-200 transition-all hover:scale-105 active:scale-95 cursor-pointer shadow"
+                className="p-2 rounded-full bg-zinc-855 border border-zinc-800 text-zinc-400 hover:text-zinc-200 cursor-pointer shadow"
               >
                 <X size={16} />
               </button>
@@ -86,7 +86,7 @@ export default function ResolveDialog({
                 <button
                   type="button"
                   onClick={() => handleResolveKeepAll(resolveDialogStudent.duplicateGroup!)}
-                  className="w-full py-3 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-zinc-950 font-bold text-xs transition-all active:scale-98 flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                  className="w-full py-3 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-zinc-950 font-bold text-xs flex items-center justify-center gap-2 cursor-pointer shadow-md"
                 >
                   <Check size={14} className="stroke-[3]" />
                   <span>Keep All</span>
@@ -95,7 +95,7 @@ export default function ResolveDialog({
                 <button
                   type="button"
                   onClick={() => handleResolveRemoveAll(resolveDialogStudent.duplicateGroup!)}
-                  className="w-full py-3 px-4 rounded-xl bg-red-500 hover:bg-red-600 text-white font-bold text-xs transition-all active:scale-98 flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                  className="w-full py-3 px-4 rounded-xl bg-red-500 hover:bg-red-600 text-white font-bold text-xs flex items-center justify-center gap-2 cursor-pointer shadow-md"
                 >
                   <Trash2 size={14} />
                   <span>Delete</span>
@@ -111,7 +111,7 @@ export default function ResolveDialog({
                       onClick={() =>
                         handleResolveKeepSelection(resolveDialogStudent.duplicateGroup!, selectedDuplicateIds)
                       }
-                      className="py-2.5 px-3 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 font-bold text-xs transition-all active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer"
+                      className="py-2.5 px-3 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 font-bold text-xs flex items-center justify-center gap-1.5 cursor-pointer"
                     >
                       <CheckSquare size={13} />
                       <span>Keep Selection</span>
@@ -121,7 +121,7 @@ export default function ResolveDialog({
                       onClick={() =>
                         handleResolveRemoveSelection(resolveDialogStudent.duplicateGroup!, selectedDuplicateIds)
                       }
-                      className="py-2.5 px-3 rounded-xl border border-red-500/30 bg-red-500/10 text-red-400 hover:bg-red-500/20 font-bold text-xs transition-all active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer"
+                      className="py-2.5 px-3 rounded-xl border border-red-500/30 bg-red-500/10 text-red-400 hover:bg-red-500/20 font-bold text-xs flex items-center justify-center gap-1.5 cursor-pointer"
                     >
                       <XSquare size={13} />
                       <span>Delete Selection</span>
@@ -211,7 +211,7 @@ export default function ResolveDialog({
                 <button
                   type="button"
                   onClick={() => handleResolveUnflag(resolveDialogStudent.id)}
-                  className="w-full py-3.5 px-4 rounded-xl border border-zinc-800 bg-zinc-850 hover:bg-zinc-800 text-zinc-300 font-bold text-xs transition-all active:scale-98 flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+                  className="w-full py-3.5 px-4 rounded-xl border border-zinc-800 bg-zinc-850 hover:bg-zinc-800 text-zinc-300 font-bold text-xs flex items-center justify-center gap-2 cursor-pointer shadow-sm"
                 >
                   <FlagOff size={14} />
                   <span>Unflag</span>
@@ -220,7 +220,7 @@ export default function ResolveDialog({
                 <button
                   type="button"
                   onClick={() => handleResolveDelete(resolveDialogStudent)}
-                  className="w-full py-3.5 px-4 rounded-xl bg-red-500 hover:bg-red-650 text-white font-bold text-xs transition-all active:scale-98 flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                  className="w-full py-3.5 px-4 rounded-xl bg-red-500 hover:bg-red-650 text-white font-bold text-xs flex items-center justify-center gap-2 cursor-pointer shadow-md"
                 >
                   <Trash2 size={14} />
                   <span>Delete</span>

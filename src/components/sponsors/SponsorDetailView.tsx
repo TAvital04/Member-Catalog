@@ -133,7 +133,7 @@ export default function SponsorDetailView({
       <button
         type="button"
         onClick={onBack}
-        className="btn-base btn-sm btn-ghost-surface self-start text-xs font-bold"
+        className="inline-flex items-center justify-center px-3.5 py-2 rounded-lg bg-white border border-neutral-300 text-xs font-bold text-black cursor-pointer self-start select-none"
       >
         <span>Back to All Chapter Sponsors</span>
       </button>
@@ -155,7 +155,7 @@ export default function SponsorDetailView({
                   <span>{sponsor.tier} Partner</span>
                 </span>
               </div>
-              <p className="text-xs font-bold text-slate-700 dark:text-slate-300 mt-0.5">
+              <p className="text-xs font-bold text-slate-700 mt-0.5">
                 {sponsor.tagline}
               </p>
               <div className="flex items-center gap-2 text-xs text-slate-500 mt-1 flex-wrap">
@@ -191,7 +191,7 @@ export default function SponsorDetailView({
         </div>
 
         {/* Narrative Description */}
-        <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed max-w-4xl">
+        <p className="text-xs text-slate-600 leading-relaxed max-w-4xl">
           {sponsor.description}
         </p>
 
@@ -200,7 +200,7 @@ export default function SponsorDetailView({
           <button
             type="button"
             onClick={() => handleTabChange("initiatives")}
-            className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 text-center transition-all cursor-pointer group"
+            className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-center cursor-pointer group"
           >
             <span className="block text-base font-black text-slate-900 group-hover:text-black transition-colors">
               {sponsor.initiatives.length}
@@ -213,7 +213,7 @@ export default function SponsorDetailView({
           <button
             type="button"
             onClick={() => handleTabChange("projects")}
-            className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 text-center transition-all cursor-pointer group"
+            className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-center cursor-pointer group"
           >
             <span className="block text-base font-black text-slate-900 group-hover:text-black transition-colors">
               {projects.length}
@@ -226,7 +226,7 @@ export default function SponsorDetailView({
           <button
             type="button"
             onClick={() => handleTabChange("events")}
-            className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 text-center transition-all cursor-pointer group"
+            className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-center cursor-pointer group"
           >
             <span className="block text-base font-black text-slate-900 group-hover:text-black transition-colors">
               {events.length}
@@ -239,7 +239,7 @@ export default function SponsorDetailView({
           <button
             type="button"
             onClick={() => handleTabChange("jobs")}
-            className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 text-center transition-all cursor-pointer group"
+            className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-center cursor-pointer group"
           >
             <span className="block text-base font-black text-slate-900 group-hover:text-black transition-colors">
               {jobs.length}
@@ -252,7 +252,7 @@ export default function SponsorDetailView({
           <button
             type="button"
             onClick={() => handleTabChange("skills")}
-            className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 text-center transition-all cursor-pointer group"
+            className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-center cursor-pointer group"
           >
             <span className="block text-base font-black text-slate-900 group-hover:text-black transition-colors">
               {skills.length}
@@ -265,7 +265,7 @@ export default function SponsorDetailView({
           <button
             type="button"
             onClick={() => handleTabChange("interactions")}
-            className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 text-center transition-all cursor-pointer group"
+            className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-center cursor-pointer group"
           >
             <span className="block text-base font-black text-slate-900 group-hover:text-black transition-colors">
               {interactions.length}
@@ -299,7 +299,7 @@ export default function SponsorDetailView({
       />
 
       {/* Sticky Quick-Jump Navigation Tabs */}
-      <div className="sticky top-14 md:top-16 z-20 py-2.5 bg-slate-50/95 dark:bg-[#0b0f19]/95 backdrop-blur-md border-b border-slate-200/80 overflow-x-auto scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
+      <div className="sticky top-14 md:top-16 z-20 py-2.5 bg-white/95 backdrop-blur-md border-b border-neutral-200 overflow-x-auto scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
         <SegmentedControl
           options={subTabOptions}
           value={activeTab}
@@ -434,7 +434,7 @@ export default function SponsorDetailView({
                 <Link
                   key={idx}
                   href={`/?skills=${encodeURIComponent(skill)}`}
-                  className="px-3 py-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 hover:border-black text-xs font-mono font-medium text-black transition-all cursor-pointer shadow-2xs inline-flex items-center"
+                  className="px-3 py-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-xs font-mono font-medium text-black cursor-pointer shadow-2xs inline-flex items-center"
                 >
                   <span>{skill}</span>
                 </Link>

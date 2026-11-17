@@ -29,17 +29,18 @@ import JobCard from "@/components/jobs/JobCard";
 import JobFilters from "@/components/jobs/JobFilters";
 import EmployerJobPostings from "@/components/jobs/EmployerJobPostings";
 import JobDetailModal from "@/components/modal/job/JobDetailModal";
-import QuickJobPostModal from "@/components/modal/job/QuickJobPostModal";
+import SponsorJobPostingForm from "@/components/forms/SponsorJobPostingForm";
 import EmployerApplicantsModal from "@/components/modal/job/EmployerApplicantsModal";
 import EmployerApplicantAnalytics from "@/components/modal/job/EmployerApplicantAnalytics";
 import PortfolioModal from "@/components/modal/PortfolioModal";
 import CustomDropdown from "@/components/common/CustomDropdown";
 import Avatar from "@/components/common/Avatar";
 import EmptyState from "@/components/common/EmptyState";
+import SearchInput from "@/components/common/SearchInput";
 
 function JobsPageContent() {
   const { theme, toggleTheme } = useThemeManager();
-  const { role, handleRoleChange } = useRoleManager();
+  const { role, session, handleRoleChange } = useRoleManager();
   const { students } = useStudentData();
 
   // Screen Mode: "member" (browse & apply) vs "employer" (manage postings & applicants)
@@ -55,9 +56,18 @@ function JobsPageContent() {
 
   // Filters for Member view
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedEmploymentType, setSelectedEmploymentType] = useState("All");
-  const [selectedLocationType, setSelectedLocationType] = useState("All");
-  const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
+  const [selectedEmploymentTypes, setSelectedEmploymentTypes] = useState<string[]>([]);
+  const [selectedLocationTypes, setSelectedLocationTypes] = useState<string[]>([]);
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const [selectedCompanies, setSelectedCompanies] = useState<string[]>([]);
+
+  const resetAllFilters = () => {
+    setSearchQuery("");
+    setSelectedEmploymentTypes([]);
+    setSelectedLocationTypes([]);
+    setSelectedSkills([]);
+    setSelectedCompanies([]);
+  };
 
   // Filters for Employer view
   const [selectedEmployerCompany, setSelectedEmployerCompany] = useState<string>("All");
@@ -133,24 +143,52 @@ function JobsPageContent() {
         }
       }
 
-      // Employment Type
-      if (selectedEmploymentType !== "All" && job.employmentType !== selectedEmploymentType) {
+      // Employment Types
+      if (
+        selectedEmploymentTypes.length > 0 &&
+        !selectedEmploymentTypes.includes(job.employmentType)
+      ) {
         return false;
       }
 
-      // Location Type
-      if (selectedLocationType !== "All" && job.locationType !== selectedLocationType) {
+      // Location Types
+      if (
+        selectedLocationTypes.length > 0 &&
+        !selectedLocationTypes.includes(job.locationType)
+      ) {
         return false;
       }
 
-      // Skill Filter
-      if (selectedSkill && !(job.skillsRequired || []).some((s) => s.toLowerCase() === selectedSkill.toLowerCase())) {
+      // Skills Filter
+      if (selectedSkills.length > 0) {
+        const hasSkill = selectedSkills.some((skill) =>
+          (job.skillsRequired || []).some(
+            (s) => s.toLowerCase() === skill.toLowerCase()
+          )
+        );
+        if (!hasSkill) {
+          return false;
+        }
+      }
+
+      // Company Filter
+      if (
+        selectedCompanies.length > 0 &&
+        !selectedCompanies.includes(job.companyName)
+      ) {
         return false;
       }
 
       return true;
     });
-  }, [jobsList, searchQuery, selectedEmploymentType, selectedLocationType, selectedSkill]);
+  }, [
+    jobsList,
+    searchQuery,
+    selectedEmploymentTypes,
+    selectedLocationTypes,
+    selectedSkills,
+    selectedCompanies,
+  ]);
 
   // Filtered jobs for Employer View
   const employerJobs = useMemo(() => {
@@ -166,11 +204,11 @@ function JobsPageContent() {
     return Array.from(set);
   }, [jobsList]);
 
-  // List of all popular skills across jobs
+  // List of all unique skills across jobs, sorted alphabetically
   const allJobSkills = useMemo(() => {
     const set = new Set<string>();
     jobsList.forEach((j) => (j.skillsRequired || []).forEach((s) => set.add(s)));
-    return Array.from(set).slice(0, 10);
+    return Array.from(set).sort((a, b) => a.localeCompare(b));
   }, [jobsList]);
 
   // Handle application success
@@ -206,14 +244,14 @@ function JobsPageContent() {
         description="Explore direct internships, co-ops, and full-time roles from corporate partners or post opportunities to source top engineering talent."
       >
         {/* Screen Mode Switcher: Member Screen vs Employer Screen */}
-        <div className="flex items-center bg-slate-100/90 p-1 rounded-2xl border border-slate-200/90 shadow-2xs shrink-0">
+        <div className="flex items-center bg-white p-1 rounded-2xl border border-neutral-300 shadow-2xs shrink-0 gap-1">
           <button
             type="button"
             onClick={() => setPortalMode("member")}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs cursor-pointer select-none ${
               portalMode === "member"
-                ? "bg-white text-slate-950 font-bold shadow-xs border border-slate-200/90"
-                : "text-slate-600 hover:text-slate-900 hover:bg-white/60"
+                ? "bg-black text-white font-bold border border-black shadow-xs"
+                : "bg-transparent text-neutral-700 font-semibold border border-transparent"
             }`}
           >
             <Users size={14} />
@@ -222,10 +260,10 @@ function JobsPageContent() {
           <button
             type="button"
             onClick={() => setPortalMode("employer")}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs cursor-pointer select-none ${
               portalMode === "employer"
-                ? "bg-white text-slate-950 font-bold shadow-xs border border-slate-200/90"
-                : "text-slate-600 hover:text-slate-900 hover:bg-white/60"
+                ? "bg-black text-white font-bold border border-black shadow-xs"
+                : "bg-transparent text-neutral-700 font-semibold border border-transparent"
             }`}
           >
             <Building2 size={14} />
@@ -234,7 +272,7 @@ function JobsPageContent() {
         </div>
       </DirectoryStatsHeader>
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 pb-8 flex flex-col gap-6">
+      <main className="max-w-7xl w-full mx-auto px-4 pb-8 flex flex-col gap-6">
         {/* MEMBER PORTAL VIEW (BROWSE & APPLY WITH PORTFOLIO) */}
         {portalMode === "member" && (
           <div className="flex flex-col gap-6 animate-fade-in">
@@ -266,7 +304,7 @@ function JobsPageContent() {
                       sublabel: `${s.major} • Class of ${s.gradDate}`,
                     }))}
                     className="w-48 sm:w-64"
-                    buttonClassName="bg-slate-100 hover:bg-slate-200/80 border-slate-200 text-slate-800 text-xs font-semibold"
+                    buttonClassName="bg-white border-neutral-300 text-black text-xs font-semibold"
                     align="right"
                     aria-label="Switch Test Candidate"
                   />
@@ -274,72 +312,186 @@ function JobsPageContent() {
               </div>
             )}
 
-            {/* Reusable Matchy-Matchy Filter Bar */}
-            <JobFilters
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-              selectedEmploymentType={selectedEmploymentType}
-              setSelectedEmploymentType={setSelectedEmploymentType}
-              selectedLocationType={selectedLocationType}
-              setSelectedLocationType={setSelectedLocationType}
-              allJobSkills={allJobSkills}
-              selectedSkill={selectedSkill}
-              setSelectedSkill={setSelectedSkill}
-            />
-
-            {/* Results Count Bar */}
-            <div className="flex items-center justify-between text-xs text-slate-500">
-              <span className="font-semibold">
-                Showing {filteredMemberJobs.length} {filteredMemberJobs.length === 1 ? "opportunity" : "opportunities"}
-              </span>
-              <span className="text-[11px]">Click any role to inspect full details and apply with portfolio</span>
+            {/* Top Search Bar */}
+            <div className="w-full">
+              <SearchInput
+                value={searchQuery}
+                onChange={setSearchQuery}
+                placeholder="Search by job title, company, skills (e.g. C++, RTOS, Altium)..."
+                ariaLabel="Search by job title, company, skills"
+              />
             </div>
 
-            {/* Jobs Grid */}
-            {isLoading ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {[1, 2, 3, 4, 5, 6].map((i) => (
-                  <div
-                    key={i}
-                    className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs animate-pulse h-[250px]"
-                  />
-                ))}
-              </div>
-            ) : filteredMemberJobs.length === 0 ? (
-              <EmptyState
-                icon={<Briefcase size={32} />}
-                headline="No job opportunities found"
-                subtext="No positions matched your selected search query or filters. Try adjusting your parameters."
-                actionLabel="Clear Filters"
-                onAction={() => {
-                  setSearchQuery("");
-                  setSelectedEmploymentType("All");
-                  setSelectedLocationType("All");
-                  setSelectedSkill(null);
-                }}
+            {/* Core Member Opportunities Hub Layout (Sidebar + Results) */}
+            <div className="flex flex-col min-[1056px]:flex-row gap-8 items-start relative z-10">
+              {/* Job Filters (Top on mobile/tablet, Sidebar on min-[1056px]) */}
+              <JobFilters
+                selectedEmploymentTypes={selectedEmploymentTypes}
+                setSelectedEmploymentTypes={setSelectedEmploymentTypes}
+                selectedLocationTypes={selectedLocationTypes}
+                setSelectedLocationTypes={setSelectedLocationTypes}
+                selectedSkills={selectedSkills}
+                setSelectedSkills={setSelectedSkills}
+                selectedCompanies={selectedCompanies}
+                setSelectedCompanies={setSelectedCompanies}
+                availableSkills={allJobSkills}
+                availableCompanies={hiringCompanies}
+                onResetAll={resetAllFilters}
+                layout="side"
               />
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {filteredMemberJobs.map((job) => {
-                  const hasApplied = applicationsList.some(
-                    (a) => a.jobId === job.id && a.memberId === activeStudent?.id
-                  );
-                  const application = applicationsList.find(
-                    (a) => a.jobId === job.id && a.memberId === activeStudent?.id
-                  );
 
-                  return (
-                    <JobCard
-                      key={job.id}
-                      job={job}
-                      hasApplied={hasApplied}
-                      application={application}
-                      onSelectJob={setSelectedJobForDetail}
-                    />
-                  );
-                })}
+              {/* Main Jobs Directory Area */}
+              <div className="grow flex flex-col gap-4 w-full">
+                {/* Active Filter Badges (if any are active) */}
+                {(selectedEmploymentTypes.length > 0 ||
+                  selectedLocationTypes.length > 0 ||
+                  selectedSkills.length > 0 ||
+                  selectedCompanies.length > 0) && (
+                  <div className="flex flex-wrap items-center gap-1.5 pb-2 border-b border-slate-200/80 text-xs">
+                    <span className="text-slate-500 pr-1 select-none font-bold uppercase tracking-wider text-[11px]">
+                      Active Filters:
+                    </span>
+                    {selectedEmploymentTypes.map((type) => (
+                      <span
+                        key={type}
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-neutral-100 text-neutral-800 border border-neutral-300 text-xs font-medium"
+                      >
+                        {type}
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setSelectedEmploymentTypes(
+                              selectedEmploymentTypes.filter((t) => t !== type)
+                            )
+                          }
+                          className="hover:text-black cursor-pointer font-bold ml-0.5"
+                          aria-label={`Remove ${type} filter`}
+                        >
+                          ×
+                        </button>
+                      </span>
+                    ))}
+                    {selectedLocationTypes.map((loc) => (
+                      <span
+                        key={loc}
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-neutral-100 text-neutral-800 border border-neutral-300 text-xs font-medium"
+                      >
+                        {loc}
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setSelectedLocationTypes(
+                              selectedLocationTypes.filter((l) => l !== loc)
+                            )
+                          }
+                          className="hover:text-black cursor-pointer font-bold ml-0.5"
+                          aria-label={`Remove ${loc} filter`}
+                        >
+                          ×
+                        </button>
+                      </span>
+                    ))}
+                    {selectedSkills.map((sk) => (
+                      <span
+                        key={sk}
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-neutral-100 text-neutral-800 border border-neutral-300 text-xs font-medium"
+                      >
+                        {sk}
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setSelectedSkills(selectedSkills.filter((s) => s !== sk))
+                          }
+                          className="hover:text-black cursor-pointer font-bold ml-0.5"
+                          aria-label={`Remove ${sk} filter`}
+                        >
+                          ×
+                        </button>
+                      </span>
+                    ))}
+                    {selectedCompanies.map((comp) => (
+                      <span
+                        key={comp}
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-neutral-100 text-neutral-800 border border-neutral-300 text-xs font-medium"
+                      >
+                        {comp}
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setSelectedCompanies(
+                              selectedCompanies.filter((c) => c !== comp)
+                            )
+                          }
+                          className="hover:text-black cursor-pointer font-bold ml-0.5"
+                          aria-label={`Remove ${comp} filter`}
+                        >
+                          ×
+                        </button>
+                      </span>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={resetAllFilters}
+                      className="text-xs text-slate-500 hover:text-black underline ml-2 cursor-pointer font-medium"
+                    >
+                      Clear all
+                    </button>
+                  </div>
+                )}
+
+                {/* Results Count Bar */}
+                <div className="flex items-center justify-between text-xs text-slate-500">
+                  <span className="font-semibold">
+                    Showing {filteredMemberJobs.length}{" "}
+                    {filteredMemberJobs.length === 1 ? "opportunity" : "opportunities"}
+                  </span>
+                  <span className="text-[11px]">
+                    Click any role to inspect full details and apply with portfolio
+                  </span>
+                </div>
+
+                {/* Jobs Grid */}
+                {isLoading ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                    {[1, 2, 3, 4, 5, 6].map((i) => (
+                      <div
+                        key={i}
+                        className="bg-neutral-100 border border-neutral-200 rounded-2xl p-5 animate-pulse h-[195px] sm:h-[220px]"
+                      />
+                    ))}
+                  </div>
+                ) : filteredMemberJobs.length === 0 ? (
+                  <EmptyState
+                    icon={<Briefcase size={32} />}
+                    headline="No job opportunities found"
+                    subtext="No positions matched your selected search query or filters. Try adjusting your parameters."
+                    actionLabel="Clear Filters"
+                    onAction={resetAllFilters}
+                  />
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                    {filteredMemberJobs.map((job) => {
+                      const hasApplied = applicationsList.some(
+                        (a) => a.jobId === job.id && a.memberId === activeStudent?.id
+                      );
+                      const application = applicationsList.find(
+                        (a) => a.jobId === job.id && a.memberId === activeStudent?.id
+                      );
+
+                      return (
+                        <JobCard
+                          key={job.id}
+                          job={job}
+                          hasApplied={hasApplied}
+                          application={application}
+                          onSelectJob={setSelectedJobForDetail}
+                        />
+                      );
+                    })}
+                  </div>
+                )}
               </div>
-            )}
+            </div>
           </div>
         )}
 
@@ -347,29 +499,29 @@ function JobsPageContent() {
         {portalMode === "employer" && (
           <div className="flex flex-col gap-6 animate-fade-in">
             {/* Employer Sub-Navigation: Postings vs Applicant Pool Analytics */}
-            <div className="flex items-center gap-2 p-1.5 bg-slate-100 rounded-2xl w-fit border border-slate-200">
+            <div className="flex items-center gap-1 p-1 bg-white rounded-2xl w-fit border border-neutral-300 shadow-2xs">
               <button
                 type="button"
                 onClick={() => setEmployerSubTab("postings")}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs cursor-pointer select-none ${
                   employerSubTab === "postings"
-                    ? "bg-white text-slate-950 font-bold shadow-xs border border-slate-200/90"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-white/60"
+                    ? "bg-black text-white font-bold border border-black shadow-xs"
+                    : "bg-transparent text-neutral-700 font-semibold border border-transparent"
                 }`}
               >
-                <Briefcase size={14} className={employerSubTab === "postings" ? "text-black" : ""} />
+                <Briefcase size={14} className={employerSubTab === "postings" ? "text-white" : "text-neutral-500"} />
                 <span>Active Postings ({employerJobs.length})</span>
               </button>
               <button
                 type="button"
                 onClick={() => setEmployerSubTab("analytics")}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs cursor-pointer select-none ${
                   employerSubTab === "analytics"
-                    ? "bg-white text-slate-950 font-bold shadow-xs border border-slate-200/90"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-white/60"
+                    ? "bg-black text-white font-bold border border-black shadow-xs"
+                    : "bg-transparent text-neutral-700 font-semibold border border-transparent"
                 }`}
               >
-                <BarChart3 size={14} className={employerSubTab === "analytics" ? "text-black" : ""} />
+                <BarChart3 size={14} className={employerSubTab === "analytics" ? "text-white" : "text-neutral-500"} />
                 <span>Applicant Pool Analytics ({applicationsList.length})</span>
               </button>
             </div>
@@ -409,9 +561,11 @@ function JobsPageContent() {
         />
       )}
 
-      {/* Employer: Quick Post Job Modal */}
+      {/* Employer / Sponsor: Post Job Modal (Form 4) */}
       {isPostJobModalOpen && (
-        <QuickJobPostModal
+        <SponsorJobPostingForm
+          role={role}
+          session={session}
           onClose={() => setIsPostJobModalOpen(false)}
           onJobCreated={handleJobCreated}
         />
@@ -436,6 +590,7 @@ function JobsPageContent() {
           onClose={() => setInspectedStudent(null)}
           adminMode={true}
           role="admin"
+          allStudents={students}
         />
       )}
     </div>

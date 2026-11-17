@@ -48,10 +48,10 @@ export default function EmployerJobPostings({
         <button
           type="button"
           onClick={onOpenPostJobModal}
-          className="btn-base btn-lg btn-primary-amber"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-black hover:bg-neutral-800 text-white font-bold text-xs transition-all cursor-pointer shadow-xs shrink-0"
         >
           <Plus size={15} />
-          <span>+ Post New Job Opportunity</span>
+          <span>+ Post New Opportunity</span>
         </button>
       </div>
 

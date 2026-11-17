@@ -11,14 +11,31 @@ interface EventsTabProps {
   formatDateStr?: (dateStr: string) => string;
   role?: "standard" | "sponsor" | "admin";
   onClose?: () => void;
+  onSelectEvent?: (event: EventEntry) => void;
 }
 
 export default function EventsTab({
   events = [],
   role = "standard",
   onClose,
+  onSelectEvent,
 }: EventsTabProps) {
   const canFilter = role === "sponsor" || role === "admin";
+
+  const handleCardClick = (e: React.MouseEvent, evt: EventEntry) => {
+    const target = e.target as HTMLElement;
+    if (target.closest("a") || target.closest("button")) {
+      return;
+    }
+    onSelectEvent?.(evt);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent, evt: EventEntry) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      onSelectEvent?.(evt);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-4 animate-fade-in pt-1 pb-4">
@@ -39,7 +56,12 @@ export default function EventsTab({
           {events.map((evt, idx) => (
             <div
               key={evt.id || idx}
-              className={`${CARD_INTERACTIVE} p-4 md:p-5 flex flex-col justify-between gap-3`}
+              role="button"
+              tabIndex={0}
+              onClick={(e) => handleCardClick(e, evt)}
+              onKeyDown={(e) => handleKeyDown(e, evt)}
+              aria-label={`Open event details for ${evt.title}`}
+              className={`${CARD_INTERACTIVE} p-4 md:p-5 flex flex-col justify-between gap-3 focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none`}
             >
               <div className="flex flex-col gap-2">
                 {evt.category && (
@@ -70,8 +92,11 @@ export default function EventsTab({
                       <Link
                         key={sIdx}
                         href={`/?skills=${encodeURIComponent(skill)}`}
-                        onClick={() => onClose?.()}
-                        className="text-[10.5px] font-semibold px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-slate-700 hover:text-slate-900 transition-all shadow-2xs cursor-pointer active:scale-95"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onClose?.();
+                        }}
+                        className="text-[10.5px] font-semibold px-2 py-0.5 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 cursor-pointer shadow-2xs"
                       >
                         <span>{skill}</span>
                       </Link>

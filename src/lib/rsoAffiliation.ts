@@ -1,4 +1,4 @@
-import { ProjectEntry, Student } from "@/data/students";
+import { ProjectEntry, Student, EventEntry } from "@/data/students";
 import { SAMPLE_IEEE_PROJECTS } from "@/data/projects";
 import { SAMPLE_IEEE_EVENTS, IEEEEvent } from "@/data/events";
 import { canAwardSkills } from "./skills";
@@ -344,6 +344,89 @@ export function findMatchingIeeeProject(
     });
 
     if (matchByTokens) return matchByTokens;
+  }
+
+  return undefined;
+}
+
+/**
+ * Finds the matching official chapter event on this site.
+ */
+export function findMatchingIeeeEvent(
+  eventOrTitleOrSlugOrId: EventEntry | string,
+  eventsList: IEEEEvent[] = SAMPLE_IEEE_EVENTS
+): IEEEEvent | undefined {
+  if (!eventOrTitleOrSlugOrId) return undefined;
+
+  const rawTitle =
+    typeof eventOrTitleOrSlugOrId === "string"
+      ? eventOrTitleOrSlugOrId
+      : eventOrTitleOrSlugOrId.title || eventOrTitleOrSlugOrId.id || "";
+  const rawId = typeof eventOrTitleOrSlugOrId === "object" ? eventOrTitleOrSlugOrId.id : "";
+  const rawSlug = typeof eventOrTitleOrSlugOrId === "object" ? eventOrTitleOrSlugOrId.slug : "";
+
+  const cleanTitle = rawTitle.toLowerCase().trim();
+  const cleanId = (rawId || "").toLowerCase().trim();
+  const cleanSlug = (rawSlug || "").toLowerCase().trim();
+
+  // 1. Match by exact ID or slug
+  const matchById = eventsList.find((e) => {
+    const eId = (e.id || "").toLowerCase();
+    const eSlug = (e.slug || "").toLowerCase();
+    return (
+      (cleanId && eId === cleanId) ||
+      (cleanSlug && eSlug === cleanSlug) ||
+      (cleanTitle && (eId === cleanTitle || eSlug === cleanTitle))
+    );
+  });
+  if (matchById) return matchById;
+
+  // 2. Direct exact match by title
+  const matchByExactTitle = eventsList.find((e) => e.title.toLowerCase().trim() === cleanTitle);
+  if (matchByExactTitle) return matchByExactTitle;
+
+  // 3. Substring match
+  const matchBySubstring = eventsList.find((e) => {
+    const eTitle = e.title.toLowerCase().trim();
+    return eTitle.includes(cleanTitle) || cleanTitle.includes(eTitle);
+  });
+  if (matchBySubstring) return matchBySubstring;
+
+  // 4. Normalized match (stripping RSO, IEEE, UCF, chapter, etc.)
+  const normalize = (str: string) =>
+    str
+      .toLowerCase()
+      .replace(/\b(rso|ieee|ucf|chapter|event|workshop)\b/g, "")
+      .replace(/[^a-z0-9]/g, " ")
+      .trim();
+
+  const normTarget = normalize(cleanTitle);
+  if (normTarget.length > 3) {
+    const matchByNorm = eventsList.find((e) => {
+      const normE = normalize(e.title);
+      return normE.includes(normTarget) || normTarget.includes(normE);
+    });
+    if (matchByNorm) return matchByNorm;
+  }
+
+  // 5. Fallback synthesize if EventEntry object was passed
+  if (typeof eventOrTitleOrSlugOrId === "object") {
+    const entry = eventOrTitleOrSlugOrId;
+    return {
+      id: entry.id || `evt-${cleanTitle.replace(/[^a-z0-9]+/g, "-")}`,
+      title: entry.title,
+      slug: entry.slug || cleanTitle.replace(/[^a-z0-9]+/g, "-"),
+      description: entry.description || "IEEE UCF Chapter Event & Workshop",
+      category: (entry.category as any) || "Special Event & Tour",
+      location: entry.location || "Harris Engineering Center (HEC)",
+      startTime: entry.startTime || new Date().toISOString(),
+      endTime: entry.endTime,
+      host: "IEEE UCF Student Chapter",
+      pointsAwarded: entry.pointsAwarded ?? 3,
+      tags: entry.skills || [],
+      skills: entry.skills || [],
+      attendees: [],
+    };
   }
 
   return undefined;

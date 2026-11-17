@@ -7,7 +7,7 @@
  * Standard tactile motion and border highlight for all clickable cards.
  */
 export const CARD_HOVER_EFFECT =
-  "group transition-all duration-150 hover:border-black cursor-pointer";
+  "group cursor-pointer";
 
 /**
  * Standard non-interactive base styling for white cards.
@@ -46,7 +46,7 @@ export const CARD_ACTION_HOVER =
  * Standardized interactive card action button. Solid black with white text.
  */
 export const CARD_BUTTON_INTERACTIVE =
-  "px-3.5 py-1.5 rounded-lg bg-black text-white hover:bg-neutral-800 border border-black text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer active:scale-95";
+  "px-3.5 py-1.5 rounded-lg bg-black text-white border border-black text-xs font-bold flex items-center gap-1.5 cursor-pointer";
 
 /**
  * Helper to compute card classes with conditional state support (e.g., flagged cards).
@@ -70,10 +70,10 @@ export function getCardClasses(options?: {
   }
 
   const borderHover = isFlagged
-    ? "border-black bg-neutral-100 hover:border-black"
-    : "border-neutral-300 hover:border-black";
+    ? "border-black bg-neutral-100"
+    : "border-neutral-300";
 
-  const hoverMotion = "group transition-all duration-150 cursor-pointer";
+  const hoverMotion = "group cursor-pointer";
 
   return [base, borderHover, hoverMotion, options?.className].filter(Boolean).join(" ");
 }

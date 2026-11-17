@@ -9,7 +9,7 @@
 
 import React, { useState, useEffect, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { GitBranch } from "lucide-react";
+import { GitBranch, Plus, CheckCircle2, X } from "lucide-react";
 import DirectoryNavbar from "@/components/directory/DirectoryNavbar";
 import DirectoryStatsHeader from "@/components/directory/DirectoryStatsHeader";
 import { useThemeManager } from "@/hooks/useThemeManager";
@@ -20,6 +20,7 @@ import { ProjectTabType } from "@/components/modal/project/ProjectTabNavigation"
 import PortfolioModal from "@/components/modal/PortfolioModal";
 import ProjectCard from "@/components/projects/ProjectCard";
 import ProjectFilters from "@/components/projects/ProjectFilters";
+import LeadershipProjectForm from "@/components/forms/LeadershipProjectForm";
 import EmptyState from "@/components/common/EmptyState";
 import { IEEEProject } from "@/data/projects";
 import { Student } from "@/data/students";
@@ -30,7 +31,6 @@ function IEEEProjectsContent() {
   const { students } = useStudentData();
   const [projects, setProjects] = useState<IEEEProject[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
   const searchParams = useSearchParams();
   const searchParam = searchParams.get("search") || searchParams.get("q");
@@ -41,6 +41,14 @@ function IEEEProjectsContent() {
   const [activeModalProject, setActiveModalProject] = useState<IEEEProject | null>(null);
   const [activeModalTab, setActiveModalTab] = useState<ProjectTabType>("overview");
   const [selectedMemberStudent, setSelectedMemberStudent] = useState<Student | null>(null);
+  const [isProjectFormOpen, setIsProjectFormOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const handleProjectCreated = (newProject: IEEEProject) => {
+    setProjects((prev) => [newProject, ...prev]);
+    setToastMessage(`Created ${newProject.title}.`);
+    setTimeout(() => setToastMessage(null), 4500);
+  };
 
   const handleOpenProjectModal = (project: IEEEProject, tab: ProjectTabType = "overview") => {
     setActiveModalProject(project);
@@ -107,14 +115,8 @@ function IEEEProjectsContent() {
     }
   }, [projects, searchParams]);
 
-  const categories = ["All", "Robotics & Controls", "Hardware & Silicon", "Aerospace & Embedded", "IoT & Infrastructure"];
-
   const filteredProjects = useMemo(() => {
     return projects.filter((project) => {
-      // Category filter
-      if (selectedCategory !== "All" && project.category !== selectedCategory) {
-        return false;
-      }
       // Search query filter
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase();
@@ -129,7 +131,7 @@ function IEEEProjectsContent() {
       }
       return true;
     });
-  }, [projects, selectedCategory, searchQuery]);
+  }, [projects, searchQuery]);
 
   const handleSelectMember = (memberId?: string, name?: string, email?: string) => {
     if (!students || students.length === 0) return;
@@ -179,37 +181,65 @@ function IEEEProjectsContent() {
       <DirectoryStatsHeader
         title="IEEE UCF Chapter Projects"
         description="Explore hands-on hardware builds, autonomous robotics, power inverters, and wireless IoT networks engineered by UCF IEEE students."
-      />
+      >
+        {isAdmin && (
+          <button
+            type="button"
+            onClick={() => setIsProjectFormOpen(true)}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-black hover:bg-neutral-800 text-white font-bold text-xs transition-all cursor-pointer shrink-0"
+          >
+            <Plus size={14} />
+            <span>New Chapter Project</span>
+          </button>
+        )}
+      </DirectoryStatsHeader>
 
-      {/* Controls Bar: Search & Category Filter */}
+      {/* Floating Success Feedback Toast */}
+      {toastMessage && (
+        <aside aria-label="Notification" className="max-w-7xl w-full mx-auto px-4 -mt-2 mb-3 animate-fade-in">
+          <div className="p-3 rounded-lg bg-neutral-100 border border-neutral-300 text-black text-xs font-bold flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 size={16} className="text-black shrink-0" />
+              <span>{toastMessage}</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setToastMessage(null)}
+              aria-label="Dismiss notification"
+              className="p-1 text-neutral-500 hover:text-black cursor-pointer"
+            >
+              <X size={14} />
+            </button>
+          </div>
+        </aside>
+      )}
+
+      {/* Controls Bar: Search */}
       <ProjectFilters
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
-        categories={categories}
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
       />
 
       {/* Main Content Area */}
       <main className="max-w-7xl w-full mx-auto px-4 flex flex-col gap-6 relative z-10">
         {isLoading ? (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-pulse">
-            <div className="h-80 glass-panel rounded-2xl animate-shimmer" />
-            <div className="h-80 glass-panel rounded-2xl animate-shimmer" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 animate-pulse">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div key={i} className="h-[195px] sm:h-[220px] bg-neutral-100 rounded-2xl border border-neutral-200" />
+            ))}
           </div>
         ) : filteredProjects.length === 0 ? (
           <EmptyState
             icon={<GitBranch size={32} />}
             headline="No projects found"
-            subtext="No projects match your current filter criteria. Try searching for a different tool, technology, or category."
-            actionLabel="Reset Filters"
+            subtext="No projects match your current search criteria. Try searching for a different tool, technology, or title."
+            actionLabel="Reset Search"
             onAction={() => {
-              setSelectedCategory("All");
               setSearchQuery("");
             }}
           />
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {filteredProjects.map((project) => (
               <ProjectCard
                 key={project.id}
@@ -252,6 +282,7 @@ function IEEEProjectsContent() {
           onClose={() => setSelectedMemberStudent(null)}
           adminMode={isAdmin}
           role={role}
+          allStudents={students}
           onSelectProject={(projectSlugOrId) => {
             setSelectedMemberStudent(null);
             const clean = projectSlugOrId.toLowerCase().trim();
@@ -268,6 +299,16 @@ function IEEEProjectsContent() {
               window.history.pushState(null, "", `/projects?project=${match.slug}`);
             }
           }}
+        />
+      )}
+
+      {/* RSO Leadership Form 3: Create Chapter Project & Team Roster Modal */}
+      {isProjectFormOpen && (
+        <LeadershipProjectForm
+          role={role}
+          students={students}
+          onClose={() => setIsProjectFormOpen(false)}
+          onProjectCreated={handleProjectCreated}
         />
       )}
     </div>

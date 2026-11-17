@@ -185,7 +185,7 @@ function SponsorsPageContent() {
           <button
             type="button"
             onClick={() => setIsSponsorFormOpen(true)}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-black hover:bg-neutral-800 text-white font-bold text-xs transition-all cursor-pointer shrink-0"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-black text-white font-bold text-xs cursor-pointer shrink-0"
           >
             <Plus size={14} />
             <span>Onboard Chapter Sponsor</span>
@@ -289,6 +289,7 @@ function SponsorsPageContent() {
           onClose={() => setInspectedStudent(null)}
           adminMode={isAdmin}
           role={role}
+          allStudents={students}
         />
       )}
 

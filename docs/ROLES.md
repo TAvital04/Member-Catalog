@@ -219,9 +219,9 @@ With Sponsors, Events, Projects, and Jobs all flowing through PostgreSQL, this f
   - [x] Build [`LeadershipSponsorForm.tsx`](../src/components/forms/LeadershipSponsorForm.tsx) and `POST /api/sponsors` ([`src/app/api/sponsors/route.ts`](../src/app/api/sponsors/route.ts)).
 - [x] **Step 3: Form 2 — RSO Leadership Event & Attendance Roster Form (`/events`) (Completed)**
   - [x] Build [`LeadershipEventForm.tsx`](../src/components/forms/LeadershipEventForm.tsx) with member attendance multi-select and `POST /api/events` ([`src/app/api/events/route.ts`](../src/app/api/events/route.ts)).
-- [ ] **Step 4: Form 3 — RSO Leadership Project & Team Roster Form (`/projects`)**
-  - [ ] Build `LeadershipProjectForm.tsx` with tool/milestone builders, team roster selector, and `POST /api/projects`.
-- [ ] **Step 5: Form 4 — Sponsor Job Posting Form (`/jobs`)**
-  - [ ] Upgrade `QuickJobPostModal.tsx` into `SponsorJobPostingForm.tsx` with Sponsor session auto-fill and role guard on `POST /api/jobs`.
+- [x] **Step 4: Form 3 — RSO Leadership Project & Team Roster Form (`/projects`) (Completed)**
+  - [x] Build [`LeadershipProjectForm.tsx`](../src/components/forms/LeadershipProjectForm.tsx) with tool/milestone builders, team roster selector, and `POST /api/projects` ([`src/app/api/projects/route.ts`](../src/app/api/projects/route.ts)).
+- [x] **Step 5: Form 4 — Sponsor Job Posting Form (`/jobs`) (Completed)**
+  - [x] Build [`SponsorJobPostingForm.tsx`](../src/components/forms/SponsorJobPostingForm.tsx) with Sponsor session auto-fill, dynamic bullet list builders, and role guard on `POST /api/jobs` ([`src/app/api/jobs/route.ts`](../src/app/api/jobs/route.ts)).
 - [ ] **Step 6: Form 5 — Sponsor Initiatives & Profile Form (`/sponsors`)**
   - [ ] Build `SponsorInitiativeForm.tsx` and `PATCH /api/sponsors/[id]`.

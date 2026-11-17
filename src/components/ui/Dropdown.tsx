@@ -58,7 +58,7 @@ export function Dropdown({
 
   const triggerVariantClasses = {
     input:
-      "w-full h-9 px-3 py-2 bg-white border border-neutral-300 rounded-xl text-xs text-black justify-between hover:border-black focus:ring-1 focus:ring-black",
+      "w-full h-9 px-3 py-2 bg-white border border-neutral-300 rounded-xl text-xs text-black justify-between focus:ring-1 focus:ring-black",
     filter:
       "px-3 py-1.5 bg-white border border-neutral-300 rounded-xl text-xs font-semibold text-black hover:bg-neutral-100",
     minimal: "px-2 py-1 bg-transparent text-xs text-neutral-700 hover:text-black",

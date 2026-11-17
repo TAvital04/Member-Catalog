@@ -27,7 +27,7 @@ export default function CustomCheckbox({ checked, onChange, ariaLabel }: CustomC
       className={`w-[18px] h-[18px] rounded border flex items-center justify-center transition-all duration-150 ease-out shrink-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-black cursor-pointer ${
         checked
           ? "bg-black border-black text-white"
-          : "border-neutral-400 bg-white text-transparent hover:border-black"
+          : "border-neutral-400 bg-white text-transparent"
       }`}
     >
       <svg

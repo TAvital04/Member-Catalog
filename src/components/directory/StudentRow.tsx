@@ -27,7 +27,7 @@ function StudentRow({
     <div
       onClick={() => onClick(student)}
       data-student-id={student.id}
-      className="relative group flex flex-col md:flex-row md:items-center justify-between p-3.5 rounded-xl bg-white hover:bg-slate-50 transition-all border border-slate-200 hover:border-slate-300 shadow-2xs cursor-pointer gap-4"
+      className="relative group flex flex-col md:flex-row md:items-center justify-between p-3.5 rounded-xl bg-white border border-neutral-300 shadow-2xs cursor-pointer gap-4"
     >
       {/* Left: Avatar & Personal Info */}
       <div className="flex items-center gap-3 min-w-[240px]">

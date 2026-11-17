@@ -59,19 +59,24 @@ describe("LeadershipEventForm (Form 2: Event & Workshop Creation)", () => {
       />
     );
 
-    // Initial skills should include default tags
-    expect(screen.getByText("PCB Layout")).toBeInTheDocument();
-    expect(screen.getByText("Altium Designer")).toBeInTheDocument();
+    // Initial skills should be empty
+    expect(screen.getByText(/No skills added yet/i)).toBeInTheDocument();
 
-    // Remove Altium Designer
-    const removeBtn = screen.getByLabelText("Remove Altium Designer");
+    // Add PCB Layout via input
+    const input = screen.getByPlaceholderText(/Type a skill tag/i);
+    fireEvent.change(input, { target: { value: "PCB Layout" } });
+    const addBtn = screen.getByRole("button", { name: /Add Tag/i });
+    fireEvent.click(addBtn);
+
+    expect(screen.getByText("PCB Layout")).toBeInTheDocument();
+
+    // Remove PCB Layout
+    const removeBtn = screen.getByLabelText("Remove PCB Layout");
     fireEvent.click(removeBtn);
-    expect(screen.queryByText("Altium Designer")).not.toBeInTheDocument();
+    expect(screen.queryByText("PCB Layout")).not.toBeInTheDocument();
 
     // Add FreeRTOS via input
-    const input = screen.getByPlaceholderText(/Type a skill tag/i);
     fireEvent.change(input, { target: { value: "FreeRTOS" } });
-    const addBtn = screen.getByRole("button", { name: /Add Tag/i });
     fireEvent.click(addBtn);
 
     expect(screen.getByText("FreeRTOS")).toBeInTheDocument();
@@ -132,6 +137,41 @@ describe("LeadershipEventForm (Form 2: Event & Workshop Creation)", () => {
       expect(mockOnEventCreated).toHaveBeenCalledTimes(1);
       expect(mockOnClose).toHaveBeenCalledTimes(1);
     });
+  });
+
+  test("renders Event Leads & Instructors section and handles candidate assignment", () => {
+    const mockStudents = [
+      {
+        id: "mem-01",
+        name: "Alex Rivera",
+        email: "arivera@ucf.edu",
+        major: "Electrical Engineering",
+        degree: "BS",
+        gradDate: "May 2026",
+        skills: ["PCB Layout"],
+        bio: "",
+        status: "Active",
+        flagged: false,
+        links: [],
+        education: [],
+        projects: [],
+        workExperiences: [],
+        clubs: [],
+        certifications: [],
+      },
+    ];
+
+    render(
+      <LeadershipEventForm
+        role="admin"
+        onClose={mockOnClose}
+        onEventCreated={mockOnEventCreated}
+        students={mockStudents as any}
+      />
+    );
+
+    expect(screen.getByText(/3\. Event Leads/i)).toBeInTheDocument();
+    expect(screen.getByText(/No event leads assigned yet/i)).toBeInTheDocument();
   });
 });
 

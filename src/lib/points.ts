@@ -126,16 +126,8 @@ export function isIeeeBoardMember(
 export function isProjectLead(roleTitle?: string, description?: string): boolean {
   const text = `${roleTitle || ""} ${description || ""}`.toLowerCase();
   return (
-    text.includes("project director") ||
-    text.includes("lead engineer") ||
-    text.includes("lead designer") ||
-    text.includes("lead architect") ||
-    text.includes("firmware lead") ||
-    text.includes("hardware lead") ||
-    text.includes("software lead") ||
+    text.includes("lead") ||
     text.includes("director") ||
-    text.includes("project lead") ||
-    text.includes("team lead") ||
     text.includes("principal") ||
     text.includes("founder") ||
     text.includes("led ") ||
