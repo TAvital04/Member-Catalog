@@ -119,7 +119,7 @@ export default function JobDetailModal({
         {/* Modal Header */}
         <div className="p-6 border-b border-slate-200/80 bg-slate-50/70 flex flex-col gap-3 shrink-0">
           <div className="flex items-start gap-3.5 pr-8">
-            <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-700 font-black text-sm flex items-center justify-center shrink-0 shadow-2xs">
+            <div className="w-12 h-12 rounded-xl bg-neutral-100 border border-neutral-300 text-black font-black text-sm flex items-center justify-center shrink-0 shadow-2xs">
               {job.companyLogo || job.companyName.slice(0, 2).toUpperCase()}
             </div>
             <div className="min-w-0 flex-1">
@@ -150,8 +150,8 @@ export default function JobDetailModal({
               <span>{job.location} ({job.locationType})</span>
             </span>
             {job.salaryRange && (
-              <span className="px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 font-bold flex items-center gap-1.5 shadow-2xs">
-                <DollarSign size={12} className="text-emerald-600" />
+              <span className="px-3 py-1 rounded-full bg-neutral-100 border border-neutral-300 text-black font-bold flex items-center gap-1.5 shadow-2xs">
+                <DollarSign size={12} className="text-black" />
                 <span>{job.salaryRange}</span>
               </span>
             )}
@@ -183,7 +183,7 @@ export default function JobDetailModal({
               <ul className="space-y-1.5 text-xs text-slate-600">
                 {job.responsibilities.map((resp, idx) => (
                   <li key={idx} className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-black mt-1.5 shrink-0" />
                     <span>{resp}</span>
                   </li>
                 ))}
@@ -200,7 +200,7 @@ export default function JobDetailModal({
               <ul className="space-y-1.5 text-xs text-slate-600">
                 {job.requirements.map((req, idx) => (
                   <li key={idx} className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-slate-400 mt-1.5 shrink-0" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-neutral-400 mt-1.5 shrink-0" />
                     <span>{req}</span>
                   </li>
                 ))}
@@ -227,8 +227,8 @@ export default function JobDetailModal({
                       key={idx}
                       className={`px-2.5 py-1 rounded-lg text-xs font-semibold border shadow-2xs ${
                         isMatch
-                          ? "bg-amber-500/15 border-amber-500 text-slate-900 font-bold"
-                          : "bg-slate-100 border-slate-200 text-slate-700"
+                          ? "bg-black text-white border-black font-bold"
+                          : "bg-neutral-100 border-neutral-300 text-black"
                       }`}
                     >
                       {skill}
@@ -270,11 +270,11 @@ export default function JobDetailModal({
             </div>
 
             {hasAppliedLocally ? (
-              <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs flex items-center gap-3">
-                <CheckCircle2 size={20} className="text-emerald-600 shrink-0" />
+              <div className="p-4 rounded-xl bg-neutral-100 border border-neutral-300 text-black text-xs flex items-center gap-3">
+                <CheckCircle2 size={20} className="text-black shrink-0" />
                 <div>
                   <h4 className="font-bold text-sm">Application Submitted!</h4>
-                  <p className="mt-0.5 text-emerald-800">
+                  <p className="mt-0.5 text-neutral-700">
                     Your full engineering portfolio and credentials have been transmitted directly to {job.companyName}&apos;s university recruiting team.
                   </p>
                 </div>
@@ -311,7 +311,7 @@ export default function JobDetailModal({
                     value={coverNote}
                     onChange={(e) => setCoverNote(e.target.value)}
                     placeholder="Briefly highlight why you're interested in this role or mention relevant coursework/projects..."
-                    className="w-full text-xs p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none font-sans"
+                    className="w-full text-xs p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-1 focus:ring-black resize-none font-sans"
                   />
                 </div>
 
@@ -326,7 +326,7 @@ export default function JobDetailModal({
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs transition-all shadow-sm active:scale-98 cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
+                  className="w-full py-2.5 px-4 rounded-xl bg-black hover:bg-neutral-800 text-white font-bold text-xs transition-all shadow-sm active:scale-98 cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
                 >
                   {isSubmitting ? (
                     <>

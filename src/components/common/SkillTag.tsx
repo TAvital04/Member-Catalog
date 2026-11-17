@@ -49,9 +49,9 @@ export default function SkillTag({
       : false;
 
   const variantClasses = {
-    card: "text-[10px] font-medium bg-slate-100 border border-slate-200/90 text-slate-700 px-2 py-0.5 rounded-md hover:border-amber-300 hover:text-amber-900 hover:bg-amber-50/70 transition-colors",
-    row: "text-[10px] font-medium bg-slate-100 border border-slate-200/90 text-slate-700 px-2 py-0.5 rounded-md hover:border-amber-300 hover:text-amber-900 hover:bg-amber-50/70 transition-colors",
-    modal: "text-xs font-medium bg-slate-100 border border-slate-200/90 text-slate-800 px-2.5 py-1 rounded-md hover:border-amber-300 hover:text-amber-900 hover:bg-amber-50/70 transition-colors",
+    card: "text-[10px] font-medium bg-neutral-100 border border-neutral-300 text-black px-2 py-0.5 rounded hover:border-black hover:bg-neutral-200 transition-colors",
+    row: "text-[10px] font-medium bg-neutral-100 border border-neutral-300 text-black px-2 py-0.5 rounded hover:border-black hover:bg-neutral-200 transition-colors",
+    modal: "text-xs font-medium bg-neutral-100 border border-neutral-300 text-black px-2.5 py-1 rounded hover:border-black hover:bg-neutral-200 transition-colors",
   }[variant];
 
   const pillContent = (
@@ -69,7 +69,7 @@ export default function SkillTag({
             e.stopPropagation();
             onClick?.(e);
           }}
-          className="block cursor-pointer focus:outline-none focus:ring-1 focus:ring-amber-500 rounded-md"
+          className="block cursor-pointer focus:outline-none focus:ring-1 focus:ring-black rounded"
           title={`Filter candidates with skill: ${skill}`}
         >
           {pillContent}

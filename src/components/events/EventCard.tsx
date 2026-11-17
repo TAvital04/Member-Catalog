@@ -34,7 +34,7 @@ export default function EventCard({
             {event.category}
           </span>
           {event.partner && (
-            <span className="text-[10px] font-semibold text-amber-800 bg-amber-50 px-3.5 py-1.5 rounded-full border border-amber-200/60 flex items-center gap-1.5">
+            <span className="text-[10px] font-semibold text-black bg-neutral-100 px-3.5 py-1.5 rounded-full border border-neutral-300 flex items-center gap-1.5">
               <Building2 size={12} />
               <span className="truncate max-w-[130px]">{event.partner}</span>
             </span>

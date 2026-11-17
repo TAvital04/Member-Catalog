@@ -3,7 +3,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { ProjectEntry, Student } from "@/data/students";
-import { ExternalLink, Clock } from "lucide-react";
+import { Clock } from "lucide-react";
 import { isRsoProject, findMatchingIeeeProject } from "@/lib/rsoAffiliation";
 import { getSafeUrl } from "@/shared";
 
@@ -85,7 +85,7 @@ export default function ProjectCard({
       tabIndex={isClickable ? 0 : undefined}
       aria-label={isClickable ? `View project modal for ${displayName}` : undefined}
       className={`${CARD_INTERACTIVE} p-4 md:p-5 flex flex-col justify-between gap-3 ${
-        isClickable ? "focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none" : ""
+        isClickable ? "focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none" : ""
       }`}
     >
       <div className="flex flex-col gap-2.5">

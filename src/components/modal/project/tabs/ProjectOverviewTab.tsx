@@ -2,7 +2,6 @@
 
 import React from "react";
 import { IEEEProject } from "@/data/projects";
-import { FolderGit2, Target, Lightbulb, Compass } from "lucide-react";
 import { ProjectTabType } from "../ProjectTabNavigation";
 import { CARD_TITLE_HOVER } from "@/lib/cardStyles";
 

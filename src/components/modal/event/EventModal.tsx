@@ -120,8 +120,8 @@ export default function EventModal({
           {event.category}
         </span>
         {event.partner && (
-          <span className="bg-amber-50 text-amber-900 border border-amber-200/60 text-[10px] font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider flex items-center gap-1.5">
-            <Building2 size={12} className="text-amber-600" />
+          <span className="bg-neutral-100 text-black border border-neutral-300 text-[10px] font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider flex items-center gap-1.5">
+            <Building2 size={12} className="text-black" />
             <span>Partner: {event.partner}</span>
           </span>
         )}
@@ -224,14 +224,14 @@ export default function EventModal({
                 onClick={() => setActiveTab("info")}
                 className={`py-2 px-2.5 font-bold uppercase tracking-wider relative transition-all md:hidden shrink-0 flex items-center gap-1.5 whitespace-nowrap ${
                   activeTab === "info"
-                    ? "text-slate-900 font-extrabold"
-                    : "text-slate-500 hover:text-slate-700 font-semibold"
+                    ? "text-black font-extrabold"
+                    : "text-neutral-500 hover:text-black font-semibold"
                 }`}
               >
-                <Info size={14} className={activeTab === "info" ? "text-amber-500" : "text-slate-400"} />
+                <Info size={14} className={activeTab === "info" ? "text-black" : "text-neutral-400"} />
                 <span>Info</span>
                 {activeTab === "info" && (
-                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 rounded-full"></span>
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-black rounded-full"></span>
                 )}
               </button>
 
@@ -246,13 +246,13 @@ export default function EventModal({
                     onClick={() => setActiveTab(id)}
                     className={`py-2 px-2.5 sm:px-3 font-bold uppercase tracking-wider relative transition-all shrink-0 md:shrink md:flex-1 md:text-center whitespace-nowrap text-xs md:text-xs lg:text-sm ${
                       isActive
-                        ? "text-slate-900 font-extrabold"
-                        : "text-slate-500 hover:text-slate-700 font-semibold"
+                        ? "text-black font-extrabold"
+                        : "text-neutral-500 hover:text-black font-semibold"
                     }`}
                   >
                     <span>{label}</span>
                     {isActive && (
-                      <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 rounded-full"></span>
+                      <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-black rounded-full"></span>
                     )}
                   </button>
                 );
@@ -279,7 +279,7 @@ export default function EventModal({
                       </div>
 
                       <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs">
-                        <ul className="list-disc pl-5 space-y-2 text-xs text-slate-700 font-medium leading-relaxed marker:text-amber-500">
+                        <ul className="list-disc pl-5 space-y-2 text-xs text-slate-700 font-medium leading-relaxed marker:text-black">
                           {event.learningOutcomes.map((item, idx) => (
                             <li key={idx} className="pl-0.5">
                               <span>{item}</span>
@@ -307,7 +307,7 @@ export default function EventModal({
                             key={idx}
                             href={`/?skills=${encodeURIComponent(skill)}`}
                             onClick={() => onClose()}
-                            className="inline-flex items-center gap-1.5 text-xs font-medium bg-slate-50 hover:bg-amber-50 text-slate-700 hover:text-amber-900 px-3 py-1.5 rounded-full border border-slate-200 hover:border-amber-300 transition-all cursor-pointer group shadow-2xs"
+                            className="inline-flex items-center gap-1.5 text-xs font-medium bg-neutral-100 hover:bg-neutral-200 text-black px-3 py-1.5 rounded-full border border-neutral-300 hover:border-black transition-all cursor-pointer group shadow-2xs"
                           >
                             <span>{skill}</span>
                           </Link>
@@ -322,7 +322,7 @@ export default function EventModal({
                     className="p-4 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer shadow-2xs flex items-center justify-between group mt-1"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-xl bg-slate-100 text-slate-700 group-hover:bg-amber-50 group-hover:text-amber-800 transition-colors">
+                      <div className="p-2 rounded-xl bg-neutral-100 text-black group-hover:bg-neutral-200 transition-colors">
                         <Users size={16} />
                       </div>
                       <div>

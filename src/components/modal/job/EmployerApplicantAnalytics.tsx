@@ -182,11 +182,11 @@ export default function EmployerApplicantAnalytics({
         {/* Tile 2: Pipeline Conversion Rate */}
         <div className="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col justify-between gap-1">
           <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1">
-            <TrendingUp size={12} className="text-purple-500" />
+            <TrendingUp size={12} className="text-black" />
             <span>Interview/Offer Rate</span>
           </span>
           <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-2xl font-black text-purple-700">{conversionRate}%</span>
+            <span className="text-2xl font-black text-black">{conversionRate}%</span>
             <span className="text-[11px] font-semibold text-slate-500">
               ({advancedCount} advanced)
             </span>
@@ -196,7 +196,7 @@ export default function EmployerApplicantAnalytics({
         {/* Tile 3: Top Major Representation */}
         <div className="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col justify-between gap-1">
           <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1">
-            <GraduationCap size={12} className="text-amber-600" />
+            <GraduationCap size={12} className="text-black" />
             <span>Top Degree</span>
           </span>
           <div className="flex items-baseline gap-2 mt-1">
@@ -214,7 +214,7 @@ export default function EmployerApplicantAnalytics({
         {/* Tile 4: Primary Graduation Year */}
         <div className="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col justify-between gap-1">
           <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1">
-            <Award size={12} className="text-emerald-600" />
+            <Award size={12} className="text-black" />
             <span>Leading Cohort</span>
           </span>
           <div className="flex items-baseline gap-2 mt-1">
@@ -222,7 +222,7 @@ export default function EmployerApplicantAnalytics({
               {gradStats[0]?.[0] || "N/A"}
             </span>
             {gradStats[0] && (
-              <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 font-bold shrink-0">
+              <span className="text-[11px] font-semibold text-black bg-neutral-100 px-2 py-0.5 rounded-full border border-neutral-300 font-bold shrink-0">
                 Full-time Ready
               </span>
             )}
@@ -253,11 +253,11 @@ export default function EmployerApplicantAnalytics({
                 {majorStats.map(([major, count], idx) => {
                   const percent = Math.round((count / (filteredApps.length || 1)) * 100);
                   const colors = [
-                    "bg-amber-500",
-                    "bg-sky-500",
-                    "bg-emerald-500",
-                    "bg-purple-500",
-                    "bg-rose-500",
+                    "bg-black",
+                    "bg-neutral-600",
+                    "bg-neutral-400",
+                    "bg-neutral-300",
+                    "bg-neutral-200",
                   ];
                   return (
                     <div
@@ -281,18 +281,18 @@ export default function EmployerApplicantAnalytics({
               majorStats.map(([major, count], idx) => {
                 const percent = Math.round((count / (filteredApps.length || 1)) * 100);
                 const barColors = [
-                  "bg-amber-500",
-                  "bg-sky-500",
-                  "bg-emerald-500",
-                  "bg-purple-500",
-                  "bg-rose-500",
+                  "bg-black",
+                  "bg-neutral-600",
+                  "bg-neutral-400",
+                  "bg-neutral-300",
+                  "bg-neutral-200",
                 ];
                 const dotColors = [
-                  "bg-amber-500",
-                  "bg-sky-500",
-                  "bg-emerald-500",
-                  "bg-purple-500",
-                  "bg-rose-500",
+                  "bg-black",
+                  "bg-neutral-600",
+                  "bg-neutral-400",
+                  "bg-neutral-300",
+                  "bg-neutral-200",
                 ];
                 return (
                   <div key={major} className="flex flex-col gap-1 text-xs">
@@ -347,7 +347,7 @@ export default function EmployerApplicantAnalytics({
                     {/* Visual Bar */}
                     <div className="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
                       <div
-                        className="h-full rounded-full bg-amber-500 transition-all duration-500"
+                        className="h-full rounded-full bg-black transition-all duration-500"
                         style={{ width: `${percent}%` }}
                       />
                     </div>
@@ -370,58 +370,58 @@ export default function EmployerApplicantAnalytics({
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            <div className="p-3.5 rounded-xl bg-sky-50/70 border border-sky-200/80 flex items-center justify-between">
+            <div className="p-3.5 rounded-xl bg-neutral-100 border border-neutral-300 flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-bold text-sky-800 uppercase tracking-wider block">
+                <span className="text-[10px] font-bold text-neutral-600 uppercase tracking-wider block">
                   1. Submitted
                 </span>
-                <span className="text-xl font-black text-sky-950 mt-0.5 block">
+                <span className="text-xl font-black text-black mt-0.5 block">
                   {statusStats["Submitted"]}
                 </span>
               </div>
-              <span className="text-xs font-bold text-sky-700">
+              <span className="text-xs font-bold text-black">
                 {Math.round(((statusStats["Submitted"] || 0) / (filteredApps.length || 1)) * 100)}%
               </span>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-amber-50/70 border border-amber-200/80 flex items-center justify-between">
+            <div className="p-3.5 rounded-xl bg-neutral-100 border border-neutral-300 flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-bold text-amber-800 uppercase tracking-wider block">
+                <span className="text-[10px] font-bold text-neutral-600 uppercase tracking-wider block">
                   2. Under Review
                 </span>
-                <span className="text-xl font-black text-amber-950 mt-0.5 block">
+                <span className="text-xl font-black text-black mt-0.5 block">
                   {statusStats["Under Review"]}
                 </span>
               </div>
-              <span className="text-xs font-bold text-amber-700">
+              <span className="text-xs font-bold text-black">
                 {Math.round(((statusStats["Under Review"] || 0) / (filteredApps.length || 1)) * 100)}%
               </span>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-purple-50/70 border border-purple-200/80 flex items-center justify-between">
+            <div className="p-3.5 rounded-xl bg-neutral-100 border border-neutral-300 flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-bold text-purple-800 uppercase tracking-wider block">
+                <span className="text-[10px] font-bold text-neutral-600 uppercase tracking-wider block">
                   3. Interviewing
                 </span>
-                <span className="text-xl font-black text-purple-950 mt-0.5 block">
+                <span className="text-xl font-black text-black mt-0.5 block">
                   {statusStats["Interviewing"]}
                 </span>
               </div>
-              <span className="text-xs font-bold text-purple-700">
+              <span className="text-xs font-bold text-black">
                 {Math.round(((statusStats["Interviewing"] || 0) / (filteredApps.length || 1)) * 100)}%
               </span>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-200/80 flex items-center justify-between">
+            <div className="p-3.5 rounded-xl bg-neutral-100 border border-neutral-300 flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider block">
+                <span className="text-[10px] font-bold text-neutral-600 uppercase tracking-wider block">
                   4. Offers Extended
                 </span>
-                <span className="text-xl font-black text-emerald-950 mt-0.5 block">
+                <span className="text-xl font-black text-black mt-0.5 block">
                   {statusStats["Offered"]}
                 </span>
               </div>
-              <span className="text-xs font-bold text-emerald-700">
+              <span className="text-xs font-bold text-black">
                 {Math.round(((statusStats["Offered"] || 0) / (filteredApps.length || 1)) * 100)}%
               </span>
             </div>
@@ -452,7 +452,7 @@ export default function EmployerApplicantAnalytics({
                   </div>
                   <div className="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
                     <div
-                      className="h-full rounded-full bg-emerald-500 transition-all duration-500"
+                      className="h-full rounded-full bg-black transition-all duration-500"
                       style={{ width: `${percent}%` }}
                     />
                   </div>
@@ -480,7 +480,7 @@ export default function EmployerApplicantAnalytics({
               key={projectName}
               className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center gap-2 text-xs font-semibold text-slate-800 shadow-2xs"
             >
-              <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+              <CheckCircle2 size={13} className="text-black shrink-0" />
               <span className="truncate">{projectName}</span>
             </div>
           ))}

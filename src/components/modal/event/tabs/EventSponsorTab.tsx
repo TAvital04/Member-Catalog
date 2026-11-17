@@ -137,7 +137,7 @@ ${sponsorMessage || "Interested in learning more about corporate workshop sponso
               className={`${CARD_INTERACTIVE} p-4 flex flex-col justify-between gap-2.5`}
             >
               <div className="flex items-start gap-2.5">
-                <div className="p-1 rounded-lg bg-amber-50 text-amber-700 border border-amber-200/60 shrink-0 mt-0.5">
+                <div className="p-1 rounded-lg bg-neutral-100 text-black border border-neutral-300 shrink-0 mt-0.5">
                   <CheckCircle2 size={13} />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -151,7 +151,7 @@ ${sponsorMessage || "Interested in learning more about corporate workshop sponso
               </div>
               <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-500 font-mono">
                 <span>{benefit.tag}</span>
-                <span className="text-amber-600 font-semibold">Included</span>
+                <span className="text-black font-semibold">Included</span>
               </div>
             </div>
           ))}
@@ -171,8 +171,8 @@ ${sponsorMessage || "Interested in learning more about corporate workshop sponso
         </div>
 
         {submitStatus === "success" && (
-          <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2">
-            <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+          <div className="p-3.5 rounded-xl bg-neutral-100 border border-neutral-300 text-black text-xs flex items-center gap-2">
+            <CheckCircle2 size={16} className="text-black shrink-0" />
             <span>
               Thank you! Your event sponsorship inquiry has been routed to the IEEE UCF corporate relations committee. We will reach out shortly.
             </span>
@@ -197,7 +197,7 @@ ${sponsorMessage || "Interested in learning more about corporate workshop sponso
                 value={sponsorName}
                 onChange={(e) => setSponsorName(e.target.value)}
                 placeholder="e.g. Jane Doe"
-                className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:bg-white focus:outline-none focus:border-amber-500 transition-colors"
+                className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:bg-white focus:outline-none focus:border-black transition-colors"
               />
             </div>
             <div className="flex flex-col gap-1">
@@ -207,7 +207,7 @@ ${sponsorMessage || "Interested in learning more about corporate workshop sponso
                 value={sponsorCompany}
                 onChange={(e) => setSponsorCompany(e.target.value)}
                 placeholder="e.g. Lockheed Martin, TI, or Independent"
-                className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:bg-white focus:outline-none focus:border-amber-500 transition-colors"
+                className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:bg-white focus:outline-none focus:border-black transition-colors"
               />
             </div>
           </div>
@@ -215,7 +215,7 @@ ${sponsorMessage || "Interested in learning more about corporate workshop sponso
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="flex flex-col gap-1">
               <label className="text-[11px] font-bold text-slate-700">
-                Work Email <span className="text-red-500">*</span>
+                Work Email <span className="text-black font-bold">*</span>
               </label>
               <input
                 type="text"
@@ -224,7 +224,7 @@ ${sponsorMessage || "Interested in learning more about corporate workshop sponso
                 value={sponsorEmail}
                 onChange={(e) => setSponsorEmail(e.target.value)}
                 placeholder="jane@company.com"
-                className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:bg-white focus:outline-none focus:border-amber-500 transition-colors"
+                className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:bg-white focus:outline-none focus:border-black transition-colors"
               />
             </div>
             <div className="flex flex-col gap-1">
@@ -252,14 +252,14 @@ ${sponsorMessage || "Interested in learning more about corporate workshop sponso
               value={sponsorMessage}
               onChange={(e) => setSponsorMessage(e.target.value)}
               placeholder="Tell us what technologies or roles you are looking to spotlight..."
-              className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:bg-white focus:outline-none focus:border-amber-500 transition-colors resize-none"
+              className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:bg-white focus:outline-none focus:border-black transition-colors resize-none"
             />
           </div>
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full sm:w-auto self-end px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 disabled:opacity-50 text-slate-950 text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer mt-1"
+            className="w-full sm:w-auto self-end px-5 py-2.5 rounded-xl bg-black hover:bg-neutral-800 disabled:opacity-50 text-white text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer mt-1"
           >
             <Send size={13} />
             <span>{isSubmitting ? "Submitting Inquiry..." : "Submit Event Sponsorship Inquiry"}</span>

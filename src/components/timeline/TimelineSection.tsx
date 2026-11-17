@@ -15,8 +15,7 @@ export default function TimelineSection({ student, formatDateStr }: TimelineSect
   return (
     <div className="flex flex-col gap-6 animate-fade-in pt-1 pb-4">
       {/* Section Header */}
-      <div className="flex items-center gap-2 text-zinc-200 font-extrabold text-xs uppercase tracking-wider py-1 leading-normal">
-        <BookOpen size={14} className="text-amber-500 shrink-0" />
+      <div className="flex items-center gap-2 text-black font-extrabold text-xs uppercase tracking-wider py-1 leading-normal">
         <span>Academic, Professional & Leadership History</span>
       </div>
 
@@ -25,7 +24,7 @@ export default function TimelineSection({ student, formatDateStr }: TimelineSect
         <TimelineCategory
           title="Academic Pathway"
           icon={<Award size={13} />}
-          headerTextColorClass="text-purple-400"
+          headerTextColorClass="text-black"
           hasItems={student.education.length > 0}
           emptyMessage="No academic entries."
         >
@@ -51,7 +50,7 @@ export default function TimelineSection({ student, formatDateStr }: TimelineSect
         <TimelineCategory
           title="Professional Roles"
           icon={<Briefcase size={13} />}
-          headerTextColorClass="text-blue-400"
+          headerTextColorClass="text-black"
           hasItems={student.workExperiences.length > 0}
           emptyMessage="No professional entries."
         >
@@ -74,7 +73,7 @@ export default function TimelineSection({ student, formatDateStr }: TimelineSect
         <TimelineCategory
           title="Clubs & Leadership"
           icon={<Flame size={13} />}
-          headerTextColorClass="text-amber-400"
+          headerTextColorClass="text-black"
           hasItems={student.clubs.length > 0}
           emptyMessage="No leadership roles."
         >

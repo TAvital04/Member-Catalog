@@ -57,12 +57,7 @@ export default function SponsorDetailView({
   const { sponsor, projects, events, jobs, skills, interactions } = relations;
   const [activeTab, setActiveTab] = useState<SponsorSubTab>("initiatives");
 
-  const tierColor =
-    sponsor.tier === "Platinum"
-      ? "bg-amber-50 text-amber-800 border-amber-300 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/30"
-      : sponsor.tier === "Gold"
-      ? "bg-yellow-50 text-yellow-800 border-yellow-300 dark:bg-yellow-500/10 dark:text-yellow-400 dark:border-yellow-500/30"
-      : "bg-slate-100 text-slate-700 border-slate-300 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700";
+  const tierColor = "bg-white text-black border-neutral-300 font-bold";
 
   const subTabOptions = [
     { value: "initiatives" as const, label: `Initiatives (${sponsor.initiatives.length})`, icon: <Sparkles size={13} /> },
@@ -149,7 +144,7 @@ export default function SponsorDetailView({
       <div className="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-5">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-400 font-black text-xl flex items-center justify-center shrink-0 shadow-2xs">
+            <div className="w-16 h-16 rounded-2xl bg-neutral-100 border border-neutral-300 text-black font-black text-xl flex items-center justify-center shrink-0 shadow-2xs">
               {sponsor.logoText}
             </div>
             <div>
@@ -209,7 +204,7 @@ export default function SponsorDetailView({
             onClick={() => handleTabChange("initiatives")}
             className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 text-center transition-all cursor-pointer group"
           >
-            <span className="block text-base font-black text-slate-900 group-hover:text-amber-600 transition-colors">
+            <span className="block text-base font-black text-slate-900 group-hover:text-black transition-colors">
               {sponsor.initiatives.length}
             </span>
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mt-0.5">
@@ -222,7 +217,7 @@ export default function SponsorDetailView({
             onClick={() => handleTabChange("projects")}
             className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 text-center transition-all cursor-pointer group"
           >
-            <span className="block text-base font-black text-slate-900 group-hover:text-amber-600 transition-colors">
+            <span className="block text-base font-black text-slate-900 group-hover:text-black transition-colors">
               {projects.length}
             </span>
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mt-0.5">
@@ -235,7 +230,7 @@ export default function SponsorDetailView({
             onClick={() => handleTabChange("events")}
             className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 text-center transition-all cursor-pointer group"
           >
-            <span className="block text-base font-black text-slate-900 group-hover:text-amber-600 transition-colors">
+            <span className="block text-base font-black text-slate-900 group-hover:text-black transition-colors">
               {events.length}
             </span>
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mt-0.5">
@@ -248,7 +243,7 @@ export default function SponsorDetailView({
             onClick={() => handleTabChange("jobs")}
             className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 text-center transition-all cursor-pointer group"
           >
-            <span className="block text-base font-black text-slate-900 group-hover:text-amber-600 transition-colors">
+            <span className="block text-base font-black text-slate-900 group-hover:text-black transition-colors">
               {jobs.length}
             </span>
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mt-0.5">
@@ -261,7 +256,7 @@ export default function SponsorDetailView({
             onClick={() => handleTabChange("skills")}
             className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 text-center transition-all cursor-pointer group"
           >
-            <span className="block text-base font-black text-slate-900 group-hover:text-amber-600 transition-colors">
+            <span className="block text-base font-black text-slate-900 group-hover:text-black transition-colors">
               {skills.length}
             </span>
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mt-0.5">
@@ -274,7 +269,7 @@ export default function SponsorDetailView({
             onClick={() => handleTabChange("interactions")}
             className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 text-center transition-all cursor-pointer group"
           >
-            <span className="block text-base font-black text-slate-900 group-hover:text-amber-600 transition-colors">
+            <span className="block text-base font-black text-slate-900 group-hover:text-black transition-colors">
               {interactions.length}
             </span>
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mt-0.5">
@@ -441,7 +436,7 @@ export default function SponsorDetailView({
                 <Link
                   key={idx}
                   href={`/?skills=${encodeURIComponent(skill)}`}
-                  className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-amber-500/15 border border-slate-200 hover:border-amber-500/40 text-xs font-mono font-medium text-slate-800 hover:text-amber-900 transition-all cursor-pointer shadow-2xs inline-flex items-center"
+                  className="px-3 py-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 hover:border-black text-xs font-mono font-medium text-black transition-all cursor-pointer shadow-2xs inline-flex items-center"
                 >
                   <span>{skill}</span>
                 </Link>

@@ -75,7 +75,7 @@ function StudentRow({
                 <Trash2 size={11} />
               </button>
             )}
-            <div className="flex items-center justify-center p-1 bg-amber-50 border border-amber-200 rounded text-amber-700">
+            <div className="flex items-center justify-center p-1 bg-neutral-100 border border-neutral-300 rounded text-black">
               <Eye size={12} />
             </div>
           </div>

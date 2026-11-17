@@ -71,7 +71,7 @@ export default function JobFilters({
                   onClick={() => setSelectedLocationType(loc)}
                   className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition-all cursor-pointer shadow-2xs ${
                     isSelected
-                      ? "bg-amber-500/15 border-amber-500 text-slate-900 font-bold"
+                      ? "bg-black text-white border-black font-bold"
                       : "bg-slate-100 hover:bg-slate-200/80 border-slate-200 text-slate-700"
                   }`}
                 >
@@ -96,7 +96,7 @@ export default function JobFilters({
                 onClick={() => setSelectedSkill(isSelected ? null : skill)}
                 className={`px-2 py-0.5 rounded-lg text-[10.5px] font-semibold border transition-all cursor-pointer shadow-2xs ${
                   isSelected
-                    ? "bg-amber-500/20 border-amber-500 text-amber-800 dark:text-amber-400 font-bold"
+                    ? "bg-black text-white border-black font-bold"
                     : "bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-700"
                 }`}
               >
@@ -108,7 +108,7 @@ export default function JobFilters({
             <button
               type="button"
               onClick={() => setSelectedSkill(null)}
-              className="text-[11px] font-bold text-amber-700 hover:text-amber-900 underline ml-1 cursor-pointer"
+              className="text-[11px] font-bold text-black hover:underline ml-1 cursor-pointer"
             >
               Clear
             </button>

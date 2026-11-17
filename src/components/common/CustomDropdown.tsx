@@ -119,8 +119,8 @@ export default function CustomDropdown({
 
   const surfaceClasses =
     variant === "input"
-      ? "border border-slate-200 hover:border-slate-300 bg-slate-50 text-slate-900 font-medium focus:ring-2 focus:ring-amber-500"
-      : "border border-slate-200 bg-slate-100/90 hover:bg-slate-200/80 text-slate-800 font-semibold shadow-2xs focus:ring-2 focus:ring-amber-500/20";
+      ? "border border-neutral-300 hover:border-black bg-white text-black font-medium focus:ring-1 focus:ring-black"
+      : "border border-neutral-300 bg-white hover:border-black text-black font-semibold focus:ring-1 focus:ring-black";
 
   const alignClasses = align === "right" ? "right-0" : "left-0";
 
@@ -233,7 +233,7 @@ export default function CustomDropdown({
                 </div>
 
                 {isSelected && (
-                  <Check size={13} className="text-amber-600 shrink-0 ml-1" />
+                  <Check size={13} className="text-black shrink-0 ml-1" />
                 )}
               </button>
             );

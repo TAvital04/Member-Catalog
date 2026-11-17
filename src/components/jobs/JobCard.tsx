@@ -40,7 +40,7 @@ export default function JobCard({
       <div className="flex flex-col gap-2.5">
         <div className="flex items-start justify-between gap-2.5">
           <div className="flex items-center gap-2.5 min-w-0">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-700 font-black text-xs flex items-center justify-center shrink-0 shadow-2xs">
+            <div className="w-10 h-10 rounded-xl bg-neutral-100 border border-neutral-300 text-black font-black text-xs flex items-center justify-center shrink-0 shadow-2xs">
               {job.companyLogo || job.companyName.slice(0, 2).toUpperCase()}
             </div>
             <div className="min-w-0">
@@ -65,7 +65,7 @@ export default function JobCard({
             <span>{job.employmentType}</span>
           </span>
           {job.salaryRange && (
-            <span className="px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 font-semibold shadow-2xs">
+            <span className="px-2 py-0.5 rounded-full bg-neutral-100 border border-neutral-300 text-black font-semibold shadow-2xs">
               {job.salaryRange}
             </span>
           )}
@@ -92,8 +92,8 @@ export default function JobCard({
       {/* Footer / Application Status */}
       <div className="pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs">
         {hasApplied ? (
-          <span className="flex items-center gap-1.5 text-emerald-700 font-bold text-[11px]">
-            <CheckCircle2 size={13} className="text-emerald-600" />
+          <span className="flex items-center gap-1.5 text-black font-bold text-[11px]">
+            <CheckCircle2 size={13} className="text-black" />
             <span>Applied ({application?.status || "Submitted"})</span>
           </span>
         ) : (

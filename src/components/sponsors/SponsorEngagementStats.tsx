@@ -84,11 +84,11 @@ export default function SponsorEngagementStats({
   }
 
   const barColors = [
-    "bg-amber-500",
-    "bg-sky-500",
-    "bg-emerald-500",
-    "bg-purple-500",
-    "bg-rose-500",
+    "bg-black",
+    "bg-neutral-600",
+    "bg-neutral-400",
+    "bg-neutral-300",
+    "bg-neutral-200",
   ];
 
   return (
@@ -188,7 +188,7 @@ export default function SponsorEngagementStats({
                     <div className="flex items-center justify-between font-semibold gap-2">
                       <Link
                         href={`/?skills=${encodeURIComponent(skill)}`}
-                        className="text-slate-800 hover:text-amber-600 font-bold truncate transition-colors"
+                        className="text-slate-800 hover:text-black font-bold truncate transition-colors"
                       >
                         <span>{skill}</span>
                       </Link>
@@ -199,7 +199,7 @@ export default function SponsorEngagementStats({
                     </div>
                     <div className="w-full h-1.5 rounded-full bg-slate-100 overflow-hidden">
                       <div
-                        className="h-full rounded-full bg-emerald-500 transition-all duration-500"
+                        className="h-full rounded-full bg-black transition-all duration-500"
                         style={{ width: `${percent}%` }}
                       />
                     </div>
@@ -232,7 +232,7 @@ export default function SponsorEngagementStats({
                     <div className="flex items-center justify-between font-semibold gap-2">
                       <Link
                         href={`/?skills=${encodeURIComponent(skill)}`}
-                        className="text-slate-800 hover:text-amber-600 font-bold truncate transition-colors"
+                        className="text-slate-800 hover:text-black font-bold truncate transition-colors"
                       >
                         <span>{skill}</span>
                       </Link>
@@ -243,7 +243,7 @@ export default function SponsorEngagementStats({
                     </div>
                     <div className="w-full h-1.5 rounded-full bg-slate-100 overflow-hidden">
                       <div
-                        className="h-full rounded-full bg-amber-500 transition-all duration-500"
+                        className="h-full rounded-full bg-black transition-all duration-500"
                         style={{ width: `${percent}%` }}
                       />
                     </div>

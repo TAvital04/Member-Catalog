@@ -121,7 +121,7 @@ export default function LeadershipSponsorForm({
         <div className="p-6 border-b border-slate-200/80 bg-slate-50/70 flex items-center gap-3.5 shrink-0 pr-12">
           <div>
             <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-700">
+              <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border border-black bg-white text-black">
                 <span>RSO Leadership • Form 1</span>
               </span>
             </div>
@@ -157,7 +157,7 @@ export default function LeadershipSponsorForm({
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Raytheon Technologies"
-                  className="w-full h-[36px] px-3.5 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full h-[36px] px-3.5 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:ring-1 focus:ring-black"
                 />
               </div>
 
@@ -198,7 +198,7 @@ export default function LeadershipSponsorForm({
                 value={tagline}
                 onChange={(e) => setTagline(e.target.value)}
                 placeholder="e.g. Defense Radar, Avionics & Precision Guidance Systems"
-                className="w-full px-3.5 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-3.5 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:ring-1 focus:ring-black"
               />
             </div>
 
@@ -219,7 +219,7 @@ export default function LeadershipSponsorForm({
                     value={website}
                     onChange={(e) => setWebsite(e.target.value)}
                     placeholder="https://www.rtx.com"
-                    className="w-full pl-9 pr-3.5 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full pl-9 pr-3.5 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:ring-1 focus:ring-black"
                   />
                 </div>
               </div>
@@ -240,7 +240,7 @@ export default function LeadershipSponsorForm({
                     value={careersUrl}
                     onChange={(e) => setCareersUrl(e.target.value)}
                     placeholder="https://careers.rtx.com"
-                    className="w-full pl-9 pr-3.5 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full pl-9 pr-3.5 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:ring-1 focus:ring-black"
                   />
                 </div>
               </div>
@@ -278,7 +278,7 @@ export default function LeadershipSponsorForm({
                     value={contactEmail}
                     onChange={(e) => setContactEmail(e.target.value)}
                     placeholder="recruiting@rtx.com"
-                    className="w-full pl-9 pr-3.5 py-2 text-xs rounded-xl bg-white border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full pl-9 pr-3.5 py-2 text-xs rounded-xl bg-white border border-slate-200 text-slate-900 focus:outline-none focus:ring-1 focus:ring-black"
                   />
                 </div>
               </div>
@@ -299,7 +299,7 @@ export default function LeadershipSponsorForm({
                     value={sponsorLoginPassword}
                     onChange={(e) => setSponsorLoginPassword(e.target.value)}
                     placeholder="ieee-sponsor-access"
-                    className="w-full pl-9 pr-3.5 py-2 text-xs font-mono rounded-xl bg-white border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full pl-9 pr-3.5 py-2 text-xs font-mono rounded-xl bg-white border border-slate-200 text-slate-900 focus:outline-none focus:ring-1 focus:ring-black"
                   />
                 </div>
               </div>
@@ -325,7 +325,7 @@ export default function LeadershipSponsorForm({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-xs transition-all shadow-xs cursor-pointer flex items-center gap-2 disabled:opacity-50"
+              className="px-5 py-2.5 rounded-lg bg-black hover:bg-neutral-800 text-white font-bold text-xs transition-all cursor-pointer flex items-center gap-2 disabled:opacity-50"
             >
               {isSubmitting ? (
                 <>

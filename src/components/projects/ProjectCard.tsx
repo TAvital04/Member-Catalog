@@ -43,7 +43,7 @@ export default function ProjectCard({
           onOpenModal(project, "overview");
         }
       }}
-      className={`${CARD_INTERACTIVE} p-6 flex flex-col justify-between gap-5 relative group focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500`}
+      className={`${CARD_INTERACTIVE} p-6 flex flex-col justify-between gap-5 relative group focus:outline-none focus-visible:ring-2 focus-visible:ring-black`}
     >
       <div className="flex flex-col gap-4">
         {/* Header Badges */}
@@ -54,12 +54,12 @@ export default function ProjectCard({
           <span
             className={`text-[10px] font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider flex items-center gap-1.5 ${
               project.status === "Completed"
-                ? "bg-emerald-50 text-emerald-800 border border-emerald-200/70"
+                ? "bg-neutral-100 text-black border border-neutral-300 font-bold"
                 : "bg-slate-100 text-slate-700 border border-slate-200"
             }`}
           >
             {project.status === "Completed" ? (
-              <CheckCircle2 size={11} className="text-emerald-600" />
+              <CheckCircle2 size={11} className="text-black" />
             ) : (
               <Clock size={11} className="text-slate-400" />
             )}
@@ -96,7 +96,7 @@ export default function ProjectCard({
                   e.stopPropagation();
                   onOpenModal(project, "tools");
                 }}
-                className="text-[10px] font-bold text-slate-500 hover:text-amber-500 uppercase tracking-wider flex items-center gap-1 transition-colors cursor-pointer group/stack text-left"
+                className="text-[10px] font-bold text-slate-500 hover:text-black uppercase tracking-wider flex items-center gap-1 transition-colors cursor-pointer group/stack text-left"
               >
                 <span>Key Tech Stack ({project.tools.length})</span>
               </button>
@@ -107,7 +107,7 @@ export default function ProjectCard({
                   key={idx}
                   href={`/?skills=${encodeURIComponent(tool.name)}`}
                   onClick={(e) => e.stopPropagation()}
-                  className="px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 hover:border-amber-300 hover:text-amber-900 hover:bg-amber-50/70 text-[10.5px] font-mono font-medium text-slate-700 transition-colors cursor-pointer inline-block"
+                  className="px-2.5 py-1 rounded-lg bg-neutral-100 border border-neutral-300 hover:border-black text-[10.5px] font-mono font-medium text-black transition-colors cursor-pointer inline-block"
                 >
                   <span>{tool.name}</span>
                 </Link>
@@ -119,7 +119,7 @@ export default function ProjectCard({
                     e.stopPropagation();
                     onOpenModal(project, "tools");
                   }}
-                  className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-amber-500/15 border border-slate-200 hover:border-amber-500/40 text-[10.5px] font-medium text-slate-600 hover:text-amber-500 transition-all cursor-pointer active:scale-95 shadow-2xs"
+                  className="px-2.5 py-1 rounded-lg bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 hover:border-black text-[10.5px] font-medium text-black transition-all cursor-pointer active:scale-95 shadow-2xs"
                   aria-label={`Show more tools and skills for ${project.title}`}
                 >
                   <span>+{project.tools.length - 4} more</span>

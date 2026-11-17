@@ -37,7 +37,7 @@ export default function ModalTabNavigation({
       >
         Overview
         {activeTab === "about" && (
-          <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 rounded-full"></span>
+          <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-black rounded-full"></span>
         )}
       </button>
 
@@ -56,13 +56,13 @@ export default function ModalTabNavigation({
             onClick={() => setActiveTab(tab)}
             className={`py-2 px-3 font-bold uppercase tracking-wider relative transition-all shrink-0 md:shrink md:flex-1 md:text-center ${
               activeTab === tab
-                ? "text-slate-900 font-extrabold"
-                : "text-slate-500 hover:text-slate-700 font-semibold"
+                ? "text-black font-extrabold"
+                : "text-neutral-500 hover:text-black font-semibold"
             }`}
           >
             {label}
             {activeTab === tab && (
-              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 rounded-full"></span>
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-black rounded-full"></span>
             )}
           </button>
         );

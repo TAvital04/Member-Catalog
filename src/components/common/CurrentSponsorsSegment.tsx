@@ -1,10 +1,8 @@
 "use client";
 
 import React from "react";
-import { Building2, ExternalLink } from "lucide-react";
 import { CURRENT_CHAPTER_SPONSORS } from "@/data/sponsors";
 import { CARD_HOVER_EFFECT } from "@/lib/cardStyles";
-import Tooltip from "@/components/common/Tooltip";
 
 interface CurrentSponsorsSegmentProps {
   variant?: "panel" | "full";
@@ -35,7 +33,7 @@ export default function CurrentSponsorsSegment({
             >
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
-                  <span className="text-xs font-bold text-slate-900 group-hover:text-amber-800 transition-colors truncate">
+                  <span className="text-xs font-bold text-slate-900 transition-colors truncate">
                     {sponsor.name}
                   </span>
                 </div>
@@ -69,7 +67,7 @@ export default function CurrentSponsorsSegment({
             className={`p-3 rounded-2xl bg-white border border-slate-200/90 flex items-center justify-between gap-2 text-left group ${CARD_HOVER_EFFECT}`}
           >
             <div className="min-w-0">
-              <span className="text-xs font-bold text-slate-900 group-hover:text-amber-800 transition-colors block truncate">
+              <span className="text-xs font-bold text-slate-900 transition-colors block truncate">
                 {sponsor.name}
               </span>
               <p className="text-[10.5px] text-slate-500 leading-snug mt-0.5">

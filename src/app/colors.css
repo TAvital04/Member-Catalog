@@ -1,51 +1,51 @@
 :root {
   /* ==========================================================================
-     LIGHT COLOR DESIGN SYSTEM (Clean, High-Clarity, Minimal Visual Noise)
+     MONOCHROME TWO-COLOR DESIGN SYSTEM (Black & White, Ultra-Minimalist)
      ========================================================================== */
 
   /* The Base Surfaces & Backgrounds */
-  --bg-app: #f8fafc;           /* Crisp, clean slate-50 canvas */
-  --bg-card: #ffffff;          /* Pure white card surface */
-  --bg-card-inner: #f1f5f9;    /* Light grey inner surface */
-  --border-subtle: #e2e8f0;    /* Crisp 1px slate-200 border */
-  --border-strong: #cbd5e1;    /* Slate-300 border for active/focused elements */
+  --bg-app: #ffffff;           /* Clean pure white canvas */
+  --bg-card: #ffffff;          /* White card surface */
+  --bg-card-inner: #fafafa;    /* Off-white inner surface */
+  --border-subtle: #e5e5e5;    /* 1px clean border */
+  --border-strong: #000000;    /* Solid black border for focused/active elements */
 
   /* Typography */
-  --text-primary: #0f172a;     /* Slate-900 for high-contrast readability */
-  --text-muted: #64748b;       /* Slate-500 for secondary/meta text */
-  --text-dark: #0f172a;
+  --text-primary: #000000;     /* Solid black for maximum readability */
+  --text-muted: #525252;       /* Neutral medium-dark for subheadings/meta */
+  --text-dark: #000000;
 
-  /* Accent UCF Gold / Amber */
-  --accent-gold: #b45309;      /* Amber-700 */
-  --accent-gold-glow: rgba(180, 83, 9, 0.10);
-  --shimmer-bg: #f1f5f9;
-  --shimmer-highlight: rgba(180, 83, 9, 0.10);
+  /* Accent Mappings (Strictly Monochrome) */
+  --accent-gold: #000000;
+  --accent-gold-glow: transparent;
+  --shimmer-bg: #f5f5f5;
+  --shimmer-highlight: rgba(0, 0, 0, 0.05);
 
-  /* Tailwind CSS Utility class integrations */
-  --primary-light: #c27803;
-  --primary: #b45309;
-  --primary-dark: #92400e;
-  --yellow-light: #c27803;
-  --yellow-dark: #92400e;
+  /* Primary Brand Utilities (All Black) */
+  --primary-light: #262626;
+  --primary: #000000;
+  --primary-dark: #000000;
+  --yellow-light: #000000;
+  --yellow-dark: #000000;
 
-  /* Semantic Accent Hues */
-  --purple-light: #6d28d9;
-  --purple-medium: #5b21b6;
-  --blue-light: #1d4ed8;
-  --blue-medium: #1e40af;
-  --emerald-light: #047857;
-  --emerald-medium: #065f46;
-  --red-light: #b91c1c;
-  --red-medium: #991b1b;
+  /* Semantic Accent Hues mapped to Monochrome */
+  --purple-light: #000000;
+  --purple-medium: #000000;
+  --blue-light: #000000;
+  --blue-medium: #000000;
+  --emerald-light: #000000;
+  --emerald-medium: #000000;
+  --red-light: #000000;
+  --red-medium: #000000;
 
-  --accent-purple: #6d28d9;
-  --accent-purple-bg: rgba(109, 40, 217, 0.06);
-  --accent-blue: #1d4ed8;
-  --accent-blue-bg: rgba(29, 78, 216, 0.06);
-  --accent-emerald: #047857;
-  --accent-emerald-bg: rgba(4, 120, 87, 0.06);
-  --accent-red: #b91c1c;
-  --accent-red-bg: rgba(185, 28, 28, 0.06);
+  --accent-purple: #000000;
+  --accent-purple-bg: #f5f5f5;
+  --accent-blue: #000000;
+  --accent-blue-bg: #f5f5f5;
+  --accent-emerald: #000000;
+  --accent-emerald-bg: #f5f5f5;
+  --accent-red: #000000;
+  --accent-red-bg: #f5f5f5;
 
   /* Semantic UI Mappings */
   --background: var(--bg-app);
@@ -59,271 +59,179 @@
   --glass-border: var(--border-subtle);
 
   /* Modal surfaces */
-  --modal-left-bg: #f8fafc;
+  --modal-left-bg: #fafafa;
   --modal-right-bg: #ffffff;
-  --modal-overlay-bg: rgba(15, 23, 42, 0.45);
+  --modal-overlay-bg: rgba(0, 0, 0, 0.6);
 
   /* Scrollbar */
   --scrollbar-track: transparent;
-  --scrollbar-thumb: #cbd5e1;
-  --scrollbar-thumb-hover: #94a3b8;
+  --scrollbar-thumb: #d4d4d4;
+  --scrollbar-thumb-hover: #737373;
 
-  /* Light mode slate palette explicit values */
+  /* Slate palette mapped to Monochrome */
   --color-white: #ffffff;
-  --color-slate-50: #f8fafc;
-  --color-slate-100: #f1f5f9;
-  --color-slate-200: #e2e8f0;
-  --color-slate-300: #cbd5e1;
-  --color-slate-400: #94a3b8;
-  --color-slate-500: #64748b;
-  --color-slate-600: #475569;
-  --color-slate-700: #334155;
-  --color-slate-800: #1e293b;
-  --color-slate-900: #0f172a;
-  --color-slate-950: #020617;
+  --color-slate-50: #fafafa;
+  --color-slate-100: #f5f5f5;
+  --color-slate-200: #e5e5e5;
+  --color-slate-300: #d4d4d4;
+  --color-slate-400: #a3a3a3;
+  --color-slate-500: #737373;
+  --color-slate-600: #525252;
+  --color-slate-700: #404040;
+  --color-slate-800: #262626;
+  --color-slate-900: #000000;
+  --color-slate-950: #000000;
 
-  /* Semantic color badge explicit values (Light mode) */
-  --color-emerald-50: #ecfdf5;
-  --color-emerald-100: #d1fae5;
-  --color-emerald-200: #a7f3d0;
-  --color-emerald-600: #059669;
-  --color-emerald-700: #047857;
-  --color-emerald-800: #065f46;
-  --color-emerald-900: #064e3b;
+  /* Amber -> Monochrome */
+  --color-amber-50: #f5f5f5;
+  --color-amber-100: #e5e5e5;
+  --color-amber-200: #d4d4d4;
+  --color-amber-300: #a3a3a3;
+  --color-amber-400: #737373;
+  --color-amber-500: #000000;
+  --color-amber-600: #000000;
+  --color-amber-700: #000000;
+  --color-amber-800: #000000;
+  --color-amber-900: #000000;
+  --color-amber-950: #000000;
 
-  --color-blue-50: #eff6ff;
-  --color-blue-100: #dbeafe;
-  --color-blue-200: #bfdbfe;
-  --color-blue-300: #93c5fd;
-  --color-blue-600: #2563eb;
-  --color-blue-700: #1d4ed8;
-  --color-blue-800: #1e40af;
-  --color-blue-900: #1e3a8a;
+  /* Emerald -> Monochrome */
+  --color-emerald-50: #f5f5f5;
+  --color-emerald-100: #e5e5e5;
+  --color-emerald-200: #d4d4d4;
+  --color-emerald-400: #737373;
+  --color-emerald-500: #000000;
+  --color-emerald-600: #000000;
+  --color-emerald-700: #000000;
+  --color-emerald-800: #000000;
+  --color-emerald-900: #000000;
 
-  --color-amber-50: #fffbeb;
-  --color-amber-100: #fef3c7;
-  --color-amber-200: #fde68a;
-  --color-amber-300: #fcd34d;
-  --color-amber-400: #fbbf24;
-  --color-amber-700: #b45309;
-  --color-amber-800: #92400e;
-  --color-amber-900: #78350f;
-  --color-amber-950: #451a03;
+  /* Blue -> Monochrome */
+  --color-blue-50: #f5f5f5;
+  --color-blue-100: #e5e5e5;
+  --color-blue-200: #d4d4d4;
+  --color-blue-300: #a3a3a3;
+  --color-blue-400: #737373;
+  --color-blue-500: #000000;
+  --color-blue-600: #000000;
+  --color-blue-700: #000000;
+  --color-blue-800: #000000;
+  --color-blue-900: #000000;
 
-  --color-sky-50: #f0f9ff;
-  --color-sky-100: #e0f2fe;
-  --color-sky-200: #bae6fd;
-  --color-sky-700: #0369a1;
-  --color-sky-800: #075985;
-  --color-sky-900: #0c4a6e;
+  /* Sky -> Monochrome */
+  --color-sky-50: #f5f5f5;
+  --color-sky-100: #e5e5e5;
+  --color-sky-200: #d4d4d4;
+  --color-sky-700: #000000;
+  --color-sky-800: #000000;
+  --color-sky-900: #000000;
 
-  --color-indigo-50: #eef2ff;
-  --color-indigo-100: #e0e7ff;
-  --color-indigo-200: #c7d2fe;
-  --color-indigo-700: #4338ca;
-  --color-indigo-800: #3730a3;
-  --color-indigo-900: #312e81;
+  /* Indigo -> Monochrome */
+  --color-indigo-50: #f5f5f5;
+  --color-indigo-100: #e5e5e5;
+  --color-indigo-200: #d4d4d4;
+  --color-indigo-700: #000000;
+  --color-indigo-800: #000000;
+  --color-indigo-900: #000000;
 
-  --color-purple-50: #faf5ff;
-  --color-purple-100: #f3e8ff;
-  --color-purple-200: #e9d5ff;
-  --color-purple-700: #7e22ce;
-  --color-purple-800: #6b21a8;
+  /* Purple -> Monochrome */
+  --color-purple-50: #f5f5f5;
+  --color-purple-100: #e5e5e5;
+  --color-purple-200: #d4d4d4;
+  --color-purple-400: #737373;
+  --color-purple-500: #000000;
+  --color-purple-700: #000000;
+  --color-purple-800: #000000;
 
-  --color-red-50: #fef2f2;
-  --color-red-100: #fee2e2;
-  --color-red-200: #fecaca;
-  --color-red-600: #dc2626;
-  --color-red-700: #b91c1c;
-  --color-red-800: #991b1b;
+  /* Red -> Monochrome */
+  --color-red-50: #f5f5f5;
+  --color-red-100: #e5e5e5;
+  --color-red-200: #d4d4d4;
+  --color-red-600: #000000;
+  --color-red-700: #000000;
+  --color-red-800: #000000;
 
-  /* Dynamic Zinc scale mapped to light surfaces */
-  --zinc-955: #f8fafc;
+  /* Dynamic Zinc scale mapped to Monochrome */
+  --zinc-955: #ffffff;
   --zinc-950: #ffffff;
-  --zinc-900: #f1f5f9;
+  --zinc-900: #fafafa;
   --zinc-855: #ffffff;
-  --zinc-850: #f8fafc;
-  --zinc-800: #e2e8f0;
-  --zinc-750: #cbd5e1;
-  --zinc-700: #cbd5e1;
-  --zinc-650: #94a3b8;
-  --zinc-600: #64748b;
-  --zinc-550: #64748b;
-  --zinc-500: #64748b;
-  --zinc-450: #475569;
-  --zinc-400: #334155;
-  --zinc-350: #1e293b;
-  --zinc-300: #1e293b;
-  --zinc-205: #0f172a;
-  --zinc-200: #0f172a;
-  --zinc-155: #0f172a;
-  --zinc-150: #0f172a;
-  --zinc-100: #020617;
-  --zinc-50: #020617;
+  --zinc-850: #ffffff;
+  --zinc-800: #e5e5e5;
+  --zinc-750: #d4d4d4;
+  --zinc-700: #a3a3a3;
+  --zinc-650: #737373;
+  --zinc-600: #525252;
+  --zinc-550: #525252;
+  --zinc-500: #404040;
+  --zinc-450: #262626;
+  --zinc-400: #171717;
+  --zinc-350: #000000;
+  --zinc-300: #000000;
+  --zinc-205: #000000;
+  --zinc-200: #000000;
+  --zinc-155: #000000;
+  --zinc-150: #000000;
+  --zinc-100: #000000;
+  --zinc-50: #000000;
 }
 
-/* ==========================================================================
-   DARK WARM BLUE COLOR DESIGN SYSTEM
-   Deep twilight & warm midnight navy surfaces, crisp elevated layers,
-   and glowing warm amber accents.
-   ========================================================================== */
-
+/* Enforce the identical clean monochrome theme in dark mode */
 [data-theme="dark"] {
-  /* The Base Surfaces & Backgrounds */
-  --bg-app: #0b0f19;           /* Deep, warm midnight twilight canvas */
-  --bg-card: #121b2d;          /* Elevated warm dark navy surface */
-  --bg-card-inner: #18233a;    /* Elevated inner card layer */
-  --border-subtle: #223150;    /* Refined 1px warm blue border */
-  --border-strong: #31456d;    /* Active / focused warm blue border */
+  --bg-app: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-inner: #fafafa;
+  --border-subtle: #e5e5e5;
+  --border-strong: #000000;
 
-  /* Typography: Softened, glare-free, highly legible off-white tones */
-  --text-primary: #dbe4f0;     /* Soft warm slate-white, removes piercing glare */
-  --text-muted: #7e94ae;       /* Warm soft slate-blue for secondary text */
-  --text-dark: #dbe4f0;
+  --text-primary: #000000;
+  --text-muted: #525252;
+  --text-dark: #000000;
 
-  /* Accent UCF Gold / Amber (Vibrant and warm on dark blue) */
-  --accent-gold: #f59e0b;      /* Amber-500 */
-  --accent-gold-glow: rgba(245, 158, 11, 0.20);
-  --shimmer-bg: #152035;
-  --shimmer-highlight: rgba(245, 158, 11, 0.18);
+  --accent-gold: #000000;
+  --accent-gold-glow: transparent;
+  --shimmer-bg: #f5f5f5;
+  --shimmer-highlight: rgba(0, 0, 0, 0.05);
 
-  /* Tailwind CSS Utility class integrations - refined warm tones */
-  --primary-light: #fbbf24;    /* Amber-400 */
-  --primary: #f59e0b;          /* Rich Amber-500 */
-  --primary-dark: #d97706;     /* Deep Amber-600 */
-  --yellow-light: #fbbf24;
-  --yellow-dark: #d97706;
+  --primary-light: #262626;
+  --primary: #000000;
+  --primary-dark: #000000;
+  --yellow-light: #000000;
+  --yellow-dark: #000000;
 
-  /* Semantic Accent Hues (Tailored for dark warm blue backgrounds) */
-  --purple-light: #a78bfa;
-  --purple-medium: #8b5cf6;
-  --blue-light: #60a5fa;
-  --blue-medium: #3b82f6;
-  --emerald-light: #34d399;
-  --emerald-medium: #10b981;
-  --red-light: #f87171;
-  --red-medium: #ef4444;
+  --purple-light: #000000;
+  --purple-medium: #000000;
+  --blue-light: #000000;
+  --blue-medium: #000000;
+  --emerald-light: #000000;
+  --emerald-medium: #000000;
+  --red-light: #000000;
+  --red-medium: #000000;
 
-  --accent-purple: #a78bfa;
-  --accent-purple-bg: rgba(167, 139, 250, 0.12);
-  --accent-blue: #60a5fa;
-  --accent-blue-bg: rgba(96, 165, 250, 0.12);
-  --accent-emerald: #34d399;
-  --accent-emerald-bg: rgba(52, 211, 153, 0.12);
-  --accent-red: #f87171;
-  --accent-red-bg: rgba(248, 113, 113, 0.12);
+  --accent-purple: #000000;
+  --accent-purple-bg: #f5f5f5;
+  --accent-blue: #000000;
+  --accent-blue-bg: #f5f5f5;
+  --accent-emerald: #000000;
+  --accent-emerald-bg: #f5f5f5;
+  --accent-red: #000000;
+  --accent-red-bg: #f5f5f5;
 
-  /* Semantic UI Mappings */
   --background: var(--bg-app);
   --foreground: var(--text-primary);
-  --card-bg: var(--bg-card);
+  --card-bg: #ffffff;
   --border-color: var(--border-subtle);
 
-  --grid-line-color: rgba(34, 49, 80, 0.40);
-  --circuit-color: rgba(245, 158, 11, 0.08);
-  --glass-bg: #121b2d;
+  --grid-line-color: transparent;
+  --circuit-color: transparent;
+  --glass-bg: #ffffff;
   --glass-border: var(--border-subtle);
 
-  /* Modal surfaces */
-  --modal-left-bg: rgba(11, 15, 25, 0.70);
-  --modal-right-bg: rgba(11, 15, 25, 0.70);
-  --modal-overlay-bg: rgba(7, 11, 19, 0.80);
+  --modal-left-bg: #fafafa;
+  --modal-right-bg: #ffffff;
+  --modal-overlay-bg: rgba(0, 0, 0, 0.6);
 
-  /* Scrollbar */
   --scrollbar-track: transparent;
-  --scrollbar-thumb: #2a3c61;
-  --scrollbar-thumb-hover: #3b5385;
-
-  /* Direct Tailwind v4 utility overrides in dark warm blue mode */
-  --color-white: #121b2d;         /* bg-white elements become warm dark blue cards */
-  --color-slate-50: #0b0f19;      /* bg-slate-50 canvas becomes deep warm midnight blue */
-  --color-slate-100: #18233a;     /* inputs, secondary tags, pill buttons */
-  --color-slate-200: #223150;     /* borders, dividers */
-  --color-slate-300: #31456d;     /* hover borders, focused states */
-  --color-slate-400: #516680;     /* subtle icons, placeholder text */
-  --color-slate-500: #697f99;     /* captions, metadata labels */
-  --color-slate-600: #7e94ae;     /* readable body copy */
-  --color-slate-700: #94a9c2;     /* high-contrast body text */
-  --color-slate-800: #b8c9dd;     /* subheadings, section labels */
-  --color-slate-900: #dbe4f0;     /* main page headings, titles - softened, glare-free */
-  --color-slate-950: #edf2f7;     /* supreme contrast elements - softened from pure #ffffff */
-
-  /* Semantic color badge / pill overrides for dark mode clarity */
-  --color-emerald-50: rgba(6, 78, 59, 0.28);
-  --color-emerald-100: rgba(6, 78, 59, 0.45);
-  --color-emerald-200: rgba(16, 185, 129, 0.35);
-  --color-emerald-600: #10b981;
-  --color-emerald-700: #34d399;
-  --color-emerald-800: #6ee7b7;
-  --color-emerald-900: #a7f3d0;
-
-  --color-blue-50: rgba(29, 78, 216, 0.22);
-  --color-blue-100: rgba(29, 78, 216, 0.40);
-  --color-blue-200: rgba(59, 130, 246, 0.35);
-  --color-blue-300: rgba(96, 165, 250, 0.45);
-  --color-blue-600: #3b82f6;
-  --color-blue-700: #60a5fa;
-  --color-blue-800: #93c5fd;
-  --color-blue-900: #bfdbfe;
-
-  --color-amber-50: rgba(180, 83, 9, 0.25);
-  --color-amber-100: rgba(180, 83, 9, 0.45);
-  --color-amber-200: rgba(245, 158, 11, 0.35);
-  --color-amber-300: #f59e0b;
-  --color-amber-400: #fbbf24;
-  --color-amber-700: #f59e0b;
-  --color-amber-800: #fbbf24;
-  --color-amber-900: #fde68a;
-  --color-amber-950: #fef3c7;
-
-  --color-sky-50: rgba(3, 105, 161, 0.22);
-  --color-sky-100: rgba(3, 105, 161, 0.40);
-  --color-sky-200: rgba(14, 165, 233, 0.35);
-  --color-sky-700: #0284c7;
-  --color-sky-800: #38bdf8;
-  --color-sky-900: #7dd3fc;
-
-  --color-indigo-50: rgba(67, 56, 202, 0.25);
-  --color-indigo-100: rgba(67, 56, 202, 0.45);
-  --color-indigo-200: rgba(99, 102, 241, 0.35);
-  --color-indigo-700: #6366f1;
-  --color-indigo-800: #818cf8;
-  --color-indigo-900: #a5b4fc;
-
-  --color-purple-50: rgba(109, 40, 217, 0.25);
-  --color-purple-100: rgba(109, 40, 217, 0.45);
-  --color-purple-200: rgba(139, 92, 246, 0.35);
-  --color-purple-700: #8b5cf6;
-  --color-purple-800: #a78bfa;
-
-  --color-red-50: rgba(185, 28, 28, 0.25);
-  --color-red-100: rgba(185, 28, 28, 0.45);
-  --color-red-200: rgba(239, 68, 68, 0.35);
-  --color-red-600: #ef4444;
-  --color-red-700: #f87171;
-  --color-red-800: #fca5a5;
-
-  /* Dynamic Zinc scale mapped to warm dark blue surfaces */
-  --zinc-955: #0b0f19;
-  --zinc-950: #121b2d;
-  --zinc-900: #18233a;
-  --zinc-855: #152035;
-  --zinc-850: #1c2a47;
-  --zinc-800: #223150;
-  --zinc-750: #2a3c61;
-  --zinc-700: #31456d;
-  --zinc-650: #48608e;
-  --zinc-600: #516680;
-  --zinc-550: #5c7490;
-  --zinc-500: #647b95;
-  --zinc-450: #7187a2;
-  --zinc-400: #7e94ae;
-  --zinc-350: #869cb7;
-  --zinc-300: #94a9c2;
-  --zinc-205: #b0c3d9;
-  --zinc-200: #b8c9dd;
-  --zinc-155: #c2d0e0;
-  --zinc-150: #cbd7e6;
-  --zinc-100: #dbe4f0;
-  --zinc-50: #edf2f7;
+  --scrollbar-thumb: #d4d4d4;
+  --scrollbar-thumb-hover: #737373;
 }

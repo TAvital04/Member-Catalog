@@ -37,12 +37,7 @@ export default function SponsorCard({
   isSelected = false,
   onSelect,
 }: SponsorCardProps) {
-  const tierColor =
-    sponsor.tier === "Platinum"
-      ? "bg-amber-50 text-amber-800 border-amber-300 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/30"
-      : sponsor.tier === "Gold"
-      ? "bg-yellow-50 text-yellow-800 border-yellow-300 dark:bg-yellow-500/10 dark:text-yellow-400 dark:border-yellow-500/30"
-      : "bg-slate-100 text-slate-700 border-slate-300 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700";
+  const tierColor = "bg-white text-black border-neutral-300 font-bold";
 
   return (
     <div
@@ -57,14 +52,14 @@ export default function SponsorCard({
         }
       }}
       className={`${CARD_INTERACTIVE} p-6 flex flex-col justify-between gap-5 group ${
-        isSelected ? "ring-2 ring-amber-500 border-amber-500" : ""
+        isSelected ? "ring-2 ring-black border-black" : ""
       }`}
     >
       <div className="flex flex-col gap-3.5">
         {/* Top Header: Logo Initial & Tier Badge */}
         <div className="flex items-start justify-between gap-2.5">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-400 font-black text-sm flex items-center justify-center shrink-0 shadow-2xs">
+            <div className="w-12 h-12 rounded-2xl bg-neutral-100 border border-neutral-300 text-black font-black text-sm flex items-center justify-center shrink-0 shadow-2xs">
               {sponsor.logoText || sponsor.name.slice(0, 2).toUpperCase()}
             </div>
             <div>
@@ -145,7 +140,7 @@ export default function SponsorCard({
           )}
         </div>
 
-        <span className="text-xs font-bold text-slate-800 group-hover:text-amber-800 transition-colors">
+        <span className="text-xs font-bold text-black transition-colors">
           View Hub
         </span>
       </div>

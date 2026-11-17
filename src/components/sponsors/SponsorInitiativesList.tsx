@@ -19,15 +19,15 @@ export default function SponsorInitiativesList({
   const getCategoryIcon = (category: SponsorInitiative["category"]) => {
     switch (category) {
       case "Lab & Hardware Grants":
-        return <Wrench size={14} className="text-amber-600" />;
+        return <Wrench size={14} className="text-black" />;
       case "Technical Workshops":
-        return <Sparkles size={14} className="text-amber-600" />;
+        return <Sparkles size={14} className="text-black" />;
       case "Recruiting & Careers":
-        return <Briefcase size={14} className="text-amber-600" />;
+        return <Briefcase size={14} className="text-black" />;
       case "Capstone Mentorship":
-        return <GraduationCap size={14} className="text-amber-600" />;
+        return <GraduationCap size={14} className="text-black" />;
       default:
-        return <Award size={14} className="text-amber-600" />;
+        return <Award size={14} className="text-black" />;
     }
   };
 
@@ -56,7 +56,7 @@ export default function SponsorInitiativesList({
                 </span>
 
                 {init.metrics && (
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-neutral-100 text-black border border-neutral-300">
                     {init.metrics}
                   </span>
                 )}

@@ -32,7 +32,7 @@ export default function SkillsFilter({
           placeholder="Search skills..."
           value={skillSearch}
           onChange={(e) => setSkillSearch(e.target.value)}
-          className="w-full bg-zinc-950 border border-zinc-800 rounded-lg pl-7 pr-2 py-1 text-[11px] text-zinc-300 focus:outline-none focus:border-amber-500 shadow-inner"
+          className="w-full bg-zinc-950 border border-zinc-800 rounded-lg pl-7 pr-2 py-1 text-[11px] text-zinc-300 focus:outline-none focus:border-black shadow-inner"
         />
       </div>
 
@@ -49,7 +49,7 @@ export default function SkillsFilter({
               onClick={() => onSkillToggle(skill)}
               className={`px-2 py-1 rounded-lg text-[11px] font-medium transition-all flex items-center gap-1.5 select-none cursor-pointer max-w-full ${
                 isSelected
-                  ? "bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-sm"
+                  ? "bg-black text-white border border-black shadow-sm"
                   : "bg-zinc-900/90 text-zinc-400 border border-zinc-800 hover:text-zinc-200 hover:border-zinc-700"
               }`}
             >
@@ -84,7 +84,7 @@ export function SkillModeSelector({
         onClick={() => setSkillFilterMode("OR")}
         className={`px-1.5 py-0.5 rounded transition-all ${
           skillFilterMode === "OR"
-            ? "bg-zinc-800 text-amber-400 font-bold"
+            ? "bg-black text-white font-bold"
             : "text-zinc-550 hover:text-zinc-300"
         }`}
       >
@@ -95,7 +95,7 @@ export function SkillModeSelector({
         onClick={() => setSkillFilterMode("AND")}
         className={`px-1.5 py-0.5 rounded transition-all ${
           skillFilterMode === "AND"
-            ? "bg-zinc-800 text-amber-400 font-bold"
+            ? "bg-black text-white font-bold"
             : "text-zinc-550 hover:text-zinc-300"
         }`}
       >

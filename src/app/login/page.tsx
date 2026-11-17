@@ -184,45 +184,45 @@ function LoginPageContent() {
               aria-pressed={selectedRole === "rso_leadership"}
               className={`w-full text-left p-5 rounded-2xl border transition-all cursor-pointer flex flex-col gap-3 ${
                 selectedRole === "rso_leadership"
-                  ? "bg-white border-amber-500 ring-2 ring-amber-500/20 shadow-md"
-                  : "bg-white border-slate-200/90 hover:border-slate-300 shadow-2xs"
+                  ? "bg-white border-black ring-2 ring-black/10 shadow-sm"
+                  : "bg-white border-neutral-300 hover:border-black shadow-2xs"
               }`}
             >
               <div className="flex items-center justify-between gap-2">
                 <div>
-                  <h2 className="text-sm font-black text-slate-900">RSO Leadership</h2>
-                  <span className="text-[11px] text-slate-500 font-medium">
+                  <h2 className="text-sm font-black text-black">RSO Leadership</h2>
+                  <span className="text-[11px] text-neutral-600 font-medium">
                     Executive Board, Project Leads & Directors
                   </span>
                 </div>
                 <span
                   className={`w-4 h-4 rounded-full border flex items-center justify-center ${
                     selectedRole === "rso_leadership"
-                      ? "border-amber-500 bg-amber-500"
-                      : "border-slate-300"
+                      ? "border-black bg-black"
+                      : "border-neutral-300"
                   }`}
                 >
                   {selectedRole === "rso_leadership" && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-slate-950" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-white" />
                   )}
                 </span>
               </div>
 
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-neutral-700 leading-relaxed">
                 Manage chapter engineering initiatives, publish hardware build projects and technical workshops, and maintain the student directory.
               </p>
 
-              <div className="pt-2 border-t border-slate-100 flex flex-wrap gap-1.5">
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-100 border border-slate-200 text-[10.5px] font-semibold text-slate-700">
-                  <FolderGit2 size={11} className="text-amber-600" />
+              <div className="pt-2 border-t border-neutral-200 flex flex-wrap gap-1.5">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-neutral-100 border border-neutral-300 text-[10.5px] font-semibold text-black">
+                  <FolderGit2 size={11} className="text-black" />
                   <span>Create Projects</span>
                 </span>
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-100 border border-slate-200 text-[10.5px] font-semibold text-slate-700">
-                  <Calendar size={11} className="text-amber-600" />
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-neutral-100 border border-neutral-300 text-[10.5px] font-semibold text-black">
+                  <Calendar size={11} className="text-black" />
                   <span>Create Events</span>
                 </span>
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-100 border border-slate-200 text-[10.5px] font-semibold text-slate-700">
-                  <Users size={11} className="text-amber-600" />
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-neutral-100 border border-neutral-300 text-[10.5px] font-semibold text-black">
+                  <Users size={11} className="text-black" />
                   <span>Directory Admin</span>
                 </span>
               </div>
@@ -235,41 +235,41 @@ function LoginPageContent() {
               aria-pressed={selectedRole === "sponsor"}
               className={`w-full text-left p-5 rounded-2xl border transition-all cursor-pointer flex flex-col gap-3 ${
                 selectedRole === "sponsor"
-                  ? "bg-white border-amber-500 ring-2 ring-amber-500/20 shadow-md"
-                  : "bg-white border-slate-200/90 hover:border-slate-300 shadow-2xs"
+                  ? "bg-white border-black ring-2 ring-black/10 shadow-sm"
+                  : "bg-white border-neutral-300 hover:border-black shadow-2xs"
               }`}
             >
               <div className="flex items-center justify-between gap-2">
                 <div>
-                  <h2 className="text-sm font-black text-slate-900">Sponsor</h2>
-                  <span className="text-[11px] text-slate-500 font-medium">
+                  <h2 className="text-sm font-black text-black">Sponsor</h2>
+                  <span className="text-[11px] text-neutral-600 font-medium">
                     Corporate Partners & University Recruiters
                   </span>
                 </div>
                 <span
                   className={`w-4 h-4 rounded-full border flex items-center justify-center ${
                     selectedRole === "sponsor"
-                      ? "border-amber-500 bg-amber-500"
-                      : "border-slate-300"
+                      ? "border-black bg-black"
+                      : "border-neutral-300"
                   }`}
                 >
                   {selectedRole === "sponsor" && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-slate-950" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-white" />
                   )}
                 </span>
               </div>
 
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-neutral-700 leading-relaxed">
                 Publish internship and full-time engineering job postings, filter student portfolios by technical skills and graduation date, and review applicants.
               </p>
 
-              <div className="pt-2 border-t border-slate-100 flex flex-wrap gap-1.5">
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-100 border border-slate-200 text-[10.5px] font-semibold text-slate-700">
-                  <Briefcase size={11} className="text-amber-600" />
+              <div className="pt-2 border-t border-neutral-200 flex flex-wrap gap-1.5">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-neutral-100 border border-neutral-300 text-[10.5px] font-semibold text-black">
+                  <Briefcase size={11} className="text-black" />
                   <span>Create Job Postings</span>
                 </span>
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-100 border border-slate-200 text-[10.5px] font-semibold text-slate-700">
-                  <Users size={11} className="text-amber-600" />
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-neutral-100 border border-neutral-300 text-[10.5px] font-semibold text-black">
+                  <Users size={11} className="text-black" />
                   <span>Candidate Skill Filtering</span>
                 </span>
               </div>
@@ -325,7 +325,7 @@ function LoginPageContent() {
                         ? "leadership@ieeeucf.org"
                         : "recruiting@company.com"
                     }
-                    className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm rounded-xl bg-neutral-50 border border-neutral-300 text-black focus:outline-none focus:ring-1 focus:ring-black"
                   />
                 </div>
               </div>
@@ -334,12 +334,12 @@ function LoginPageContent() {
               <div className="flex flex-col gap-1.5">
                 <label
                   htmlFor="login-org"
-                  className="text-[11px] font-bold text-slate-700 uppercase tracking-wider"
+                  className="text-[11px] font-bold text-neutral-700 uppercase tracking-wider"
                 >
                   {selectedRole === "rso_leadership" ? "Chapter Division / Board" : "Partner Company Name"}
                 </label>
                 <div className="relative flex items-center">
-                  <Building2 size={15} className="text-slate-400 absolute left-3.5 pointer-events-none" />
+                  <Building2 size={15} className="text-neutral-400 absolute left-3.5 pointer-events-none" />
                   <input
                     id="login-org"
                     type="text"
@@ -350,7 +350,7 @@ function LoginPageContent() {
                         ? "IEEE UCF Student Chapter"
                         : "Lockheed Martin / Texas Instruments"
                     }
-                    className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm rounded-xl bg-neutral-50 border border-neutral-300 text-black focus:outline-none focus:ring-1 focus:ring-black"
                   />
                 </div>
               </div>
@@ -359,12 +359,12 @@ function LoginPageContent() {
               <div className="flex flex-col gap-1.5">
                 <label
                   htmlFor="login-password"
-                  className="text-[11px] font-bold text-slate-700 uppercase tracking-wider"
+                  className="text-[11px] font-bold text-neutral-700 uppercase tracking-wider"
                 >
                   Access Password
                 </label>
                 <div className="relative flex items-center">
-                  <Lock size={15} className="text-slate-400 absolute left-3.5 pointer-events-none" />
+                  <Lock size={15} className="text-neutral-400 absolute left-3.5 pointer-events-none" />
                   <input
                     id="login-password"
                     type={showPassword ? "text" : "password"}
@@ -372,13 +372,13 @@ function LoginPageContent() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter your password"
-                    className="w-full pl-10 pr-10 py-2.5 text-xs sm:text-sm rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full pl-10 pr-10 py-2.5 text-xs sm:text-sm rounded-xl bg-neutral-50 border border-neutral-300 text-black focus:outline-none focus:ring-1 focus:ring-black"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword((prev) => !prev)}
                     aria-label={showPassword ? "Hide password" : "Show password"}
-                    className="absolute right-3 p-1 text-slate-400 hover:text-slate-700 cursor-pointer"
+                    className="absolute right-3 p-1 text-neutral-400 hover:text-black cursor-pointer"
                   >
                     {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
                   </button>
@@ -387,7 +387,7 @@ function LoginPageContent() {
 
               {/* Error Banner */}
               {errorMessage && (
-                <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+                <div className="p-3 rounded-xl bg-neutral-100 border border-neutral-300 text-black text-xs flex items-center gap-2">
                   <AlertCircle size={15} className="shrink-0" />
                   <span>{errorMessage}</span>
                 </div>
@@ -397,7 +397,7 @@ function LoginPageContent() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-3 px-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-xs sm:text-sm transition-all shadow-xs cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
+                className="w-full py-3 px-4 rounded-xl bg-black hover:bg-neutral-800 text-white font-black text-xs sm:text-sm transition-all shadow-xs cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 <span>
                   {isSubmitting
@@ -409,17 +409,17 @@ function LoginPageContent() {
               </button>
 
               {/* Demo Helper Footer */}
-              <div className="pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] text-slate-500">
+              <div className="pt-3 border-t border-neutral-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] text-neutral-600">
                 <span>
                   Pre-filled with demo{" "}
-                  <strong className="text-slate-700">
+                  <strong className="text-black">
                     {selectedRole === "rso_leadership" ? "RSO Leadership" : "Sponsor"}
                   </strong>{" "}
                   credentials for testing.
                 </span>
                 <Link
                   href="/"
-                  className="text-slate-700 hover:text-amber-600 font-bold underline underline-offset-2"
+                  className="text-black hover:underline font-bold underline-offset-2"
                 >
                   Continue as Guest Member
                 </Link>

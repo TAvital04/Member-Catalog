@@ -122,7 +122,7 @@ export default function StudentLowerInfo({
                 <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block leading-none mb-1">
                   Primary IEEE Project Affiliation
                 </span>
-                <span className="leading-tight font-extrabold text-slate-900 group-hover:text-amber-800 transition-colors truncate block">
+                <span className="leading-tight font-extrabold text-slate-900 group-hover:text-black transition-colors truncate block">
                   {student.mainProjectName}
                 </span>
               </div>
@@ -164,7 +164,7 @@ export default function StudentLowerInfo({
                 <button
                   type="button"
                   onClick={() => onSelectTab("skills")}
-                  className="text-[10px] font-semibold text-slate-500 hover:text-amber-800 transition-colors cursor-pointer"
+                  className="text-[10px] font-semibold text-slate-500 hover:text-black transition-colors cursor-pointer"
                 >
                   See more
                 </button>
@@ -180,8 +180,8 @@ export default function StudentLowerInfo({
                     onClick={() => onClose?.()}
                     className={`px-2 py-0.5 rounded-lg text-[10.5px] font-semibold transition-all active:scale-95 cursor-pointer shadow-2xs ${
                       isLead
-                        ? "bg-amber-50/40 hover:bg-amber-100/60 border-2 border-amber-500 text-slate-900 font-bold"
-                        : "bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-slate-700 hover:text-slate-900"
+                        ? "bg-neutral-100 hover:bg-neutral-200 border-2 border-black text-black font-bold"
+                        : "bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-black"
                     }`}
                   >
                     <span>{skill}</span>
@@ -192,7 +192,7 @@ export default function StudentLowerInfo({
                 <button
                   type="button"
                   onClick={() => onSelectTab?.("skills")}
-                  className="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-[10px] font-semibold text-slate-600 hover:text-amber-800 transition-all cursor-pointer active:scale-95 shadow-2xs"
+                  className="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-[10px] font-semibold text-slate-600 hover:text-black transition-all cursor-pointer active:scale-95 shadow-2xs"
                 >
                   <span>+{student.skills.length - 6} more</span>
                 </button>
@@ -220,9 +220,9 @@ export default function StudentLowerInfo({
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-white hover:border-slate-300 border border-slate-200/90 text-xs font-semibold text-slate-700 hover:text-slate-900 transition-all duration-200 shadow-2xs hover:shadow-md hover:-translate-y-0.5 active:scale-95 cursor-pointer grow"
                 >
-                  {isGithub && <Github size={13} className="text-slate-700" />}
-                  {isLinkedin && <Linkedin size={13} className="text-sky-600" />}
-                  {!isGithub && !isLinkedin && <Globe size={13} className="text-amber-600" />}
+                  {isGithub && <Github size={13} className="text-black" />}
+                  {isLinkedin && <Linkedin size={13} className="text-black" />}
+                  {!isGithub && !isLinkedin && <Globe size={13} className="text-black" />}
                   <span>{link.name}</span>
                 </a>
               );
@@ -235,9 +235,9 @@ export default function StudentLowerInfo({
           href={getSafeUrl(resumeUrl) || "#"}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs transition-all shadow-sm active:scale-98 cursor-pointer group/resume"
+          className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-black hover:bg-neutral-800 text-white font-bold text-xs transition-all shadow-sm active:scale-98 cursor-pointer group/resume"
         >
-          <FileText size={14} className="text-slate-950/80 transition-colors" />
+          <FileText size={14} className="text-white transition-colors" />
           <span>View Resume PDF</span>
         </a>
       </div>

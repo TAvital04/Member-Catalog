@@ -152,8 +152,8 @@ export default function FilterSidebar({
         )}
 
         <div className="flex flex-wrap items-center gap-2 grow relative z-30">
-          <div className="flex items-center gap-1.5 text-slate-700 text-xs pr-1 font-bold">
-            <Filter size={14} className="text-amber-600" />
+          <div className="flex items-center gap-1.5 text-black text-xs pr-1 font-bold">
+            <Filter size={14} className="text-black" />
             <span>Filters:</span>
           </div>
 
@@ -262,7 +262,7 @@ export default function FilterSidebar({
             <Filter size={16} className="text-slate-400" />
             <span>Filters</span>
             {activeFiltersCount > 0 && (
-              <span className="bg-amber-50 text-amber-800 border border-amber-200 text-[10px] px-2 py-0.2 rounded-full font-bold">
+              <span className="bg-neutral-100 text-black border border-neutral-300 text-[10px] px-2 py-0.2 rounded-full font-bold">
                 {activeFiltersCount}
               </span>
             )}

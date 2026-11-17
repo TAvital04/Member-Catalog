@@ -63,12 +63,12 @@ export default function ProjectSkillsTab({
 
             const cardContent = (
               <>
-                <div className={`p-1 rounded-lg bg-emerald-50 text-emerald-600 border border-emerald-200/70 shrink-0 mt-0.5 ${canFilter ? "group-hover:border-amber-300 transition-colors" : ""}`}>
+                <div className={`p-1 rounded-lg bg-neutral-100 text-black border border-neutral-300 shrink-0 mt-0.5 ${canFilter ? "group-hover:border-black transition-colors" : ""}`}>
                   <CheckCircle2 size={13} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-1">
-                    <span className={`text-xs font-bold text-slate-900 ${canFilter ? "group-hover:text-amber-800 transition-colors" : ""} leading-snug truncate`}>
+                    <span className={`text-xs font-bold text-slate-900 ${canFilter ? "group-hover:text-black transition-colors" : ""} leading-snug truncate`}>
                       {skill}
                     </span>
                   </div>
@@ -77,12 +77,12 @@ export default function ProjectSkillsTab({
                       Chapter Competency
                     </span>
                     {matchingCount > 0 ? (
-                      <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 group-hover:bg-amber-100 text-slate-600 group-hover:text-amber-900 transition-colors shrink-0 flex items-center gap-1">
-                        <Users size={10} className="text-slate-400 group-hover:text-amber-600" />
+                      <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 group-hover:bg-neutral-200 text-slate-700 group-hover:text-black transition-colors shrink-0 flex items-center gap-1">
+                        <Users size={10} className="text-slate-400 group-hover:text-black" />
                         {matchingCount} candidate{matchingCount === 1 ? "" : "s"}
                       </span>
                     ) : (
-                      <span className="text-[10px] text-slate-400 group-hover:text-amber-700 font-medium shrink-0">
+                      <span className="text-[10px] text-slate-400 group-hover:text-black font-medium shrink-0">
                         Filter
                       </span>
                     )}

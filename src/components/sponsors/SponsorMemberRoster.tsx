@@ -34,21 +34,21 @@ export default function SponsorMemberRoster({
     switch (type) {
       case "Event Attendee":
         return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-800 border border-blue-200">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-neutral-100 text-black border border-neutral-300">
             <Calendar size={10} />
             <span>Workshop Attendee</span>
           </span>
         );
       case "Job Applicant":
         return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-neutral-100 text-black border border-neutral-300">
             <Briefcase size={10} />
             <span>Job Applicant</span>
           </span>
         );
       case "Project Contributor":
         return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-50 text-purple-800 border border-purple-200">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-neutral-100 text-black border border-neutral-300">
             <FolderGit2 size={10} />
             <span>Project Contributor</span>
           </span>
@@ -117,7 +117,7 @@ export default function SponsorMemberRoster({
                 <Avatar name={student.name} size="md" />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center justify-between gap-1">
-                    <h4 className="font-bold text-sm text-slate-900 group-hover:text-amber-800 transition-colors truncate">
+                    <h4 className="font-bold text-sm text-slate-900 group-hover:text-black transition-colors truncate">
                       {student.name}
                     </h4>
                   </div>
@@ -134,7 +134,7 @@ export default function SponsorMemberRoster({
                 <span className="truncate pr-2 font-medium">
                   <span>{context}</span>
                 </span>
-                <span className="text-amber-800 font-bold shrink-0 flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform">
+                <span className="text-black font-bold shrink-0 flex items-center gap-0.5">
                   Portfolio
                 </span>
               </div>

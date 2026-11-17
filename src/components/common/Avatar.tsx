@@ -9,23 +9,6 @@ interface AvatarProps {
 }
 
 export default function Avatar({ name, size = "md", className = "" }: AvatarProps) {
-  const getAvatarStyle = (nameStr: string = "") => {
-    const safeStr = nameStr || "IEEE";
-    const styles = [
-      "bg-slate-100 text-slate-700 border border-slate-200",
-      "bg-amber-50 text-amber-800 border border-amber-200/60",
-      "bg-sky-50 text-sky-800 border border-sky-200/60",
-      "bg-emerald-50 text-emerald-800 border border-emerald-200/60",
-      "bg-indigo-50 text-indigo-800 border border-indigo-200/60",
-      "bg-purple-50 text-purple-800 border border-purple-200/60",
-    ];
-    let sum = 0;
-    for (let i = 0; i < safeStr.length; i++) {
-      sum += safeStr.charCodeAt(i);
-    }
-    return styles[sum % styles.length];
-  };
-
   const getInitials = (nameStr: string) => {
     if (!nameStr) return "";
     const cleanName = nameStr.trim();
@@ -40,16 +23,14 @@ export default function Avatar({ name, size = "md", className = "" }: AvatarProp
 
   const sizeClasses = {
     xs: "w-6 h-6 rounded-full text-[9px] font-bold",
-    sm: "w-8 h-8 rounded-lg text-[10px] font-extrabold",
-    md: "w-12 h-12 rounded-xl text-xs font-bold",
-    lg: "w-16 h-16 rounded-2xl text-base font-black",
+    sm: "w-8 h-8 rounded-md text-[10px] font-bold",
+    md: "w-11 h-11 rounded-lg text-xs font-bold",
+    lg: "w-14 h-14 rounded-xl text-base font-black",
   };
 
   return (
     <div
-      className={`flex items-center justify-center font-bold ${getAvatarStyle(
-        name
-      )} shadow-2xs shrink-0 select-none ${sizeClasses[size]} ${className}`}
+      className={`flex items-center justify-center font-bold bg-neutral-100 text-black border border-neutral-300 shrink-0 select-none ${sizeClasses[size]} ${className}`}
     >
       {getInitials(name)}
     </div>

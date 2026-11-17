@@ -25,7 +25,7 @@ export default function SkillsTab({ student, formatDateStr, onClose, role, canFi
         <div className="flex items-center justify-between pb-3 border-b border-slate-100">
           <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider">
             <span>Skills & Tech Stack</span>
-            <span className="bg-amber-50 text-amber-800 border border-amber-200 text-[10px] px-2 py-0.2 rounded-full font-bold">
+            <span className="bg-neutral-100 text-black border border-neutral-300 text-[10px] px-2 py-0.2 rounded-full font-bold">
               {student.skills.length}
             </span>
           </div>
@@ -35,9 +35,9 @@ export default function SkillsTab({ student, formatDateStr, onClose, role, canFi
         {/* Lead Skill Filter Legend & Status */}
         <div className="flex items-center justify-between flex-wrap gap-2 text-[11px]">
           {leadSkillCount > 0 ? (
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-semibold text-[10.5px] bg-amber-50 text-amber-800 border border-amber-300">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0"></span>
-              <span>Gold Border = Workshop Lead</span>
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-semibold text-[10.5px] bg-neutral-100 text-black border border-neutral-300">
+              <span className="w-1.5 h-1.5 rounded-full bg-black shrink-0"></span>
+              <span>Black Border = Workshop Lead</span>
             </span>
           ) : (
             <span className="text-slate-400">Earned Exclusively via Chapter Workshops</span>
@@ -51,8 +51,8 @@ export default function SkillsTab({ student, formatDateStr, onClose, role, canFi
           {student.skills.map((skill) => {
             const isLead = isLeadSkill(skill, student);
             const chipClasses = isLead
-              ? "bg-amber-50/40 hover:bg-amber-100/60 border-2 border-amber-500 text-slate-900 font-bold shadow-2xs"
-              : "bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-slate-700 hover:text-slate-900 font-semibold shadow-2xs";
+              ? "bg-neutral-100 hover:bg-neutral-200 border-2 border-black text-black font-bold shadow-2xs"
+              : "bg-white hover:bg-neutral-100 border border-neutral-300 text-black font-semibold shadow-2xs";
 
             return canFilter ? (
               <Link
@@ -81,7 +81,7 @@ export default function SkillsTab({ student, formatDateStr, onClose, role, canFi
           <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider">
             <span>Certifications & Credentials</span>
             {student.certifications && student.certifications.length > 0 && (
-              <span className="bg-amber-50 text-amber-800 border border-amber-200 text-[10px] px-2 py-0.2 rounded-full font-bold">
+              <span className="bg-neutral-100 text-black border border-neutral-300 text-[10px] px-2 py-0.2 rounded-full font-bold">
                 {student.certifications.length}
               </span>
             )}

@@ -202,8 +202,8 @@ export default function QuickJobPostModal({
         {/* Scrollable Form */}
         <form onSubmit={handleSubmit} noValidate className="overflow-y-auto p-6 flex flex-col gap-5 flex-1">
           {/* Quick Templates Bar */}
-          <div className="p-4 rounded-xl bg-amber-50/60 border border-amber-200/80 flex flex-col gap-2 shadow-2xs">
-            <div className="flex items-center gap-1.5 text-xs font-bold text-slate-900">
+          <div className="p-4 rounded-xl bg-neutral-100 border border-neutral-300 flex flex-col gap-2 shadow-2xs">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-black">
               <span>1-Click Role Presets (Fill in Seconds)</span>
             </div>
             <div className="flex flex-wrap gap-2 pt-1">
@@ -213,8 +213,8 @@ export default function QuickJobPostModal({
                   type="button"
                   onClick={() => handleApplyTemplate(tpl)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer shadow-2xs active:scale-95 ${selectedTemplate === tpl.name
-                    ? "bg-amber-500/20 border-amber-500 text-amber-800 dark:text-amber-300 font-bold"
-                    : "bg-slate-100 hover:bg-slate-200/80 text-slate-700 hover:text-slate-900 border-slate-200 hover:border-slate-300"
+                    ? "bg-black text-white border-black font-bold"
+                    : "bg-white hover:bg-neutral-200 text-black border-neutral-300"
                     }`}
                 >
                   {tpl.name}
@@ -233,7 +233,7 @@ export default function QuickJobPostModal({
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
                 placeholder="e.g. Lockheed Martin, TI, or Startup Inc."
-                className="w-full text-xs p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full text-xs p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-1 focus:ring-black"
               />
             </div>
             <div className="flex flex-col gap-1.5">
@@ -245,7 +245,7 @@ export default function QuickJobPostModal({
                 value={employerEmail}
                 onChange={(e) => setEmployerEmail(e.target.value)}
                 placeholder="recruiting@company.com"
-                className="w-full text-xs p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full text-xs p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-1 focus:ring-black"
               />
             </div>
           </div>
@@ -260,7 +260,7 @@ export default function QuickJobPostModal({
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g. Embedded Firmware Engineer"
-                className="w-full text-xs p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full text-xs p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-1 focus:ring-black"
               />
             </div>
             <div className="flex flex-col gap-1.5">
@@ -270,7 +270,7 @@ export default function QuickJobPostModal({
                 value={department}
                 onChange={(e) => setDepartment(e.target.value)}
                 placeholder="e.g. Avionics & Flight Software"
-                className="text-xs p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="text-xs p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-1 focus:ring-black"
               />
             </div>
           </div>
@@ -284,7 +284,7 @@ export default function QuickJobPostModal({
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 placeholder="e.g. Orlando, FL"
-                className="text-xs h-[36px] px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="text-xs h-[36px] px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-1 focus:ring-black"
               />
             </div>
             <div className="flex flex-col gap-1.5">
@@ -319,7 +319,7 @@ export default function QuickJobPostModal({
               value={salaryRange}
               onChange={(e) => setSalaryRange(e.target.value)}
               placeholder="e.g. $85,000 - $100,000 / yr or $30 - $35 / hr"
-              className="text-xs p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="text-xs p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-1 focus:ring-black"
             />
           </div>
 
@@ -335,8 +335,8 @@ export default function QuickJobPostModal({
                     type="button"
                     onClick={() => toggleSkill(skill)}
                     className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer shadow-2xs ${isSelected
-                      ? "bg-amber-500/15 border border-amber-500 text-slate-900 font-bold"
-                      : "bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-600"
+                      ? "bg-black text-white border border-black font-bold"
+                      : "bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-black"
                       }`}
                   >
                     {skill} {isSelected && "✓"}
@@ -352,7 +352,7 @@ export default function QuickJobPostModal({
                 onChange={(e) => setCustomSkillInput(e.target.value)}
                 onKeyDown={handleAddCustomSkill}
                 placeholder="Type custom skill and press Enter..."
-                className="text-xs p-2 rounded-lg border border-slate-200 flex-1 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="text-xs p-2 rounded-lg border border-slate-200 flex-1 focus:outline-none focus:ring-1 focus:ring-black"
               />
               <button
                 type="button"
@@ -373,7 +373,7 @@ export default function QuickJobPostModal({
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Overview of the mission, day-to-day work, and impact of the role..."
-              className="w-full text-xs p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none font-sans"
+              className="w-full text-xs p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-1 focus:ring-black resize-none font-sans"
             />
           </div>
 
@@ -386,7 +386,7 @@ export default function QuickJobPostModal({
                 value={responsibilitiesText}
                 onChange={(e) => setResponsibilitiesText(e.target.value)}
                 placeholder="Develop embedded drivers...&#10;Conduct bench validation...&#10;Collaborate with systems engineers..."
-                className="text-xs p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none font-sans"
+                className="text-xs p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-1 focus:ring-black resize-none font-sans"
               />
             </div>
             <div className="flex flex-col gap-1.5">
@@ -396,7 +396,7 @@ export default function QuickJobPostModal({
                 value={requirementsText}
                 onChange={(e) => setRequirementsText(e.target.value)}
                 placeholder="B.S. in CpE or EE...&#10;Hands-on C/C++ experience...&#10;Familiar with oscilloscopes..."
-                className="text-xs p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none font-sans"
+                className="text-xs p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-1 focus:ring-black resize-none font-sans"
               />
             </div>
           </div>
@@ -420,7 +420,7 @@ export default function QuickJobPostModal({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-bold shadow-sm active:scale-98 cursor-pointer flex items-center gap-2 disabled:opacity-50"
+              className="px-5 py-2.5 rounded-xl bg-black hover:bg-neutral-800 text-white text-xs font-bold shadow-sm active:scale-98 cursor-pointer flex items-center gap-2 disabled:opacity-50"
             >
               {isSubmitting ? (
                 <>

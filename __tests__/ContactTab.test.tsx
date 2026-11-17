@@ -65,7 +65,7 @@ describe("ContactTab Component", () => {
 
     // Direct channels header
     expect(screen.getByText("Direct Candidate Outreach")).toBeInTheDocument();
-    expect(screen.getByText("Verified Channels & Profiles")).toBeInTheDocument();
+    expect(screen.getByText("Channels & Profiles")).toBeInTheDocument();
     expect(screen.getByText("Seeking Full-time")).toBeInTheDocument();
     expect(screen.getByText("marcus.vance@knights.ucf.edu")).toBeInTheDocument();
 

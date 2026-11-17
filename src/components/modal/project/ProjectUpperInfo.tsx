@@ -2,7 +2,7 @@
 
 import React from "react";
 import { IEEEProject } from "@/data/projects";
-import { FolderGit2, GitBranch, ExternalLink, CheckCircle2, Clock } from "lucide-react";
+import { CheckCircle2, Clock } from "lucide-react";
 import CurrentSponsorsSegment from "@/components/common/CurrentSponsorsSegment";
 import { getSafeUrl } from "@/shared";
 
@@ -23,12 +23,12 @@ export default function ProjectUpperInfo({ project }: ProjectUpperInfoProps) {
         <span
           className={`text-[10px] font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider flex items-center gap-1.5 ${
             project.status === "Completed"
-              ? "bg-emerald-50 text-emerald-800 border border-emerald-200/70"
+              ? "bg-neutral-100 text-black border border-neutral-300 font-bold"
               : "bg-slate-100 text-slate-700 border border-slate-200"
           }`}
         >
           {project.status === "Completed" ? (
-            <CheckCircle2 size={11} className="text-emerald-600" />
+            <CheckCircle2 size={11} className="text-black" />
           ) : (
             <Clock size={11} className="text-slate-400" />
           )}

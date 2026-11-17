@@ -83,12 +83,12 @@ export default function ActiveFiltersBar({
       {selectedSkills.map((skill) => (
         <span
           key={skill}
-          className="flex items-center gap-1 bg-amber-50 border border-amber-200 text-amber-900 font-semibold px-2.5 py-0.5 rounded-lg shadow-2xs animate-fade-in"
+          className="flex items-center gap-1 bg-neutral-100 border border-neutral-300 text-black font-semibold px-2.5 py-0.5 rounded-lg shadow-2xs animate-fade-in"
         >
           <span>{skill}</span>
           <button
             onClick={() => removeSkillFilter(skill)}
-            className="text-amber-600 hover:text-red-600 font-bold text-xs cursor-pointer ml-1"
+            className="text-neutral-500 hover:text-black font-bold text-xs cursor-pointer ml-1"
           >
             ×
           </button>
@@ -98,12 +98,12 @@ export default function ActiveFiltersBar({
       {selectedEvents.map((evtTitle) => (
         <span
           key={evtTitle}
-          className="flex items-center gap-1 bg-sky-50 border border-sky-200 text-sky-900 font-medium px-2.5 py-0.5 rounded-lg shadow-2xs animate-fade-in"
+          className="flex items-center gap-1 bg-neutral-100 border border-neutral-300 text-black font-semibold px-2.5 py-0.5 rounded-lg shadow-2xs animate-fade-in"
         >
           <span>{evtTitle}</span>
           <button
             onClick={() => removeEventFilter?.(evtTitle)}
-            className="text-sky-500 hover:text-red-600 font-bold text-xs cursor-pointer ml-1"
+            className="text-neutral-500 hover:text-black font-bold text-xs cursor-pointer ml-1"
           >
             ×
           </button>
@@ -113,12 +113,12 @@ export default function ActiveFiltersBar({
       {selectedProjects.map((projectName) => (
         <span
           key={projectName}
-          className="flex items-center gap-1 bg-indigo-50 border border-indigo-200 text-indigo-900 font-medium px-2.5 py-0.5 rounded-lg shadow-2xs animate-fade-in"
+          className="flex items-center gap-1 bg-neutral-100 border border-neutral-300 text-black font-semibold px-2.5 py-0.5 rounded-lg shadow-2xs animate-fade-in"
         >
           <span>{projectName}</span>
           <button
             onClick={() => removeProjectFilter?.(projectName)}
-            className="text-indigo-500 hover:text-red-600 font-bold text-xs cursor-pointer ml-1"
+            className="text-neutral-500 hover:text-black font-bold text-xs cursor-pointer ml-1"
           >
             ×
           </button>
@@ -128,12 +128,12 @@ export default function ActiveFiltersBar({
       {selectedCompanies.map((comp) => (
         <span
           key={comp}
-          className="flex items-center gap-1 bg-emerald-50 border border-emerald-200 text-emerald-900 font-medium px-2.5 py-0.5 rounded-lg shadow-2xs animate-fade-in"
+          className="flex items-center gap-1 bg-neutral-100 border border-neutral-300 text-black font-semibold px-2.5 py-0.5 rounded-lg shadow-2xs animate-fade-in"
         >
           <span>{comp}</span>
           <button
             onClick={() => removeCompanyFilter?.(comp)}
-            className="text-emerald-500 hover:text-red-600 font-bold text-xs cursor-pointer ml-1"
+            className="text-neutral-500 hover:text-black font-bold text-xs cursor-pointer ml-1"
           >
             ×
           </button>
@@ -143,7 +143,7 @@ export default function ActiveFiltersBar({
       {onClearAll && (
         <button
           onClick={onClearAll}
-          className="text-amber-700 hover:text-amber-800 font-bold text-xs underline cursor-pointer ml-2"
+          className="text-black hover:underline font-bold text-xs underline cursor-pointer ml-2"
         >
           Clear All
         </button>

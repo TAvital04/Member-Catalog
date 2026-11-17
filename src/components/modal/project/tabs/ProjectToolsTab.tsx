@@ -50,7 +50,7 @@ export default function ProjectToolsTab({
                   key={idx}
                   href={`/?skills=${encodeURIComponent(tool.name)}`}
                   onClick={() => onClose?.()}
-                  className={`${chipClass} bg-white text-slate-800 border-slate-200 hover:border-amber-400 hover:text-amber-900 hover:bg-amber-50/60 shadow-2xs cursor-pointer active:scale-95`}
+                  className={`${chipClass} bg-white text-black border-neutral-300 hover:border-black hover:bg-neutral-100 shadow-2xs cursor-pointer active:scale-95`}
                 >
                   <span>{tool.name}</span>
                 </Link>
@@ -81,7 +81,7 @@ export default function ProjectToolsTab({
                   key={idx}
                   href={`/?skills=${encodeURIComponent(skill)}`}
                   onClick={() => onClose?.()}
-                  className={`${chipClass} bg-white text-slate-800 border-slate-200 hover:border-amber-400 hover:text-amber-900 hover:bg-amber-50/60 shadow-2xs cursor-pointer active:scale-95`}
+                  className={`${chipClass} bg-white text-black border-neutral-300 hover:border-black hover:bg-neutral-100 shadow-2xs cursor-pointer active:scale-95`}
                 >
                   <span>{skill}</span>
                 </Link>

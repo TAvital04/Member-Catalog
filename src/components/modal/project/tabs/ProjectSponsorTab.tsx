@@ -99,7 +99,7 @@ ${message || "No additional notes provided."}`,
                 className="p-4 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between gap-2.5 shadow-2xs"
               >
                 <div className="flex items-start gap-2.5">
-                  <div className="p-1 rounded-lg bg-amber-50 text-amber-700 border border-amber-200/60 shrink-0 mt-0.5">
+                  <div className="p-1 rounded-lg bg-neutral-100 text-black border border-neutral-300 shrink-0 mt-0.5">
                     <CheckCircle2 size={13} />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -115,7 +115,7 @@ ${message || "No additional notes provided."}`,
                 {benefit.category && (
                   <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-500 font-mono">
                     <span>{benefit.category}</span>
-                    {benefit.highlight && <span className="text-amber-600 font-sans font-bold">Featured Perk</span>}
+                    {benefit.highlight && <span className="text-black font-sans font-bold">Featured Perk</span>}
                   </div>
                 )}
               </div>
@@ -146,8 +146,8 @@ ${message || "No additional notes provided."}`,
         </div>
 
         {submissionStatus === "success" ? (
-          <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2">
-            <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+          <div className="p-3.5 rounded-xl bg-neutral-100 border border-neutral-300 text-black text-xs flex items-center gap-2">
+            <CheckCircle2 size={16} className="text-black shrink-0" />
             <span>
               Thank you for supporting student innovation at UCF! Our project team and corporate relations chairs will respond within 24 hours.
             </span>
@@ -171,7 +171,7 @@ ${message || "No additional notes provided."}`,
                   value={sponsorName}
                   onChange={(e) => setSponsorName(e.target.value)}
                   placeholder="e.g. Dr. Jane Smith"
-                  className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-amber-500 transition-colors"
+                  className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-black transition-colors"
                 />
               </div>
 
@@ -184,7 +184,7 @@ ${message || "No additional notes provided."}`,
                   value={sponsorCompany}
                   onChange={(e) => setSponsorCompany(e.target.value)}
                   placeholder="e.g. Lockheed Martin, TI, or Independent"
-                  className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-amber-500 transition-colors"
+                  className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-black transition-colors"
                 />
               </div>
             </div>
@@ -192,7 +192,7 @@ ${message || "No additional notes provided."}`,
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="flex flex-col gap-1">
                 <label className="text-[11px] font-bold text-slate-700">
-                  Contact Email <span className="text-red-500">*</span>
+                  Contact Email <span className="text-black font-bold">*</span>
                 </label>
                 <input
                   type="text"
@@ -201,7 +201,7 @@ ${message || "No additional notes provided."}`,
                   value={sponsorEmail}
                   onChange={(e) => setSponsorEmail(e.target.value)}
                   placeholder="contact@company.com"
-                  className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-amber-500 transition-colors"
+                  className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-black transition-colors"
                 />
               </div>
 
@@ -235,7 +235,7 @@ ${message || "No additional notes provided."}`,
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Tell us about your interests (e.g., logo placement on robot chassis, sponsoring component fabrication, hosting a tech talk, or lab equipment donation)..."
-                className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-amber-500 transition-colors resize-none"
+                className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-black transition-colors resize-none"
               />
             </div>
 
@@ -246,7 +246,7 @@ ${message || "No additional notes provided."}`,
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 disabled:opacity-50 text-slate-950 font-bold text-xs transition-all shadow-sm active:scale-98 flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-black hover:bg-neutral-800 disabled:opacity-50 text-white font-bold text-xs transition-all shadow-sm active:scale-98 flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Send size={13} />
                 <span>{isSubmitting ? "Sending..." : "Send Sponsorship Inquiry"}</span>

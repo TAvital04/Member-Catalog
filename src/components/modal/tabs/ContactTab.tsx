@@ -164,7 +164,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
     return (
       <div className="flex flex-col gap-6 animate-fade-in pt-4 pb-6 w-full max-w-lg mx-auto">
         <div className="p-8 rounded-2xl border border-slate-200 bg-white flex flex-col items-center justify-between text-center relative overflow-hidden shadow-2xs">
-          <div className="w-14 h-14 rounded-full bg-amber-50 text-amber-600 border border-amber-200/60 flex items-center justify-center shrink-0 mb-4 shadow-inner">
+          <div className="w-14 h-14 rounded-full bg-neutral-100 text-black border border-neutral-300 flex items-center justify-center shrink-0 mb-4 shadow-inner">
             <svg viewBox="0 0 24 24" className="w-7 h-7 fill-none stroke-current stroke-2">
               <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
               <path d="M7 11V7a5 5 0 0 1 10 0v4" />
@@ -180,7 +180,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
             href="https://www.ieeeucf.com/sponsorships"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold rounded-xl text-xs tracking-wider uppercase transition-all shadow-md active:scale-95 flex items-center justify-center cursor-pointer"
+            className="w-full sm:w-auto px-6 py-3 bg-black hover:bg-neutral-800 text-white font-extrabold rounded-xl text-xs tracking-wider uppercase transition-all shadow-md active:scale-95 flex items-center justify-center cursor-pointer"
           >
             Learn More About Sponsoring
           </a>
@@ -202,15 +202,15 @@ export default function ContactTab({ student, role }: ContactTabProps) {
               {student.status}
             </span>
           )}
-          <span className="text-[11px] text-slate-500 font-medium hidden sm:inline">Verified UCF Knights Channel</span>
+          <span className="text-[11px] text-slate-500 font-medium hidden sm:inline">UCF Knights Channel</span>
         </div>
       </div>
 
-      {/* Verified Channels Card */}
+      {/* Contact Channels Card */}
       <div className="p-4 md:p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-3.5">
         <div className="flex items-center justify-between">
           <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-            <span>Verified Channels & Profiles</span>
+            <span>Channels & Profiles</span>
           </h4>
           <span className="text-[11px] text-slate-500 font-sans hidden sm:inline">
             Direct candidate contact endpoints
@@ -221,7 +221,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
           {/* Card 1: Official Email */}
           <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/90 flex flex-col justify-between gap-3 shadow-2xs">
             <div className="flex items-start gap-2.5">
-              <div className="p-1.5 rounded-lg bg-amber-50 text-amber-700 border border-amber-200/60 shrink-0 mt-0.5">
+              <div className="p-1.5 rounded-lg bg-neutral-100 text-black border border-neutral-300 shrink-0 mt-0.5">
                 <Mail size={13} />
               </div>
               <div className="flex-1 min-w-0">
@@ -240,14 +240,14 @@ export default function ContactTab({ student, role }: ContactTabProps) {
                 onClick={handleCopyEmail}
                 className="w-full py-1.5 px-2.5 rounded-lg bg-slate-200/70 hover:bg-slate-200 text-slate-700 hover:text-slate-900 text-[10.5px] font-semibold transition-all cursor-pointer shadow-2xs active:scale-95 flex items-center justify-center gap-1"
               >
-                {copiedEmail ? <Check size={11} className="text-emerald-600" /> : <Copy size={11} className="text-slate-500" />}
+                {copiedEmail ? <Check size={11} className="text-black" /> : <Copy size={11} className="text-slate-500" />}
                 <span>{copiedEmail ? "Copied!" : "Copy"}</span>
               </button>
               <a
                 href={`mailto:${student.email}?subject=${encodeURIComponent(
                   `IEEE UCF Member Inquiry: Career Opportunity for ${student.name}`
                 )}`}
-                className="w-full py-1.5 px-2.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700 hover:text-amber-900 border border-amber-200/60 text-[10.5px] font-bold transition-all cursor-pointer shadow-2xs active:scale-95 flex items-center justify-center gap-1.5 whitespace-nowrap"
+                className="w-full py-1.5 px-2.5 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-black border border-neutral-300 text-[10.5px] font-bold transition-all cursor-pointer shadow-2xs active:scale-95 flex items-center justify-center gap-1.5 whitespace-nowrap"
               >
                 <Mail size={12} />
                 <span>Open Mail</span>
@@ -258,7 +258,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
           {/* Card 2: Professional Profiles */}
           <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/90 flex flex-col justify-between gap-3 shadow-2xs">
             <div className="flex items-start gap-2.5">
-              <div className="p-1.5 rounded-lg bg-amber-50 text-amber-700 border border-amber-200/60 shrink-0 mt-0.5">
+              <div className="p-1.5 rounded-lg bg-neutral-100 text-black border border-neutral-300 shrink-0 mt-0.5">
                 <Globe size={13} />
               </div>
               <div className="flex-1 min-w-0">
@@ -280,7 +280,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
                     rel="noopener noreferrer"
                     className="px-2.5 py-1.5 rounded-lg bg-slate-200/70 hover:bg-slate-200 text-slate-700 font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs active:scale-95 text-[10.5px]"
                   >
-                    <LinkedinIcon size={11} className="text-sky-500 shrink-0" />
+                    <LinkedinIcon size={11} className="text-black shrink-0" />
                     <span className="truncate whitespace-nowrap">LinkedIn</span>
                   </a>
                 )}
@@ -291,7 +291,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
                     rel="noopener noreferrer"
                     className="px-2.5 py-1.5 rounded-lg bg-slate-200/70 hover:bg-slate-200 text-slate-700 font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs active:scale-95 text-[10.5px]"
                   >
-                    <GithubIcon size={11} className="text-slate-600 shrink-0" />
+                    <GithubIcon size={11} className="text-black shrink-0" />
                     <span className="truncate whitespace-nowrap">GitHub</span>
                   </a>
                 )}
@@ -304,7 +304,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
                       !resumeUrl && !githubLink ? "col-span-2" : ""
                     }`}
                   >
-                    <Globe size={11} className="text-amber-600 shrink-0" />
+                    <Globe size={11} className="text-black shrink-0" />
                     <span className="truncate whitespace-nowrap">Portfolio</span>
                   </a>
                 )}
@@ -317,7 +317,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
                       !portfolioLink && !linkedinLink ? "col-span-2" : ""
                     }`}
                   >
-                    <FileText size={11} className="text-emerald-600 shrink-0" />
+                    <FileText size={11} className="text-black shrink-0" />
                     <span className="truncate whitespace-nowrap">Resume</span>
                   </a>
                 )}
@@ -344,8 +344,8 @@ export default function ContactTab({ student, role }: ContactTabProps) {
         </div>
 
         {submitStatus === "success" && (
-          <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2">
-            <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+          <div className="p-3.5 rounded-xl bg-neutral-100 border border-neutral-300 text-black text-xs flex items-center gap-2">
+            <CheckCircle2 size={16} className="text-black shrink-0" />
             <span>
               Thank you! Your direct message to {student.name} has been delivered. A confirmation has been sent to your email.
             </span>
@@ -362,7 +362,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="flex flex-col gap-1">
               <label className="text-[11px] font-bold text-slate-700">
-                Your Name <span className="text-red-500">*</span>
+                Your Name <span className="text-black font-bold">*</span>
               </label>
               <input
                 type="text"
@@ -370,7 +370,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
                 value={recruiterName}
                 onChange={(e) => setRecruiterName(e.target.value)}
                 placeholder="e.g. Jane Doe"
-                className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-amber-500 transition-colors"
+                className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-black transition-colors"
               />
             </div>
             <div className="flex flex-col gap-1">
@@ -380,7 +380,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
                 value={recruiterCompany}
                 onChange={(e) => setRecruiterCompany(e.target.value)}
                 placeholder="e.g. Lockheed Martin, TI, or Independent"
-                className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-amber-500 transition-colors"
+                className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-black transition-colors"
               />
             </div>
           </div>
@@ -388,7 +388,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="flex flex-col gap-1">
               <label className="text-[11px] font-bold text-slate-700">
-                Work Email <span className="text-red-500">*</span>
+                Work Email <span className="text-black font-bold">*</span>
               </label>
               <input
                 type="text"
@@ -397,7 +397,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
                 value={recruiterEmail}
                 onChange={(e) => setRecruiterEmail(e.target.value)}
                 placeholder="jane@company.com"
-                className="w-full h-[36px] px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-amber-500 transition-colors"
+                className="w-full h-[36px] px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-black transition-colors"
               />
             </div>
             <div className="flex flex-col gap-1">
@@ -426,14 +426,14 @@ export default function ContactTab({ student, role }: ContactTabProps) {
               value={messageText}
               onChange={(e) => setMessageText(e.target.value)}
               placeholder="Tell us what technologies or roles you are looking to spotlight..."
-              className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-amber-500 transition-colors resize-none"
+              className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-black transition-colors resize-none"
             />
           </div>
 
           <button
             type="submit"
             disabled={isSending}
-            className="w-full sm:w-auto self-end px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 disabled:opacity-50 text-slate-950 font-bold text-xs transition-all shadow-sm active:scale-98 flex items-center justify-center gap-2 cursor-pointer mt-1"
+            className="w-full sm:w-auto self-end px-5 py-2.5 rounded-xl bg-black hover:bg-neutral-800 disabled:opacity-50 text-white font-bold text-xs transition-all shadow-sm active:scale-98 flex items-center justify-center gap-2 cursor-pointer mt-1"
           >
             {isSending ? (
               <>

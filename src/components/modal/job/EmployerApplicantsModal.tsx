@@ -79,18 +79,7 @@ export default function EmployerApplicantsModal({
   };
 
   const getStatusBadgeClass = (status: JobApplication["status"]) => {
-    switch (status) {
-      case "Offered":
-        return "bg-emerald-50 text-emerald-800 border-emerald-200";
-      case "Interviewing":
-        return "bg-purple-50 text-purple-800 border-purple-200";
-      case "Under Review":
-        return "bg-amber-50 text-amber-800 border-amber-200";
-      case "Declined":
-        return "bg-slate-100 text-slate-500 border-slate-200";
-      default:
-        return "bg-sky-50 text-sky-800 border-sky-200";
-    }
+    return "bg-white text-black border-neutral-300 font-bold";
   };
 
   return (
@@ -140,7 +129,7 @@ export default function EmployerApplicantsModal({
             {/* Major Proportions */}
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1">
-                <GraduationCap size={13} className="text-amber-600" />
+                <GraduationCap size={13} className="text-black" />
                 <span>Major Proportion:</span>
               </span>
               {majorProportions.map(([major, count]) => {
@@ -148,9 +137,9 @@ export default function EmployerApplicantsModal({
                 return (
                   <span
                     key={major}
-                    className="px-2.5 py-0.5 rounded-lg bg-slate-100 border border-slate-200/90 text-slate-800 font-semibold shadow-2xs text-[11px]"
+                    className="px-2.5 py-0.5 rounded-lg bg-neutral-100 border border-neutral-300 text-black font-semibold shadow-2xs text-[11px]"
                   >
-                    <strong className="text-slate-900">{major}</strong>: {count} ({pct}%)
+                    <strong className="text-black">{major}</strong>: {count} ({pct}%)
                   </span>
                 );
               })}
@@ -162,16 +151,16 @@ export default function EmployerApplicantsModal({
                 Funnel:
               </span>
               <div className="flex items-center gap-1 text-[11px] font-bold">
-                <span className="px-2 py-0.5 rounded-md bg-sky-50 text-sky-800 border border-sky-200 shadow-2xs">
+                <span className="px-2 py-0.5 rounded-md bg-neutral-100 text-black border border-neutral-300 shadow-2xs">
                   {stageCounts["Submitted"] || 0} Sub
                 </span>
-                <span className="px-2 py-0.5 rounded-md bg-amber-50 text-amber-800 border border-amber-200 shadow-2xs">
+                <span className="px-2 py-0.5 rounded-md bg-neutral-100 text-black border border-neutral-300 shadow-2xs">
                   {stageCounts["Under Review"] || 0} Review
                 </span>
-                <span className="px-2 py-0.5 rounded-md bg-purple-50 text-purple-800 border border-purple-200 shadow-2xs">
+                <span className="px-2 py-0.5 rounded-md bg-neutral-100 text-black border border-neutral-300 shadow-2xs">
                   {stageCounts["Interviewing"] || 0} Int
                 </span>
-                <span className="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-2xs">
+                <span className="px-2 py-0.5 rounded-md bg-neutral-100 text-black border border-neutral-300 shadow-2xs">
                   {stageCounts["Offered"] || 0} Off
                 </span>
               </div>
@@ -257,8 +246,8 @@ export default function EmployerApplicantsModal({
                         <span
                           key={idx}
                           className={`px-2 py-0.5 rounded-lg text-[10.5px] font-semibold border shadow-2xs ${isMatch
-                            ? "bg-amber-500/15 border-amber-500 text-slate-900 font-bold"
-                            : "bg-slate-100 border-slate-200 text-slate-600"
+                            ? "bg-black text-white border-black font-bold"
+                            : "bg-neutral-100 border-neutral-300 text-neutral-700"
                             }`}
                         >
                           {skill} {isMatch && "✓"}
@@ -304,7 +293,7 @@ export default function EmployerApplicantsModal({
                           rel="noopener noreferrer"
                           className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold border border-slate-200 flex items-center gap-1.5 transition-all shadow-2xs active:scale-95 cursor-pointer"
                         >
-                          <FileText size={12} className="text-emerald-600" />
+                          <FileText size={12} className="text-black" />
                           <span>Resume PDF</span>
                         </a>
                       )}
@@ -313,9 +302,9 @@ export default function EmployerApplicantsModal({
                         <button
                           type="button"
                           onClick={() => onViewPortfolio(student)}
-                          className="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-bold transition-all shadow-2xs active:scale-95 cursor-pointer flex items-center gap-1.5"
+                          className="px-3 py-1.5 rounded-xl bg-black hover:bg-neutral-800 text-white text-xs font-bold transition-all shadow-2xs active:scale-95 cursor-pointer flex items-center gap-1.5"
                         >
-                          <Sparkles size={12} className="text-slate-950" />
+                          <Sparkles size={12} className="text-white" />
                           <span>Inspect Full Portfolio</span>
                         </button>
                       )}

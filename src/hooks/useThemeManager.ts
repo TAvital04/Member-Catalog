@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback } from "react";
 export type Theme = "light" | "dark";
 
 export function useThemeManager() {
-  const [theme, setTheme] = useState<Theme>("dark");
+  const [theme, setTheme] = useState<Theme>("light");
 
   useEffect(() => {
     try {
@@ -14,13 +14,13 @@ export function useThemeManager() {
         setTheme(savedTheme);
         document.documentElement.setAttribute("data-theme", savedTheme);
       } else {
-        // Default to dark warm blue mode
-        setTheme("dark");
-        document.documentElement.setAttribute("data-theme", "dark");
-        localStorage.setItem("ieee-theme", "dark");
+        // Default to clean minimalist light mode
+        setTheme("light");
+        document.documentElement.setAttribute("data-theme", "light");
+        localStorage.setItem("ieee-theme", "light");
       }
     } catch {
-      document.documentElement.setAttribute("data-theme", "dark");
+      document.documentElement.setAttribute("data-theme", "light");
     }
   }, []);
 

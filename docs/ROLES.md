@@ -125,12 +125,10 @@ A member's skills are updated **exclusively when they attend a workshop for that
 | **Category** | Select (`Technical Workshop`, `Industry Tech Talk`, `General Body Meeting`, `Competition & Hackathon`, `Career & Networking`, `Special Event & Tour`) | `events.category` | Required |
 | **Description & Abstract** | Textarea | `events.description` | Required, min 25 chars |
 | **Corporate Partner Host** | Select dropdown (populated from `chapter_sponsors`) | `events.partner` | Optional |
-| **Workshop Skills Awarded to Attendees** | Multi-tag skill input (applicable only when Category is `Technical Workshop`) | `events.skills` (`jsonb`) | Automatically added to every attending member's profile exclusively when Category is `Technical Workshop` |
-| **Chapter Points Awarded** | Number input | `events.points_awarded` | Defaults to `15` points |
-| **RSVP Link & Requires Dues** | URL input + Checkbox | `rsvp_link`, `requires_dues` | Optional |
-| **Attending Members Roster** | Searchable multi-select of `members` (or CSV email paste) | `event_attendees (event_id, member_id)` | Inserts join rows into `event_attendees` (triggers workshop skill attribution for `Technical Workshop` events) |
+| **Workshop Skills Awarded to Attendees** | Multi-tag skill input (applicable only when Category is `Technical Workshop`) | `events.skills` (`jsonb`) | Automatically added to member profiles when Category is `Technical Workshop` (attendance is automatic) |
+| **Requires Chapter Dues** | Checkbox | `requires_dues` | Optional |
 
-- **API Route**: `POST /api/events` & `PUT /api/events/[id]/attendees` (requires `x-user-role: admin`). Inserts the event and bulk-upserts `event_attendees` rows in a single PostgreSQL transaction.
+- **API Route**: `POST /api/events` (requires `x-user-role: admin`). Inserts the event with standard fixed chapter points (`15`), category, partner host, and workshop skills. Member attendance is logged automatically.
 
 ---
 
@@ -219,8 +217,8 @@ With Sponsors, Events, Projects, and Jobs all flowing through PostgreSQL, this f
   - [ ] Add `portal_users` and `chapter_sponsors` tables; add `category`, `partner`, `skills`, and `points_awarded` columns to `events`.
 - [x] **Step 2: Form 1 — RSO Leadership Sponsor Onboarding Form (`/sponsors`) (Completed)**
   - [x] Build [`LeadershipSponsorForm.tsx`](../src/components/forms/LeadershipSponsorForm.tsx) and `POST /api/sponsors` ([`src/app/api/sponsors/route.ts`](../src/app/api/sponsors/route.ts)).
-- [ ] **Step 3: Form 2 — RSO Leadership Event & Attendance Roster Form (`/events`)**
-  - [ ] Build `LeadershipEventForm.tsx` with member attendance multi-select and `POST /api/events`.
+- [x] **Step 3: Form 2 — RSO Leadership Event & Attendance Roster Form (`/events`) (Completed)**
+  - [x] Build [`LeadershipEventForm.tsx`](../src/components/forms/LeadershipEventForm.tsx) with member attendance multi-select and `POST /api/events` ([`src/app/api/events/route.ts`](../src/app/api/events/route.ts)).
 - [ ] **Step 4: Form 3 — RSO Leadership Project & Team Roster Form (`/projects`)**
   - [ ] Build `LeadershipProjectForm.tsx` with tool/milestone builders, team roster selector, and `POST /api/projects`.
 - [ ] **Step 5: Form 4 — Sponsor Job Posting Form (`/jobs`)**

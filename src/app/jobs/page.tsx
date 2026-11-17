@@ -357,7 +357,7 @@ function JobsPageContent() {
                     : "text-slate-600 hover:text-slate-900 hover:bg-white/60"
                 }`}
               >
-                <Briefcase size={14} className={employerSubTab === "postings" ? "text-amber-500" : ""} />
+                <Briefcase size={14} className={employerSubTab === "postings" ? "text-black" : ""} />
                 <span>Active Postings ({employerJobs.length})</span>
               </button>
               <button
@@ -369,7 +369,7 @@ function JobsPageContent() {
                     : "text-slate-600 hover:text-slate-900 hover:bg-white/60"
                 }`}
               >
-                <BarChart3 size={14} className={employerSubTab === "analytics" ? "text-amber-500" : ""} />
+                <BarChart3 size={14} className={employerSubTab === "analytics" ? "text-black" : ""} />
                 <span>Applicant Pool Analytics ({applicationsList.length})</span>
               </button>
             </div>

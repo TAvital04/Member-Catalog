@@ -31,19 +31,19 @@ export default function TimelineCard({
 }: TimelineCardProps) {
   const themeClasses = {
     purple: {
-      hoverBorder: "hover:border-purple-500/30",
-      textBadge: "text-purple-400",
-      textGpa: "text-purple-400/90",
+      hoverBorder: "hover:border-black",
+      textBadge: "text-black",
+      textGpa: "text-neutral-700",
     },
     blue: {
-      hoverBorder: "hover:border-blue-500/30",
-      textBadge: "text-blue-400",
-      textGpa: "text-blue-400/90",
+      hoverBorder: "hover:border-black",
+      textBadge: "text-black",
+      textGpa: "text-neutral-700",
     },
     amber: {
-      hoverBorder: "hover:border-amber-500/30",
-      textBadge: "text-amber-400",
-      textGpa: "text-amber-400/90",
+      hoverBorder: "hover:border-black",
+      textBadge: "text-black",
+      textGpa: "text-neutral-700",
     },
   }[themeColor];
 

@@ -8,7 +8,7 @@
  */
 
 import React, { useState, useEffect, useMemo, Suspense } from "react";
-import { Calendar } from "lucide-react";
+import { Calendar, Plus, CheckCircle2, X } from "lucide-react";
 import DirectoryNavbar from "@/components/directory/DirectoryNavbar";
 import DirectoryStatsHeader from "@/components/directory/DirectoryStatsHeader";
 import { useThemeManager } from "@/hooks/useThemeManager";
@@ -16,6 +16,7 @@ import { useRoleManager } from "@/hooks/useRoleManager";
 import { useStudentData } from "@/hooks/useStudentData";
 import EventModal from "@/components/modal/event/EventModal";
 import PortfolioModal from "@/components/modal/PortfolioModal";
+import LeadershipEventForm from "@/components/forms/LeadershipEventForm";
 import EventCard from "@/components/events/EventCard";
 import EventFilters from "@/components/events/EventFilters";
 import EmptyState from "@/components/common/EmptyState";
@@ -35,6 +36,14 @@ function IEEEEventsContent() {
   // Modal inspection states
   const [activeModalEvent, setActiveModalEvent] = useState<IEEEEvent | null>(null);
   const [selectedMemberStudent, setSelectedMemberStudent] = useState<Student | null>(null);
+  const [isEventFormOpen, setIsEventFormOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const handleEventCreated = (newEvent: IEEEEvent) => {
+    setEventsList((prev) => [newEvent, ...prev]);
+    setToastMessage(`Created ${newEvent.title}.`);
+    setTimeout(() => setToastMessage(null), 4500);
+  };
 
   useEffect(() => {
     async function fetchEvents() {
@@ -167,7 +176,7 @@ function IEEEEventsContent() {
         role={role}
         theme={theme}
         roleDropdownOpen={false}
-        setRoleDropdownOpen={() => {}}
+        setRoleDropdownOpen={() => { }}
         toggleTheme={toggleTheme}
         handleRoleChange={handleRoleChange}
       />
@@ -175,8 +184,39 @@ function IEEEEventsContent() {
       {/* Directory Page Header */}
       <DirectoryStatsHeader
         title="IEEE UCF Events & Workshops"
-        description="Explore upcoming and semester technical workshops, general body meetings, industry tech talks with corporate defense and semiconductor partners, hackathons, and verified student attendance records."
-      />
+        description="Explore upcoming and semester technical workshops, general body meetings, industry tech talks with corporate defense and semiconductor partners, hackathons, and student attendance records."
+      >
+        {isAdmin && (
+          <button
+            type="button"
+            onClick={() => setIsEventFormOpen(true)}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-black hover:bg-neutral-800 text-white font-bold text-xs transition-all cursor-pointer shrink-0"
+          >
+            <Plus size={14} />
+            <span>Create Event / Workshop</span>
+          </button>
+        )}
+      </DirectoryStatsHeader>
+
+      {/* Floating Success Feedback Toast */}
+      {toastMessage && (
+        <aside aria-label="Notification" className="max-w-7xl w-full mx-auto px-4 -mt-2 mb-3 animate-fade-in">
+          <div className="p-3 rounded-lg bg-neutral-100 border border-neutral-300 text-black text-xs font-bold flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 size={16} className="text-black shrink-0" />
+              <span>{toastMessage}</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setToastMessage(null)}
+              aria-label="Dismiss notification"
+              className="p-1 text-neutral-500 hover:text-black cursor-pointer"
+            >
+              <X size={14} />
+            </button>
+          </div>
+        </aside>
+      )}
 
       {/* Search & Category Filter Controls */}
       <EventFilters
@@ -245,6 +285,16 @@ function IEEEEventsContent() {
         />
       )}
 
+      {/* Leadership Event & Attendance Roster Creation Modal (Form 2) */}
+      {isEventFormOpen && (
+        <LeadershipEventForm
+          role={role}
+          onClose={() => setIsEventFormOpen(false)}
+          onEventCreated={handleEventCreated}
+          students={students}
+        />
+      )}
+
       {/* Candidate Profile Deep-Dive Modal (if attendee clicked) */}
       {selectedMemberStudent && (
         <PortfolioModal
@@ -252,7 +302,7 @@ function IEEEEventsContent() {
           onClose={() => setSelectedMemberStudent(null)}
           adminMode={isAdmin}
           role={role}
-          onToggleFlag={() => {}}
+          onToggleFlag={() => { }}
         />
       )}
     </div>

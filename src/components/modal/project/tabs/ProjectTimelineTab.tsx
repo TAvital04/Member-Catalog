@@ -16,8 +16,8 @@ export default function ProjectTimelineTab({ timeline = [] }: ProjectTimelineTab
     switch (status) {
       case "completed":
         return (
-          <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-800 border border-emerald-200/70 flex items-center gap-1.5">
-            <CheckCircle2 size={11} className="text-emerald-600" />
+          <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-neutral-100 text-black border border-neutral-300 flex items-center gap-1.5">
+            <CheckCircle2 size={11} className="text-black" />
             Completed
           </span>
         );
@@ -41,7 +41,7 @@ export default function ProjectTimelineTab({ timeline = [] }: ProjectTimelineTab
   const getMarkerClass = (status: ProjectMilestone["status"]) => {
     switch (status) {
       case "completed":
-        return "border-slate-300 bg-emerald-50 text-emerald-600";
+        return "border-neutral-300 bg-neutral-100 text-black";
       case "in_progress":
         return "border-slate-400 bg-slate-100 text-slate-700";
       case "upcoming":

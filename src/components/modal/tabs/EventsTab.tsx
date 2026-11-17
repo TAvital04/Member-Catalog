@@ -26,7 +26,7 @@ export default function EventsTab({
         <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider">
           <span>IEEE UCF Chapter Events & Workshops</span>
           {events.length > 0 && (
-            <span className="bg-amber-50 text-amber-800 border border-amber-200 text-[10px] px-2 py-0.2 rounded-full font-bold">
+            <span className="bg-neutral-100 text-black border border-neutral-300 text-[10px] px-2 py-0.2 rounded-full font-bold">
               {events.length}
             </span>
           )}

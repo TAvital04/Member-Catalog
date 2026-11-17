@@ -123,7 +123,7 @@ export default function EmployerJobPostings({
                 <span
                   className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border shadow-2xs shrink-0 ${
                     job.status === "Active"
-                      ? "bg-emerald-50 text-emerald-800 border-emerald-200"
+                      ? "bg-neutral-100 text-black border-neutral-300 font-bold"
                       : "bg-slate-100 text-slate-600 border-slate-200"
                   }`}
                 >
@@ -140,7 +140,7 @@ export default function EmployerJobPostings({
                   {job.location} ({job.locationType})
                 </span>
                 {job.salaryRange && (
-                  <span className="px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 font-semibold shadow-2xs">
+                  <span className="px-2.5 py-1 rounded-lg bg-neutral-100 border border-neutral-300 text-black font-semibold shadow-2xs">
                     {job.salaryRange}
                   </span>
                 )}
@@ -160,8 +160,8 @@ export default function EmployerJobPostings({
                 </span>
 
                 {/* Review Applicants Action */}
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 group-hover:bg-amber-50 group-hover:border-amber-300/80 border border-slate-200 text-slate-900 group-hover:text-amber-800 text-xs font-bold transition-all shadow-2xs">
-                  <Users size={13} className="text-slate-500 group-hover:text-amber-600 transition-colors" />
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-neutral-100 group-hover:bg-neutral-200 border border-neutral-300 text-black text-xs font-bold transition-all shadow-2xs">
+                  <Users size={13} className="text-black" />
                   <span>Review Applicants ({jobApps.length})</span>
                 </div>
               </div>
