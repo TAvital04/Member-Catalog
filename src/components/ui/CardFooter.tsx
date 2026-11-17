@@ -7,7 +7,7 @@ export interface CardFooterProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
-export default function CardFooter({
+export function CardFooter({
   children,
   className = "",
   ...props
@@ -21,3 +21,5 @@ export default function CardFooter({
     </div>
   );
 }
+
+export default CardFooter;

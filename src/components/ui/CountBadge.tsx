@@ -14,7 +14,7 @@ const variantStyles: Record<NonNullable<CountBadgeProps["variant"]>, string> = {
   muted: "bg-neutral-50 text-neutral-600 border border-neutral-200 font-semibold",
 };
 
-export default function CountBadge({
+export function CountBadge({
   count,
   variant = "neutral",
   className = "",
@@ -29,3 +29,5 @@ export default function CountBadge({
     </span>
   );
 }
+
+export default CountBadge;

@@ -2,8 +2,6 @@
 
 import React from "react";
 import {
-  Building2,
-  ExternalLink,
   MapPin,
   Calendar,
   FolderGit2,
@@ -12,8 +10,7 @@ import {
   Award,
 } from "lucide-react";
 import { ChapterSponsor } from "@/data/sponsors";
-import { CARD_INTERACTIVE, CARD_TITLE_HOVER } from "@/lib/cardStyles";
-import Tooltip from "@/components/common/Tooltip";
+import { Card, Badge } from "@/components/ui";
 
 export interface SponsorCardProps {
   sponsor: ChapterSponsor;
@@ -26,7 +23,8 @@ export interface SponsorCardProps {
 }
 
 /**
- * SponsorCard — Matchy-Matchy Corporate Sponsor Showcase Card
+ * SponsorCard — Standardized Corporate Sponsor Showcase Card
+ * Built with the Card & Badge primitive suite.
  */
 export default function SponsorCard({
   sponsor,
@@ -37,23 +35,26 @@ export default function SponsorCard({
   isSelected = false,
   onSelect,
 }: SponsorCardProps) {
-  const tierColor = "bg-white text-black border-neutral-300 font-bold";
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      onSelect(sponsor);
+    }
+  };
 
   return (
-    <div
+    <Card
+      as="div"
       role="button"
       tabIndex={0}
-      aria-label={`View initiatives and interactions for ${sponsor.name}`}
+      variant="interactive"
+      padding="none"
       onClick={() => onSelect(sponsor)}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          onSelect(sponsor);
-        }
-      }}
-      className={`${CARD_INTERACTIVE} p-6 flex flex-col justify-between gap-5 group ${
+      onKeyDown={handleKeyDown}
+      className={`text-left p-6 flex flex-col justify-between gap-5 group w-full cursor-pointer ${
         isSelected ? "ring-2 ring-black border-black" : ""
       }`}
+      aria-label={`View initiatives and interactions for ${sponsor.name}`}
     >
       <div className="flex flex-col gap-3.5">
         {/* Top Header: Logo Initial & Tier Badge */}
@@ -63,11 +64,11 @@ export default function SponsorCard({
               {sponsor.logoText || sponsor.name.slice(0, 2).toUpperCase()}
             </div>
             <div>
-              <h3 className={`font-black text-lg leading-tight ${CARD_TITLE_HOVER}`}>
+              <h3 className="font-black text-lg text-black leading-tight">
                 {sponsor.name}
               </h3>
-              <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-0.5">
-                <MapPin size={11} className="text-slate-400" />
+              <div className="flex items-center gap-1.5 text-xs text-neutral-500 mt-0.5">
+                <MapPin size={11} className="text-neutral-400" />
                 <span>{sponsor.location}</span>
                 <span>•</span>
                 <span>Partner since {sponsor.partnerSince}</span>
@@ -75,20 +76,18 @@ export default function SponsorCard({
             </div>
           </div>
 
-          <span
-            className={`text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border shadow-2xs flex items-center gap-1 ${tierColor}`}
-          >
+          <Badge variant="outline" className="flex items-center gap-1 font-bold">
             <Award size={11} />
             <span>{sponsor.tier} Partner</span>
-          </span>
+          </Badge>
         </div>
 
         {/* Tagline & Description */}
         <div>
-          <p className="text-xs font-semibold text-slate-800 dark:text-slate-200">
+          <p className="text-xs font-semibold text-black">
             {sponsor.tagline}
           </p>
-          <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 mt-1 leading-relaxed">
+          <p className="text-xs text-neutral-600 line-clamp-2 mt-1 leading-relaxed">
             {sponsor.description}
           </p>
         </div>
@@ -98,13 +97,13 @@ export default function SponsorCard({
           {sponsor.primaryFocus.slice(0, 3).map((tag, idx) => (
             <span
               key={idx}
-              className="px-2.5 py-0.5 rounded-lg text-[10.5px] bg-slate-100 border border-slate-200 text-slate-700 font-medium"
+              className="px-2.5 py-0.5 rounded-lg text-[10.5px] bg-neutral-100 border border-neutral-200 text-black font-medium"
             >
               {tag}
             </span>
           ))}
           {sponsor.primaryFocus.length > 3 && (
-            <span className="text-[10.5px] text-slate-400 font-medium px-1">
+            <span className="text-[10.5px] text-neutral-400 font-medium px-1">
               +{sponsor.primaryFocus.length - 3} more
             </span>
           )}
@@ -112,29 +111,29 @@ export default function SponsorCard({
       </div>
 
       {/* Footer: Stat Badges & View Action */}
-      <div className="pt-3.5 border-t border-slate-100 flex items-center justify-between gap-2 text-xs">
-        <div className="flex items-center gap-3 text-slate-500 text-[11px] font-medium">
+      <div className="pt-3.5 border-t border-neutral-200 flex items-center justify-between gap-2 text-xs">
+        <div className="flex items-center gap-3 text-neutral-500 text-[11px] font-medium">
           {projectCount > 0 && (
             <span className="flex items-center gap-1">
-              <FolderGit2 size={13} className="text-slate-400" />
+              <FolderGit2 size={13} className="text-neutral-400" />
               <span>{projectCount} projects</span>
             </span>
           )}
           {eventCount > 0 && (
             <span className="flex items-center gap-1">
-              <Calendar size={13} className="text-slate-400" />
+              <Calendar size={13} className="text-neutral-400" />
               <span>{eventCount} workshops</span>
             </span>
           )}
           {jobCount > 0 && (
             <span className="flex items-center gap-1">
-              <Briefcase size={13} className="text-slate-400" />
+              <Briefcase size={13} className="text-neutral-400" />
               <span>{jobCount} jobs</span>
             </span>
           )}
           {interactionCount > 0 && (
             <span className="flex items-center gap-1">
-              <Users size={13} className="text-slate-400" />
+              <Users size={13} className="text-neutral-400" />
               <span>{interactionCount} members</span>
             </span>
           )}
@@ -144,6 +143,6 @@ export default function SponsorCard({
           View Hub
         </span>
       </div>
-    </div>
+    </Card>
   );
 }

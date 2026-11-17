@@ -5,6 +5,7 @@ import { X, Loader2, Sparkles, AlertCircle, Plus } from "lucide-react";
 import { IEEEEvent, EventCategory } from "@/data/events";
 import { Student } from "@/data/students";
 import { CURRENT_CHAPTER_SPONSORS } from "@/data/sponsors";
+import { canAwardSkills } from "@/lib/skills";
 import CustomDropdown from "@/components/common/CustomDropdown";
 
 export interface LeadershipEventFormProps {
@@ -103,7 +104,7 @@ export default function LeadershipEventForm({
           category,
           partner: partner === "None / Chapter Hosted" ? undefined : partner,
           description: cleanDesc,
-          skills: category === "Technical Workshop" ? skills : [],
+          skills: canAwardSkills(category) ? skills : [],
           pointsAwarded: STANDARD_CHAPTER_POINTS,
           requiresDues,
           attendees: [],
@@ -256,11 +257,11 @@ export default function LeadershipEventForm({
                 2. Skills Awarded to Attendees
               </h3>
               <span className="text-[10.5px] text-neutral-600 font-medium">
-                {category === "Technical Workshop" ? "Workshop Skills" : "Non-Workshop Event"}
+                {canAwardSkills(category) ? "Workshop Skills" : "Non-Workshop Event"}
               </span>
             </div>
 
-            {category === "Technical Workshop" ? (
+            {canAwardSkills(category) ? (
               <>
                 <p className="text-[11px] text-neutral-600 leading-relaxed">
                   In accordance with chapter policy, a member&apos;s skills are updated <strong>exclusively when they attend a Technical Workshop for that skill</strong>. Member attendance is logged automatically.

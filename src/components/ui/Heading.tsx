@@ -28,7 +28,7 @@ const defaultTagForVariant: Record<NonNullable<HeadingProps["variant"]>, "h1" | 
   sub: "h5",
 };
 
-export default function Heading({
+export function Heading({
   level,
   variant,
   as,
@@ -46,3 +46,5 @@ export default function Heading({
     </Tag>
   );
 }
+
+export default Heading;

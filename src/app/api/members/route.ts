@@ -12,6 +12,7 @@ import { Student } from "@/data/students";
 import { SAMPLE_IEEE_EVENTS } from "@/data/events";
 import { calculateCandidatePoints, calculateRecentPoints } from "@/lib/points";
 import { getSeededEventsForCandidate } from "@/lib/eventSeeding";
+import { canAwardSkills } from "@/lib/skills";
 import { eq, inArray } from "drizzle-orm";
 
 export async function GET(request?: Request) {
@@ -210,7 +211,7 @@ export async function GET(request?: Request) {
         // (Skills are never populated from projects, manual entry, or non-workshop events)
         const memberSkills: string[] = [];
         candidateEvents
-          .filter((evt: any) => !evt.category || evt.category === "Technical Workshop")
+          .filter((evt: any) => canAwardSkills(evt.category))
           .forEach((evt: any) => {
             if (Array.isArray(evt.skills)) {
               evt.skills.forEach((sk: string) => {

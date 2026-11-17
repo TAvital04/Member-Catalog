@@ -24,7 +24,7 @@ const sizeStyles: Record<NonNullable<IconButtonProps["size"]>, string> = {
   lg: "p-2.5 text-base",
 };
 
-export default function IconButton({
+export function IconButton({
   children,
   ariaLabel,
   variant = "secondary",
@@ -46,3 +46,5 @@ export default function IconButton({
     </button>
   );
 }
+
+export default IconButton;

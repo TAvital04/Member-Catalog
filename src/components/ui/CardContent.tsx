@@ -7,7 +7,7 @@ export interface CardContentProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
-export default function CardContent({
+export function CardContent({
   children,
   className = "",
   ...props
@@ -18,3 +18,5 @@ export default function CardContent({
     </div>
   );
 }
+
+export default CardContent;

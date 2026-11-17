@@ -25,7 +25,7 @@ const sizeClasses: Record<NonNullable<ModalProps["size"]>, string> = {
   full: "max-w-6xl",
 };
 
-export default function Modal({
+export function Modal({
   isOpen,
   onClose,
   title,
@@ -103,3 +103,5 @@ export default function Modal({
     </div>
   );
 }
+
+export default Modal;

@@ -20,7 +20,7 @@ export interface DropdownProps {
   disabled?: boolean;
 }
 
-export default function Dropdown({
+export function Dropdown({
   value,
   onChange,
   options,
@@ -120,3 +120,5 @@ export default function Dropdown({
     </div>
   );
 }
+
+export default Dropdown;

@@ -8,7 +8,7 @@ export interface CardTitleProps extends React.HTMLAttributes<HTMLHeadingElement>
   as?: "h2" | "h3" | "h4" | "span";
 }
 
-export default function CardTitle({
+export function CardTitle({
   children,
   className = "",
   as: Tag = "h3",
@@ -23,3 +23,5 @@ export default function CardTitle({
     </Tag>
   );
 }
+
+export default CardTitle;

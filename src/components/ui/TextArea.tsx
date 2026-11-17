@@ -9,7 +9,7 @@ export interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextArea
   className?: string;
 }
 
-export default function TextArea({
+export function TextArea({
   label,
   helperText,
   error,
@@ -50,3 +50,5 @@ export default function TextArea({
     </div>
   );
 }
+
+export default TextArea;

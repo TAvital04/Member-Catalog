@@ -14,7 +14,7 @@ const alignClasses: Record<NonNullable<ModalFooterProps["align"]>, string> = {
   between: "justify-between",
 };
 
-export default function ModalFooter({
+export function ModalFooter({
   children,
   className = "",
   align = "right",
@@ -29,3 +29,5 @@ export default function ModalFooter({
     </div>
   );
 }
+
+export default ModalFooter;

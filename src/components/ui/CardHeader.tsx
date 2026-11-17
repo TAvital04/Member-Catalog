@@ -7,7 +7,7 @@ export interface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
-export default function CardHeader({
+export function CardHeader({
   children,
   className = "",
   ...props
@@ -21,3 +21,5 @@ export default function CardHeader({
     </div>
   );
 }
+
+export default CardHeader;

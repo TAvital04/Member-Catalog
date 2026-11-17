@@ -72,14 +72,14 @@ export default function PortfolioModal({
         aria-modal="true"
         aria-label={`${student.name} - Engineering Portfolio`}
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-5xl h-full md:h-[80vh] rounded-none md:rounded-3xl bg-white border-0 md:border border-slate-200 shadow-2xl flex flex-col max-h-screen md:max-h-[85vh] animate-scale-in cursor-default overflow-hidden"
+        className="relative w-full max-w-5xl h-full md:h-[80vh] rounded-none md:rounded-3xl bg-white border-0 md:border border-neutral-300 shadow-2xl flex flex-col max-h-screen md:max-h-[85vh] animate-scale-in cursor-default overflow-hidden"
       >
         {/* Close Button */}
         <button
           onClick={onClose}
           type="button"
           aria-label="Close candidate portfolio modal"
-          className="absolute top-4 right-4 z-50 p-2 rounded-full bg-slate-100 border border-slate-200 hover:bg-slate-200 text-slate-500 hover:text-slate-900 transition-all shadow-xs active:scale-90 focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none cursor-pointer"
+          className="absolute top-4 right-4 z-50 p-2 rounded-full bg-neutral-100 border border-neutral-300 hover:bg-neutral-200 text-black transition-all shadow-xs active:scale-90 focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none cursor-pointer"
         >
           <X size={18} />
         </button>
@@ -87,8 +87,8 @@ export default function PortfolioModal({
         {/* Scrollable Container Wrapper */}
         <div className="w-full flex flex-col md:flex-row overflow-hidden h-full">
           {/* Left Side Panel: Profile Hero & Desktop Metadata */}
-          <div className="w-full md:w-2/5 p-6 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col h-full overflow-hidden relative z-10 bg-slate-50/70 hidden md:flex">
-            <div className="pb-5 border-b border-slate-200 shrink-0">
+          <div className="w-full md:w-2/5 p-6 border-b md:border-b-0 md:border-r border-neutral-200 flex flex-col h-full overflow-hidden relative z-10 bg-neutral-50 hidden md:flex">
+            <div className="pb-5 border-b border-neutral-200 shrink-0">
               <StudentUpperInfo student={student} adminMode={adminMode} />
             </div>
             <div className="flex-1 flex flex-col min-h-0 overflow-y-auto overflow-x-hidden pt-5 pb-1 pr-1 w-full">

@@ -8,7 +8,7 @@ export interface ModalBodyProps extends React.HTMLAttributes<HTMLDivElement> {
   scrollable?: boolean;
 }
 
-export default function ModalBody({
+export function ModalBody({
   children,
   className = "",
   scrollable = true,
@@ -23,3 +23,5 @@ export default function ModalBody({
     </div>
   );
 }
+
+export default ModalBody;

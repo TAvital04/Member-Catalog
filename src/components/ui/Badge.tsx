@@ -23,7 +23,7 @@ const sizeStyles: Record<NonNullable<BadgeProps["size"]>, string> = {
   md: "text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wider",
 };
 
-export default function Badge({
+export function Badge({
   children,
   variant = "neutral",
   size = "sm",
@@ -41,3 +41,5 @@ export default function Badge({
     </span>
   );
 }
+
+export default Badge;

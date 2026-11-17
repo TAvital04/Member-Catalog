@@ -14,7 +14,7 @@ const alignClasses: Record<NonNullable<DropdownMenuProps["align"]>, string> = {
   center: "left-1/2 -translate-x-1/2",
 };
 
-export default function DropdownMenu({
+export function DropdownMenu({
   children,
   align = "left",
   className = "",
@@ -29,3 +29,5 @@ export default function DropdownMenu({
     </div>
   );
 }
+
+export default DropdownMenu;

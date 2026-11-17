@@ -17,7 +17,7 @@ const variantStyles: Record<NonNullable<SubheadingProps["variant"]>, string> = {
   meta: "text-[10px] sm:text-[11px] text-neutral-500 font-medium leading-none",
 };
 
-export default function Subheading({
+export function Subheading({
   variant = "page",
   as: Tag = "p",
   children,
@@ -30,3 +30,5 @@ export default function Subheading({
     </Tag>
   );
 }
+
+export default Subheading;

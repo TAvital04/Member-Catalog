@@ -58,3 +58,4 @@ export * from "./Skeleton";
 export * from "./Container";
 export * from "./Stack";
 export * from "./Grid";
+export * from "./PageShell";

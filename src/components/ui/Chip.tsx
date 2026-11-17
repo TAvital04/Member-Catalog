@@ -11,7 +11,7 @@ export interface ChipProps extends React.ButtonHTMLAttributes<HTMLButtonElement>
   className?: string;
 }
 
-export default function Chip({
+export function Chip({
   children,
   isSelected = false,
   onRemove,
@@ -49,3 +49,5 @@ export default function Chip({
     </button>
   );
 }
+
+export default Chip;

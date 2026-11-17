@@ -10,7 +10,7 @@ export interface DropdownItemProps extends React.ButtonHTMLAttributes<HTMLButton
   className?: string;
 }
 
-export default function DropdownItem({
+export function DropdownItem({
   children,
   isSelected = false,
   icon,
@@ -35,3 +35,5 @@ export default function DropdownItem({
     </button>
   );
 }
+
+export default DropdownItem;

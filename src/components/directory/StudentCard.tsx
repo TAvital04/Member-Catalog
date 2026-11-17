@@ -5,7 +5,7 @@ import { Student } from "@/data/students";
 import { Calendar } from "lucide-react";
 import Avatar from "../common/Avatar";
 import TruncatedText from "../common/TruncatedText";
-import { getCardClasses, CARD_TITLE_HOVER } from "@/lib/cardStyles";
+import { Card } from "@/components/ui";
 
 interface StudentCardProps {
   student: Student;
@@ -27,16 +27,15 @@ function StudentCard({
   };
 
   return (
-    <div
-      role="button"
-      tabIndex={0}
-      aria-label={`View ${student.name}'s engineering profile and portfolio`}
+    <Card
+      as="button"
+      variant="interactive"
+      padding="none"
       onClick={() => onClick(student)}
       onKeyDown={handleKeyDown}
       data-student-id={student.id}
-      className={getCardClasses({
-        className: "relative p-4 md:p-5 flex flex-col justify-between h-[185px] md:h-[215px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400",
-      })}
+      className="relative p-4 md:p-5 flex flex-col justify-between h-[185px] md:h-[215px] w-full text-left cursor-pointer"
+      aria-label={`View ${student.name}'s engineering profile and portfolio`}
     >
       {/* Top Section */}
       <div className="flex flex-col gap-2.5">
@@ -45,10 +44,10 @@ function StudentCard({
             <Avatar name={student.name} size="sm" className="md:hidden" />
             <Avatar name={student.name} size="md" className="hidden md:flex" />
             <div className="min-w-0 grow flex flex-col">
-              <h3 className={`font-bold text-sm md:text-base leading-tight flex ${CARD_TITLE_HOVER}`}>
+              <h3 className="font-bold text-sm md:text-base text-black leading-tight flex">
                 <TruncatedText text={student.name} maxLength={26} align="left" />
               </h3>
-              <div className="text-[11px] md:text-xs text-slate-600 dark:text-zinc-400 font-medium leading-none md:leading-[1.1] mt-1 flex">
+              <div className="text-[11px] md:text-xs text-neutral-600 font-medium leading-none md:leading-[1.1] mt-1 flex">
                 <TruncatedText text={student.major} maxLength={28} align="left" />
               </div>
             </div>
@@ -57,25 +56,25 @@ function StudentCard({
 
         {/* Short Bio */}
         {student.bio ? (
-          <p className="text-xs text-slate-600 dark:text-zinc-400 line-clamp-2 md:line-clamp-3 leading-relaxed">
+          <p className="text-xs text-neutral-600 line-clamp-2 md:line-clamp-3 leading-relaxed">
             {student.bio}
           </p>
         ) : (
-          <p className="text-xs text-slate-400 dark:text-zinc-500 italic">
+          <p className="text-xs text-neutral-400 italic">
             No bio provided.
           </p>
         )}
       </div>
 
       {/* Bottom Section */}
-      <div className="flex items-center justify-between pt-2.5 md:pt-3 border-t border-slate-100 dark:border-zinc-800 w-full text-slate-500 dark:text-zinc-400 text-[11px] md:text-xs font-medium">
+      <div className="flex items-center justify-between pt-2.5 md:pt-3 border-t border-neutral-200 w-full text-neutral-500 text-[11px] md:text-xs font-medium">
         <div className="flex items-center gap-1">
-          <Calendar size={12} className="text-slate-400 md:hidden" />
-          <Calendar size={13} className="text-slate-400 hidden md:block" />
+          <Calendar size={12} className="text-neutral-400 md:hidden" />
+          <Calendar size={13} className="text-neutral-400 hidden md:block" />
           <span>Grad: {student.gradDate}</span>
         </div>
       </div>
-    </div>
+    </Card>
   );
 }
 

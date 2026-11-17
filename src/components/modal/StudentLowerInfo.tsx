@@ -85,10 +85,10 @@ export default function StudentLowerInfo({
       {(leadershipRole || student.mainProjectName) && (
         <div className="flex flex-col gap-2.5 shrink-0">
           {leadershipRole && (
-            <div className="bg-white border border-slate-200/90 rounded-xl px-3.5 py-2.5 text-xs font-bold flex items-center gap-2.5 shadow-2xs">
+            <div className="bg-white border border-neutral-300 rounded-xl px-3.5 py-2.5 text-xs font-bold flex items-center gap-2.5 shadow-2xs">
               <div>
-                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block leading-none mb-1">IEEE UCF Chapter Leadership</span>
-                <span className="leading-tight font-extrabold text-slate-900">{leadershipRole}</span>
+                <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider block leading-none mb-1">IEEE UCF Chapter Leadership</span>
+                <span className="leading-tight font-extrabold text-black">{leadershipRole}</span>
               </div>
             </div>
           )}
@@ -116,13 +116,13 @@ export default function StudentLowerInfo({
                 }
               }}
               aria-label={`View project modal for ${student.mainProjectName}`}
-              className="bg-white hover:border-slate-300 border border-slate-200/90 rounded-xl px-3.5 py-2.5 text-xs font-bold flex items-center justify-between gap-2.5 shadow-2xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer active:scale-95 group"
+              className="bg-white hover:border-black border border-neutral-300 rounded-xl px-3.5 py-2.5 text-xs font-bold flex items-center justify-between gap-2.5 shadow-2xs transition-all duration-200 cursor-pointer active:scale-95 group"
             >
               <div className="min-w-0">
-                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block leading-none mb-1">
+                <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider block leading-none mb-1">
                   Primary IEEE Project Affiliation
                 </span>
-                <span className="leading-tight font-extrabold text-slate-900 group-hover:text-black transition-colors truncate block">
+                <span className="leading-tight font-extrabold text-black group-hover:text-black transition-colors truncate block">
                   {student.mainProjectName}
                 </span>
               </div>
@@ -133,38 +133,38 @@ export default function StudentLowerInfo({
 
       {/* High-level status bar */}
       <div className="flex flex-wrap gap-2 text-xs w-full status-stack shrink-0">
-        <span className="bg-slate-100 border border-slate-200 text-slate-700 px-3 py-1.5 rounded-full flex items-center justify-center gap-1.5 shadow-2xs font-semibold grow">
-          <Calendar size={12} className="text-slate-400 shrink-0" />
+        <span className="bg-neutral-100 border border-neutral-200 text-black px-3 py-1.5 rounded-full flex items-center justify-center gap-1.5 shadow-2xs font-semibold grow">
+          <Calendar size={12} className="text-neutral-500 shrink-0" />
           <span>Grad: {student.gradDate}</span>
         </span>
-        <span className="bg-slate-100 border border-slate-200 text-slate-700 px-3 py-1.5 rounded-full flex items-center justify-center gap-1.5 shadow-2xs font-semibold grow min-w-0">
-          <Mail size={12} className="text-slate-400 shrink-0" />
+        <span className="bg-neutral-100 border border-neutral-200 text-black px-3 py-1.5 rounded-full flex items-center justify-center gap-1.5 shadow-2xs font-semibold grow min-w-0">
+          <Mail size={12} className="text-neutral-500 shrink-0" />
           <span className="truncate">{student.email}</span>
         </span>
       </div>
 
       {/* Candidate Biography & Skills Card */}
-      <div className="rounded-2xl border border-slate-200/90 bg-white p-4 md:p-5 shadow-2xs flex flex-col gap-3 shrink-0">
+      <div className="rounded-2xl border border-neutral-300 bg-white p-4 md:p-5 shadow-2xs flex flex-col gap-3 shrink-0">
         <div className="flex flex-col gap-1.5">
-          <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-wider shrink-0">
+          <h3 className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider shrink-0">
             About
           </h3>
-          <p className="text-xs text-slate-600 leading-relaxed font-sans">
+          <p className="text-xs text-neutral-700 leading-relaxed font-sans">
             {student.bio || "No candidate biography provided yet."}
           </p>
         </div>
 
         {student.skills && student.skills.length > 0 && (
-          <div className="flex flex-col gap-1.5 pt-2 border-t border-slate-200/80">
+          <div className="flex flex-col gap-1.5 pt-2 border-t border-neutral-200">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1">
+              <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider flex items-center gap-1">
                 <span>Skills ({student.skills.length})</span>
               </span>
               {onSelectTab && (
                 <button
                   type="button"
                   onClick={() => onSelectTab("skills")}
-                  className="text-[10px] font-semibold text-slate-500 hover:text-black transition-colors cursor-pointer"
+                  className="text-[10px] font-semibold text-neutral-500 hover:text-black transition-colors cursor-pointer"
                 >
                   See more
                 </button>
@@ -192,7 +192,7 @@ export default function StudentLowerInfo({
                 <button
                   type="button"
                   onClick={() => onSelectTab?.("skills")}
-                  className="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-[10px] font-semibold text-slate-600 hover:text-black transition-all cursor-pointer active:scale-95 shadow-2xs"
+                  className="px-2 py-0.5 rounded-lg bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-[10px] font-semibold text-black transition-all cursor-pointer active:scale-95 shadow-2xs"
                 >
                   <span>+{student.skills.length - 6} more</span>
                 </button>
@@ -218,7 +218,7 @@ export default function StudentLowerInfo({
                   href={safeLinkUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-white hover:border-slate-300 border border-slate-200/90 text-xs font-semibold text-slate-700 hover:text-slate-900 transition-all duration-200 shadow-2xs hover:shadow-md hover:-translate-y-0.5 active:scale-95 cursor-pointer grow"
+                  className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-white hover:border-black border border-neutral-300 text-xs font-semibold text-black transition-all duration-200 shadow-2xs active:scale-95 cursor-pointer grow"
                 >
                   {isGithub && <Github size={13} className="text-black" />}
                   {isLinkedin && <Linkedin size={13} className="text-black" />}

@@ -9,7 +9,7 @@ export interface DropdownTriggerProps extends React.ButtonHTMLAttributes<HTMLBut
   className?: string;
 }
 
-export default function DropdownTrigger({
+export function DropdownTrigger({
   children,
   isOpen = false,
   className = "",
@@ -31,3 +31,5 @@ export default function DropdownTrigger({
     </button>
   );
 }
+
+export default DropdownTrigger;

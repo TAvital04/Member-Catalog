@@ -7,7 +7,7 @@ export interface ModalHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
-export default function ModalHeader({
+export function ModalHeader({
   children,
   className = "",
   ...props
@@ -21,3 +21,5 @@ export default function ModalHeader({
     </div>
   );
 }
+
+export default ModalHeader;

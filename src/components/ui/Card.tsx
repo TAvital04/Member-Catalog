@@ -26,7 +26,7 @@ const paddingStyles: Record<NonNullable<CardProps["padding"]>, string> = {
   lg: "p-6",
 };
 
-export default function Card({
+export function Card({
   variant = "flat",
   padding = "md",
   as = "div",
@@ -55,3 +55,5 @@ export default function Card({
     </Tag>
   );
 }
+
+export default Card;

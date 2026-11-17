@@ -11,7 +11,7 @@ export interface TextInputProps extends React.InputHTMLAttributes<HTMLInputEleme
   className?: string;
 }
 
-export default function TextInput({
+export function TextInput({
   label,
   helperText,
   error,
@@ -68,3 +68,5 @@ export default function TextInput({
     </div>
   );
 }
+
+export default TextInput;

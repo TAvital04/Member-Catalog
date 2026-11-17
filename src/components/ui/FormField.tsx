@@ -12,7 +12,7 @@ export interface FormFieldProps {
   className?: string;
 }
 
-export default function FormField({
+export function FormField({
   label,
   htmlFor,
   required = false,
@@ -44,3 +44,5 @@ export default function FormField({
     </div>
   );
 }
+
+export default FormField;

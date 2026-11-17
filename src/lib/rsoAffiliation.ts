@@ -1,6 +1,7 @@
 import { ProjectEntry, Student } from "@/data/students";
 import { SAMPLE_IEEE_PROJECTS } from "@/data/projects";
 import { SAMPLE_IEEE_EVENTS, IEEEEvent } from "@/data/events";
+import { canAwardSkills } from "./skills";
 
 /**
  * Pre-computed lowercased lookup sets for official RSO chapter projects and workshop skills.
@@ -16,7 +17,7 @@ SAMPLE_IEEE_PROJECTS.forEach((proj) => {
 
 // 2. Ingest all skills taught in RSO chapter Technical Workshops
 SAMPLE_IEEE_EVENTS.forEach((evt: IEEEEvent) => {
-  if ((!evt.category || evt.category === "Technical Workshop") && Array.isArray(evt.skills)) {
+  if (canAwardSkills(evt.category) && Array.isArray(evt.skills)) {
     evt.skills.forEach((skill: string) => {
       if (skill) {
         RSO_TOOLS_AND_SKILLS.add(skill.toLowerCase().trim());
@@ -230,7 +231,7 @@ export function isLeadSkill(skill: string, student?: Student): boolean {
     // Also include skills from workshops the student attended while serving as a workshop/committee lead
     if (Array.isArray(student.events)) {
       student.events
-        .filter((evt) => !evt.category || evt.category === "Technical Workshop")
+        .filter((evt) => canAwardSkills(evt.category))
         .forEach((evt) => {
           (evt.skills || []).forEach((sk) => {
             if (sk) leadWorkshopSkills.add(sk.toLowerCase().trim());

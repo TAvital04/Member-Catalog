@@ -18,6 +18,7 @@ import Tooltip from "@/components/common/Tooltip";
 import { CARD_INTERACTIVE, CARD_BASE, CARD_TITLE_HOVER } from "@/lib/cardStyles";
 import CurrentSponsorsSegment from "@/components/common/CurrentSponsorsSegment";
 import EventSponsorTab from "./tabs/EventSponsorTab";
+import { Heading, Subheading, Badge } from "@/components/ui";
 
 interface EventModalProps {
   event: IEEEEvent | null;
@@ -116,30 +117,22 @@ export default function EventModal({
     <div className="flex flex-col gap-5">
       {/* Category & Partner Badges */}
       <div className="flex items-center justify-between gap-2">
-        <span className="bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">
-          {event.category}
-        </span>
+        <Badge variant="neutral">{event.category}</Badge>
         {event.partner && (
-          <span className="bg-neutral-100 text-black border border-neutral-300 text-[10px] font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider flex items-center gap-1.5">
+          <Badge variant="outline" className="flex items-center gap-1.5 font-bold">
             <Building2 size={12} className="text-black" />
             <span>Partner: {event.partner}</span>
-          </span>
+          </Badge>
         )}
       </div>
 
       {/* Event Title */}
       <div className="flex flex-col">
-        <h2 className="text-xl font-black text-slate-900 tracking-tight leading-tight">
-          {event.title}
-        </h2>
+        <Heading variant="modal">{event.title}</Heading>
         {event.partner ? (
-          <p className="text-xs text-slate-600 font-medium mt-1 leading-snug">
-            Co-hosted with {event.partner}
-          </p>
+          <Subheading variant="modal">Co-hosted with {event.partner}</Subheading>
         ) : (
-          <p className="text-xs text-slate-500 font-medium mt-1 leading-snug">
-            IEEE UCF Technical Chapter Workshop
-          </p>
+          <Subheading variant="modal">IEEE UCF Technical Chapter Workshop</Subheading>
         )}
       </div>
 

@@ -27,7 +27,7 @@ const sizeStyles: Record<NonNullable<ButtonProps["size"]>, string> = {
   lg: "px-5 py-2.5 text-sm font-bold rounded-xl gap-2",
 };
 
-export default function Button({
+export function Button({
   variant = "primary",
   size = "md",
   isLoading = false,
@@ -54,3 +54,5 @@ export default function Button({
     </button>
   );
 }
+
+export default Button;
