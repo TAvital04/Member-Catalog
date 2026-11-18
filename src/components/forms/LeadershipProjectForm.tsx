@@ -219,7 +219,7 @@ export default function LeadershipProjectForm({
             type="button"
             onClick={onClose}
             aria-label="Close dialog"
-            className="p-1.5 rounded-lg text-neutral-500 hover:text-black hover:bg-neutral-100 transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg text-neutral-500 cursor-pointer"
           >
             <X size={18} />
           </button>
@@ -527,14 +527,14 @@ export default function LeadershipProjectForm({
               type="button"
               onClick={onClose}
               disabled={isSubmitting}
-              className="px-4 py-2 rounded-lg text-xs font-semibold text-neutral-600 hover:text-black hover:bg-neutral-100 transition-colors cursor-pointer"
+              className="px-4 py-2 rounded-lg text-xs font-semibold text-neutral-600 cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-5 py-2 rounded-lg bg-black hover:bg-neutral-800 disabled:opacity-50 text-white text-xs font-bold transition-all cursor-pointer flex items-center gap-2"
+              className="px-5 py-2 rounded-lg bg-black disabled:opacity-50 text-white text-xs font-bold cursor-pointer flex items-center gap-2"
             >
               {isSubmitting ? (
                 <>

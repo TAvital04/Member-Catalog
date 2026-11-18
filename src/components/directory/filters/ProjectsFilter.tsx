@@ -42,7 +42,7 @@ export default function ProjectsFilter({
         {filteredProjects.map((projectName) => (
           <label
             key={projectName}
-            className="flex items-start gap-2.5 text-xs text-zinc-400 hover:text-zinc-200 cursor-pointer transition-colors group py-0.5"
+            className="flex items-start gap-2.5 text-xs text-zinc-400 cursor-pointer group py-0.5"
           >
             <input
               type="checkbox"

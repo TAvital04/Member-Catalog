@@ -158,13 +158,29 @@ body {
   cursor: pointer;
 }
 
-/* Universal Static Interactive Elements — No hover lifts, scale springs, or glow animations */
+/* Universal Static Design — Zero hover visual effects, highlights, fades, transforms, or transitions anywhere on the website */
+*,
+*::before,
+*::after {
+  transition: none !important;
+  transition-property: none !important;
+  transition-duration: 0s !important;
+}
+
+*:hover,
+*:focus,
+*:active {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
 button,
 [role="button"],
 a,
 .btn-base {
   transform: none !important;
   transition: none !important;
+  transition-duration: 0s !important;
 }
 
 button:hover,
@@ -176,6 +192,15 @@ a:active,
 .btn-base:hover,
 .btn-base:active {
   transform: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+/* Modal close buttons — static without hover highlight */
+button[aria-label*="Close"]:hover,
+button[aria-label*="close"]:hover,
+button[aria-label*="dialog"]:hover {
+  filter: none !important;
   box-shadow: none !important;
 }
 

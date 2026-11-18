@@ -31,7 +31,7 @@ export default function EventFilters({
   const timeOptions = [
     { value: "all" as const, label: "All" },
     { value: "upcoming" as const, label: "Upcoming" },
-    { value: "past" as const, label: "Past Sessions" },
+    { value: "past" as const, label: "Past" },
   ];
 
   return (

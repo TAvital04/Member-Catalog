@@ -181,7 +181,7 @@ export default function LeadershipEventForm({
           onClick={onClose}
           type="button"
           aria-label="Close event creation modal"
-          className="absolute top-4 right-4 z-20 p-2 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200/90 text-slate-500 hover:text-slate-900 transition-all shadow-xs cursor-pointer"
+          className="absolute top-4 right-4 z-20 p-2 rounded-full bg-slate-100 border border-slate-200/90 text-slate-500 cursor-pointer"
         >
           <X size={18} />
         </button>
@@ -432,14 +432,14 @@ export default function LeadershipEventForm({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-lg bg-white hover:bg-neutral-100 border border-neutral-300 text-black font-bold text-xs transition-all cursor-pointer"
+              className="px-4 py-2 rounded-lg bg-white border border-neutral-300 text-black font-bold text-xs cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-5 py-2 rounded-lg bg-black hover:bg-neutral-800 text-white font-bold text-xs transition-all cursor-pointer flex items-center gap-2 disabled:opacity-50"
+              className="px-5 py-2 rounded-lg bg-black text-white font-bold text-xs cursor-pointer flex items-center gap-2 disabled:opacity-50"
             >
               {isSubmitting ? (
                 <>

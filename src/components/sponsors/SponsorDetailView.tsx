@@ -24,6 +24,7 @@ import ProjectCard from "@/components/projects/ProjectCard";
 import EventCard from "@/components/events/EventCard";
 import JobCard from "@/components/jobs/JobCard";
 import SponsorInitiativesList from "./SponsorInitiativesList";
+import SponsorInitiativesBanner from "./SponsorInitiativesBanner";
 import SponsorMemberRoster from "./SponsorMemberRoster";
 import SponsorEngagementStats from "./SponsorEngagementStats";
 import SegmentedControl from "@/components/common/SegmentedControl";
@@ -38,6 +39,8 @@ export interface SponsorDetailViewProps {
   onSelectProject: (project: IEEEProject, tab?: ProjectTabType) => void;
   onSelectEvent: (event: IEEEEvent) => void;
   onSelectJob: (job: JobPosting) => void;
+  onRequestInitiative?: () => void;
+  role?: "standard" | "sponsor" | "admin" | "student";
 }
 
 export type SponsorSubTab = "initiatives" | "projects" | "events" | "jobs" | "skills" | "interactions";
@@ -52,6 +55,8 @@ export default function SponsorDetailView({
   onSelectProject,
   onSelectEvent,
   onSelectJob,
+  onRequestInitiative,
+  role,
 }: SponsorDetailViewProps) {
   const { sponsor, projects, events, jobs, skills, interactions } = relations;
   const [activeTab, setActiveTab] = useState<SponsorSubTab>("initiatives");
@@ -59,12 +64,12 @@ export default function SponsorDetailView({
   const tierColor = "bg-white text-black border-neutral-300 font-bold";
 
   const subTabOptions = [
-    { value: "initiatives" as const, label: `Initiatives (${sponsor.initiatives.length})`, icon: <Sparkles size={13} /> },
-    { value: "projects" as const, label: `Projects (${projects.length})`, icon: <FolderGit2 size={13} /> },
-    { value: "events" as const, label: `Workshops & Talks (${events.length})`, icon: <Calendar size={13} /> },
-    { value: "jobs" as const, label: `Careers (${jobs.length})`, icon: <Briefcase size={13} /> },
-    { value: "skills" as const, label: `Skills & Tools (${skills.length})`, icon: <Wrench size={13} /> },
-    { value: "interactions" as const, label: `Interactions (${interactions.length})`, icon: <Users size={13} /> },
+    { value: "initiatives" as const, label: `Initiatives (${sponsor.initiatives.length})` },
+    { value: "projects" as const, label: `Projects (${projects.length})` },
+    { value: "events" as const, label: `Workshops & Talks (${events.length})` },
+    { value: "jobs" as const, label: `Careers (${jobs.length})` },
+    { value: "skills" as const, label: `Skills & Tools (${skills.length})` },
+    { value: "interactions" as const, label: `Interactions (${interactions.length})` },
   ];
 
   // Helper date formatting for EventCard
@@ -138,6 +143,14 @@ export default function SponsorDetailView({
         <span>Back to All Chapter Sponsors</span>
       </button>
 
+      {/* Wide Open Banner Introducing Initiative Creation & Services (Only visible to Sponsors) */}
+      {role === "sponsor" && onRequestInitiative && (
+        <SponsorInitiativesBanner
+          onRequestInitiative={onRequestInitiative}
+          sponsorName={sponsor.name}
+        />
+      )}
+
       {/* Hero Overview Panel */}
       <div className="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-5">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
@@ -202,7 +215,7 @@ export default function SponsorDetailView({
             onClick={() => handleTabChange("initiatives")}
             className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-center cursor-pointer group"
           >
-            <span className="block text-base font-black text-slate-900 group-hover:text-black transition-colors">
+            <span className="block text-base font-black text-slate-900">
               {sponsor.initiatives.length}
             </span>
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mt-0.5">
@@ -215,7 +228,7 @@ export default function SponsorDetailView({
             onClick={() => handleTabChange("projects")}
             className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-center cursor-pointer group"
           >
-            <span className="block text-base font-black text-slate-900 group-hover:text-black transition-colors">
+            <span className="block text-base font-black text-slate-900">
               {projects.length}
             </span>
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mt-0.5">
@@ -228,7 +241,7 @@ export default function SponsorDetailView({
             onClick={() => handleTabChange("events")}
             className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-center cursor-pointer group"
           >
-            <span className="block text-base font-black text-slate-900 group-hover:text-black transition-colors">
+            <span className="block text-base font-black text-slate-900">
               {events.length}
             </span>
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mt-0.5">
@@ -241,7 +254,7 @@ export default function SponsorDetailView({
             onClick={() => handleTabChange("jobs")}
             className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-center cursor-pointer group"
           >
-            <span className="block text-base font-black text-slate-900 group-hover:text-black transition-colors">
+            <span className="block text-base font-black text-slate-900">
               {jobs.length}
             </span>
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mt-0.5">
@@ -254,7 +267,7 @@ export default function SponsorDetailView({
             onClick={() => handleTabChange("skills")}
             className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-center cursor-pointer group"
           >
-            <span className="block text-base font-black text-slate-900 group-hover:text-black transition-colors">
+            <span className="block text-base font-black text-slate-900">
               {skills.length}
             </span>
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mt-0.5">
@@ -267,7 +280,7 @@ export default function SponsorDetailView({
             onClick={() => handleTabChange("interactions")}
             className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-center cursor-pointer group"
           >
-            <span className="block text-base font-black text-slate-900 group-hover:text-black transition-colors">
+            <span className="block text-base font-black text-slate-900">
               {interactions.length}
             </span>
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mt-0.5">
@@ -315,6 +328,7 @@ export default function SponsorDetailView({
           <SponsorInitiativesList
             initiatives={sponsor.initiatives}
             sponsorName={sponsor.name}
+            onRequestInitiative={role === "sponsor" ? onRequestInitiative : undefined}
           />
         </section>
 
@@ -434,7 +448,7 @@ export default function SponsorDetailView({
                 <Link
                   key={idx}
                   href={`/?skills=${encodeURIComponent(skill)}`}
-                  className="px-3 py-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-xs font-semibold text-black cursor-pointer shadow-2xs inline-flex items-center"
+                  className="px-3 py-1.5 rounded-xl bg-neutral-100 border border-neutral-300 text-xs font-semibold text-black cursor-pointer shadow-2xs inline-flex items-center"
                 >
                   <span>{skill}</span>
                 </Link>

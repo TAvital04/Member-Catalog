@@ -19,7 +19,7 @@ export default function MajorsFilter({
       {availableMajors.map((major) => (
         <label
           key={major}
-          className="flex items-center gap-2.5 text-xs text-zinc-400 hover:text-zinc-200 cursor-pointer transition-colors group"
+          className="flex items-center gap-2.5 text-xs text-zinc-400 cursor-pointer group"
         >
           <input
             type="checkbox"

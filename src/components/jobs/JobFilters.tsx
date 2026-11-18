@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useRef, useEffect } from "react";
 import { Filter, RotateCcw, Search, ChevronDown } from "lucide-react";
 import CustomCheckbox from "@/components/common/CustomCheckbox";
 import FilterDropdown from "@/components/directory/FilterDropdown";
@@ -54,6 +54,14 @@ export default function JobFilters({
   const [activeDropdown, setActiveDropdown] = useState<
     "employment" | "workplace" | "skill" | "company" | null
   >(null);
+  const asideRef = useRef<HTMLElement>(null);
+
+  // Guarantee the outer panel never retains any unexpected scroll offset
+  useEffect(() => {
+    if (asideRef.current) {
+      asideRef.current.scrollTop = 0;
+    }
+  });
 
   const employmentOptions = useMemo(
     () => ["Full-time", "Internship", "Co-op", "Part-time"],
@@ -267,7 +275,7 @@ export default function JobFilters({
         <button
           type="button"
           onClick={onResetAll}
-          className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-800 transition-colors py-1.5 px-3 rounded-xl justify-center shrink-0 cursor-pointer font-semibold"
+          className="flex items-center gap-1.5 text-xs text-slate-500 py-1.5 px-3 rounded-xl justify-center shrink-0 cursor-pointer font-semibold"
         >
           <RotateCcw size={12} className="text-slate-400" />
           <span>Reset</span>
@@ -276,12 +284,14 @@ export default function JobFilters({
 
       {/* Side Layout (Vertical list on >= 1056px viewports matching Candidates FilterSidebar) */}
       <aside
-        className={`w-full min-[1056px]:w-64 shrink-0 flex-col gap-5 bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs ${
+        key="job-filters-side-panel"
+        ref={asideRef}
+        className={`w-full min-[1056px]:w-64 shrink-0 flex-col bg-white rounded-2xl border border-slate-200 shadow-2xs min-[1056px]:sticky min-[1056px]:top-20 min-[1056px]:self-start min-[1056px]:max-h-[calc(100vh-6rem)] overflow-hidden ${
           layout === "side" ? "hidden min-[1056px]:flex" : "hidden"
         }`}
       >
-        {/* Active Sidebar Filters Header */}
-        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+        {/* Active Sidebar Filters Header - Fixed at the top of the panel */}
+        <div className="flex items-center justify-between p-4 pb-3 border-b border-slate-100 shrink-0 bg-white">
           <div className="flex items-center gap-2 font-bold text-slate-900 text-sm">
             <Filter size={16} className="text-slate-400" />
             <span>Filters</span>
@@ -295,12 +305,15 @@ export default function JobFilters({
           <button
             type="button"
             onClick={onResetAll}
-            className="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-800 transition-colors cursor-pointer font-medium"
+            className="flex items-center gap-1 text-xs text-slate-500 cursor-pointer font-medium"
           >
             <RotateCcw size={12} className="text-slate-400" />
             <span>Reset All</span>
           </button>
         </div>
+
+        {/* Scrollable Filters Body — Embedded scrolling right in the filtering component */}
+        <div className="flex flex-col gap-5 p-4 pr-3 pt-3 overflow-y-auto overscroll-contain min-h-0 grow">
 
         {/* Section 1: Employment Type */}
         <div className="border-b border-slate-100 pb-4">
@@ -435,6 +448,7 @@ export default function JobFilters({
             </div>
           </div>
         )}
+        </div>
       </aside>
     </>
   );

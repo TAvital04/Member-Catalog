@@ -7,11 +7,14 @@
  */
 
 import React, { useState, useEffect, useMemo, Suspense } from "react";
+import Link from "next/link";
 import {
   Briefcase,
   Building2,
   Users,
   BarChart3,
+  Shield,
+  GraduationCap,
 } from "lucide-react";
 import DirectoryNavbar from "@/components/directory/DirectoryNavbar";
 import DirectoryStatsHeader from "@/components/directory/DirectoryStatsHeader";
@@ -41,11 +44,14 @@ import SearchInput from "@/components/common/SearchInput";
 
 function JobsPageContent() {
   const { theme, toggleTheme } = useThemeManager();
-  const { role, session, handleRoleChange, isStudent, isSponsor } = useRoleManager();
+  const { role, session, handleRoleChange, isAdmin, isStudent, isSponsor } = useRoleManager();
   const { students } = useStudentData();
 
   // Screen Mode: "member" (browse & apply) vs "employer" (manage postings & applicants)
-  const [portalMode, setPortalMode] = useState<"member" | "employer">("member");
+  // Tailored to the 3 logins: Leadership & Sponsors default to Employer Management; Students/Guests to Member Board.
+  const [portalMode, setPortalMode] = useState<"member" | "employer">(
+    isAdmin || isSponsor ? "employer" : "member"
+  );
 
   // Active student for member application (defaults to first student)
   const [activeStudentId, setActiveStudentId] = useState<string>("");
@@ -111,6 +117,21 @@ function JobsPageContent() {
   const [selectedEmployerCompany, setSelectedEmployerCompany] = useState<string>("All");
   const [employerSubTab, setEmployerSubTab] = useState<"postings" | "analytics">("postings");
 
+  // Sync mode and default company when login role changes
+  useEffect(() => {
+    if (isAdmin) {
+      setPortalMode("employer");
+      setSelectedEmployerCompany("All");
+    } else if (isSponsor) {
+      setPortalMode("employer");
+      if (loggedInSponsor) {
+        setSelectedEmployerCompany(loggedInSponsor.name);
+      }
+    } else {
+      setPortalMode("member");
+    }
+  }, [isAdmin, isSponsor, loggedInSponsor]);
+
   // Modals state
   const [selectedJobForDetail, setSelectedJobForDetail] = useState<JobPosting | null>(null);
   const [isPostJobModalOpen, setIsPostJobModalOpen] = useState(false);
@@ -125,8 +146,30 @@ function JobsPageContent() {
   }, [students, activeStudentId]);
 
   const activeStudent = useMemo(() => {
+    if (isStudent && loggedInStudent) {
+      return loggedInStudent;
+    }
     return students.find((s) => s.id === activeStudentId) || students[0];
-  }, [students, activeStudentId]);
+  }, [isStudent, loggedInStudent, students, activeStudentId]);
+
+  // Count applications submitted by the logged-in student
+  const studentApplicationsCount = useMemo(() => {
+    if (!isStudent || !loggedInStudent) return 0;
+    const studentName = loggedInStudent.name.toLowerCase();
+    const studentEmail = loggedInStudent.email.toLowerCase();
+    const studentId = loggedInStudent.id.toLowerCase();
+
+    return applicationsList.filter((app) => {
+      const appName = app.portfolioSnapshot?.name?.toLowerCase() || "";
+      const appEmail = app.portfolioSnapshot?.email?.toLowerCase() || "";
+      const appMemId = app.memberId?.toLowerCase() || "";
+      return (
+        (appName && (appName === studentName || studentName.includes(appName))) ||
+        (appEmail && (appEmail === studentEmail || appEmail.includes("alex"))) ||
+        (appMemId && appMemId === studentId)
+      );
+    }).length;
+  }, [isStudent, loggedInStudent, applicationsList]);
 
   // Fetch jobs and applications
   useEffect(() => {
@@ -325,21 +368,106 @@ function JobsPageContent() {
         handleRoleChange={handleRoleChange}
       />
 
-      {/* Directory Page Header */}
+      {/* Directory Page Header — Customized for the 3 Different Logins */}
       <DirectoryStatsHeader
-        title="Engineering Opportunities Hub"
-        description="Explore direct internships, co-ops, and full-time roles from corporate partners or post opportunities to source top engineering talent."
+        title={
+          isAdmin
+            ? "Engineering Opportunities Management"
+            : isSponsor
+            ? `${loggedInSponsor?.name || "Corporate Partner"} Hiring Portal`
+            : "Engineering Opportunities Hub"
+        }
+        description={
+          isAdmin
+            ? "Oversee active corporate sponsor job postings, review student application portfolios, and monitor chapter career outcomes."
+            : isSponsor
+            ? `Manage active engineering opportunities, review USF candidate portfolios, and track hiring analytics for ${loggedInSponsor?.name || "your company"}.`
+            : "Explore direct internships, co-ops, and full-time engineering roles from corporate partners. Apply with your verified RSO USF engineering portfolio."
+        }
       >
         <div className="flex items-center gap-3 shrink-0 flex-wrap">
+          {/* Action: Post Opportunity (Available to RSO Leadership & Corporate Sponsors) */}
+          {(isAdmin || isSponsor) && (
+            <button
+              type="button"
+              onClick={() => setIsPostJobModalOpen(true)}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-black text-white font-bold text-xs cursor-pointer shadow-xs shrink-0"
+            >
+              <Briefcase size={14} />
+              <span>+ Post Opportunity</span>
+            </button>
+          )}
+
+          {/* Mode Selector for RSO Leadership (Chapter Management vs Student Directory View) */}
+          {isAdmin && (
+            <div className="flex items-center bg-white p-1 rounded-2xl border border-neutral-300 shadow-2xs shrink-0 gap-1">
+              <button
+                type="button"
+                onClick={() => setPortalMode("employer")}
+                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs cursor-pointer select-none ${
+                  portalMode === "employer"
+                    ? "bg-black text-white font-bold border border-black shadow-xs"
+                    : "bg-transparent text-neutral-700 font-semibold border border-transparent"
+                }`}
+              >
+                <Building2 size={13} />
+                <span>Chapter Job Management</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setPortalMode("member")}
+                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs cursor-pointer select-none ${
+                  portalMode === "member"
+                    ? "bg-black text-white font-bold border border-black shadow-xs"
+                    : "bg-transparent text-neutral-700 font-semibold border border-transparent"
+                }`}
+              >
+                <Users size={13} />
+                <span>Student Directory View</span>
+              </button>
+            </div>
+          )}
+
+          {/* Mode Selector for Corporate Sponsors (My Company Postings vs Browse Chapter Board) */}
+          {isSponsor && (
+            <div className="flex items-center bg-white p-1 rounded-2xl border border-neutral-300 shadow-2xs shrink-0 gap-1">
+              <button
+                type="button"
+                onClick={() => setPortalMode("employer")}
+                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs cursor-pointer select-none ${
+                  portalMode === "employer"
+                    ? "bg-black text-white font-bold border border-black shadow-xs"
+                    : "bg-transparent text-neutral-700 font-semibold border border-transparent"
+                }`}
+              >
+                <Building2 size={13} />
+                <span>My Company Postings</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setPortalMode("member")}
+                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs cursor-pointer select-none ${
+                  portalMode === "member"
+                    ? "bg-black text-white font-bold border border-black shadow-xs"
+                    : "bg-transparent text-neutral-700 font-semibold border border-transparent"
+                }`}
+              >
+                <Users size={13} />
+                <span>Browse Chapter Board</span>
+              </button>
+            </div>
+          )}
+
+          {/* Member Filtering: All Opportunities vs My Applications */}
           {isStudent && loggedInStudent && (
             <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
               <button
                 type="button"
                 onClick={() => setOnlyMyApplications(false)}
-                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg cursor-pointer ${
                   !onlyMyApplications
                     ? "bg-white text-black shadow-2xs font-black"
-                    : "text-neutral-500 hover:text-black font-semibold"
+                    : "text-neutral-500 font-semibold"
                 }`}
               >
                 All Opportunities
@@ -347,71 +475,26 @@ function JobsPageContent() {
               <button
                 type="button"
                 onClick={() => setOnlyMyApplications(true)}
-                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg cursor-pointer ${
                   onlyMyApplications
                     ? "bg-black text-white shadow-2xs font-black"
-                    : "text-neutral-500 hover:text-black font-semibold"
+                    : "text-neutral-500 font-semibold"
                 }`}
               >
-                My Applications
+                My Applications ({studentApplicationsCount})
               </button>
             </div>
           )}
 
-          {isSponsor && loggedInSponsor && (
-            <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
-              <button
-                type="button"
-                onClick={() => setOnlyMyCompanyJobs(false)}
-                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-                  !onlyMyCompanyJobs
-                    ? "bg-white text-black shadow-2xs font-black"
-                    : "text-neutral-500 hover:text-black font-semibold"
-                }`}
-              >
-                All Opportunities
-              </button>
-              <button
-                type="button"
-                onClick={() => setOnlyMyCompanyJobs(true)}
-                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-                  onlyMyCompanyJobs
-                    ? "bg-black text-white shadow-2xs font-black"
-                    : "text-neutral-500 hover:text-black font-semibold"
-                }`}
-              >
-                My Company Postings
-              </button>
-            </div>
+          {/* General Guest: Direct link to sign in */}
+          {!isAdmin && !isSponsor && !isStudent && (
+            <Link
+              href="/login"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-black text-white font-bold text-xs cursor-pointer shadow-xs shrink-0"
+            >
+              <span>Sign In to Apply</span>
+            </Link>
           )}
-
-          {/* Screen Mode Switcher: Member Screen vs Employer Screen */}
-          <div className="flex items-center bg-white p-1 rounded-2xl border border-neutral-300 shadow-2xs shrink-0 gap-1">
-            <button
-              type="button"
-              onClick={() => setPortalMode("member")}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs cursor-pointer select-none ${
-                portalMode === "member"
-                  ? "bg-black text-white font-bold border border-black shadow-xs"
-                  : "bg-transparent text-neutral-700 font-semibold border border-transparent"
-              }`}
-            >
-              <Users size={14} />
-              <span>Member Portal (Browse & Apply)</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setPortalMode("employer")}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs cursor-pointer select-none ${
-                portalMode === "employer"
-                  ? "bg-black text-white font-bold border border-black shadow-xs"
-                  : "bg-transparent text-neutral-700 font-semibold border border-transparent"
-              }`}
-            >
-              <Building2 size={14} />
-              <span>Employer Portal (Manage & Post)</span>
-            </button>
-          </div>
         </div>
       </DirectoryStatsHeader>
 
@@ -419,17 +502,65 @@ function JobsPageContent() {
         {/* MEMBER PORTAL VIEW (BROWSE & APPLY WITH PORTFOLIO) */}
         {portalMode === "member" && (
           <div className="flex flex-col gap-6 animate-fade-in">
-            {/* Active Candidate Identifier Bar */}
-            {activeStudent && (
+            {/* Active Candidate Identifier / Role Context Banner */}
+            {isStudent && loggedInStudent ? (
               <div className="p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-3 min-w-0">
-                  <Avatar name={activeStudent.name} size="sm" />
+                  <Avatar name={loggedInStudent.name} size="sm" />
                   <div className="min-w-0">
                     <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block leading-none">
-                      Applying with Member Portfolio
+                      Applying with Verified Member Portfolio
                     </span>
                     <span className="text-xs font-bold text-slate-900 truncate block mt-0.5">
-                      {activeStudent.name} • {activeStudent.major} ({activeStudent.gradDate})
+                      {loggedInStudent.name} • {loggedInStudent.major} (Class of {loggedInStudent.gradDate})
+                    </span>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setInspectedStudent(loggedInStudent)}
+                  className="px-3.5 py-1.5 rounded-xl bg-neutral-100 border border-neutral-300 text-black text-xs font-bold cursor-pointer"
+                >
+                  View My Portfolio
+                </button>
+              </div>
+            ) : isSponsor ? (
+              <div className="p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-8 h-8 rounded-xl bg-neutral-100 border border-neutral-300 flex items-center justify-center text-black shrink-0">
+                    <Building2 size={15} />
+                  </div>
+                  <div className="min-w-0">
+                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block leading-none">
+                      Corporate Sponsor Browsing Mode
+                    </span>
+                    <span className="text-xs font-bold text-slate-900 truncate block mt-0.5">
+                      Browsing live chapter engineering opportunities board as {loggedInSponsor?.name || "Corporate Partner"}
+                    </span>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setPortalMode("employer")}
+                  className="px-3.5 py-1.5 rounded-xl bg-black text-white text-xs font-bold cursor-pointer"
+                >
+                  Return to Hiring Portal
+                </button>
+              </div>
+            ) : isAdmin ? (
+              <div className="p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-8 h-8 rounded-xl bg-neutral-100 border border-neutral-300 flex items-center justify-center text-black shrink-0">
+                    <Shield size={15} />
+                  </div>
+                  <div className="min-w-0">
+                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block leading-none">
+                      RSO Leadership Student Board Preview
+                    </span>
+                    <span className="text-xs font-bold text-slate-900 truncate block mt-0.5">
+                      Simulating student 1-click application workflow • Active test profile: {activeStudent?.name}
                     </span>
                   </div>
                 </div>
@@ -452,6 +583,29 @@ function JobsPageContent() {
                     aria-label="Switch Test Candidate"
                   />
                 </div>
+              </div>
+            ) : (
+              <div className="p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-8 h-8 rounded-xl bg-neutral-100 border border-neutral-300 flex items-center justify-center text-black shrink-0">
+                    <GraduationCap size={15} />
+                  </div>
+                  <div className="min-w-0">
+                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block leading-none">
+                      USF Member Career Directory
+                    </span>
+                    <span className="text-xs font-bold text-slate-900 truncate block mt-0.5">
+                      Sign in with your RSO USF member account to submit 1-click portfolio applications to corporate partners.
+                    </span>
+                  </div>
+                </div>
+
+                <Link
+                  href="/login"
+                  className="px-3.5 py-1.5 rounded-xl bg-black text-white text-xs font-bold cursor-pointer"
+                >
+                  Sign In to Apply
+                </Link>
               </div>
             )}
 
@@ -507,7 +661,7 @@ function JobsPageContent() {
                                 selectedEmploymentTypes.filter((t) => t !== type)
                               )
                             }
-                            className="hover:text-black cursor-pointer font-bold ml-0.5"
+                            className="text-neutral-500 cursor-pointer font-bold ml-0.5"
                             aria-label={`Remove ${type} filter`}
                           >
                             ×
@@ -527,7 +681,7 @@ function JobsPageContent() {
                                 selectedLocationTypes.filter((l) => l !== loc)
                               )
                             }
-                            className="hover:text-black cursor-pointer font-bold ml-0.5"
+                            className="text-neutral-500 cursor-pointer font-bold ml-0.5"
                             aria-label={`Remove ${loc} filter`}
                           >
                             ×
@@ -545,7 +699,7 @@ function JobsPageContent() {
                             onClick={() =>
                               setSelectedSkills(selectedSkills.filter((s) => s !== sk))
                             }
-                            className="hover:text-black cursor-pointer font-bold ml-0.5"
+                            className="text-neutral-500 cursor-pointer font-bold ml-0.5"
                             aria-label={`Remove ${sk} filter`}
                           >
                             ×
@@ -565,7 +719,7 @@ function JobsPageContent() {
                                 selectedCompanies.filter((c) => c !== comp)
                               )
                             }
-                            className="hover:text-black cursor-pointer font-bold ml-0.5"
+                            className="text-neutral-500 cursor-pointer font-bold ml-0.5"
                             aria-label={`Remove ${comp} filter`}
                           >
                             ×
@@ -575,7 +729,7 @@ function JobsPageContent() {
                       <button
                         type="button"
                         onClick={resetAllFilters}
-                        className="text-xs text-slate-500 hover:text-black underline ml-2 cursor-pointer font-medium"
+                        className="text-xs text-slate-500 underline ml-2 cursor-pointer font-medium"
                       >
                         Clear all
                       </button>
@@ -666,8 +820,14 @@ function JobsPageContent() {
 
             {employerSubTab === "analytics" ? (
               <EmployerApplicantAnalytics
-                jobs={jobsList}
-                applications={applicationsList}
+                jobs={isSponsor ? employerJobs : jobsList}
+                applications={
+                  isSponsor
+                    ? applicationsList.filter((a) =>
+                        employerJobs.some((j) => j.id === a.jobId)
+                      )
+                    : applicationsList
+                }
               />
             ) : (
               <EmployerJobPostings
@@ -679,6 +839,8 @@ function JobsPageContent() {
                 hiringCompanies={hiringCompanies}
                 onOpenPostJobModal={() => setIsPostJobModalOpen(true)}
                 onSelectJobForApplicants={setSelectedJobForApplicants}
+                role={role}
+                sponsorName={loggedInSponsor?.name}
               />
             )}
           </div>

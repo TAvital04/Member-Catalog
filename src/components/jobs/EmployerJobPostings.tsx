@@ -15,6 +15,8 @@ export interface EmployerJobPostingsProps {
   hiringCompanies: string[];
   onOpenPostJobModal: () => void;
   onSelectJobForApplicants: (job: JobPosting) => void;
+  role?: string;
+  sponsorName?: string;
 }
 
 /**
@@ -30,17 +32,25 @@ export default function EmployerJobPostings({
   hiringCompanies,
   onOpenPostJobModal,
   onSelectJobForApplicants,
+  role,
+  sponsorName,
 }: EmployerJobPostingsProps) {
+  const isSponsor = role === "sponsor";
+
   return (
     <div className="flex flex-col gap-6">
       {/* Employer Action & Stats Bar */}
       <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-base font-black text-slate-900">
-            Employer Hiring Dashboard
+            {isSponsor
+              ? `${sponsorName || "Corporate Partner"} Hiring Dashboard`
+              : "Chapter Corporate Postings & Applicant Hub"}
           </h2>
           <p className="text-xs text-slate-500">
-            Manage active corporate engineering postings and inspect applicant portfolios.
+            {isSponsor
+              ? `Manage active engineering opportunities and inspect candidate applicant portfolios for ${sponsorName || "your company"}.`
+              : "Manage active chapter engineering postings across all corporate partners and inspect candidate portfolios."}
           </p>
         </div>
 
@@ -48,10 +58,10 @@ export default function EmployerJobPostings({
         <button
           type="button"
           onClick={onOpenPostJobModal}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-black hover:bg-neutral-800 text-white font-bold text-xs transition-all cursor-pointer shadow-xs shrink-0"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-black text-white font-bold text-xs cursor-pointer shadow-xs shrink-0"
         >
           <Plus size={15} />
-          <span>+ Post New Opportunity</span>
+          <span>+ Post Engineering Opportunity</span>
         </button>
       </div>
 
@@ -64,15 +74,25 @@ export default function EmployerJobPostings({
           <CustomDropdown
             value={selectedEmployerCompany}
             onChange={(val) => setSelectedEmployerCompany(val)}
-            options={[
-              { value: "All", label: "All Companies" },
-              ...hiringCompanies.map((c) => ({
-                value: c,
-                label: c,
-              })),
-            ]}
+            options={
+              isSponsor && sponsorName
+                ? [
+                    { value: sponsorName, label: `${sponsorName} (My Company)` },
+                    { value: "All", label: "All Chapter Companies" },
+                    ...hiringCompanies
+                      .filter((c) => c !== sponsorName)
+                      .map((c) => ({ value: c, label: c })),
+                  ]
+                : [
+                    { value: "All", label: "All Companies" },
+                    ...hiringCompanies.map((c) => ({
+                      value: c,
+                      label: c,
+                    })),
+                  ]
+            }
             className="w-48 sm:w-60"
-            buttonClassName="bg-slate-100 hover:bg-slate-200/80 border-slate-200 text-slate-800 text-xs font-semibold"
+            buttonClassName="bg-slate-100 border-slate-200 text-slate-800 text-xs font-semibold"
             align="left"
             aria-label="Company Filter"
           />

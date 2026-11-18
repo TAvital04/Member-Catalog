@@ -325,10 +325,10 @@ function IEEEEventsContent() {
               <button
                 type="button"
                 onClick={() => setOnlyMyEvents(false)}
-                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg cursor-pointer ${
                   !onlyMyEvents
                     ? "bg-white text-black shadow-2xs font-black"
-                    : "text-neutral-500 hover:text-black font-semibold"
+                    : "text-neutral-500 font-semibold"
                 }`}
               >
                 All Events
@@ -336,10 +336,10 @@ function IEEEEventsContent() {
               <button
                 type="button"
                 onClick={() => setOnlyMyEvents(true)}
-                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg cursor-pointer ${
                   onlyMyEvents
                     ? "bg-black text-white shadow-2xs font-black"
-                    : "text-neutral-500 hover:text-black font-semibold"
+                    : "text-neutral-500 font-semibold"
                 }`}
               >
                 My Events
@@ -352,10 +352,10 @@ function IEEEEventsContent() {
               <button
                 type="button"
                 onClick={() => setOnlySponsoredEvents(false)}
-                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg cursor-pointer ${
                   !onlySponsoredEvents
                     ? "bg-white text-black shadow-2xs font-black"
-                    : "text-neutral-500 hover:text-black font-semibold"
+                    : "text-neutral-500 font-semibold"
                 }`}
               >
                 All Events
@@ -363,10 +363,10 @@ function IEEEEventsContent() {
               <button
                 type="button"
                 onClick={() => setOnlySponsoredEvents(true)}
-                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg cursor-pointer ${
                   onlySponsoredEvents
                     ? "bg-black text-white shadow-2xs font-black"
-                    : "text-neutral-500 hover:text-black font-semibold"
+                    : "text-neutral-500 font-semibold"
                 }`}
               >
                 Sponsored Events
@@ -378,7 +378,7 @@ function IEEEEventsContent() {
             <button
               type="button"
               onClick={() => setIsEventFormOpen(true)}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-black hover:bg-neutral-800 text-white font-bold text-xs transition-all cursor-pointer shrink-0"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-black text-white font-bold text-xs cursor-pointer shrink-0"
             >
               <Plus size={14} />
               <span>Create Event / Workshop</span>

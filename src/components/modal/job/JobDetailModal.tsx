@@ -232,7 +232,7 @@ export default function JobDetailModal({
         <button
           type="button"
           onClick={() => setActiveTab("apply")}
-          className="w-full py-2.5 px-4 rounded-xl bg-black hover:bg-neutral-800 text-white font-bold text-xs cursor-pointer flex items-center justify-center gap-2 transition-all shadow-2xs"
+          className="w-full py-2.5 px-4 rounded-xl bg-black text-white font-bold text-xs cursor-pointer flex items-center justify-center gap-2 shadow-2xs"
         >
           <Send size={13} />
           <span>Apply with Student Portfolio</span>
@@ -263,7 +263,7 @@ export default function JobDetailModal({
           onClick={onClose}
           type="button"
           aria-label="Close job details modal"
-          className="absolute top-4 right-4 z-50 p-2 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700 hover:text-black cursor-pointer"
+          className="absolute top-4 right-4 z-50 p-2 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700 cursor-pointer"
         >
           <X size={18} />
         </button>

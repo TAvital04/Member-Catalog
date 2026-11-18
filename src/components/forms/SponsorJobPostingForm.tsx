@@ -315,7 +315,7 @@ export default function SponsorJobPostingForm({
           onClick={onClose}
           type="button"
           aria-label="Close job creation form"
-          className="absolute top-4 right-4 z-20 p-2 rounded-full bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-neutral-600 hover:text-black transition-all shadow-xs cursor-pointer"
+          className="absolute top-4 right-4 z-20 p-2 rounded-full bg-neutral-100 border border-neutral-300 text-neutral-600 cursor-pointer"
         >
           <X size={18} />
         </button>
@@ -580,8 +580,8 @@ export default function SponsorJobPostingForm({
                       type="button"
                       onClick={() => toggleSkill(skill)}
                       className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer shadow-2xs ${isSelected
-                          ? "bg-black text-white border border-black font-bold"
-                          : "bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-black"
+                        ? "bg-black text-white border border-black font-bold"
+                        : "bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-black"
                         }`}
                     >
                       {skill}
@@ -753,7 +753,7 @@ export default function SponsorJobPostingForm({
                 <button
                   type="button"
                   onClick={() => handleAddBenefit()}
-                  className="px-3.5 py-2.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-black text-xs font-bold transition-all cursor-pointer shrink-0"
+                  className="px-3.5 py-2.5 rounded-xl bg-neutral-100 border border-neutral-300 text-black text-xs font-bold cursor-pointer shrink-0"
                 >
                   Add Item
                 </button>
@@ -774,14 +774,14 @@ export default function SponsorJobPostingForm({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-black text-xs font-semibold border border-neutral-300 cursor-pointer"
+              className="px-4 py-2.5 rounded-xl bg-neutral-100 text-black text-xs font-semibold border border-neutral-300 cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-5 py-2.5 rounded-xl bg-black hover:bg-neutral-800 text-white text-xs font-bold cursor-pointer flex items-center gap-2 disabled:opacity-50 transition-all"
+              className="px-5 py-2.5 rounded-xl bg-black text-white text-xs font-bold cursor-pointer flex items-center gap-2 disabled:opacity-50"
             >
               {isSubmitting ? (
                 <>

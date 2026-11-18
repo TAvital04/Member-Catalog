@@ -27,6 +27,8 @@ import SponsorCard from "@/components/sponsors/SponsorCard";
 import SponsorDetailView from "@/components/sponsors/SponsorDetailView";
 import SponsorEngagementStats from "@/components/sponsors/SponsorEngagementStats";
 import LeadershipSponsorForm from "@/components/forms/LeadershipSponsorForm";
+import SponsorInitiativeForm from "@/components/forms/SponsorInitiativeForm";
+import SponsorInitiativesBanner from "@/components/sponsors/SponsorInitiativesBanner";
 import SearchInput from "@/components/common/SearchInput";
 import FilterPills from "@/components/common/FilterPills";
 import EmptyState from "@/components/common/EmptyState";
@@ -52,6 +54,7 @@ function SponsorsPageContent() {
   const [selectedTier, setSelectedTier] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isSponsorFormOpen, setIsSponsorFormOpen] = useState(false);
+  const [isInitiativeFormOpen, setIsInitiativeFormOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const [onlyMySponsors, setOnlyMySponsors] = useState(false);
@@ -368,10 +371,21 @@ function SponsorsPageContent() {
             }}
             onSelectEvent={(event) => setInspectedEvent(event)}
             onSelectJob={(job) => setInspectedJob(job)}
+            role={role}
+            onRequestInitiative={role === "sponsor" ? () => setIsInitiativeFormOpen(true) : undefined}
           />
         ) : (
           /* Catalog View: Search, Filter Pills & Sponsor Cards */
           <div className="flex flex-col gap-6">
+            {/* Wide Open Banner Introducing Initiative Creation & Services (Only visible to Sponsors) */}
+            {role === "sponsor" && (
+              <SponsorInitiativesBanner
+                onRequestInitiative={() => setIsInitiativeFormOpen(true)}
+                sponsorName={userSponsor?.name}
+                isLoggedInSponsor={true}
+              />
+            )}
+
             {/* Fast-return to My Hub alert when viewing All Sponsors */}
             {role === "sponsor" && userSponsor && (
               <div className="p-3.5 rounded-xl bg-neutral-100 border border-neutral-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs shadow-2xs">
@@ -460,6 +474,20 @@ function SponsorsPageContent() {
           role={role}
           onClose={() => setIsSponsorFormOpen(false)}
           onSponsorCreated={handleSponsorCreated}
+        />
+      )}
+
+      {/* Sponsor Form 5: Request Chapter Initiative Modal */}
+      {isInitiativeFormOpen && (
+        <SponsorInitiativeForm
+          sponsor={activeSponsor || userSponsor || sponsorsList[0]}
+          role={role}
+          defaultEmail={session?.email}
+          onClose={() => setIsInitiativeFormOpen(false)}
+          onInitiativeRequested={(inquiryTitle) => {
+            setToastMessage(`Initiative proposal "${inquiryTitle}" sent to RSO Leadership (leadership@rsousf.org)`);
+            setTimeout(() => setToastMessage(null), 5000);
+          }}
         />
       )}
 

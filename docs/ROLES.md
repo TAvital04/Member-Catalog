@@ -186,24 +186,24 @@ Once Sponsors are onboarded (Form 1) and Students have verified skills and proje
 
 ---
 
-### Form 5 (Implement Fifth): Sponsor — Manage Sponsorship Initiatives & Profile Form
-**Role**: `sponsor` (`role === "sponsor"`, also editable by `rso_leadership`)  
-**Where It Lives**: [`/sponsors`](../src/app/sponsors/page.tsx) inside [`SponsorDetailView.tsx`](../src/components/sponsors/SponsorDetailView.tsx) (**"Edit Partner Profile / Add Initiative"** button when signed in as that Sponsor or RSO Leadership)  
-**Component Target**: `src/components/forms/SponsorInitiativeForm.tsx`
+### Form 5 (Implement Fifth): Sponsor — Request Chapter Initiative Form & Services Showcase
+**Role**: `sponsor` (`role === "sponsor"` strictly; hidden from `rso_leadership` and student members)  
+**Where It Lives**: [`/sponsors`](../src/app/sponsors/page.tsx) inside [`SponsorInitiativesBanner.tsx`](../src/components/sponsors/SponsorInitiativesBanner.tsx) (prominent wide-open showcase area on the main sponsor page) and [`SponsorInitiativesList.tsx`](../src/components/sponsors/SponsorInitiativesList.tsx) (**"+ Request Initiative"** button)  
+**Component Target**: `src/components/forms/SponsorInitiativeForm.tsx` & `src/components/sponsors/SponsorInitiativesBanner.tsx`
 
 #### Why Implement This Fifth
-With Sponsors, Events, Projects, and Jobs all flowing through PostgreSQL, this final self-service form lets a logged-in Sponsor manage their own showcase cards under **"Active Sponsorship Initiatives & Chapter Programs"** (such as *Lab & Hardware Grants*, *Technical Workshops*, *Capstone Mentorship*, and *Recruiting & Careers*) and keep their tagline, careers URL, and focus disciplines up to date without needing an RSO officer to edit them manually.
+**An initiative is the umbrella for everything a sponsor can sponsor**—whether funding a student engineering build project, hosting a hands-on technical workshop, providing hardware lab grants, or sponsoring a hackathon. The main sponsor page introduces corporate partners to initiative creation via a wide open welcoming banner that describes the 5 core chapter services we offer. Rather than forcing sponsors to choose from rigid category dropdowns, the form acts as a clean, frictionless email proposal sent directly to RSO USF Leadership (`leadership@rsousf.org`) to initiate a collaborative conversation.
 
-#### Fields & Mapping (`chapter_sponsors.initiatives`)
-| Field Label | Input Type | Target Column | Validation Rules |
+#### Fields & Mapping (`POST /api/sponsors/[id]/request-initiative`)
+| Field Label | Input Type | Target Column / Payload | Validation Rules |
 | :--- | :--- | :--- | :--- |
-| **Initiative Title** | Text input | `initiatives[].title` | Required (e.g., *Autonomous Systems & Robotics Sponsorship*) |
-| **Program Category** | Select (`Technical Workshops`, `Lab & Hardware Grants`, `Recruiting & Careers`, `Capstone Mentorship`) | `initiatives[].category` | Required |
-| **Impact Metric Badge** | Text input | `initiatives[].metrics` | Optional (e.g., *\$15,000 in hardware grants* or *120+ attendees annually*) |
-| **Program Description** | Textarea | `initiatives[].description` | Required, 20–300 chars |
-| **Company Tagline / Careers URL** | Optional profile fields | `tagline`, `careers_url`, `primary_focus` | Optional updates to sponsor header |
+| **Partner Organization** | Read-only context | `sponsorName` | Pre-filled with active sponsor name |
+| **Your Name / Role** | Text input | `requesterName` | Optional (e.g., *Alex Mercer, University Relations*) |
+| **Contact Email** | Email input | `requesterEmail` | Required, valid email (pre-filled with session or sponsor email) |
+| **Initiative Focus / Title** | Text input | `title` | Required (e.g., *Autonomous Rover Hardware Sponsorship* or *Radar Systems Workshop*) |
+| **Proposed Collaboration & Discussion Topics** | Textarea | `proposal` | Required, min 15 chars |
 
-- **API Route**: `PATCH /api/sponsors/[id]` (requires `x-user-role: sponsor` matching the sponsor's organization, or `admin`). Updates the `initiatives` `JSONB` array and profile fields in `chapter_sponsors`.
+- **API Route**: `POST /api/sponsors/[id]/request-initiative`. Dispatches the inquiry, records it in the inquiry registry, and provides a pre-formatted `mailto:` link to `leadership@rsousf.org` so both parties can immediately initiate an email conversation.
 
 ---
 
@@ -223,5 +223,5 @@ With Sponsors, Events, Projects, and Jobs all flowing through PostgreSQL, this f
   - [x] Build [`LeadershipProjectForm.tsx`](../src/components/forms/LeadershipProjectForm.tsx) with tool/milestone builders, team roster selector, and `POST /api/projects` ([`src/app/api/projects/route.ts`](../src/app/api/projects/route.ts)).
 - [x] **Step 5: Form 4 — Sponsor Job Posting Form (`/jobs`) (Completed)**
   - [x] Build [`SponsorJobPostingForm.tsx`](../src/components/forms/SponsorJobPostingForm.tsx) with Sponsor session auto-fill, dynamic bullet list builders, and role guard on `POST /api/jobs` ([`src/app/api/jobs/route.ts`](../src/app/api/jobs/route.ts)).
-- [ ] **Step 6: Form 5 — Sponsor Initiatives & Profile Form (`/sponsors`)**
-  - [ ] Build `SponsorInitiativeForm.tsx` and `PATCH /api/sponsors/[id]`.
+- [x] **Step 6: Form 5 — Sponsor Initiatives & Profile Form (`/sponsors`) (Completed)**
+  - [x] Build [`SponsorInitiativeForm.tsx`](../src/components/forms/SponsorInitiativeForm.tsx) and `PATCH /api/sponsors/[id]` ([`src/app/api/sponsors/[id]/route.ts`](../src/app/api/sponsors/[id]/route.ts)).

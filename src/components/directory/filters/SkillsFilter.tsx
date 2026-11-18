@@ -50,7 +50,7 @@ export default function SkillsFilter({
               className={`px-2 py-1 rounded-lg text-[11px] font-medium flex items-center gap-1.5 select-none cursor-pointer max-w-full ${
                 isSelected
                   ? "bg-black text-white border border-black shadow-sm"
-                  : "bg-zinc-900/90 text-zinc-400 border border-zinc-800 hover:text-zinc-200"
+                  : "bg-zinc-900/90 text-zinc-400 border border-zinc-800"
               }`}
             >
               <div className="shrink-0">
@@ -82,10 +82,10 @@ export function SkillModeSelector({
       <button
         type="button"
         onClick={() => setSkillFilterMode("OR")}
-        className={`px-1.5 py-0.5 rounded transition-all ${
+        className={`px-1.5 py-0.5 rounded ${
           skillFilterMode === "OR"
             ? "bg-black text-white font-bold"
-            : "text-zinc-550 hover:text-zinc-300"
+            : "text-zinc-550"
         }`}
       >
         OR
@@ -93,10 +93,10 @@ export function SkillModeSelector({
       <button
         type="button"
         onClick={() => setSkillFilterMode("AND")}
-        className={`px-1.5 py-0.5 rounded transition-all ${
+        className={`px-1.5 py-0.5 rounded ${
           skillFilterMode === "AND"
             ? "bg-black text-white font-bold"
-            : "text-zinc-550 hover:text-zinc-300"
+            : "text-zinc-550"
         }`}
       >
         AND

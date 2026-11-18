@@ -1,13 +1,14 @@
 "use client";
 
 import React from "react";
-import { Sparkles, Award, Wrench, Briefcase, GraduationCap } from "lucide-react";
+import { Sparkles, Award, Wrench, Briefcase, GraduationCap, Plus } from "lucide-react";
 import { SponsorInitiative } from "@/data/sponsors";
 import { CARD_BASE } from "@/lib/cardStyles";
 
 export interface SponsorInitiativesListProps {
   initiatives: SponsorInitiative[];
   sponsorName?: string;
+  onRequestInitiative?: () => void;
 }
 
 /**
@@ -15,6 +16,7 @@ export interface SponsorInitiativesListProps {
  */
 export default function SponsorInitiativesList({
   initiatives,
+  onRequestInitiative,
 }: SponsorInitiativesListProps) {
   const getCategoryIcon = (category: SponsorInitiative["category"]) => {
     switch (category) {
@@ -33,13 +35,24 @@ export default function SponsorInitiativesList({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-2">
         <h3 className="section-title">
           <span>Active Sponsorship Initiatives & Chapter Programs</span>
           <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
             {initiatives.length} Programs
           </span>
         </h3>
+
+        {onRequestInitiative && (
+          <button
+            type="button"
+            onClick={onRequestInitiative}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black hover:bg-neutral-800 text-white text-xs font-bold cursor-pointer transition-all shadow-2xs"
+          >
+            <Plus size={13} />
+            <span>Request Initiative</span>
+          </button>
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
