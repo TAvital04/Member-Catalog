@@ -35,7 +35,7 @@ export default function LeadershipSponsorForm({
   const [website, setWebsite] = useState("");
   const [careersUrl, setCareersUrl] = useState("");
   const [contactEmail, setContactEmail] = useState("");
-  const [sponsorLoginPassword, setSponsorLoginPassword] = useState("ieee-sponsor-access");
+  const [sponsorLoginPassword, setSponsorLoginPassword] = useState("sponsor-access");
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -122,7 +122,7 @@ export default function LeadershipSponsorForm({
           <div>
             <div className="flex items-center gap-2">
               <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border border-black bg-white text-black">
-                <span>RSO Leadership • Form 1</span>
+                <span>RSO Leadership</span>
               </span>
             </div>
             <h2 className="text-lg sm:text-xl font-black text-slate-900 mt-0.5">
@@ -136,10 +136,10 @@ export default function LeadershipSponsorForm({
 
         {/* Scrollable Form Body */}
         <form onSubmit={handleSubmit} noValidate className="overflow-y-auto p-6 flex flex-col gap-6 flex-1">
-          {/* Section 1: Core Company Identity */}
+          {/* Section: Core Company Identity */}
           <div className="flex flex-col gap-4">
             <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-2">
-              1. Partner Identity & Links
+              Partner Identity & Links
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-12 gap-4">
@@ -247,11 +247,11 @@ export default function LeadershipSponsorForm({
             </div>
           </div>
 
-          {/* Section 2: Sponsor Login Provisioning */}
+          {/* Section: Sponsor Login Provisioning */}
           <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/90 flex flex-col gap-3.5">
             <div className="flex items-center gap-2">
               <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-                2. Provision Sponsor Portal Login Credentials
+                Provision Sponsor Portal Login Credentials
               </h3>
             </div>
             <p className="text-[11px] text-slate-500 leading-relaxed">
@@ -298,7 +298,7 @@ export default function LeadershipSponsorForm({
                     aria-required="true"
                     value={sponsorLoginPassword}
                     onChange={(e) => setSponsorLoginPassword(e.target.value)}
-                    placeholder="ieee-sponsor-access"
+                    placeholder="sponsor-access"
                     className="w-full pl-9 pr-3.5 py-2 text-xs font-mono rounded-xl bg-white border border-slate-200 text-slate-900 focus:outline-none focus:ring-1 focus:ring-black"
                   />
                 </div>
@@ -333,10 +333,7 @@ export default function LeadershipSponsorForm({
                   <span>Onboarding Sponsor...</span>
                 </>
               ) : (
-                <>
-                  <Sparkles size={14} />
-                  <span>Onboard Chapter Sponsor</span>
-                </>
+                <span>Onboard Chapter Sponsor</span>
               )}
             </button>
           </div>

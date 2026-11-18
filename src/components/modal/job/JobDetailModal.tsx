@@ -19,7 +19,6 @@ import { JobPosting, JobApplication } from "@/data/jobs";
 import { Student } from "@/data/students";
 import Avatar from "@/components/common/Avatar";
 import { Heading, Subheading, Badge } from "@/components/ui";
-import CurrentSponsorsSegment from "@/components/common/CurrentSponsorsSegment";
 
 export type JobTabType = "info" | "overview" | "skills" | "apply";
 
@@ -139,10 +138,10 @@ export default function JobDetailModal({
     label: string;
     ariaLabel?: string;
   }> = [
-    { id: "overview", label: "Overview", ariaLabel: "Job overview & responsibilities" },
-    { id: "skills", label: `Skills (${matchedSkills.length}/${job.skillsRequired?.length || 0})`, ariaLabel: "Skills breakdown & match" },
-    { id: "apply", label: hasAppliedLocally ? "Application (Submitted)" : "Apply", ariaLabel: "Submit portfolio application" },
-  ];
+      { id: "overview", label: "Overview", ariaLabel: "Job overview & responsibilities" },
+      { id: "skills", label: `Skills (${matchedSkills.length}/${job.skillsRequired?.length || 0})`, ariaLabel: "Skills breakdown & match" },
+      { id: "apply", label: hasAppliedLocally ? "Application (Submitted)" : "Apply", ariaLabel: "Submit portfolio application" },
+    ];
 
   // Left Column Hero Content (mirrors EventModal and ProjectModal Left Column)
   const JobHeroContent = (
@@ -244,9 +243,6 @@ export default function JobDetailModal({
           <span>Application on file with {job.companyName}</span>
         </div>
       )}
-
-      {/* Chapter Sponsor Recognition Segment */}
-      <CurrentSponsorsSegment variant="panel" />
     </div>
   );
 
@@ -294,11 +290,10 @@ export default function JobDetailModal({
               <button
                 type="button"
                 onClick={() => setActiveTab("info")}
-                className={`py-2 px-2.5 font-bold uppercase tracking-wider relative md:hidden shrink-0 flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
-                  activeTab === "info"
-                    ? "text-black font-extrabold"
-                    : "text-neutral-500 hover:text-black font-semibold"
-                }`}
+                className={`py-2 px-2.5 font-bold uppercase tracking-wider relative md:hidden shrink-0 flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${activeTab === "info"
+                  ? "text-black font-extrabold"
+                  : "text-neutral-500 hover:text-black font-semibold"
+                  }`}
               >
                 <Info size={14} className={activeTab === "info" ? "text-black" : "text-neutral-400"} />
                 <span>Info</span>
@@ -316,11 +311,10 @@ export default function JobDetailModal({
                     type="button"
                     aria-label={ariaLabel || label}
                     onClick={() => setActiveTab(id)}
-                    className={`py-2 px-2.5 sm:px-3 font-bold uppercase tracking-wider relative shrink-0 md:shrink md:flex-1 md:text-center whitespace-nowrap text-xs md:text-xs lg:text-sm cursor-pointer ${
-                      isActive
-                        ? "text-black font-extrabold"
-                        : "text-neutral-500 hover:text-black font-semibold"
-                    }`}
+                    className={`py-2 px-2.5 sm:px-3 font-bold uppercase tracking-wider relative shrink-0 md:shrink md:flex-1 md:text-center whitespace-nowrap text-xs md:text-xs lg:text-sm cursor-pointer ${isActive
+                      ? "text-black font-extrabold"
+                      : "text-neutral-500 hover:text-black font-semibold"
+                      }`}
                   >
                     <span>{label}</span>
                     {isActive && (
@@ -436,9 +430,8 @@ export default function JobDetailModal({
                   {/* Verified Matched Skills */}
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider flex items-center gap-1.5">
-                        <CheckCircle2 size={13} className="text-black" />
-                        <span>Matched Skills ({matchedSkills.length})</span>
+                      <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
+                        Matched Skills ({matchedSkills.length})
                       </h3>
                       <span className="text-[11px] text-neutral-500">Verified in your portfolio</span>
                     </div>
@@ -499,7 +492,7 @@ export default function JobDetailModal({
                       </div>
                       <h4 className="font-black text-lg text-black">Application Successfully Transmitted</h4>
                       <p className="text-xs text-neutral-600 max-w-md leading-relaxed font-sans">
-                        Your complete verified IEEE UCF engineering portfolio, resume attachment, and project endorsements have been routed directly to{" "}
+                        Your complete verified RSO USF engineering portfolio, resume attachment, and project endorsements have been routed directly to{" "}
                         <span className="font-bold text-black">{job.companyName}</span>&apos;s university recruiting department.
                       </p>
                       <div className="mt-2 text-xs font-bold text-neutral-500 uppercase tracking-wider">
@@ -511,7 +504,7 @@ export default function JobDetailModal({
                       <div className="flex items-center justify-between border-b border-neutral-200 pb-3">
                         <div>
                           <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
-                            Apply with IEEE Engineering Portfolio
+                            Apply with RSO Engineering Portfolio
                           </h3>
                           <p className="text-[11px] text-neutral-500 mt-0.5 font-sans">
                             Fast-track submission transmitting your active profile directly to corporate recruiters.

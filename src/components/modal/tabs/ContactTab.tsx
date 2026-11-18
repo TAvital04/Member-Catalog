@@ -118,7 +118,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
           subject: subjectLine,
           message:
             `Hello ${student.name},\n\n` +
-            `You have received a new candidate inquiry through the IEEE UCF Member Catalog!\n\n` +
+            `You have received a new candidate inquiry through the RSO USF Member Catalog!\n\n` +
             `Employer Details:\n- Name: ${recruiterName}\n- Organization: ${recruiterCompany || "Not specified"}\n- Contact Email: ${recruiterEmail}\n` +
             `- Inquiry Topic: ${inquiryTopic}\n\n` +
             `Message:\n${messageText || "No additional message provided."}\n\n` +
@@ -133,14 +133,14 @@ export default function ContactTab({ student, role }: ContactTabProps) {
           subject: `[Confirmation] Your Inquiry to ${student.name} Has Been Delivered`,
           message:
             `Hello ${recruiterName},\n\n` +
-            `Thank you for using the IEEE UCF Member Catalog portal.\n\n` +
+            `Thank you for using the RSO USF Member Catalog portal.\n\n` +
             `Your candidate inquiry to ${student.name} (${student.email}) has been successfully delivered.\n\n` +
             `Subject: ${subjectLine}\n` +
             `Inquiry Topic: ${inquiryTopic}\n\n` +
             `Summary of Sent Message:\n"${messageText || "No additional message provided."}"\n\n` +
             `${student.name} has been provided with your contact email (${recruiterEmail}) and will be able to reply directly to you.`,
-          senderName: "IEEE UCF Member Catalog Portal",
-          senderEmail: "ieee@ucf.edu",
+          senderName: "RSO USF Member Catalog Portal",
+          senderEmail: "leadership@rsousf.org",
         }),
       ]);
 
@@ -173,13 +173,11 @@ export default function ContactTab({ student, role }: ContactTabProps) {
 
           <h3 className="text-base font-extrabold text-slate-900 mb-2">Direct Candidate Messaging Locked</h3>
           <p className="text-xs text-slate-500 leading-relaxed mb-6 max-w-sm">
-            Sponsor access is required to view candidate contact details, copy official UCF student emails, and send direct recruiting inquiries.
+            Sponsor access is required to view candidate contact details, copy official USF student emails, and send direct recruiting inquiries.
           </p>
 
           <a
-            href="https://www.ieeeucf.com/sponsorships"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/sponsors"
             className="w-full sm:w-auto px-6 py-3 bg-black text-white font-extrabold rounded-xl text-xs tracking-wider uppercase flex items-center justify-center cursor-pointer"
           >
             Learn More About Sponsoring
@@ -202,7 +200,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
               {student.status}
             </span>
           )}
-          <span className="text-[11px] text-slate-500 font-medium hidden sm:inline">UCF Knights Channel</span>
+          <span className="text-[11px] text-slate-500 font-medium hidden sm:inline">USF Student Channel</span>
         </div>
       </div>
 
@@ -226,7 +224,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
               </div>
               <div className="flex-1 min-w-0">
                 <h5 className="text-xs font-bold text-slate-900 leading-snug">
-                  UCF Knights Email
+                  USF Student Email
                 </h5>
                 <p className="text-[11px] text-slate-600 mt-0.5 truncate select-all font-mono">
                   {student.email}
@@ -245,7 +243,7 @@ export default function ContactTab({ student, role }: ContactTabProps) {
               </button>
               <a
                 href={`mailto:${student.email}?subject=${encodeURIComponent(
-                  `IEEE UCF Member Inquiry: Career Opportunity for ${student.name}`
+                  `RSO USF Member Inquiry: Career Opportunity for ${student.name}`
                 )}`}
                 className="w-full py-1.5 px-2.5 rounded-lg bg-neutral-100 text-black border border-neutral-300 text-[10.5px] font-bold cursor-pointer shadow-2xs flex items-center justify-center gap-1.5 whitespace-nowrap"
               >

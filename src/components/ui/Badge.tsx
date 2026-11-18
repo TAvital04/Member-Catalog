@@ -19,8 +19,8 @@ const variantStyles: Record<NonNullable<BadgeProps["variant"]>, string> = {
 
 const sizeStyles: Record<NonNullable<BadgeProps["size"]>, string> = {
   xs: "text-[9.5px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider",
-  sm: "text-[10.5px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider",
-  md: "text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wider",
+  sm: "text-[10px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wider",
+  md: "text-xs px-3 py-1.5 rounded-full font-bold uppercase tracking-wider",
 };
 
 export function Badge({
@@ -33,11 +33,11 @@ export function Badge({
 }: BadgeProps) {
   return (
     <span
-      className={`inline-flex items-center gap-1.5 leading-none transition-colors select-none ${variantStyles[variant]} ${sizeStyles[size]} ${className}`.trim()}
+      className={`inline-flex items-center gap-1.5 leading-none transition-colors select-none whitespace-nowrap shrink-0 ${variantStyles[variant]} ${sizeStyles[size]} ${className}`.trim()}
       {...props}
     >
-      {icon && <span className="shrink-0">{icon}</span>}
-      <span>{children}</span>
+      {icon && <span className="shrink-0 flex items-center">{icon}</span>}
+      <span className="inline-flex items-center gap-1 shrink-0 whitespace-nowrap">{children}</span>
     </span>
   );
 }

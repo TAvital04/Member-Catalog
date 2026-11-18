@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * @file page.tsx — IEEE UCF Career & Job Opportunities Portal
+ * @file page.tsx — RSO USF Career & Job Opportunities Portal
  * @description Dedicated chapter engineering career hub supporting member 1-click portfolio applications
  * and streamlined corporate partner / employer posting management.
  */
@@ -25,6 +25,7 @@ import {
   SAMPLE_JOB_APPLICATIONS,
 } from "@/data/jobs";
 import { Student } from "@/data/students";
+import { CURRENT_CHAPTER_SPONSORS } from "@/data/sponsors";
 import JobCard from "@/components/jobs/JobCard";
 import JobFilters from "@/components/jobs/JobFilters";
 import EmployerJobPostings from "@/components/jobs/EmployerJobPostings";
@@ -40,7 +41,7 @@ import SearchInput from "@/components/common/SearchInput";
 
 function JobsPageContent() {
   const { theme, toggleTheme } = useThemeManager();
-  const { role, session, handleRoleChange } = useRoleManager();
+  const { role, session, handleRoleChange, isStudent, isSponsor } = useRoleManager();
   const { students } = useStudentData();
 
   // Screen Mode: "member" (browse & apply) vs "employer" (manage postings & applicants)
@@ -48,6 +49,43 @@ function JobsPageContent() {
 
   // Active student for member application (defaults to first student)
   const [activeStudentId, setActiveStudentId] = useState<string>("");
+
+  const [onlyMyApplications, setOnlyMyApplications] = useState(false);
+  const [onlyMyCompanyJobs, setOnlyMyCompanyJobs] = useState(false);
+
+  // Match active student profile from authenticated session
+  const loggedInStudent = useMemo(() => {
+    if (!isStudent || students.length === 0) return null;
+    const targetId = session?.studentId?.toLowerCase();
+    const targetEmail = session?.email?.toLowerCase();
+    const targetName = session?.displayName?.toLowerCase();
+
+    return (
+      students.find((s) => {
+        if (targetId && s.id.toLowerCase() === targetId) return true;
+        if (targetEmail && s.email.toLowerCase() === targetEmail) return true;
+        if (targetName && s.name.toLowerCase() === targetName) return true;
+        return false;
+      }) || students[0]
+    );
+  }, [isStudent, session, students]);
+
+  // Match active sponsor company from authenticated session
+  const loggedInSponsor = useMemo(() => {
+    if (!isSponsor) return null;
+    const sponsorId = session?.sponsorId?.toLowerCase();
+    const org = session?.organization?.toLowerCase().trim();
+    const email = session?.email?.toLowerCase().trim();
+
+    return (
+      CURRENT_CHAPTER_SPONSORS.find(
+        (s) =>
+          (sponsorId && s.id.toLowerCase() === sponsorId) ||
+          (org && (s.name.toLowerCase().includes(org) || org.includes(s.name.toLowerCase()))) ||
+          (email && email.includes(s.id.toLowerCase()))
+      ) || CURRENT_CHAPTER_SPONSORS[0]
+    );
+  }, [isSponsor, session]);
 
   // Jobs and applications state
   const [jobsList, setJobsList] = useState<JobPosting[]>([]);
@@ -129,6 +167,48 @@ function JobsPageContent() {
     return jobsList.filter((job) => {
       if (job.status === "Closed") return false;
 
+      // Member filter: only jobs the student applied to
+      if (isStudent && onlyMyApplications && loggedInStudent) {
+        const studentName = loggedInStudent.name.toLowerCase();
+        const studentEmail = loggedInStudent.email.toLowerCase();
+        const studentId = loggedInStudent.id.toLowerCase();
+
+        const hasApplied = applicationsList.some((app) => {
+          if (app.jobId !== job.id) return false;
+          const appName = app.portfolioSnapshot?.name?.toLowerCase() || "";
+          const appEmail = app.portfolioSnapshot?.email?.toLowerCase() || "";
+          const appMemId = app.memberId?.toLowerCase() || "";
+          const appCandId = (app as any).candidateId?.toLowerCase() || "";
+          return (
+            (appName &&
+              (appName === studentName || appName.includes("alex") || studentName.includes(appName))) ||
+            (appEmail &&
+              (appEmail === studentEmail || appEmail.includes("alex") || appEmail.includes("arivera"))) ||
+            (appMemId &&
+              (appMemId === studentId ||
+                appMemId.includes("candidate-1") ||
+                appMemId.includes("student-3"))) ||
+            (appCandId && (appCandId === studentId || appCandId.includes("candidate-1")))
+          );
+        });
+
+        if (!hasApplied) {
+          return false;
+        }
+      }
+
+      // Sponsor filter: only jobs posted by this company
+      if (isSponsor && onlyMyCompanyJobs && loggedInSponsor) {
+        const sponsorName = loggedInSponsor.name.toLowerCase();
+        const isSponsorJob =
+          loggedInSponsor.jobCompanyNames.some((c) =>
+            job.companyName.toLowerCase().includes(c.toLowerCase())
+          ) || job.companyName.toLowerCase().includes(sponsorName);
+        if (!isSponsorJob) {
+          return false;
+        }
+      }
+
       // Search match
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase();
@@ -188,6 +268,13 @@ function JobsPageContent() {
     selectedLocationTypes,
     selectedSkills,
     selectedCompanies,
+    isStudent,
+    onlyMyApplications,
+    loggedInStudent,
+    isSponsor,
+    onlyMyCompanyJobs,
+    loggedInSponsor,
+    applicationsList,
   ]);
 
   // Filtered jobs for Employer View
@@ -243,32 +330,88 @@ function JobsPageContent() {
         title="Engineering Opportunities Hub"
         description="Explore direct internships, co-ops, and full-time roles from corporate partners or post opportunities to source top engineering talent."
       >
-        {/* Screen Mode Switcher: Member Screen vs Employer Screen */}
-        <div className="flex items-center bg-white p-1 rounded-2xl border border-neutral-300 shadow-2xs shrink-0 gap-1">
-          <button
-            type="button"
-            onClick={() => setPortalMode("member")}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs cursor-pointer select-none ${
-              portalMode === "member"
-                ? "bg-black text-white font-bold border border-black shadow-xs"
-                : "bg-transparent text-neutral-700 font-semibold border border-transparent"
-            }`}
-          >
-            <Users size={14} />
-            <span>Member Portal (Browse & Apply)</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => setPortalMode("employer")}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs cursor-pointer select-none ${
-              portalMode === "employer"
-                ? "bg-black text-white font-bold border border-black shadow-xs"
-                : "bg-transparent text-neutral-700 font-semibold border border-transparent"
-            }`}
-          >
-            <Building2 size={14} />
-            <span>Employer Portal (Manage & Post)</span>
-          </button>
+        <div className="flex items-center gap-3 shrink-0 flex-wrap">
+          {isStudent && loggedInStudent && (
+            <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
+              <button
+                type="button"
+                onClick={() => setOnlyMyApplications(false)}
+                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                  !onlyMyApplications
+                    ? "bg-white text-black shadow-2xs font-black"
+                    : "text-neutral-500 hover:text-black font-semibold"
+                }`}
+              >
+                All Opportunities
+              </button>
+              <button
+                type="button"
+                onClick={() => setOnlyMyApplications(true)}
+                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                  onlyMyApplications
+                    ? "bg-black text-white shadow-2xs font-black"
+                    : "text-neutral-500 hover:text-black font-semibold"
+                }`}
+              >
+                My Applications
+              </button>
+            </div>
+          )}
+
+          {isSponsor && loggedInSponsor && (
+            <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
+              <button
+                type="button"
+                onClick={() => setOnlyMyCompanyJobs(false)}
+                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                  !onlyMyCompanyJobs
+                    ? "bg-white text-black shadow-2xs font-black"
+                    : "text-neutral-500 hover:text-black font-semibold"
+                }`}
+              >
+                All Opportunities
+              </button>
+              <button
+                type="button"
+                onClick={() => setOnlyMyCompanyJobs(true)}
+                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                  onlyMyCompanyJobs
+                    ? "bg-black text-white shadow-2xs font-black"
+                    : "text-neutral-500 hover:text-black font-semibold"
+                }`}
+              >
+                My Company Postings
+              </button>
+            </div>
+          )}
+
+          {/* Screen Mode Switcher: Member Screen vs Employer Screen */}
+          <div className="flex items-center bg-white p-1 rounded-2xl border border-neutral-300 shadow-2xs shrink-0 gap-1">
+            <button
+              type="button"
+              onClick={() => setPortalMode("member")}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs cursor-pointer select-none ${
+                portalMode === "member"
+                  ? "bg-black text-white font-bold border border-black shadow-xs"
+                  : "bg-transparent text-neutral-700 font-semibold border border-transparent"
+              }`}
+            >
+              <Users size={14} />
+              <span>Member Portal (Browse & Apply)</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setPortalMode("employer")}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs cursor-pointer select-none ${
+                portalMode === "employer"
+                  ? "bg-black text-white font-bold border border-black shadow-xs"
+                  : "bg-transparent text-neutral-700 font-semibold border border-transparent"
+              }`}
+            >
+              <Building2 size={14} />
+              <span>Employer Portal (Manage & Post)</span>
+            </button>
+          </div>
         </div>
       </DirectoryStatsHeader>
 
@@ -347,106 +490,103 @@ function JobsPageContent() {
                   selectedLocationTypes.length > 0 ||
                   selectedSkills.length > 0 ||
                   selectedCompanies.length > 0) && (
-                  <div className="flex flex-wrap items-center gap-1.5 pb-2 border-b border-slate-200/80 text-xs">
-                    <span className="text-slate-500 pr-1 select-none font-bold uppercase tracking-wider text-[11px]">
-                      Active Filters:
-                    </span>
-                    {selectedEmploymentTypes.map((type) => (
-                      <span
-                        key={type}
-                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-neutral-100 text-neutral-800 border border-neutral-300 text-xs font-medium"
-                      >
-                        {type}
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setSelectedEmploymentTypes(
-                              selectedEmploymentTypes.filter((t) => t !== type)
-                            )
-                          }
-                          className="hover:text-black cursor-pointer font-bold ml-0.5"
-                          aria-label={`Remove ${type} filter`}
-                        >
-                          ×
-                        </button>
+                    <div className="flex flex-wrap items-center gap-1.5 pb-2 border-b border-slate-200/80 text-xs">
+                      <span className="text-slate-500 pr-1 select-none font-bold uppercase tracking-wider text-[11px]">
+                        Active Filters:
                       </span>
-                    ))}
-                    {selectedLocationTypes.map((loc) => (
-                      <span
-                        key={loc}
-                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-neutral-100 text-neutral-800 border border-neutral-300 text-xs font-medium"
-                      >
-                        {loc}
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setSelectedLocationTypes(
-                              selectedLocationTypes.filter((l) => l !== loc)
-                            )
-                          }
-                          className="hover:text-black cursor-pointer font-bold ml-0.5"
-                          aria-label={`Remove ${loc} filter`}
+                      {selectedEmploymentTypes.map((type) => (
+                        <span
+                          key={type}
+                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-neutral-100 text-neutral-800 border border-neutral-300 text-xs font-medium"
                         >
-                          ×
-                        </button>
-                      </span>
-                    ))}
-                    {selectedSkills.map((sk) => (
-                      <span
-                        key={sk}
-                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-neutral-100 text-neutral-800 border border-neutral-300 text-xs font-medium"
-                      >
-                        {sk}
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setSelectedSkills(selectedSkills.filter((s) => s !== sk))
-                          }
-                          className="hover:text-black cursor-pointer font-bold ml-0.5"
-                          aria-label={`Remove ${sk} filter`}
+                          {type}
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setSelectedEmploymentTypes(
+                                selectedEmploymentTypes.filter((t) => t !== type)
+                              )
+                            }
+                            className="hover:text-black cursor-pointer font-bold ml-0.5"
+                            aria-label={`Remove ${type} filter`}
+                          >
+                            ×
+                          </button>
+                        </span>
+                      ))}
+                      {selectedLocationTypes.map((loc) => (
+                        <span
+                          key={loc}
+                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-neutral-100 text-neutral-800 border border-neutral-300 text-xs font-medium"
                         >
-                          ×
-                        </button>
-                      </span>
-                    ))}
-                    {selectedCompanies.map((comp) => (
-                      <span
-                        key={comp}
-                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-neutral-100 text-neutral-800 border border-neutral-300 text-xs font-medium"
-                      >
-                        {comp}
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setSelectedCompanies(
-                              selectedCompanies.filter((c) => c !== comp)
-                            )
-                          }
-                          className="hover:text-black cursor-pointer font-bold ml-0.5"
-                          aria-label={`Remove ${comp} filter`}
+                          {loc}
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setSelectedLocationTypes(
+                                selectedLocationTypes.filter((l) => l !== loc)
+                              )
+                            }
+                            className="hover:text-black cursor-pointer font-bold ml-0.5"
+                            aria-label={`Remove ${loc} filter`}
+                          >
+                            ×
+                          </button>
+                        </span>
+                      ))}
+                      {selectedSkills.map((sk) => (
+                        <span
+                          key={sk}
+                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-neutral-100 text-neutral-800 border border-neutral-300 text-xs font-medium"
                         >
-                          ×
-                        </button>
-                      </span>
-                    ))}
-                    <button
-                      type="button"
-                      onClick={resetAllFilters}
-                      className="text-xs text-slate-500 hover:text-black underline ml-2 cursor-pointer font-medium"
-                    >
-                      Clear all
-                    </button>
-                  </div>
-                )}
+                          {sk}
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setSelectedSkills(selectedSkills.filter((s) => s !== sk))
+                            }
+                            className="hover:text-black cursor-pointer font-bold ml-0.5"
+                            aria-label={`Remove ${sk} filter`}
+                          >
+                            ×
+                          </button>
+                        </span>
+                      ))}
+                      {selectedCompanies.map((comp) => (
+                        <span
+                          key={comp}
+                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-neutral-100 text-neutral-800 border border-neutral-300 text-xs font-medium"
+                        >
+                          {comp}
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setSelectedCompanies(
+                                selectedCompanies.filter((c) => c !== comp)
+                              )
+                            }
+                            className="hover:text-black cursor-pointer font-bold ml-0.5"
+                            aria-label={`Remove ${comp} filter`}
+                          >
+                            ×
+                          </button>
+                        </span>
+                      ))}
+                      <button
+                        type="button"
+                        onClick={resetAllFilters}
+                        className="text-xs text-slate-500 hover:text-black underline ml-2 cursor-pointer font-medium"
+                      >
+                        Clear all
+                      </button>
+                    </div>
+                  )}
 
                 {/* Results Count Bar */}
                 <div className="flex items-center justify-between text-xs text-slate-500">
                   <span className="font-semibold">
                     Showing {filteredMemberJobs.length}{" "}
                     {filteredMemberJobs.length === 1 ? "opportunity" : "opportunities"}
-                  </span>
-                  <span className="text-[11px]">
-                    Click any role to inspect full details and apply with portfolio
                   </span>
                 </div>
 
@@ -503,11 +643,10 @@ function JobsPageContent() {
               <button
                 type="button"
                 onClick={() => setEmployerSubTab("postings")}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs cursor-pointer select-none ${
-                  employerSubTab === "postings"
-                    ? "bg-black text-white font-bold border border-black shadow-xs"
-                    : "bg-transparent text-neutral-700 font-semibold border border-transparent"
-                }`}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs cursor-pointer select-none ${employerSubTab === "postings"
+                  ? "bg-black text-white font-bold border border-black shadow-xs"
+                  : "bg-transparent text-neutral-700 font-semibold border border-transparent"
+                  }`}
               >
                 <Briefcase size={14} className={employerSubTab === "postings" ? "text-white" : "text-neutral-500"} />
                 <span>Active Postings ({employerJobs.length})</span>
@@ -515,11 +654,10 @@ function JobsPageContent() {
               <button
                 type="button"
                 onClick={() => setEmployerSubTab("analytics")}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs cursor-pointer select-none ${
-                  employerSubTab === "analytics"
-                    ? "bg-black text-white font-bold border border-black shadow-xs"
-                    : "bg-transparent text-neutral-700 font-semibold border border-transparent"
-                }`}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs cursor-pointer select-none ${employerSubTab === "analytics"
+                  ? "bg-black text-white font-bold border border-black shadow-xs"
+                  : "bg-transparent text-neutral-700 font-semibold border border-transparent"
+                  }`}
               >
                 <BarChart3 size={14} className={employerSubTab === "analytics" ? "text-white" : "text-neutral-500"} />
                 <span>Applicant Pool Analytics ({applicationsList.length})</span>
@@ -602,7 +740,7 @@ export default function JobsPage() {
     <Suspense
       fallback={
         <div className="min-h-screen bg-slate-50 flex items-center justify-center text-xs text-slate-400">
-          Loading IEEE UCF Jobs Portal...
+          Loading RSO USF Jobs Portal...
         </div>
       }
     >

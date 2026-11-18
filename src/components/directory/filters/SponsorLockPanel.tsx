@@ -26,9 +26,7 @@ export default function SponsorLockPanel({ layout }: SponsorLockPanelProps) {
           </div>
         </div>
         <a
-          href="https://www.ieeeucf.com/sponsorships"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="/sponsors"
           className="w-full sm:w-auto shrink-0 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 font-bold text-xs rounded-xl shadow-2xs transition-all flex items-center justify-center cursor-pointer whitespace-nowrap text-center"
         >
           Learn More About Sponsoring
@@ -36,7 +34,7 @@ export default function SponsorLockPanel({ layout }: SponsorLockPanelProps) {
       </div>
 
       {/* Side Locked Placeholder */}
-      <aside className={`w-full min-[1056px]:w-64 shrink-0 ${
+      <aside className={`w-full min-[1056px]:w-64 shrink-0 min-[1056px]:sticky min-[1056px]:top-20 min-[1056px]:self-start ${
         layout === "side" ? "hidden min-[1056px]:flex" : "hidden"
       }`}>
         <div className="px-5 py-6 rounded-2xl border border-slate-200 bg-white shadow-2xs flex flex-col items-center justify-between text-center relative overflow-hidden h-[295px] w-full">
@@ -50,9 +48,7 @@ export default function SponsorLockPanel({ layout }: SponsorLockPanelProps) {
             </p>
           </div>
           <a
-            href="https://www.ieeeucf.com/sponsorships"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/sponsors"
             className="w-full px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 font-bold text-xs rounded-xl shadow-2xs transition-all flex items-center justify-center cursor-pointer text-center"
           >
             Learn More About Sponsoring

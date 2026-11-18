@@ -44,7 +44,7 @@ export default function EventSponsorTab({ event }: EventSponsorTabProps) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          to: "sponsorship@ieeeucf.com",
+          to: "sponsorship@rsousf.org",
           subject: `[Event Sponsorship Inquiry] ${event.title} - ${sponsorCompany || sponsorName}`,
           senderName: sponsorName,
           senderEmail: sponsorEmail,
@@ -109,7 +109,7 @@ ${sponsorMessage || "Interested in learning more about corporate workshop sponso
         <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider py-1 leading-normal min-w-0">
           <span>Sponsor This Workshop & Event</span>
         </div>
-        <span className="text-[11px] text-slate-500 font-medium">IEEE UCF Corporate Partnerships</span>
+        <span className="text-[11px] text-slate-500 font-medium">RSO USF Corporate Partnerships</span>
       </div>
 
       {/* Hero Overview */}
@@ -119,7 +119,7 @@ ${sponsorMessage || "Interested in learning more about corporate workshop sponso
         </div>
         <p className="text-xs text-slate-700 leading-relaxed font-sans">
           Sponsoring this technical chapter session puts your organization directly in front of active,
-          hands-on UCF computer engineering, electrical engineering, and computer science students.
+          hands-on USF computer engineering, electrical engineering, and computer science students.
           Equip students with lab tooling, share industry best practices, and recruit high-caliber talent.
         </p>
       </div>
@@ -174,7 +174,7 @@ ${sponsorMessage || "Interested in learning more about corporate workshop sponso
           <div className="p-3.5 rounded-xl bg-neutral-100 border border-neutral-300 text-black text-xs flex items-center gap-2">
             <CheckCircle2 size={16} className="text-black shrink-0" />
             <span>
-              Thank you! Your event sponsorship inquiry has been routed to the IEEE UCF corporate relations committee. We will reach out shortly.
+              Thank you! Your event sponsorship inquiry has been routed to the RSO USF corporate relations committee. We will reach out shortly.
             </span>
           </div>
         )}

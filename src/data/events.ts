@@ -1,6 +1,6 @@
 /**
  * @file events.ts
- * @description IEEE UCF Chapter Events Data Models and Rich Seed Data.
+ * @description RSO USF Chapter Events Data Models and Rich Seed Data.
  * Defines comprehensive event models including category taxonomies, hosting corporate partners,
  * attendance rosters, and technical workshop outcomes.
  */
@@ -55,7 +55,7 @@ export const SAMPLE_IEEE_EVENTS: IEEEEvent[] = [
     room: "HEC 101",
     description: "Overview of semester technical build projects, committee workshops, free pizza, and networking with RSO student officers.",
     category: "General Body Meeting",
-    host: "RSO UCF Student Chapter",
+    host: "RSO USF Student Chapter",
     pointsAwarded: 3,
     startTime: "2024-09-04T18:00:00Z",
     endTime: "2024-09-04T20:00:00Z",
@@ -134,13 +134,13 @@ export const SAMPLE_IEEE_EVENTS: IEEEEvent[] = [
   },
   {
     id: "evt-4",
-    title: "RSO UCF Technical Resume & Recruiter Showcase",
+    title: "RSO USF Technical Resume & Recruiter Showcase",
     slug: "resume-recruiter-showcase-2024",
     location: "Student Union Pegasus Ballroom",
     room: "Pegasus Ballroom",
-    description: "Exclusive member networking session with defense, cloud, and semiconductor industry recruiters ahead of UCF STEM Career Fair.",
+    description: "Exclusive member networking session with defense, cloud, and semiconductor industry recruiters ahead of USF STEM Career Fair.",
     category: "Career & Networking",
-    host: "RSO UCF Corporate Relations",
+    host: "RSO USF Corporate Relations",
     partner: "Lockheed Martin & L3Harris",
     pointsAwarded: 3,
     startTime: "2024-10-23T16:00:00Z",
@@ -222,7 +222,7 @@ export const SAMPLE_IEEE_EVENTS: IEEEEvent[] = [
     room: "HEC 101",
     description: "Unveiling 2025 student projects, announcing officer elections, and connecting with corporate sponsors.",
     category: "General Body Meeting",
-    host: "RSO UCF Student Chapter",
+    host: "RSO USF Student Chapter",
     pointsAwarded: 3,
     startTime: "2025-01-22T18:00:00Z",
     endTime: "2025-01-22T20:00:00Z",
@@ -230,7 +230,7 @@ export const SAMPLE_IEEE_EVENTS: IEEEEvent[] = [
     skills: ["Embedded Systems", "Robotics", "Python", "C++", "Hardware"],
     learningOutcomes: [
       "Mid-year build team milestone reviews and prototype demonstrations",
-      "Nominations for upcoming 2025-2026 RSO UCF Executive Committee elections",
+      "Nominations for upcoming 2025-2026 RSO USF Executive Committee elections",
       "Announcement of funding grants for senior design and independent projects",
     ],
     attendees: [
@@ -312,7 +312,7 @@ export const SAMPLE_IEEE_EVENTS: IEEEEvent[] = [
     learningOutcomes: [
       "Walkthrough of orbital rocket staging and cryogenics routing",
       "Cleanroom avionics qualification, vibration testing, and thermal vacuum chambers",
-      "Networking with launch operations engineers and UCF alumni at Blue Origin",
+      "Networking with launch operations engineers and USF alumni at Blue Origin",
     ],
     attendees: [
       { memberId: "candidate-1", name: "Alex Rivera", email: "alex.rivera@knights.ucf.edu", major: "Computer Engineering" },
@@ -455,13 +455,13 @@ export const SAMPLE_IEEE_EVENTS: IEEEEvent[] = [
   },
   {
     id: "evt-16",
-    title: "RSO UCF Industry Dinner & End-of-Year Banquet",
+    title: "RSO USF Industry Dinner & End-of-Year Banquet",
     slug: "industry-dinner-banquet-2025",
-    location: "UCF Alumni Center",
+    location: "USF Alumni Center",
     room: "Grand Ballroom",
     description: "Annual celebration honoring graduating seniors, outstanding committee chairs, and student competition winners.",
     category: "Special Event & Tour",
-    host: "RSO UCF Executive Board",
+    host: "RSO USF Executive Board",
     pointsAwarded: 3,
     startTime: "2025-04-18T18:30:00Z",
     endTime: "2025-04-18T21:30:00Z",
@@ -470,7 +470,7 @@ export const SAMPLE_IEEE_EVENTS: IEEEEvent[] = [
     learningOutcomes: [
       "Chapter annual awards ceremony recognizing top project contributors and leaders",
       "Formal dinner with corporate sponsors, faculty advisors, and alumni",
-      "Passing of the gavel to newly elected 2025-2026 RSO UCF officers",
+      "Passing of the gavel to newly elected 2025-2026 RSO USF officers",
     ],
     attendees: [
       { memberId: "candidate-1", name: "Alex Rivera", email: "alex.rivera@knights.ucf.edu", major: "Computer Engineering" },

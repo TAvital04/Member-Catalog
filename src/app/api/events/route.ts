@@ -1,6 +1,6 @@
 /**
  * @file route.ts — /api/events (GET & POST)
- * @description API route handler delivering IEEE UCF chapter events and managing event creation with attendance rosters.
+ * @description API route handler delivering RSO USF chapter events and managing event creation with attendance rosters.
  * Queries events from PostgreSQL via Drizzle ORM, joins eventAttendees with members and resumes,
  * and falls back seamlessly to the rich SAMPLE_IEEE_EVENTS dataset when database is unavailable.
  */
@@ -111,14 +111,14 @@ export async function GET() {
         title: row.title,
         slug: row.slug || `event-${row.id}`,
         description: row.description,
-        location: row.location || "UCF Main Campus",
+        location: row.location || "USF Main Campus",
         startTime: typeof row.startTime === "object" && row.startTime ? row.startTime.toISOString() : String(row.startTime),
         endTime: row.endTime ? (typeof row.endTime === "object" ? row.endTime.toISOString() : String(row.endTime)) : undefined,
         category: (sampleMatch?.category || "Technical Workshop") as EventCategory,
-        host: sampleMatch?.host || "IEEE UCF Student Chapter",
+        host: sampleMatch?.host || "RSO USF Student Chapter",
         partner: sampleMatch?.partner,
         pointsAwarded: sampleMatch?.pointsAwarded || 15,
-        tags: sampleMatch?.tags || ["IEEE UCF", "Workshop"],
+        tags: sampleMatch?.tags || ["RSO USF", "Workshop"],
         skills: sampleMatch?.skills,
         learningOutcomes: sampleMatch?.learningOutcomes || [],
         flyerUrl: row.flyerUrl || undefined,
@@ -145,7 +145,7 @@ export async function GET() {
     console.error("[API Error] Failed to retrieve events:", err);
     return Response.json({
       success: false,
-      error: "Failed to retrieve IEEE events",
+      error: "Failed to retrieve RSO events",
       data: getDynamicEvents(),
     });
   }
@@ -230,12 +230,12 @@ export async function POST(request: Request) {
       slug: cleanSlug || newEventId,
       description: cleanDescription,
       category: category as EventCategory,
-      location: "UCF Main Campus",
+      location: "USF Main Campus",
       startTime: new Date().toISOString(),
-      host: "IEEE UCF Student Chapter",
+      host: "RSO USF Student Chapter",
       partner: partner ? String(partner).trim() : undefined,
       pointsAwarded: Number(pointsAwarded) || 15,
-      tags: ["IEEE UCF", category],
+      tags: ["RSO USF", category],
       skills: cleanSkills,
       learningOutcomes:
         cleanSkills.length > 0

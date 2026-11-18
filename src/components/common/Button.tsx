@@ -11,7 +11,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 /**
  * Button — Matchy-Matchy Catalog Action Button
- * Adheres to IEEE Gold accents, tactile active states, and dark mode compliance.
+ * Standard catalog action button with tactile active states.
  */
 export default function Button({
   variant = "secondary",

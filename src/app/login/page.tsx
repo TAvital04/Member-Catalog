@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * @file page.tsx — IEEE UCF Portal Login Page (/login)
+ * @file page.tsx — RSO USF Portal Login Page (/login)
  * @description Role-based authentication portal supporting two authorized account types:
  * 1. RSO Leadership (Chapter Officers, Project Leads, Event Coordinators)
  * 2. Corporate Sponsor (Official Partners & Technical Recruiters)
@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import {
   Shield,
   Award,
+  GraduationCap,
   Mail,
   Lock,
   Building2,
@@ -38,30 +39,59 @@ function LoginPageContent() {
   const { role, session, login, logout, handleRoleChange, isAuthenticated } = useRoleManager();
 
   const [selectedRole, setSelectedRole] = useState<AuthAccountType>(
-    session?.accountType || "rso_leadership"
+    session?.accountType || "sponsor"
   );
   const [email, setEmail] = useState(
-    session?.email || "leadership@ieeeucf.org"
+    session?.email || "recruiting@lockheedmartin.com"
   );
   const [organization, setOrganization] = useState(
-    session?.organization || "IEEE UCF Student Chapter"
+    session?.organization || "Lockheed Martin"
   );
-  const [password, setPassword] = useState("ieee-ucf-leadership");
+  const [password, setPassword] = useState(
+    session?.accountType === "rso_leadership"
+      ? "rso-usf-leadership"
+      : session?.accountType === "student"
+      ? "student-access"
+      : "sponsor-access"
+  );
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  React.useEffect(() => {
+    if (session?.accountType) {
+      setSelectedRole(session.accountType);
+      if (session.accountType === "rso_leadership") {
+        setEmail(session.email || "leadership@rsousf.org");
+        setOrganization(session.organization || "RSO USF Student Chapter");
+        setPassword("rso-usf-leadership");
+      } else if (session.accountType === "sponsor") {
+        setEmail(session.email || "recruiting@lockheedmartin.com");
+        setOrganization(session.organization || "Lockheed Martin");
+        setPassword("sponsor-access");
+      } else {
+        setEmail(session.email || "student@usf.edu");
+        setOrganization(session.organization || "USF Computer Engineering");
+        setPassword("student-access");
+      }
+    }
+  }, [session]);
 
   const handleSelectRoleCard = (accountType: AuthAccountType) => {
     setSelectedRole(accountType);
     setErrorMessage(null);
     if (accountType === "rso_leadership") {
-      setEmail("leadership@ieeeucf.org");
-      setOrganization("IEEE UCF Student Chapter");
-      setPassword("ieee-ucf-leadership");
-    } else {
+      setEmail("leadership@rsousf.org");
+      setOrganization("RSO USF Student Chapter");
+      setPassword("rso-usf-leadership");
+    } else if (accountType === "sponsor") {
       setEmail("recruiting@lockheedmartin.com");
       setOrganization("Lockheed Martin");
-      setPassword("ieee-sponsor-access");
+      setPassword("sponsor-access");
+    } else {
+      setEmail("student@usf.edu");
+      setOrganization("USF Computer Engineering");
+      setPassword("student-access");
     }
   };
 
@@ -115,14 +145,15 @@ function LoginPageContent() {
         {/* Page Header */}
         <div className="text-center max-w-2xl mx-auto flex flex-col gap-2">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-700 text-[11px] font-bold uppercase tracking-wider self-center">
-            <span>IEEE UCF Portal Authentication</span>
+            <span>RSO USF Portal Authentication</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-            Sign In to IEEE UCF Member Catalog
+            Sign In to RSO USF Member Catalog
           </h1>
           <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-            Select your portal role below to authenticate as{" "}
-            <strong className="text-slate-900 font-bold">RSO Leadership</strong> or a{" "}
+            Select your portal role below to authenticate as a{" "}
+            <strong className="text-slate-900 font-bold">Student Member</strong>,{" "}
+            <strong className="text-slate-900 font-bold">RSO Leadership</strong>, or a{" "}
             <strong className="text-slate-900 font-bold">Corporate Sponsor</strong>.
           </p>
         </div>
@@ -138,7 +169,11 @@ function LoginPageContent() {
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className="text-xs font-black text-slate-900 uppercase tracking-wider">
                     Active Session:{" "}
-                    {session.accountType === "rso_leadership" ? "RSO Leadership" : "Corporate Sponsor"}
+                    {session.accountType === "rso_leadership"
+                      ? "RSO Leadership"
+                      : session.accountType === "sponsor"
+                      ? "Corporate Sponsor"
+                      : "Student Member"}
                   </span>
                   <span className="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-slate-700 font-semibold">
                     {session.organization}
@@ -177,7 +212,54 @@ function LoginPageContent() {
               1. Choose Your Account Role
             </span>
 
-            {/* Role Card 1: RSO Leadership */}
+            {/* Role Card 1: Student Member */}
+            <button
+              type="button"
+              onClick={() => handleSelectRoleCard("student")}
+              aria-pressed={selectedRole === "student"}
+              className={`w-full text-left p-5 rounded-2xl border cursor-pointer flex flex-col gap-3 ${
+                selectedRole === "student"
+                  ? "bg-white border-black ring-2 ring-black/10 shadow-sm"
+                  : "bg-white border-neutral-300 shadow-2xs"
+              }`}
+            >
+              <div className="flex items-center justify-between gap-2">
+                <div>
+                  <h2 className="text-sm font-black text-black">Student Member</h2>
+                  <span className="text-[11px] text-neutral-600 font-medium">
+                    Undergraduate & Graduate Candidates
+                  </span>
+                </div>
+                <span
+                  className={`w-4 h-4 rounded-full border flex items-center justify-center ${
+                    selectedRole === "student"
+                      ? "border-black bg-black"
+                      : "border-neutral-300"
+                  }`}
+                >
+                  {selectedRole === "student" && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                  )}
+                </span>
+              </div>
+
+              <p className="text-xs text-neutral-700 leading-relaxed">
+                Access your verified career portfolio by default, view your project achievements, filter the directory by yourself, and browse chapter members.
+              </p>
+
+              <div className="pt-2 border-t border-neutral-200 flex flex-wrap gap-1.5">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-neutral-100 border border-neutral-300 text-[10.5px] font-semibold text-black">
+                  <GraduationCap size={11} className="text-black" />
+                  <span>My Profile Default</span>
+                </span>
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-neutral-100 border border-neutral-300 text-[10.5px] font-semibold text-black">
+                  <Users size={11} className="text-black" />
+                  <span>Filter by Myself</span>
+                </span>
+              </div>
+            </button>
+
+            {/* Role Card 2: RSO Leadership */}
             <button
               type="button"
               onClick={() => handleSelectRoleCard("rso_leadership")}
@@ -228,7 +310,7 @@ function LoginPageContent() {
               </div>
             </button>
 
-            {/* Role Card 2: Corporate Sponsor */}
+            {/* Role Card 3: Corporate Sponsor */}
             <button
               type="button"
               onClick={() => handleSelectRoleCard("sponsor")}
@@ -279,7 +361,13 @@ function LoginPageContent() {
           {/* Right Column: Login Credentials Form */}
           <div className="lg:col-span-7 flex flex-col gap-4">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-              2. Enter {selectedRole === "rso_leadership" ? "RSO Leadership" : "Sponsor"} Credentials
+              2. Enter{" "}
+              {selectedRole === "rso_leadership"
+                ? "RSO Leadership"
+                : selectedRole === "sponsor"
+                ? "Sponsor"
+                : "Student"}{" "}
+              Credentials
             </span>
 
             <form
@@ -293,12 +381,16 @@ function LoginPageContent() {
                   <h3 className="text-base font-black text-slate-900">
                     {selectedRole === "rso_leadership"
                       ? "RSO Leadership Sign In"
-                      : "Corporate Sponsor Sign In"}
+                      : selectedRole === "sponsor"
+                      ? "Corporate Sponsor Sign In"
+                      : "Student Member Sign In"}
                   </h3>
                   <p className="text-xs text-slate-500">
                     {selectedRole === "rso_leadership"
-                      ? "Authenticate with your IEEE UCF officer credentials"
-                      : "Authenticate with your partner organization account"}
+                      ? "Authenticate with your RSO USF officer credentials"
+                      : selectedRole === "sponsor"
+                      ? "Authenticate with your partner organization account"
+                      : "Authenticate with your USF student credentials"}
                   </p>
                 </div>
               </div>
@@ -309,7 +401,11 @@ function LoginPageContent() {
                   htmlFor="login-email"
                   className="text-[11px] font-bold text-slate-700 uppercase tracking-wider"
                 >
-                  {selectedRole === "rso_leadership" ? "Officer Email" : "Corporate Email"}
+                  {selectedRole === "rso_leadership"
+                    ? "Officer Email"
+                    : selectedRole === "sponsor"
+                    ? "Corporate Email"
+                    : "Student Email"}
                 </label>
                 <div className="relative flex items-center">
                   <Mail size={15} className="text-slate-400 absolute left-3.5 pointer-events-none" />
@@ -322,8 +418,10 @@ function LoginPageContent() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={
                       selectedRole === "rso_leadership"
-                        ? "leadership@ieeeucf.org"
-                        : "recruiting@company.com"
+                        ? "leadership@rsousf.org"
+                        : selectedRole === "sponsor"
+                        ? "recruiting@company.com"
+                        : "student@usf.edu"
                     }
                     className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm rounded-xl bg-neutral-50 border border-neutral-300 text-black focus:outline-none focus:ring-1 focus:ring-black"
                   />
@@ -336,7 +434,11 @@ function LoginPageContent() {
                   htmlFor="login-org"
                   className="text-[11px] font-bold text-neutral-700 uppercase tracking-wider"
                 >
-                  {selectedRole === "rso_leadership" ? "Chapter Division / Board" : "Partner Company Name"}
+                  {selectedRole === "rso_leadership"
+                    ? "Chapter Division / Board"
+                    : selectedRole === "sponsor"
+                    ? "Partner Company Name"
+                    : "Major / Department"}
                 </label>
                 <div className="relative flex items-center">
                   <Building2 size={15} className="text-neutral-400 absolute left-3.5 pointer-events-none" />
@@ -347,8 +449,10 @@ function LoginPageContent() {
                     onChange={(e) => setOrganization(e.target.value)}
                     placeholder={
                       selectedRole === "rso_leadership"
-                        ? "IEEE UCF Student Chapter"
-                        : "Lockheed Martin / Texas Instruments"
+                        ? "RSO USF Student Chapter"
+                        : selectedRole === "sponsor"
+                        ? "Lockheed Martin / Texas Instruments"
+                        : "USF Computer Engineering"
                     }
                     className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm rounded-xl bg-neutral-50 border border-neutral-300 text-black focus:outline-none focus:ring-1 focus:ring-black"
                   />
@@ -404,7 +508,9 @@ function LoginPageContent() {
                     ? "Signing In..."
                     : selectedRole === "rso_leadership"
                     ? "Sign In as RSO Leadership"
-                    : "Sign In as Corporate Sponsor"}
+                    : selectedRole === "sponsor"
+                    ? "Sign In as Corporate Sponsor"
+                    : "Sign In as Student Member"}
                 </span>
               </button>
 
@@ -413,7 +519,11 @@ function LoginPageContent() {
                 <span>
                   Pre-filled with demo{" "}
                   <strong className="text-black">
-                    {selectedRole === "rso_leadership" ? "RSO Leadership" : "Sponsor"}
+                    {selectedRole === "rso_leadership"
+                      ? "RSO Leadership"
+                      : selectedRole === "sponsor"
+                      ? "Sponsor"
+                      : "Student Member"}
                   </strong>{" "}
                   credentials for testing.
                 </span>
@@ -421,7 +531,7 @@ function LoginPageContent() {
                   href="/"
                   className="text-black hover:underline font-bold underline-offset-2"
                 >
-                  Continue as Guest Member
+                  Continue as Guest
                 </Link>
               </div>
             </form>
@@ -437,7 +547,7 @@ export default function LoginPage() {
     <Suspense
       fallback={
         <div className="min-h-screen bg-slate-50 flex items-center justify-center text-xs text-slate-400">
-          Loading IEEE UCF Login Portal...
+          Loading RSO USF Login Portal...
         </div>
       }
     >

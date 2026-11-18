@@ -191,7 +191,7 @@ export default function LeadershipEventForm({
           <div>
             <div className="flex items-center gap-2">
               <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border border-black bg-white text-black">
-                <span>RSO Leadership • Form 2</span>
+                <span>RSO Leadership</span>
               </span>
             </div>
             <h2 className="text-lg sm:text-xl font-black text-black mt-0.5">
@@ -205,10 +205,10 @@ export default function LeadershipEventForm({
 
         {/* Scrollable Form Body */}
         <form onSubmit={handleSubmit} noValidate className="overflow-y-auto p-6 flex flex-col gap-6 flex-1">
-          {/* Section 1: Event Identity */}
+          {/* Section: Event Identity */}
           <div className="flex flex-col gap-4">
             <h3 className="text-xs font-bold text-black uppercase tracking-wider border-b border-neutral-200 pb-2">
-              1. Event Details & Classification
+              Event Details & Classification
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-12 gap-4">
@@ -289,11 +289,11 @@ export default function LeadershipEventForm({
             </div>
           </div>
 
-          {/* Section 2: Workshop Skills */}
+          {/* Section: Workshop Skills */}
           <div className="flex flex-col gap-3.5 p-4 rounded-xl bg-neutral-50 border border-neutral-300">
             <div className="flex items-center justify-between border-b border-neutral-200 pb-2">
               <h3 className="text-xs font-bold text-black uppercase tracking-wider">
-                2. Skills Awarded to Attendees
+                Skills Awarded to Attendees
               </h3>
               <span className="text-[10.5px] text-neutral-600 font-medium">
                 {canAwardSkills(category) ? "Workshop Skills" : "Non-Workshop Event"}
@@ -309,7 +309,7 @@ export default function LeadershipEventForm({
                 {/* Skill Chips */}
                 <div className="flex flex-wrap gap-1.5 min-h-[32px] p-2 rounded-lg bg-white border border-neutral-300">
                   {skills.length === 0 ? (
-                    <span className="text-xs text-neutral-400 italic">No skills added yet. Type a skill tag below and press Add.</span>
+                    <span className="text-xs text-neutral-400 italic">No skills added yet. Type a skill below and press Add.</span>
                   ) : (
                     skills.map((skill) => (
                       <span
@@ -342,7 +342,7 @@ export default function LeadershipEventForm({
                         handleAddSkill(newSkillInput);
                       }
                     }}
-                    placeholder="Type a skill tag (e.g. FreeRTOS, STM32) and press Add..."
+                    placeholder="Type a skill (e.g. FreeRTOS, STM32) and press Add..."
                     className="flex-1 px-3.5 py-2 text-xs rounded-lg bg-white border border-neutral-300 text-black focus:outline-none focus:ring-1 focus:ring-black"
                   />
                   <button
@@ -351,7 +351,7 @@ export default function LeadershipEventForm({
                     className="px-3.5 py-2 rounded-lg bg-black text-white hover:bg-neutral-800 font-bold text-xs transition-colors cursor-pointer flex items-center gap-1"
                   >
                     <Plus size={13} />
-                    <span>Add Tag</span>
+                    <span>Add Skill</span>
                   </button>
                 </div>
               </>
@@ -362,12 +362,11 @@ export default function LeadershipEventForm({
             )}
           </div>
 
-          {/* Section 3: Event Leads */}
+          {/* Section: Event Leads */}
           <div className="space-y-4">
             <div className="flex items-center justify-between border-b border-neutral-200 pb-2">
-              <h3 className="text-xs font-bold text-black uppercase tracking-wider flex items-center gap-1.5">
-                <Users size={14} />
-                <span>3. Event Leads ({leads.length})</span>
+              <h3 className="text-xs font-bold text-black uppercase tracking-wider">
+                Event Leads ({leads.length})
               </h3>
               <span className="text-[10.5px] text-neutral-500 font-medium">Assign chapter leads</span>
             </div>
@@ -448,10 +447,7 @@ export default function LeadershipEventForm({
                   <span>Publishing Event...</span>
                 </>
               ) : (
-                <>
-                  <Sparkles size={14} />
-                  <span>Create Event</span>
-                </>
+                <span>Create Event</span>
               )}
             </button>
           </div>

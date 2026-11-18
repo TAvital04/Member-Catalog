@@ -1,6 +1,6 @@
 /**
  * @file route.ts — GET /api/ieee-projects
- * @description API route handler delivering IEEE UCF chapter projects and active student team rosters.
+ * @description API route handler delivering RSO USF chapter projects and active student team rosters.
  * Queries ieeeProjects from PostgreSQL via Drizzle ORM, joins projectParticipants with members and resumes,
  * and aggregates tooling, milestone timelines, skills taught, and sponsorship configurations.
  *

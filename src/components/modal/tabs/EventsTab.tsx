@@ -41,7 +41,7 @@ export default function EventsTab({
     <div className="flex flex-col gap-4 animate-fade-in pt-1 pb-4">
       <div className="flex items-center justify-between pb-3 border-b border-slate-100">
         <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider">
-          <span>IEEE UCF Chapter Events & Workshops</span>
+          <span>RSO USF Chapter Events & Workshops</span>
           {events.length > 0 && (
             <span className="bg-neutral-100 text-black border border-neutral-300 text-[10px] px-2 py-0.2 rounded-full font-bold">
               {events.length}
@@ -116,7 +116,7 @@ export default function EventsTab({
         </div>
       ) : (
         <div className="text-center py-12 bg-white rounded-2xl border border-dashed border-slate-200 p-6 shadow-2xs">
-          <p className="text-slate-500 text-xs">No IEEE UCF event attendance recorded for this member yet.</p>
+          <p className="text-slate-500 text-xs">No RSO USF event attendance recorded for this member yet.</p>
         </div>
       )}
     </div>

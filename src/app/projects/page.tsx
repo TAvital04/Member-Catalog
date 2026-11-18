@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * @file page.tsx — IEEE UCF Chapter Projects Page
+ * @file page.tsx — RSO USF Chapter Projects Page
  * @description Dedicated project showcase directory highlighting active builds, hardware initiatives,
  * autonomous robotics, and IoT sensor platforms. Integrates the comprehensive ProjectModal for deep-dives
  * into tooling, milestone timelines, participant rosters, skills taught, and sponsorship benefits.
@@ -24,13 +24,51 @@ import LeadershipProjectForm from "@/components/forms/LeadershipProjectForm";
 import EmptyState from "@/components/common/EmptyState";
 import { IEEEProject } from "@/data/projects";
 import { Student } from "@/data/students";
+import { CURRENT_CHAPTER_SPONSORS } from "@/data/sponsors";
 
 function IEEEProjectsContent() {
   const { theme, toggleTheme } = useThemeManager();
-  const { role, handleRoleChange, isAdmin } = useRoleManager();
+  const { role, session, handleRoleChange, isAdmin, isStudent, isSponsor } = useRoleManager();
   const { students } = useStudentData();
   const [projects, setProjects] = useState<IEEEProject[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [onlyMyProjects, setOnlyMyProjects] = useState(false);
+  const [onlySponsoredProjects, setOnlySponsoredProjects] = useState(false);
+
+  // Match active student profile from authenticated session
+  const loggedInStudent = useMemo(() => {
+    if (!isStudent || students.length === 0) return null;
+    const targetId = session?.studentId?.toLowerCase();
+    const targetEmail = session?.email?.toLowerCase();
+    const targetName = session?.displayName?.toLowerCase();
+
+    return (
+      students.find((s) => {
+        if (targetId && s.id.toLowerCase() === targetId) return true;
+        if (targetEmail && s.email.toLowerCase() === targetEmail) return true;
+        if (targetName && s.name.toLowerCase() === targetName) return true;
+        return false;
+      }) || students[0]
+    );
+  }, [isStudent, session, students]);
+
+  // Match active sponsor company from authenticated session
+  const loggedInSponsor = useMemo(() => {
+    if (!isSponsor) return null;
+    const sponsorId = session?.sponsorId?.toLowerCase();
+    const org = session?.organization?.toLowerCase().trim();
+    const email = session?.email?.toLowerCase().trim();
+
+    return (
+      CURRENT_CHAPTER_SPONSORS.find(
+        (s) =>
+          (sponsorId && s.id.toLowerCase() === sponsorId) ||
+          (org && (s.name.toLowerCase().includes(org) || org.includes(s.name.toLowerCase()))) ||
+          (email && email.includes(s.id.toLowerCase()))
+      ) || CURRENT_CHAPTER_SPONSORS[0]
+    );
+  }, [isSponsor, session]);
 
   const searchParams = useSearchParams();
   const searchParam = searchParams.get("search") || searchParams.get("q");
@@ -117,6 +155,48 @@ function IEEEProjectsContent() {
 
   const filteredProjects = useMemo(() => {
     return projects.filter((project) => {
+      // Member filter: only projects the student is in / contributed to
+      if (isStudent && onlyMyProjects && loggedInStudent) {
+        const studentName = loggedInStudent.name.toLowerCase();
+        const studentEmail = loggedInStudent.email.toLowerCase();
+        const studentId = loggedInStudent.id.toLowerCase();
+
+        const isInParticipants = (project.participants || []).some((pt) => {
+          const ptName = pt.name?.toLowerCase() || "";
+          const ptEmail = pt.email?.toLowerCase() || "";
+          const ptMemId = pt.memberId?.toLowerCase() || "";
+          return (
+            (ptName && (ptName === studentName || ptName.includes("alex") || studentName.includes(ptName))) ||
+            (ptEmail && (ptEmail === studentEmail || ptEmail.includes("alex") || ptEmail.includes("arivera"))) ||
+            (ptMemId && (ptMemId === studentId || ptMemId.includes("alex") || ptMemId.includes("candidate-1")))
+          );
+        });
+
+        const isAssociatedInStudent = (loggedInStudent.projects || []).some((sp) => {
+          const spTitle = sp.title?.toLowerCase() || "";
+          const projTitle = project.title.toLowerCase();
+          return spTitle.includes(projTitle) || projTitle.includes(spTitle) || sp.id === project.id;
+        });
+
+        if (!isInParticipants && !isAssociatedInStudent) {
+          return false;
+        }
+      }
+
+      // Sponsor filter: only projects sponsored by this company
+      if (isSponsor && onlySponsoredProjects && loggedInSponsor) {
+        const sponsorName = loggedInSponsor.name.toLowerCase();
+        const isExplicitSlug =
+          loggedInSponsor.sponsoredProjectSlugs.includes(project.slug) ||
+          loggedInSponsor.sponsoredProjectSlugs.includes(project.id);
+        const matchesDescOrTitle =
+          project.description?.toLowerCase().includes(sponsorName) ||
+          project.title.toLowerCase().includes(sponsorName);
+        if (!isExplicitSlug && !matchesDescOrTitle) {
+          return false;
+        }
+      }
+
       // Search query filter
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase();
@@ -131,7 +211,16 @@ function IEEEProjectsContent() {
       }
       return true;
     });
-  }, [projects, searchQuery]);
+  }, [
+    projects,
+    searchQuery,
+    isStudent,
+    onlyMyProjects,
+    loggedInStudent,
+    isSponsor,
+    onlySponsoredProjects,
+    loggedInSponsor,
+  ]);
 
   const handleSelectMember = (memberId?: string, name?: string, email?: string) => {
     if (!students || students.length === 0) return;
@@ -179,19 +268,75 @@ function IEEEProjectsContent() {
 
       {/* Directory Page Header */}
       <DirectoryStatsHeader
-        title="IEEE UCF Chapter Projects"
-        description="Explore hands-on hardware builds, autonomous robotics, power inverters, and wireless IoT networks engineered by UCF IEEE students."
+        title="RSO USF Chapter Projects"
+        description="Explore hands-on hardware builds, autonomous robotics, power inverters, and wireless IoT networks engineered by USF RSO students."
       >
-        {isAdmin && (
-          <button
-            type="button"
-            onClick={() => setIsProjectFormOpen(true)}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-black hover:bg-neutral-800 text-white font-bold text-xs transition-all cursor-pointer shrink-0"
-          >
-            <Plus size={14} />
-            <span>New Chapter Project</span>
-          </button>
-        )}
+        <div className="flex items-center gap-3 shrink-0 flex-wrap">
+          {isStudent && loggedInStudent && (
+            <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
+              <button
+                type="button"
+                onClick={() => setOnlyMyProjects(false)}
+                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                  !onlyMyProjects
+                    ? "bg-white text-black shadow-2xs font-black"
+                    : "text-neutral-500 hover:text-black font-semibold"
+                }`}
+              >
+                All Projects
+              </button>
+              <button
+                type="button"
+                onClick={() => setOnlyMyProjects(true)}
+                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                  onlyMyProjects
+                    ? "bg-black text-white shadow-2xs font-black"
+                    : "text-neutral-500 hover:text-black font-semibold"
+                }`}
+              >
+                My Projects
+              </button>
+            </div>
+          )}
+
+          {isSponsor && loggedInSponsor && (
+            <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
+              <button
+                type="button"
+                onClick={() => setOnlySponsoredProjects(false)}
+                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                  !onlySponsoredProjects
+                    ? "bg-white text-black shadow-2xs font-black"
+                    : "text-neutral-500 hover:text-black font-semibold"
+                }`}
+              >
+                All Projects
+              </button>
+              <button
+                type="button"
+                onClick={() => setOnlySponsoredProjects(true)}
+                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                  onlySponsoredProjects
+                    ? "bg-black text-white shadow-2xs font-black"
+                    : "text-neutral-500 hover:text-black font-semibold"
+                }`}
+              >
+                Sponsored Projects
+              </button>
+            </div>
+          )}
+
+          {isAdmin && (
+            <button
+              type="button"
+              onClick={() => setIsProjectFormOpen(true)}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-black hover:bg-neutral-800 text-white font-bold text-xs transition-all cursor-pointer shrink-0"
+            >
+              <Plus size={14} />
+              <span>New Chapter Project</span>
+            </button>
+          )}
+        </div>
       </DirectoryStatsHeader>
 
       {/* Floating Success Feedback Toast */}

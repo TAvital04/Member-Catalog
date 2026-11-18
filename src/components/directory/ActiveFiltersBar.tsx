@@ -17,6 +17,9 @@ interface ActiveFiltersBarProps {
   selectedCompanies?: string[];
   removeCompanyFilter?: (company: string) => void;
   onClearAll?: () => void;
+  filterByMyself?: boolean;
+  removeSelfFilter?: () => void;
+  selfStudentName?: string;
 }
 
 export default function ActiveFiltersBar({
@@ -33,8 +36,12 @@ export default function ActiveFiltersBar({
   selectedCompanies = [],
   removeCompanyFilter,
   onClearAll,
+  filterByMyself = false,
+  removeSelfFilter,
+  selfStudentName,
 }: ActiveFiltersBarProps) {
   const hasActiveFilters =
+    Boolean(filterByMyself) ||
     selectedMajors.length > 0 ||
     selectedGradDates.length > 0 ||
     selectedSkills.length > 0 ||
@@ -49,6 +56,21 @@ export default function ActiveFiltersBar({
       <span className="text-slate-500 pr-1 select-none font-bold uppercase tracking-wider text-[11px]">
         Active Filters:
       </span>
+
+      {filterByMyself && (
+        <span className="flex items-center gap-1 bg-black text-white px-2.5 py-0.5 rounded-lg shadow-2xs font-semibold animate-fade-in">
+          <span>Only My Profile ({selfStudentName || "Myself"})</span>
+          {removeSelfFilter && (
+            <button
+              onClick={removeSelfFilter}
+              className="text-white/80 hover:text-white font-bold text-xs cursor-pointer ml-1"
+              aria-label="Remove self filter"
+            >
+              ×
+            </button>
+          )}
+        </span>
+      )}
       
       {selectedMajors.map((major) => (
         <span

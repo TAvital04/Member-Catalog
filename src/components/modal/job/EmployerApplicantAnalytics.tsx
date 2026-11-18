@@ -10,7 +10,6 @@ import {
   Clock,
   Briefcase,
   Building2,
-  FolderGit2,
   Award,
 } from "lucide-react";
 import { JobPosting, JobApplication } from "@/data/jobs";
@@ -99,17 +98,6 @@ export default function EmployerApplicantAnalytics({
     return Object.entries(counts)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 10);
-  }, [filteredApps]);
-
-  // Top chapter projects represented
-  const chapterProjects = useMemo(() => {
-    const set = new Set<string>();
-    filteredApps.forEach((app) => {
-      if (app.portfolioSnapshot.mainProjectName) {
-        set.add(app.portfolioSnapshot.mainProjectName);
-      }
-    });
-    return Array.from(set);
   }, [filteredApps]);
 
   // Advanced pipeline conversion %
@@ -458,30 +446,6 @@ export default function EmployerApplicantAnalytics({
               );
             })}
           </div>
-        </div>
-      </div>
-
-      {/* Module 3: Verified Chapter Projects Represented in Pool */}
-      <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-3">
-        <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
-          <div className="flex items-center gap-2">
-            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-              Chapter Projects Represented by Applicants
-            </h4>
-          </div>
-          <span className="text-[11px] text-slate-500">Hands-on Collegiate Engineering Experience</span>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
-          {chapterProjects.map((projectName) => (
-            <div
-              key={projectName}
-              className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center gap-2 text-xs font-semibold text-slate-800 shadow-2xs"
-            >
-              <CheckCircle2 size={13} className="text-black shrink-0" />
-              <span className="truncate">{projectName}</span>
-            </div>
-          ))}
         </div>
       </div>
     </div>

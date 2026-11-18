@@ -31,7 +31,7 @@ export default function ProjectsTab({
             </span>
           )}
         </div>
-        <span className="text-[11px] text-slate-500 font-medium">IEEE UCF Chapter Initiatives</span>
+        <span className="text-[11px] text-slate-500 font-medium">RSO USF Chapter Initiatives</span>
       </div>
 
       {projects.length > 0 ? (

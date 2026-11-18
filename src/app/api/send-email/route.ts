@@ -37,7 +37,7 @@ function checkRateLimit(clientIp: string): boolean {
   return true;
 }
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "ieee@ucf.edu";
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "leadership@rsousf.org";
 
 export async function POST(req: Request) {
   try {
@@ -69,8 +69,12 @@ export async function POST(req: Request) {
     const cleanSenderEmail = senderEmail ? String(senderEmail).replace(/[\r\n]/g, "").trim() : undefined;
     const cleanSenderName = senderName ? String(senderName).replace(/[\r\n]/g, "").trim().slice(0, 100) : "Recruiter";
 
-    // Open relay prevention: Recipient must be a UCF student email or the authorized admin address
-    const isAllowedStudent = cleanTo.endsWith("@knights.ucf.edu") || cleanTo.endsWith("@ucf.edu");
+    // Open relay prevention: Recipient must be a USF or UCF student email or the authorized admin address
+    const isAllowedStudent =
+      cleanTo.endsWith("@usf.edu") ||
+      cleanTo.endsWith("@mail.usf.edu") ||
+      cleanTo.endsWith("@knights.ucf.edu") ||
+      cleanTo.endsWith("@ucf.edu");
     const isAllowedAdmin = cleanTo.toLowerCase() === ADMIN_EMAIL.toLowerCase();
     const isSenderConfirmation = cleanSenderEmail && cleanTo.toLowerCase() === cleanSenderEmail.toLowerCase();
 
@@ -84,14 +88,14 @@ export async function POST(req: Request) {
     const contactDisclaimer =
       `\n\n----------------------------------------\n` +
       `PLEASE NOTE: Do not reply directly to this automated address as inbox replies are unmonitored.\n` +
-      `For inquiries or support, please contact the IEEE UCF administrative team at ${ADMIN_EMAIL}.`;
+      `For inquiries or support, please contact the RSO USF administrative team at ${ADMIN_EMAIL}.`;
 
     const fullMessage = String(message).slice(0, 5000) + contactDisclaimer;
 
     const apiKey = process.env.RESEND_API_KEY;
     if (apiKey) {
       const resend = new Resend(apiKey);
-      const fromAddress = process.env.RESEND_FROM_EMAIL || "IEEE UCF Member Catalog <onboarding@resend.dev>";
+      const fromAddress = process.env.RESEND_FROM_EMAIL || "RSO USF Member Catalog <onboarding@resend.dev>";
 
       const emailResponse = await resend.emails.send({
         from: fromAddress,

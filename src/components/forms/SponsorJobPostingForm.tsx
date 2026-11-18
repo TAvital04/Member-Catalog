@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * @file SponsorJobPostingForm.tsx — Form 4 in IEEE UCF Sequential Form Architecture
+ * @file SponsorJobPostingForm.tsx — RSO USF Job Creation Form
  * @description Dedicated Corporate Sponsor & Employer Job Creation Form.
  * Allows corporate partners and RSO Leadership to publish engineering opportunities
  * linked to verified student skills, with structured bullet-list builders for
@@ -11,22 +11,8 @@
 import React, { useState, useMemo } from "react";
 import {
   X,
-  Briefcase,
-  Building2,
-  MapPin,
-  DollarSign,
-  Plus,
-  Check,
-  Send,
   Loader2,
   AlertCircle,
-  Sparkles,
-  Lock,
-  ListChecks,
-  Gift,
-  Globe,
-  Mail,
-  Trash2,
 } from "lucide-react";
 import { JobPosting, JobTemplate, JOB_TEMPLATES } from "@/data/jobs";
 import { CURRENT_CHAPTER_SPONSORS } from "@/data/sponsors";
@@ -337,57 +323,23 @@ export default function SponsorJobPostingForm({
         {/* Modal Header */}
         <div className="p-6 border-b border-neutral-200 bg-neutral-50/70 shrink-0">
           <div className="flex items-center gap-2 text-xs font-bold text-neutral-500 uppercase tracking-wider mb-1">
-            <Briefcase size={14} className="text-black" />
-            <span>Form 4: Corporate Sponsor Opportunity</span>
-            {isSponsorRole && (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-neutral-100 text-black border border-neutral-300">
-                <Lock size={10} /> Verified Partner Session
-              </span>
-            )}
+            <span>Corporate Sponsor Opportunity</span>
           </div>
           <h2 className="text-xl sm:text-2xl font-black text-black leading-tight">
             Post an Engineering Opportunity
           </h2>
           <p className="text-xs text-neutral-600 mt-1">
-            Publish direct internships, co-ops, or full-time roles matching IEEE UCF member portfolios and workshop-verified skills.
+            Publish direct internships, co-ops, or full-time roles matching RSO USF member portfolios and workshop-verified skills.
           </p>
         </div>
 
         {/* Scrollable Form */}
         <form onSubmit={handleSubmit} noValidate className="overflow-y-auto p-6 flex flex-col gap-6 flex-1 text-black">
-          {/* Quick Role Templates Bar */}
-          <div className="p-4 rounded-xl bg-neutral-100 border border-neutral-300 flex flex-col gap-2 shadow-2xs">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-black flex items-center gap-1.5">
-                <Sparkles size={13} className="text-black" />
-                1-Click Role Presets (Fill in Seconds)
-              </span>
-              <span className="text-[11px] text-neutral-500">Auto-populates requirements & skills</span>
-            </div>
-            <div className="flex flex-wrap gap-2 pt-1">
-              {JOB_TEMPLATES.map((tpl) => (
-                <button
-                  key={tpl.name}
-                  type="button"
-                  onClick={() => handleApplyTemplate(tpl)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold border cursor-pointer transition-all shadow-2xs ${
-                    selectedTemplate === tpl.name
-                      ? "bg-black text-white border-black font-bold"
-                      : "bg-white hover:bg-neutral-200 text-black border-neutral-300"
-                  }`}
-                >
-                  {tpl.name}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Section 1: Company & Recruiter Details */}
+          {/* Section: Company & Recruiter Details */}
           <div className="space-y-4">
             <div className="border-b border-neutral-200 pb-2">
-              <h3 className="text-xs font-bold text-black uppercase tracking-wider flex items-center gap-1.5">
-                <Building2 size={14} />
-                <span>1. Company & Recruiter Details</span>
+              <h3 className="text-xs font-bold text-black uppercase tracking-wider">
+                Company & Recruiter Details
               </h3>
             </div>
 
@@ -396,16 +348,13 @@ export default function SponsorJobPostingForm({
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs font-bold text-black">Company Name *</label>
                 {isSponsorRole ? (
-                  <div className="relative">
-                    <input
-                      type="text"
-                      readOnly
-                      value={companyName}
-                      aria-required="true"
-                      className="w-full text-xs p-2.5 pr-8 rounded-xl bg-neutral-100 border border-neutral-300 text-neutral-800 cursor-not-allowed font-semibold"
-                    />
-                    <Lock size={13} className="absolute right-3 top-3 text-neutral-500" />
-                  </div>
+                  <input
+                    type="text"
+                    readOnly
+                    value={companyName}
+                    aria-required="true"
+                    className="w-full text-xs p-2.5 rounded-xl bg-neutral-100 border border-neutral-300 text-neutral-800 cursor-not-allowed font-semibold"
+                  />
                 ) : (
                   <div className="flex flex-col gap-1">
                     <input
@@ -435,8 +384,8 @@ export default function SponsorJobPostingForm({
 
               {/* Recruiter Email */}
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-black flex items-center gap-1">
-                  <Mail size={12} /> Recruiter Contact Email *
+                <label className="text-xs font-bold text-black">
+                  Recruiter Contact Email *
                 </label>
                 <input
                   type="text"
@@ -465,8 +414,8 @@ export default function SponsorJobPostingForm({
 
               {/* Corporate Careers URL */}
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-black flex items-center gap-1">
-                  <Globe size={12} /> Careers / Application Portal URL
+                <label className="text-xs font-bold text-black">
+                  Careers / Application Portal URL
                 </label>
                 <input
                   type="text"
@@ -479,12 +428,11 @@ export default function SponsorJobPostingForm({
             </div>
           </div>
 
-          {/* Section 2: Role Specifications */}
+          {/* Section: Role Specifications */}
           <div className="space-y-4">
             <div className="border-b border-neutral-200 pb-2">
-              <h3 className="text-xs font-bold text-black uppercase tracking-wider flex items-center gap-1.5">
-                <Briefcase size={14} />
-                <span>2. Role Specifications & Arrangement</span>
+              <h3 className="text-xs font-bold text-black uppercase tracking-wider">
+                Role Specifications & Arrangement
               </h3>
             </div>
 
@@ -504,8 +452,8 @@ export default function SponsorJobPostingForm({
             {/* Location, Location Type, Employment Type, Experience Level */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-black flex items-center gap-1">
-                  <MapPin size={12} /> Location
+                <label className="text-xs font-bold text-black">
+                  Location
                 </label>
                 <input
                   type="text"
@@ -555,8 +503,8 @@ export default function SponsorJobPostingForm({
 
             {/* Salary / Compensation Range */}
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-bold text-black flex items-center gap-1">
-                <DollarSign size={12} /> Compensation / Salary Range
+              <label className="text-xs font-bold text-black">
+                Compensation / Salary Range
               </label>
               <input
                 type="text"
@@ -568,12 +516,11 @@ export default function SponsorJobPostingForm({
             </div>
           </div>
 
-          {/* Section 3: Role Overview & Matching Skills */}
+          {/* Section: Role Overview & Matching Skills */}
           <div className="space-y-4">
             <div className="border-b border-neutral-200 pb-2">
-              <h3 className="text-xs font-bold text-black uppercase tracking-wider flex items-center gap-1.5">
-                <ListChecks size={14} />
-                <span>3. Role Overview & Required Skills</span>
+              <h3 className="text-xs font-bold text-black uppercase tracking-wider">
+                Role Overview & Required Skills
               </h3>
             </div>
 
@@ -602,7 +549,7 @@ export default function SponsorJobPostingForm({
               {/* Selected skills pill box */}
               <div className="flex flex-wrap gap-1.5 min-h-[32px] p-2 rounded-lg bg-neutral-50 border border-neutral-200">
                 {selectedSkills.length === 0 ? (
-                  <span className="text-xs text-neutral-400 italic">No skills selected yet. Click quick tags below or add custom skills.</span>
+                  <span className="text-xs text-neutral-400 italic">No skills selected yet. Click tags below or add custom skills.</span>
                 ) : (
                   selectedSkills.map((skill) => (
                     <span
@@ -632,13 +579,12 @@ export default function SponsorJobPostingForm({
                       key={skill}
                       type="button"
                       onClick={() => toggleSkill(skill)}
-                      className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer shadow-2xs ${
-                        isSelected
+                      className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer shadow-2xs ${isSelected
                           ? "bg-black text-white border border-black font-bold"
                           : "bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-black"
-                      }`}
+                        }`}
                     >
-                      {skill} {isSelected && "✓"}
+                      {skill}
                     </button>
                   );
                 })}
@@ -659,18 +605,17 @@ export default function SponsorJobPostingForm({
                   onClick={() => handleAddCustomSkill()}
                   className="px-4 py-2.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-black text-xs font-bold border border-neutral-300 cursor-pointer"
                 >
-                  + Add Skill
+                  Add Skill
                 </button>
               </div>
             </div>
           </div>
 
-          {/* Section 4: Dynamic Bullet List Builders */}
+          {/* Section: Dynamic Bullet List Builders */}
           <div className="space-y-5">
             <div className="border-b border-neutral-200 pb-2">
-              <h3 className="text-xs font-bold text-black uppercase tracking-wider flex items-center gap-1.5">
-                <ListChecks size={14} />
-                <span>4. Structured Responsibilities, Qualifications & Benefits</span>
+              <h3 className="text-xs font-bold text-black uppercase tracking-wider">
+                Responsibilities, Qualifications & Benefits
               </h3>
             </div>
 
@@ -689,17 +634,14 @@ export default function SponsorJobPostingForm({
                     key={idx}
                     className="p-2.5 rounded-lg bg-neutral-50 border border-neutral-200 flex items-start justify-between gap-3 text-xs"
                   >
-                    <div className="flex items-start gap-2">
-                      <span className="text-neutral-400 font-bold">•</span>
-                      <span className="text-neutral-800">{resp}</span>
-                    </div>
+                    <span className="text-neutral-800">{resp}</span>
                     <button
                       type="button"
                       onClick={() => handleRemoveResponsibility(idx)}
                       aria-label="Remove responsibility"
                       className="text-neutral-400 hover:text-black cursor-pointer shrink-0"
                     >
-                      <Trash2 size={13} />
+                      <X size={13} />
                     </button>
                   </div>
                 ))}
@@ -717,10 +659,9 @@ export default function SponsorJobPostingForm({
                 <button
                   type="button"
                   onClick={() => handleAddResponsibility()}
-                  className="px-3.5 py-2.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-black text-xs font-bold transition-all cursor-pointer flex items-center gap-1 shrink-0"
+                  className="px-3.5 py-2.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-black text-xs font-bold transition-all cursor-pointer shrink-0"
                 >
-                  <Plus size={14} />
-                  <span>Add Item</span>
+                  Add Item
                 </button>
               </div>
             </div>
@@ -740,17 +681,14 @@ export default function SponsorJobPostingForm({
                     key={idx}
                     className="p-2.5 rounded-lg bg-neutral-50 border border-neutral-200 flex items-start justify-between gap-3 text-xs"
                   >
-                    <div className="flex items-start gap-2">
-                      <span className="text-neutral-400 font-bold">•</span>
-                      <span className="text-neutral-800">{req}</span>
-                    </div>
+                    <span className="text-neutral-800">{req}</span>
                     <button
                       type="button"
                       onClick={() => handleRemoveRequirement(idx)}
                       aria-label="Remove requirement"
                       className="text-neutral-400 hover:text-black cursor-pointer shrink-0"
                     >
-                      <Trash2 size={13} />
+                      <X size={13} />
                     </button>
                   </div>
                 ))}
@@ -768,10 +706,9 @@ export default function SponsorJobPostingForm({
                 <button
                   type="button"
                   onClick={() => handleAddRequirement()}
-                  className="px-3.5 py-2.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-black text-xs font-bold transition-all cursor-pointer flex items-center gap-1 shrink-0"
+                  className="px-3.5 py-2.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-black text-xs font-bold transition-all cursor-pointer shrink-0"
                 >
-                  <Plus size={14} />
-                  <span>Add Item</span>
+                  Add Item
                 </button>
               </div>
             </div>
@@ -779,8 +716,8 @@ export default function SponsorJobPostingForm({
             {/* Dynamic Builder: Benefits */}
             <div className="flex flex-col gap-2">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-bold text-black flex items-center gap-1">
-                  <Gift size={13} /> Benefits & Perks ({benefits.length})
+                <label className="text-xs font-bold text-black">
+                  Benefits & Perks ({benefits.length})
                 </label>
                 <span className="text-[11px] text-neutral-500">Optional items</span>
               </div>
@@ -791,17 +728,14 @@ export default function SponsorJobPostingForm({
                     key={idx}
                     className="p-2.5 rounded-lg bg-neutral-50 border border-neutral-200 flex items-start justify-between gap-3 text-xs"
                   >
-                    <div className="flex items-start gap-2">
-                      <span className="text-neutral-400 font-bold">•</span>
-                      <span className="text-neutral-800">{ben}</span>
-                    </div>
+                    <span className="text-neutral-800">{ben}</span>
                     <button
                       type="button"
                       onClick={() => handleRemoveBenefit(idx)}
                       aria-label="Remove benefit"
                       className="text-neutral-400 hover:text-black cursor-pointer shrink-0"
                     >
-                      <Trash2 size={13} />
+                      <X size={13} />
                     </button>
                   </div>
                 ))}
@@ -819,10 +753,9 @@ export default function SponsorJobPostingForm({
                 <button
                   type="button"
                   onClick={() => handleAddBenefit()}
-                  className="px-3.5 py-2.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-black text-xs font-bold transition-all cursor-pointer flex items-center gap-1 shrink-0"
+                  className="px-3.5 py-2.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-black text-xs font-bold transition-all cursor-pointer shrink-0"
                 >
-                  <Plus size={14} />
-                  <span>Add Item</span>
+                  Add Item
                 </button>
               </div>
             </div>
@@ -856,10 +789,7 @@ export default function SponsorJobPostingForm({
                   <span>Publishing Opportunity...</span>
                 </>
               ) : (
-                <>
-                  <Send size={13} />
-                  <span>Publish Opportunity</span>
-                </>
+                <span>Publish Opportunity</span>
               )}
             </button>
           </div>

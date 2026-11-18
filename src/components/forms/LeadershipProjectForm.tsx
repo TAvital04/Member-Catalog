@@ -207,18 +207,13 @@ export default function LeadershipProjectForm({
       >
         {/* Modal Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-200">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-black text-white flex items-center justify-center font-black">
-              <GitBranch size={16} />
-            </div>
-            <div>
-              <h2 id="create-project-title" className="text-base font-black text-black">
-                Create Chapter Project
-              </h2>
-              <p className="text-[11px] text-neutral-500 font-medium">
-                Publish a new hardware or robotics build to the project showcase
-              </p>
-            </div>
+          <div>
+            <h2 id="create-project-title" className="text-base font-black text-black">
+              Create Chapter Project
+            </h2>
+            <p className="text-[11px] text-neutral-500 font-medium">
+              Publish a new hardware or robotics build to the project showcase
+            </p>
           </div>
           <button
             type="button"
@@ -239,11 +234,11 @@ export default function LeadershipProjectForm({
             </div>
           )}
 
-          {/* Section 1: Core Information */}
+          {/* Section: Core Information */}
           <div className="space-y-4">
             <div className="border-b border-neutral-200 pb-2">
               <h3 className="text-xs font-bold text-black uppercase tracking-wider">
-                1. Project Information
+                Project Information
               </h3>
             </div>
 
@@ -304,11 +299,11 @@ export default function LeadershipProjectForm({
             </div>
           </div>
 
-          {/* Section 2: Repositories & Demo Links */}
+          {/* Section: Repositories & Demo Links */}
           <div className="space-y-4">
             <div className="border-b border-neutral-200 pb-2">
               <h3 className="text-xs font-bold text-black uppercase tracking-wider">
-                2. Repositories & Links
+                Repositories & Links
               </h3>
             </div>
 
@@ -321,18 +316,17 @@ export default function LeadershipProjectForm({
                 type="url"
                 value={repositoryUrl}
                 onChange={(e) => setRepositoryUrl(e.target.value)}
-                placeholder="https://github.com/ieee-ucf/..."
+                placeholder="https://github.com/rso-usf/..."
                 className="w-full px-3.5 py-2.5 rounded-lg border border-neutral-300 text-xs text-black placeholder:text-neutral-400 focus:outline-none focus:border-black focus:ring-1 focus:ring-black"
               />
             </div>
           </div>
 
-          {/* Section 3: Key Tech Stack & Tools */}
+          {/* Section: Key Tech Stack & Tools */}
           <div className="space-y-4">
             <div className="flex items-center justify-between border-b border-neutral-200 pb-2">
-              <h3 className="text-xs font-bold text-black uppercase tracking-wider flex items-center gap-1.5">
-                <Wrench size={14} />
-                <span>3. Key Tech Stack & Tools ({tools.length})</span>
+              <h3 className="text-xs font-bold text-black uppercase tracking-wider">
+                Key Tech Stack & Tools ({tools.length})
               </h3>
               <span className="text-[10.5px] text-neutral-500 font-medium">Showcase hardware & software</span>
             </div>
@@ -384,12 +378,11 @@ export default function LeadershipProjectForm({
             </div>
           </div>
 
-          {/* Section 4: Milestone Timeline */}
+          {/* Section: Milestone Timeline */}
           <div className="space-y-4">
             <div className="flex items-center justify-between border-b border-neutral-200 pb-2">
-              <h3 className="text-xs font-bold text-black uppercase tracking-wider flex items-center gap-1.5">
-                <Calendar size={14} />
-                <span>4. Milestone Timeline ({timeline.length})</span>
+              <h3 className="text-xs font-bold text-black uppercase tracking-wider">
+                Milestone Timeline ({timeline.length})
               </h3>
             </div>
 
@@ -462,12 +455,11 @@ export default function LeadershipProjectForm({
             </div>
           </div>
 
-          {/* Section 5: Team & Leads Roster */}
+          {/* Section: Team & Leads Roster */}
           <div className="space-y-4">
             <div className="flex items-center justify-between border-b border-neutral-200 pb-2">
-              <h3 className="text-xs font-bold text-black uppercase tracking-wider flex items-center gap-1.5">
-                <Users size={14} />
-                <span>5. Project Team & Leads Roster ({participants.length})</span>
+              <h3 className="text-xs font-bold text-black uppercase tracking-wider">
+                Project Team & Leads Roster ({participants.length})
               </h3>
               <span className="text-[10.5px] text-neutral-500 font-medium">Assign leads & builders</span>
             </div>

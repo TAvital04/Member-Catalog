@@ -34,9 +34,13 @@ export default function SponsorCard({
         </div>
       }
       badgeRight={
-        <Badge variant="outline" className="flex items-center gap-1 text-[10px] font-bold">
-          <Award size={11} />
-          <span>{sponsor.tier} Partner</span>
+        <Badge
+          variant="outline"
+          size="sm"
+          icon={<Award size={11} className="shrink-0 text-black" />}
+          className="shrink-0 whitespace-nowrap text-[10px] font-bold"
+        >
+          {sponsor.tier} Partner
         </Badge>
       }
       title={sponsor.name}

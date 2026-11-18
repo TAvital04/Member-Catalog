@@ -22,7 +22,7 @@ export interface TooltipProps {
 }
 
 /**
- * Official IEEE UCF Themed Mouse Hover Tooltip Component (`Tooltip`)
+ * Official RSO USF Themed Mouse Hover Tooltip Component (`Tooltip`)
  * Replaces native browser `title="..."` attributes with a unified, theme-aware
  * popover surface (`bg-white border-slate-200 text-slate-900`) that adapts automatically
  * to Light Mode and Dark Warm Navy Mode.

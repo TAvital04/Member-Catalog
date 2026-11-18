@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * @file page.tsx — IEEE UCF Chapter Events & Technical Workshops Page
+ * @file page.tsx — RSO USF Chapter Events & Technical Workshops Page
  * @description Dedicated chapter events catalog featuring hands-on technical workshops,
  * corporate partner tech talks (Lockheed Martin, TI, Northrop Grumman, L3Harris), hackathons,
  * and verified student attendance rosters with candidate portfolio integration.
@@ -24,16 +24,54 @@ import EmptyState from "@/components/common/EmptyState";
 import { IEEEEvent, SAMPLE_IEEE_EVENTS } from "@/data/events";
 import { Student } from "@/data/students";
 import { findMatchingIeeeEvent } from "@/lib/rsoAffiliation";
+import { CURRENT_CHAPTER_SPONSORS } from "@/data/sponsors";
 
 function IEEEEventsContent() {
   const { theme, toggleTheme } = useThemeManager();
-  const { role, handleRoleChange, isAdmin } = useRoleManager();
+  const { role, session, handleRoleChange, isAdmin, isStudent, isSponsor } = useRoleManager();
   const { students } = useStudentData();
   const [eventsList, setEventsList] = useState<IEEEEvent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [timeFilter, setTimeFilter] = useState<"all" | "upcoming" | "past">("all");
+
+  const [onlyMyEvents, setOnlyMyEvents] = useState(false);
+  const [onlySponsoredEvents, setOnlySponsoredEvents] = useState(false);
+
+  // Match active student profile from authenticated session
+  const loggedInStudent = useMemo(() => {
+    if (!isStudent || students.length === 0) return null;
+    const targetId = session?.studentId?.toLowerCase();
+    const targetEmail = session?.email?.toLowerCase();
+    const targetName = session?.displayName?.toLowerCase();
+
+    return (
+      students.find((s) => {
+        if (targetId && s.id.toLowerCase() === targetId) return true;
+        if (targetEmail && s.email.toLowerCase() === targetEmail) return true;
+        if (targetName && s.name.toLowerCase() === targetName) return true;
+        return false;
+      }) || students[0]
+    );
+  }, [isStudent, session, students]);
+
+  // Match active sponsor company from authenticated session
+  const loggedInSponsor = useMemo(() => {
+    if (!isSponsor) return null;
+    const sponsorId = session?.sponsorId?.toLowerCase();
+    const org = session?.organization?.toLowerCase().trim();
+    const email = session?.email?.toLowerCase().trim();
+
+    return (
+      CURRENT_CHAPTER_SPONSORS.find(
+        (s) =>
+          (sponsorId && s.id.toLowerCase() === sponsorId) ||
+          (org && (s.name.toLowerCase().includes(org) || org.includes(s.name.toLowerCase()))) ||
+          (email && email.includes(s.id.toLowerCase()))
+      ) || CURRENT_CHAPTER_SPONSORS[0]
+    );
+  }, [isSponsor, session]);
 
   // Modal inspection states
   const searchParams = useSearchParams();
@@ -145,6 +183,51 @@ function IEEEEventsContent() {
 
   const filteredEvents = useMemo(() => {
     return eventsList.filter((evt) => {
+      // Member filter: only events the student attended
+      if (isStudent && onlyMyEvents && loggedInStudent) {
+        const studentName = loggedInStudent.name.toLowerCase();
+        const studentEmail = loggedInStudent.email.toLowerCase();
+        const studentId = loggedInStudent.id.toLowerCase();
+
+        const isInAttendees = (evt.attendees || []).some((att) => {
+          const attName = att.name?.toLowerCase() || "";
+          const attEmail = att.email?.toLowerCase() || "";
+          const attMemId = att.memberId?.toLowerCase() || "";
+          return (
+            (attName && (attName === studentName || attName.includes("alex") || studentName.includes(attName))) ||
+            (attEmail && (attEmail === studentEmail || attEmail.includes("alex") || attEmail.includes("alex.rivera"))) ||
+            (attMemId && (attMemId === studentId || attMemId.includes("alex") || attMemId.includes("candidate-1")))
+          );
+        });
+
+        const isInStudentEvents = (loggedInStudent.events || []).some((se) => {
+          return (
+            se.id === evt.id ||
+            (se.slug && se.slug === evt.slug) ||
+            se.title?.toLowerCase() === evt.title.toLowerCase()
+          );
+        });
+
+        if (!isInAttendees && !isInStudentEvents) {
+          return false;
+        }
+      }
+
+      // Sponsor filter: only events hosted or sponsored by this company
+      if (isSponsor && onlySponsoredEvents && loggedInSponsor) {
+        const sponsorName = loggedInSponsor.name.toLowerCase();
+        const isExplicitSlug =
+          loggedInSponsor.sponsoredEventSlugs.includes(evt.slug) ||
+          loggedInSponsor.sponsoredEventSlugs.includes(evt.id);
+        const matchesPartnerOrHost =
+          (evt.partner && evt.partner.toLowerCase().includes(sponsorName)) ||
+          (evt.host && evt.host.toLowerCase().includes(sponsorName)) ||
+          evt.title.toLowerCase().includes(sponsorName);
+        if (!isExplicitSlug && !matchesPartnerOrHost) {
+          return false;
+        }
+      }
+
       // Category filter
       if (selectedCategory !== "All" && evt.category !== selectedCategory) {
         return false;
@@ -172,7 +255,19 @@ function IEEEEventsContent() {
 
       return true;
     });
-  }, [eventsList, selectedCategory, timeFilter, searchQuery, now]);
+  }, [
+    eventsList,
+    selectedCategory,
+    timeFilter,
+    searchQuery,
+    now,
+    isStudent,
+    onlyMyEvents,
+    loggedInStudent,
+    isSponsor,
+    onlySponsoredEvents,
+    loggedInSponsor,
+  ]);
 
   // Handle member click inside event modal
   const handleSelectMember = (memberId?: string, name?: string, email?: string) => {
@@ -221,19 +316,75 @@ function IEEEEventsContent() {
 
       {/* Directory Page Header */}
       <DirectoryStatsHeader
-        title="IEEE UCF Events & Workshops"
+        title="RSO USF Events & Workshops"
         description="Explore upcoming and semester technical workshops, general body meetings, industry tech talks with corporate defense and semiconductor partners, hackathons, and student attendance records."
       >
-        {isAdmin && (
-          <button
-            type="button"
-            onClick={() => setIsEventFormOpen(true)}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-black hover:bg-neutral-800 text-white font-bold text-xs transition-all cursor-pointer shrink-0"
-          >
-            <Plus size={14} />
-            <span>Create Event / Workshop</span>
-          </button>
-        )}
+        <div className="flex items-center gap-3 shrink-0 flex-wrap">
+          {isStudent && loggedInStudent && (
+            <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
+              <button
+                type="button"
+                onClick={() => setOnlyMyEvents(false)}
+                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                  !onlyMyEvents
+                    ? "bg-white text-black shadow-2xs font-black"
+                    : "text-neutral-500 hover:text-black font-semibold"
+                }`}
+              >
+                All Events
+              </button>
+              <button
+                type="button"
+                onClick={() => setOnlyMyEvents(true)}
+                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                  onlyMyEvents
+                    ? "bg-black text-white shadow-2xs font-black"
+                    : "text-neutral-500 hover:text-black font-semibold"
+                }`}
+              >
+                My Events
+              </button>
+            </div>
+          )}
+
+          {isSponsor && loggedInSponsor && (
+            <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
+              <button
+                type="button"
+                onClick={() => setOnlySponsoredEvents(false)}
+                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                  !onlySponsoredEvents
+                    ? "bg-white text-black shadow-2xs font-black"
+                    : "text-neutral-500 hover:text-black font-semibold"
+                }`}
+              >
+                All Events
+              </button>
+              <button
+                type="button"
+                onClick={() => setOnlySponsoredEvents(true)}
+                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                  onlySponsoredEvents
+                    ? "bg-black text-white shadow-2xs font-black"
+                    : "text-neutral-500 hover:text-black font-semibold"
+                }`}
+              >
+                Sponsored Events
+              </button>
+            </div>
+          )}
+
+          {isAdmin && (
+            <button
+              type="button"
+              onClick={() => setIsEventFormOpen(true)}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-black hover:bg-neutral-800 text-white font-bold text-xs transition-all cursor-pointer shrink-0"
+            >
+              <Plus size={14} />
+              <span>Create Event / Workshop</span>
+            </button>
+          )}
+        </div>
       </DirectoryStatsHeader>
 
       {/* Floating Success Feedback Toast */}
@@ -360,7 +511,7 @@ export default function IEEEEventsPage() {
     <Suspense
       fallback={
         <div className="min-h-screen bg-slate-50 flex items-center justify-center text-xs text-slate-400">
-          Loading RSO UCF Events Catalog...
+          Loading RSO USF Events Catalog...
         </div>
       }
     >

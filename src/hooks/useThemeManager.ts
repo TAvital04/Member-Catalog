@@ -9,7 +9,7 @@ export function useThemeManager() {
 
   useEffect(() => {
     try {
-      const savedTheme = localStorage.getItem("ieee-theme") as Theme | null;
+      const savedTheme = (localStorage.getItem("rso-theme") || localStorage.getItem("ieee-theme")) as Theme | null;
       if (savedTheme === "light" || savedTheme === "dark") {
         setTheme(savedTheme);
         document.documentElement.setAttribute("data-theme", savedTheme);
@@ -17,7 +17,7 @@ export function useThemeManager() {
         // Default to clean minimalist light mode
         setTheme("light");
         document.documentElement.setAttribute("data-theme", "light");
-        localStorage.setItem("ieee-theme", "light");
+        localStorage.setItem("rso-theme", "light");
       }
     } catch {
       document.documentElement.setAttribute("data-theme", "light");
@@ -28,7 +28,7 @@ export function useThemeManager() {
     setTheme((prevTheme) => {
       const nextTheme = prevTheme === "dark" ? "light" : "dark";
       try {
-        localStorage.setItem("ieee-theme", nextTheme);
+        localStorage.setItem("rso-theme", nextTheme);
       } catch {
         // ignore localStorage errors in private browsing
       }

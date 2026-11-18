@@ -39,14 +39,14 @@ export default function IEEELeadershipSection({
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-base md:text-lg font-black text-black uppercase tracking-wider">
-                IEEE UCF Officers & Committee Leads
+                RSO USF Officers & Committee Leads
               </h2>
               <span className="border border-black bg-white text-black text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">
                 Student Leaders
               </span>
             </div>
             <p className="text-xs text-neutral-600 mt-0.5 leading-relaxed">
-              Student officers, committee leads, and SIG chairs driving IEEE innovation labs, technical build sprints, and peer mentorship.
+              Student officers, committee leads, and SIG chairs driving RSO innovation labs, technical build sprints, and peer mentorship.
             </p>
           </div>
         </div>

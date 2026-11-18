@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useCallback } from "react";
 
-export type UserRole = "standard" | "sponsor" | "admin";
-export type AuthAccountType = "rso_leadership" | "sponsor";
+export type UserRole = "standard" | "sponsor" | "admin" | "student";
+export type AuthAccountType = "rso_leadership" | "sponsor" | "student";
 
 export interface AuthSession {
   accountType: AuthAccountType;
@@ -11,12 +11,14 @@ export interface AuthSession {
   email: string;
   displayName: string;
   organization?: string;
+  sponsorId?: string;
+  studentId?: string;
   signedInAt: string;
 }
 
-const ROLE_STORAGE_KEY = "ieee-role";
-const SESSION_STORAGE_KEY = "ieee-auth-session";
-const AUTH_CHANGE_EVENT = "ieee-auth-change";
+const ROLE_STORAGE_KEY = "rso-role";
+const SESSION_STORAGE_KEY = "rso-auth-session";
+const AUTH_CHANGE_EVENT = "rso-auth-change";
 
 export function useRoleManager(defaultRole: UserRole = "standard") {
   const [role, setRoleState] = useState<UserRole>(defaultRole);
@@ -27,7 +29,7 @@ export function useRoleManager(defaultRole: UserRole = "standard") {
       const savedSessionRaw = localStorage.getItem(SESSION_STORAGE_KEY);
       if (savedSessionRaw) {
         const parsed = JSON.parse(savedSessionRaw) as AuthSession;
-        if (parsed && (parsed.role === "admin" || parsed.role === "sponsor")) {
+        if (parsed && (parsed.role === "admin" || parsed.role === "sponsor" || parsed.role === "student")) {
           setSessionState(parsed);
           setRoleState(parsed.role);
           return;
@@ -36,7 +38,7 @@ export function useRoleManager(defaultRole: UserRole = "standard") {
 
       setSessionState(null);
       const savedRole = localStorage.getItem(ROLE_STORAGE_KEY) as UserRole | null;
-      if (savedRole === "standard" || savedRole === "sponsor" || savedRole === "admin") {
+      if (savedRole === "standard" || savedRole === "sponsor" || savedRole === "admin" || savedRole === "student") {
         setRoleState(savedRole);
       } else {
         setRoleState("standard");
@@ -66,11 +68,28 @@ export function useRoleManager(defaultRole: UserRole = "standard") {
         setSessionState(null);
       } else {
         const nextSession: AuthSession = {
-          accountType: newRole === "admin" ? "rso_leadership" : "sponsor",
+          accountType: newRole === "admin" ? "rso_leadership" : newRole === "sponsor" ? "sponsor" : "student",
           role: newRole,
-          email: newRole === "admin" ? "leadership@ieeeucf.org" : "partner@sponsor.com",
-          displayName: newRole === "admin" ? "RSO Leadership" : "Corporate Sponsor",
-          organization: newRole === "admin" ? "IEEE UCF Executive Board" : "Corporate Partner",
+          email:
+            newRole === "admin"
+              ? "leadership@rsousf.org"
+              : newRole === "sponsor"
+              ? "recruiting@lockheedmartin.com"
+              : "student@usf.edu",
+          displayName:
+            newRole === "admin"
+              ? "RSO Leadership"
+              : newRole === "sponsor"
+              ? "Corporate Sponsor"
+              : "Alex Rivera",
+          organization:
+            newRole === "admin"
+              ? "RSO USF Executive Board"
+              : newRole === "sponsor"
+              ? "Lockheed Martin"
+              : "USF Computer Engineering",
+          sponsorId: newRole === "sponsor" ? "lockheed-martin" : undefined,
+          studentId: newRole === "student" ? "candidate-1" : undefined,
           signedInAt: new Date().toISOString(),
         };
         localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(nextSession));
@@ -110,6 +129,7 @@ export function useRoleManager(defaultRole: UserRole = "standard") {
   const isAdmin = role === "admin";
   const isRsoLeadership = role === "admin";
   const isSponsor = role === "sponsor";
+  const isStudent = role === "student";
   const isAuthenticated = role !== "standard";
 
   return {
@@ -123,6 +143,7 @@ export function useRoleManager(defaultRole: UserRole = "standard") {
     isAdmin,
     isRsoLeadership,
     isSponsor,
+    isStudent,
     isAuthenticated,
   };
 }

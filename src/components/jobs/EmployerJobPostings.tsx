@@ -65,11 +65,10 @@ export default function EmployerJobPostings({
             value={selectedEmployerCompany}
             onChange={(val) => setSelectedEmployerCompany(val)}
             options={[
-              { value: "All", label: `All Companies (${jobsList.length})` },
+              { value: "All", label: "All Companies" },
               ...hiringCompanies.map((c) => ({
                 value: c,
                 label: c,
-                badge: `${jobsList.filter((j) => j.companyName === c).length} roles`,
               })),
             ]}
             className="w-48 sm:w-60"
@@ -121,7 +120,7 @@ export default function EmployerJobPostings({
                 </div>
 
                 <span
-                  className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border shadow-2xs shrink-0 ${
+                  className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border shrink-0 ${
                     job.status === "Active"
                       ? "bg-neutral-100 text-black border-neutral-300 font-bold"
                       : "bg-slate-100 text-slate-600 border-slate-200"
@@ -133,14 +132,14 @@ export default function EmployerJobPostings({
 
               {/* Metadata Specs */}
               <div className="flex flex-wrap items-center gap-2 text-xs text-slate-600">
-                <span className="px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 font-medium shadow-2xs">
+                <span className="px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 font-medium">
                   {job.employmentType}
                 </span>
-                <span className="px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 font-medium shadow-2xs">
+                <span className="px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 font-medium">
                   {job.location} ({job.locationType})
                 </span>
                 {job.salaryRange && (
-                  <span className="px-2.5 py-1 rounded-lg bg-neutral-100 border border-neutral-300 text-black font-semibold shadow-2xs">
+                  <span className="px-2.5 py-1 rounded-lg bg-neutral-100 border border-neutral-300 text-black font-semibold">
                     {job.salaryRange}
                   </span>
                 )}
@@ -160,7 +159,7 @@ export default function EmployerJobPostings({
                 </span>
 
                 {/* Review Applicants Action */}
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-neutral-100 group-hover:bg-neutral-200 border border-neutral-300 text-black text-xs font-bold transition-all shadow-2xs">
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-neutral-100 border border-neutral-300 text-black text-xs font-bold shadow-none">
                   <Users size={13} className="text-black" />
                   <span>Review Applicants ({jobApps.length})</span>
                 </div>

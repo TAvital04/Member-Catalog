@@ -27,8 +27,12 @@ export default function EventCard({
       badge={<Badge variant="neutral">{event.category}</Badge>}
       badgeRight={
         event.partner ? (
-          <Badge variant="outline" className="flex items-center gap-1 text-[10px]">
-            <Building2 size={11} />
+          <Badge
+            variant="outline"
+            size="sm"
+            icon={<Building2 size={11} className="shrink-0" />}
+            className="shrink-0 whitespace-nowrap text-[10px]"
+          >
             <span className="truncate max-w-[120px]">{event.partner}</span>
           </Badge>
         ) : null

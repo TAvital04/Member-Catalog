@@ -11,6 +11,7 @@ import {
   Briefcase,
   Shield,
   Award,
+  GraduationCap,
   Sun,
   Moon,
   Building2,
@@ -39,7 +40,8 @@ export default function DirectoryNavbar({
 
   const isSponsor = role === "sponsor";
   const isRsoLeadership = role === "admin";
-  const isAuthenticated = isSponsor || isRsoLeadership;
+  const isStudent = role === "student";
+  const isAuthenticated = isSponsor || isRsoLeadership || isStudent;
 
   const handleSignOut = () => {
     logout();
@@ -86,10 +88,12 @@ export default function DirectoryNavbar({
       >
         {isRsoLeadership ? (
           <Shield size={13} className="text-black" />
-        ) : (
+        ) : isSponsor ? (
           <Award size={13} className="text-black" />
+        ) : (
+          <GraduationCap size={13} className="text-black" />
         )}
-        <span>{isRsoLeadership ? "RSO Leadership" : "Sponsor"}</span>
+        <span>{isRsoLeadership ? "RSO Leadership" : isSponsor ? "Sponsor" : "Student"}</span>
       </Link>
 
       <button
@@ -134,7 +138,7 @@ export default function DirectoryNavbar({
         <div className="flex items-center justify-between w-full xl:w-auto gap-4">
           <Link href="/" className="flex items-center group cursor-pointer shrink-0 py-0.5 mr-2">
             <span className="text-base font-black text-black tracking-tight transition-colors">
-              IEEE UCF
+              RSO USF
             </span>
           </Link>
 

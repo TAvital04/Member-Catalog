@@ -47,7 +47,7 @@ export default function ProjectSkillsTab({
             Hands-on Learning Pipeline
           </h4>
           <p className="text-xs text-slate-600 mt-1 leading-relaxed">
-            By collaborating on this project, UCF RSO members receive direct mentorship, laboratory training,
+            By collaborating on this project, USF RSO members receive direct mentorship, laboratory training,
             and real-world build experience that mirrors high-reliability defense, aerospace, and robotics engineering standards.
           </p>
         </div>

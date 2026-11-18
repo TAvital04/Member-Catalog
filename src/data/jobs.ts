@@ -1,6 +1,6 @@
 /**
  * @file jobs.ts
- * @description IEEE UCF Corporate Partner & Member Job Postings & Applications Dataset
+ * @description RSO USF Corporate Partner & Member Job Postings & Applications Dataset
  */
 
 export interface JobPosting {
@@ -85,7 +85,7 @@ export const JOB_TEMPLATES: JobTemplate[] = [
       "Pursuing a B.S. or M.S. in Computer Engineering, Electrical Engineering, or Computer Science.",
       "Demonstrated experience with C/C++ in microcontrollers (STM32, ESP32, TI MSP430, or Arduino).",
       "Familiarity with hardware communication protocols (SPI, I2C, UART, CAN).",
-      "Active participant in IEEE, robotics clubs, or collegiate technical projects."
+      "Active participant in RSO, robotics clubs, or collegiate technical projects."
     ],
     benefits: [
       "Competitive hourly wage with housing stipend support for relocation.",
@@ -173,7 +173,7 @@ export const JOB_TEMPLATES: JobTemplate[] = [
     ],
     benefits: [
       "Direct hands-on access to autonomous vehicle test fleets and hardware labs.",
-      "Paid attendance at leading robotics conferences and IEEE workshops.",
+      "Paid attendance at leading robotics conferences and technical workshops.",
       "Housing subsidy and commuter reimbursement."
     ]
   }
@@ -192,7 +192,7 @@ export const SAMPLE_JOB_POSTINGS: JobPosting[] = [
     employmentType: "Internship",
     experienceLevel: "Internship / Student",
     salaryRange: "$32 - $38 / hr",
-    description: "Lockheed Martin Missiles and Fire Control in Orlando, FL is seeking high-achieving IEEE UCF student engineers for a premier Summer 2027 Embedded Software Engineering internship. Work alongside top defense industry aerospace architects building deterministic real-time software.",
+    description: "Lockheed Martin Missiles and Fire Control in Orlando, FL is seeking high-achieving RSO USF student engineers for a premier Summer 2027 Embedded Software Engineering internship. Work alongside top defense industry aerospace architects building deterministic real-time software.",
     responsibilities: [
       "Design and test hard real-time C++ algorithms for guidance, navigation, and control modules.",
       "Integrate hardware-in-the-loop (HIL) simulators and conduct deterministic latency profiling.",
@@ -200,9 +200,9 @@ export const SAMPLE_JOB_POSTINGS: JobPosting[] = [
       "Participate in Agile sprint planning, daily stand-ups, and peer architecture reviews."
     ],
     requirements: [
-      "Active pursuit of B.S. in Computer Engineering or Electrical Engineering at UCF.",
+      "Active pursuit of B.S. in Computer Engineering or Electrical Engineering at USF.",
       "Proficiency in C++ and understanding of Real-Time Operating Systems (RTOS / VxWorks / FreeRTOS).",
-      "Demonstrated collegiate project involvement (IEEE, Robotics, Senior Design).",
+      "Demonstrated collegiate project involvement (RSO, Robotics, Senior Design).",
       "Ability to obtain a U.S. DoD Secret security clearance."
     ],
     benefits: [
@@ -284,7 +284,7 @@ export const SAMPLE_JOB_POSTINGS: JobPosting[] = [
     benefits: [
       "9/80 work schedule (enjoy every second Friday off).",
       "$5,000 relocation assistance + 30 days corporate temporary lodging.",
-      "Tuition assistance for graduate master's degree programs at UCF or FIT."
+      "Tuition assistance for graduate master's degree programs at USF or FIT."
     ],
     skillsRequired: ["RF Engineering", "Wireless Communications", "Antennas", "MATLAB", "Signal Processing"],
     employerEmail: "careers.space@l3harris.com",
@@ -306,7 +306,7 @@ export const SAMPLE_JOB_POSTINGS: JobPosting[] = [
     employmentType: "Co-op",
     experienceLevel: "Internship / Student",
     salaryRange: "$28 - $34 / hr",
-    description: "Siemens Energy Orlando Innovation Center is seeking motivated UCF engineering students for a dynamic 6-month Co-op rotation. You will develop supervisory control algorithms, protective relay settings, and IoT condition-monitoring telemetry for renewable energy sub-stations.",
+    description: "Siemens Energy Orlando Innovation Center is seeking motivated USF engineering students for a dynamic 6-month Co-op rotation. You will develop supervisory control algorithms, protective relay settings, and IoT condition-monitoring telemetry for renewable energy sub-stations.",
     responsibilities: [
       "Configure and test digital substation protection relays (SIPROTEC) using IEC 61850 protocols.",
       "Develop Python automation scripts to simulate grid load flow under fluctuating solar/wind generation.",
@@ -382,15 +382,15 @@ export const SAMPLE_JOB_POSTINGS: JobPosting[] = [
     employmentType: "Internship",
     experienceLevel: "Internship / Student",
     salaryRange: "$26 - $32 / hr",
-    description: "KnightTech Robotics is a venture-backed autonomous delivery robotics startup located right in the UCF Central Florida Research Park. We are recruiting IEEE UCF student roboticists to build ROS2 perception and trajectory planning algorithms.",
+    description: "KnightTech Robotics is a venture-backed autonomous delivery robotics startup located right in the USF Research Park. We are recruiting RSO USF student roboticists to build ROS2 perception and trajectory planning algorithms.",
     responsibilities: [
       "Develop ROS2 navigation and behavior tree packages for autonomous ground robots.",
       "Train edge computer vision models (YOLO / TensorRT) on embedded NVIDIA Jetson platforms.",
       "Perform hardware sensor calibration: LiDAR, RGB-D cameras, and RTK-GPS modules.",
-      "Participate in live outdoor operational testing across UCF main campus."
+      "Participate in live outdoor operational testing across USF main campus."
     ],
     requirements: [
-      "Current UCF engineering student with at least 1 semester remaining.",
+      "Current USF engineering student with at least 1 semester remaining.",
       "Hands-on experience with ROS or ROS2 and Linux environments.",
       "Proficient in Python and modern C++.",
       "Eager to test robotic prototypes in real-world environments."
@@ -417,7 +417,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     jobId: "job-1",
     memberId: "student-1",
     status: "Interviewing",
-    coverNote: "I've spent the last year developing embedded motor control algorithms for the UCF IEEE Autonomous Rover and have hands-on experience with FreeRTOS and STM32.",
+    coverNote: "I've spent the last year developing embedded motor control algorithms for the USF RSO Autonomous Rover and have hands-on experience with FreeRTOS and STM32.",
     portfolioSnapshot: {
       name: "Marcus Vance",
       email: "marcus.vance@knights.ucf.edu",
@@ -495,7 +495,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     jobId: "job-2",
     memberId: "student-2",
     status: "Interviewing",
-    coverNote: "I lead the UCF IEEE PCB Design Workshop and have routed high-speed 4-layer boards in Altium Designer. I would love to contribute to TI's evaluation module reference team.",
+    coverNote: "I lead the USF RSO PCB Design Workshop and have routed high-speed 4-layer boards in Altium Designer. I would love to contribute to TI's evaluation module reference team.",
     portfolioSnapshot: {
       name: "Ethan Wright",
       email: "ewright@knights.ucf.edu",
@@ -514,7 +514,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     jobId: "job-2",
     memberId: "student-6",
     status: "Offered",
-    coverNote: "Senior Electrical Engineer specializing in switched-mode power supplies (SMPS) and GaN FET gate drivers. Winner of the 2025 IEEE SoutheastCon Hardware Competition.",
+    coverNote: "Senior Electrical Engineer specializing in switched-mode power supplies (SMPS) and GaN FET gate drivers. Winner of the 2025 Collegiate Hardware Competition.",
     portfolioSnapshot: {
       name: "Maya Patel",
       email: "mpatel@knights.ucf.edu",
@@ -573,7 +573,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     jobId: "job-3",
     memberId: "student-9",
     status: "Interviewing",
-    coverNote: "Conducted RF anechoic chamber testing for UCF IEEE CubeSat communications subsystem. Proficient in MATLAB antenna modeling and network analyzer calibration.",
+    coverNote: "Conducted RF anechoic chamber testing for USF RSO CubeSat communications subsystem. Proficient in MATLAB antenna modeling and network analyzer calibration.",
     portfolioSnapshot: {
       name: "Jordan Hayes",
       email: "jhayes@knights.ucf.edu",
@@ -651,7 +651,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     jobId: "job-4",
     memberId: "student-6",
     status: "Interviewing",
-    coverNote: "Passionate about renewable energy grid integration. Completed IEEE coursework in transmission line modeling, power flow analysis, and protective relaying.",
+    coverNote: "Passionate about renewable energy grid integration. Completed power systems coursework in transmission line modeling, power flow analysis, and protective relaying.",
     portfolioSnapshot: {
       name: "Maya Patel",
       email: "mpatel@knights.ucf.edu",

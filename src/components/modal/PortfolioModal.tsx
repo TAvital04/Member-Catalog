@@ -14,6 +14,7 @@ import ContactTab from "./tabs/ContactTab";
 import EventModal from "./event/EventModal";
 import { IEEEEvent } from "@/data/events";
 import { findMatchingIeeeEvent } from "@/lib/rsoAffiliation";
+import { UserRole } from "@/hooks/useRoleManager";
 import { X } from "lucide-react";
 
 interface PortfolioModalProps {
@@ -22,7 +23,7 @@ interface PortfolioModalProps {
   onToggleFlag?: (id: string) => void;
   onResolve?: (student: Student) => void;
   adminMode?: boolean;
-  role?: "standard" | "sponsor" | "admin";
+  role?: UserRole;
   onSelectProject?: (projectSlugOrId: string) => void;
   onSelectEvent?: (event: EventEntry | IEEEEvent) => void;
   allStudents?: Student[];

@@ -91,7 +91,7 @@ export default function ProjectCard({
       <div className="flex flex-col gap-2.5">
         <div className="flex items-center justify-between gap-2">
           <span className="bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
-            {isRso ? "IEEE UCF Project" : "Technical Build"}
+            {isRso ? "RSO USF Project" : "Technical Build"}
           </span>
 
           <span className="text-[10px] font-medium text-slate-500 bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-full shrink-0 flex items-center gap-1.5 leading-none">

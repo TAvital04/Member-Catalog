@@ -1,6 +1,6 @@
 # Member Catalog
 
-Welcome to the **Member Catalog** web application for the **IEEE Student Chapter at the University of Central Florida (UCF)**.
+Welcome to the **Member Catalog** web application for **RSO USF** (University of South Florida).
 
 The Member Catalog is an interactive engineering talent directory and chapter portfolio portal featuring verified candidate profiles, project showcases, event attendance histories, and leadership engagement.
 

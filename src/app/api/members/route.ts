@@ -249,7 +249,7 @@ export async function GET(request?: Request) {
           clubs: (Array.isArray(row.clubMemberships) ? row.clubMemberships : [])
             .filter((c: any) => /ieee|rso|institute of electrical/i.test(c.clubName || ""))
             .map((c: any) => ({
-              name: c.clubName || "IEEE UCF Student Chapter",
+              name: c.clubName || "RSO USF Student Chapter",
               title: c.roleTitle || "Active Member",
               description: c.description || "Participating in chapter workshops and build projects.",
               startDate: c.startDate || "2023-08-20",

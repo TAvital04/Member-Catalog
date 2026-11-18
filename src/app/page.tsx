@@ -2,7 +2,7 @@
 
 /**
  * @file page.tsx — Main Student Directory Page
- * @description Primary entry point for the IEEE UCF Member Catalog candidate directory.
+ * @description Primary entry point for the RSO USF Member Catalog candidate directory.
  * Orchestrates multi-parametric filtering, layout toggling, and real-time student profile modals.
  */
 
@@ -27,12 +27,13 @@ import ConfirmDialog from "@/components/dialogs/ConfirmDialog";
 import ToastNotification from "@/components/dialogs/ToastNotification";
 import { Shield } from "lucide-react";
 import { useRoleManager, UserRole } from "@/hooks/useRoleManager";
+import { CURRENT_CHAPTER_SPONSORS, getSponsorRelatedData } from "@/data/sponsors";
 
 export type { UserRole };
 
 function StudentDirectoryContent() {
   const { theme, toggleTheme } = useThemeManager();
-  const { role, setRole, hasFilterPermission, isAdmin } = useRoleManager();
+  const { role, setRole, hasFilterPermission, isAdmin, isStudent, isSponsor, session } = useRoleManager();
   const { students, setStudents, isLoading } = useStudentData();
 
   // Synced directory filter state from URL search params
@@ -65,6 +66,53 @@ function StudentDirectoryContent() {
   const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [onlyLeadersFilter, setOnlyLeadersFilter] = useState(false);
+  const [filterByMyself, setFilterByMyself] = useState(false);
+  const [sponsorInteractingFilter, setSponsorInteractingFilter] = useState(false);
+
+  // Match active student profile from authenticated session
+  const loggedInStudent = React.useMemo(() => {
+    if (!isStudent || students.length === 0) return null;
+    const targetId = session?.studentId?.toLowerCase();
+    const targetEmail = session?.email?.toLowerCase();
+    const targetName = session?.displayName?.toLowerCase();
+
+    return (
+      students.find((s) => {
+        if (targetId && s.id.toLowerCase() === targetId) return true;
+        if (targetEmail && s.email.toLowerCase() === targetEmail) return true;
+        if (targetName && s.name.toLowerCase() === targetName) return true;
+        return false;
+      }) || students[0]
+    );
+  }, [isStudent, session, students]);
+
+  // Match active sponsor company from authenticated session
+  const loggedInSponsor = React.useMemo(() => {
+    if (!isSponsor) return null;
+    const sponsorId = session?.sponsorId?.toLowerCase();
+    const org = session?.organization?.toLowerCase().trim();
+    const email = session?.email?.toLowerCase().trim();
+
+    return (
+      CURRENT_CHAPTER_SPONSORS.find(
+        (s) =>
+          (sponsorId && s.id.toLowerCase() === sponsorId) ||
+          (org && (s.name.toLowerCase().includes(org) || org.includes(s.name.toLowerCase()))) ||
+          (email && email.includes(s.id.toLowerCase()))
+      ) || CURRENT_CHAPTER_SPONSORS[0]
+    );
+  }, [isSponsor, session]);
+
+  const sponsorInteractingStudentIds = React.useMemo(() => {
+    if (!isSponsor || !loggedInSponsor) return new Set<string>();
+    const relData = getSponsorRelatedData(loggedInSponsor);
+    const ids = new Set<string>();
+    relData.interactions.forEach((item) => {
+      if (item.student?.id) ids.add(item.student.id.toLowerCase());
+      if (item.student?.email) ids.add(item.student.email.toLowerCase());
+    });
+    return ids;
+  }, [isSponsor, loggedInSponsor]);
 
   // Custom confirm dialog state
   const [confirmDialog, setConfirmDialog] = useState<{
@@ -97,6 +145,8 @@ function StudentDirectoryContent() {
     if (newRole === "standard") {
       resetAllFilters();
       setOnlyLeadersFilter(false);
+      setFilterByMyself(false);
+      setSponsorInteractingFilter(false);
     }
   };
 
@@ -164,6 +214,25 @@ function StudentDirectoryContent() {
     role,
   });
 
+  // When self-filtering is enabled, narrow directory results strictly to the authenticated student or interacting candidates
+  const displayedStudents = React.useMemo(() => {
+    if (isStudent && filterByMyself && loggedInStudent) {
+      return filteredStudents.filter(
+        (s) =>
+          s.id.toLowerCase() === loggedInStudent.id.toLowerCase() ||
+          s.email.toLowerCase() === loggedInStudent.email.toLowerCase()
+      );
+    }
+    if (isSponsor && sponsorInteractingFilter && sponsorInteractingStudentIds.size > 0) {
+      return filteredStudents.filter(
+        (s) =>
+          sponsorInteractingStudentIds.has(s.id.toLowerCase()) ||
+          sponsorInteractingStudentIds.has(s.email.toLowerCase())
+      );
+    }
+    return filteredStudents;
+  }, [filteredStudents, isStudent, filterByMyself, loggedInStudent, isSponsor, sponsorInteractingFilter, sponsorInteractingStudentIds]);
+
   // Admin profile deletion handler
   const { handleDeleteStudent } = useFlagDialogManager({
     students,
@@ -206,10 +275,66 @@ function StudentDirectoryContent() {
 
       {/* Directory Stats Dashboard Banner */}
       <DirectoryStatsHeader
+        title="Member Candidate Directory"
+        description="Explore USF engineering and computer science student resumes, portfolios, and project achievements."
         totalResumes={totalResumes}
         majorCount={majorCount}
         totalSkillsCount={totalSkillsCount}
-      />
+      >
+        {isStudent && loggedInStudent && (
+          <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
+            <button
+              type="button"
+              onClick={() => setFilterByMyself(false)}
+              className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                !filterByMyself
+                  ? "bg-white text-black shadow-2xs font-black"
+                  : "text-neutral-500 hover:text-black font-semibold"
+              }`}
+            >
+              All Members
+            </button>
+            <button
+              type="button"
+              onClick={() => setFilterByMyself(true)}
+              className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                filterByMyself
+                  ? "bg-black text-white shadow-2xs font-black"
+                  : "text-neutral-500 hover:text-black font-semibold"
+              }`}
+            >
+              Filter by Myself
+            </button>
+          </div>
+        )}
+
+        {isSponsor && loggedInSponsor && (
+          <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
+            <button
+              type="button"
+              onClick={() => setSponsorInteractingFilter(false)}
+              className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                !sponsorInteractingFilter
+                  ? "bg-white text-black shadow-2xs font-black"
+                  : "text-neutral-500 hover:text-black font-semibold"
+              }`}
+            >
+              All Candidates
+            </button>
+            <button
+              type="button"
+              onClick={() => setSponsorInteractingFilter(true)}
+              className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                sponsorInteractingFilter
+                  ? "bg-black text-white shadow-2xs font-black"
+                  : "text-neutral-500 hover:text-black font-semibold"
+              }`}
+            >
+              Interacting Candidates
+            </button>
+          </div>
+        )}
+      </DirectoryStatsHeader>
 
       {/* Secondary Search & Views Utility Header */}
       <DirectoryControlBar
@@ -226,10 +351,10 @@ function StudentDirectoryContent() {
       />
 
       {/* Core Directory Layout (Sidebar + Results) */}
-      <main className={`max-w-7xl w-full mx-auto px-4 flex ${filterLayout === "side" ? "flex-col min-[1056px]:flex-row gap-8" : "flex-col gap-6"} relative z-10`}>
+      <main className={`max-w-7xl w-full mx-auto px-4 flex ${filterLayout === "side" ? "flex-col min-[1056px]:flex-row min-[1056px]:items-start gap-8" : "flex-col gap-6"} relative z-10`}>
         {/* Filters Widget (Top or Side) */}
         {isLoading ? (
-          <div className={`${filterLayout === "side" ? "w-full min-[1056px]:w-72 shrink-0" : "w-full"}`}>
+          <div className={`${filterLayout === "side" ? "w-full min-[1056px]:w-64 shrink-0 min-[1056px]:sticky min-[1056px]:top-20" : "w-full"}`}>
             <FilterSidebarSkeleton />
           </div>
         ) : (
@@ -277,19 +402,28 @@ function StudentDirectoryContent() {
               removeProjectFilter={removeProjectFilter}
               selectedCompanies={selectedCompanies}
               removeCompanyFilter={removeCompanyFilter}
-              onClearAll={resetAllFilters}
+              onClearAll={() => {
+                resetAllFilters();
+                setFilterByMyself(false);
+              }}
+              filterByMyself={filterByMyself}
+              removeSelfFilter={() => setFilterByMyself(false)}
+              selfStudentName={loggedInStudent?.name}
             />
           )}
 
           <StudentDirectoryResults
             isLoading={isLoading}
-            filteredStudents={filteredStudents}
+            filteredStudents={displayedStudents}
             viewMode={viewMode}
             adminMode={adminMode}
             canFilter={hasFilterPermission}
             onSelectStudent={setSelectedStudent}
             onDeleteStudent={handleDeleteStudent}
-            onResetAllFilters={resetAllFilters}
+            onResetAllFilters={() => {
+              resetAllFilters();
+              setFilterByMyself(false);
+            }}
           />
         </div>
       </main>

@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "IEEE UCF Member Catalog",
+  title: "RSO USF Member Catalog",
   description:
-    "Browse, filter, and discover IEEE UCF engineering candidate resumes, technical projects, and career portfolios.",
+    "Browse, filter, and discover RSO USF engineering candidate resumes, technical projects, and career portfolios.",
 };
 
 export default function RootLayout({

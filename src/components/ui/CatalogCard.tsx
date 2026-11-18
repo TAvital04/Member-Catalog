@@ -76,7 +76,7 @@ export function CatalogCard({
           <div className="flex flex-col gap-2 min-w-0">
             <div className="flex items-center justify-between gap-2 min-w-0">
               {badge || <div />}
-              {badgeRight}
+              {badgeRight && <div className="shrink-0 flex items-center">{badgeRight}</div>}
             </div>
             <div className="min-w-0">
               <h3 className="font-bold text-sm sm:text-base text-black leading-tight truncate">
@@ -97,7 +97,7 @@ export function CatalogCard({
                 <h3 className="font-bold text-sm sm:text-base text-black leading-tight truncate">
                   {title}
                 </h3>
-                {badgeRight}
+                {badgeRight && <div className="shrink-0 flex items-center">{badgeRight}</div>}
               </div>
               {subtitle && (
                 <div className="text-[11px] sm:text-xs text-neutral-600 font-medium leading-none mt-1 truncate">

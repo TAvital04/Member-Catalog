@@ -22,7 +22,7 @@ interface UseResolveDialogManagerProps {
   setToastMessage: (msg: string | null) => void;
 }
 
-const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL || "ta616249@ucf.edu";
+const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL || "leadership@rsousf.org";
 
 export function useResolveDialogManager({
   students,
@@ -49,11 +49,11 @@ export function useResolveDialogManager({
   const dispatchUnflagEmails = async (unflaggedStudents: Student[]) => {
     try {
       const emailPromises = unflaggedStudents.flatMap((student) => {
-        const subjectStudent = "[IEEE UCF Member Catalog] Profile Flag Resolved";
-        const bodyStudent = `Hello ${student.name},\n\nGood news! Your candidate profile in the IEEE UCF Member Catalog has been reviewed by an administrator and unflagged.\n\nYour profile is now active and restored to public directory searches.\n\nBest,\nIEEE UCF Admin Team`;
+        const subjectStudent = "[RSO USF Member Catalog] Profile Flag Resolved";
+        const bodyStudent = `Hello ${student.name},\n\nGood news! Your candidate profile in the RSO USF Member Catalog has been reviewed by an administrator and unflagged.\n\nYour profile is now active and restored to public directory searches.\n\nBest,\nRSO USF Admin Team`;
 
         const subjectAdmin = `[Member Catalog Resolution] Candidate Profile Unflagged: ${student.name}`;
-        const bodyAdmin = `Hello Member Catalog Administrator,\n\nCandidate profile for ${student.name} (${student.email}) has been reviewed and unflagged.\n\nThe profile is now restored to active directory searches.\n\nBest,\nUCF Member Catalog System`;
+        const bodyAdmin = `Hello Member Catalog Administrator,\n\nCandidate profile for ${student.name} (${student.email}) has been reviewed and unflagged.\n\nThe profile is now restored to active directory searches.\n\nBest,\nRSO USF Member Catalog System`;
 
         return [
           student.email

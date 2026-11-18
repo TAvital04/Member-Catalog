@@ -150,8 +150,8 @@ export default function SponsorDetailView({
                 <h2 className="text-2xl font-black text-slate-900 tracking-tight">
                   {sponsor.name}
                 </h2>
-                <span className={`text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border shadow-2xs flex items-center gap-1 ${tierColor}`}>
-                  <Award size={11} />
+                <span className={`text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border shadow-2xs inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 ${tierColor}`}>
+                  <Award size={11} className="shrink-0 text-black" />
                   <span>{sponsor.tier} Partner</span>
                 </span>
               </div>
@@ -398,7 +398,7 @@ export default function SponsorDetailView({
             <EmptyState
               icon={<Briefcase size={32} />}
               headline="No active positions listed"
-              subtext="This partner currently does not have active postings on the IEEE UCF jobs board."
+              subtext="This partner currently does not have active postings on the RSO USF jobs board."
             />
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -434,7 +434,7 @@ export default function SponsorDetailView({
                 <Link
                   key={idx}
                   href={`/?skills=${encodeURIComponent(skill)}`}
-                  className="px-3 py-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-xs font-mono font-medium text-black cursor-pointer shadow-2xs inline-flex items-center"
+                  className="px-3 py-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-xs font-semibold text-black cursor-pointer shadow-2xs inline-flex items-center"
                 >
                   <span>{skill}</span>
                 </Link>

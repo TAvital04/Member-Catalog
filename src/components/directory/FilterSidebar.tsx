@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Filter, RotateCcw } from "lucide-react";
 import FilterDropdown from "./FilterDropdown";
 import MajorsFilter from "./filters/MajorsFilter";
@@ -56,7 +56,7 @@ export default function FilterSidebar({
   selectedEvents,
   setSelectedEvents,
   selectedProjects = [],
-  setSelectedProjects = () => {},
+  setSelectedProjects = () => { },
   skillFilterMode,
   setSkillFilterMode,
   availableMajors,
@@ -69,6 +69,14 @@ export default function FilterSidebar({
   onResetAll,
 }: FilterSidebarProps) {
   const [activeDropdown, setActiveDropdown] = useState<"major" | "skill" | "grad" | "event" | "project" | "company" | null>(null);
+  const asideRef = useRef<HTMLElement>(null);
+
+  // Guarantee the outer panel never retains any scroll offset
+  useEffect(() => {
+    if (asideRef.current) {
+      asideRef.current.scrollTop = 0;
+    }
+  });
 
   const activeFiltersCount =
     selectedMajors.length +
@@ -141,9 +149,8 @@ export default function FilterSidebar({
   return (
     <>
       {/* Horizontal Top-bar Dropdowns Layout */}
-      <div className={`w-full flex-col min-[1056px]:flex-row items-stretch min-[1056px]:items-center gap-3 bg-white p-3 rounded-2xl border border-slate-200/90 shadow-2xs relative z-30 ${
-        layout === "side" ? "flex min-[1056px]:hidden" : "flex"
-      }`}>
+      <div className={`w-full flex-col min-[1056px]:flex-row items-stretch min-[1056px]:items-center gap-3 bg-white p-3 rounded-2xl border border-slate-200/90 shadow-2xs relative z-30 ${layout === "side" ? "flex min-[1056px]:hidden" : "flex"
+        }`}>
         {activeDropdown && (
           <div
             className="fixed inset-0 z-20 cursor-default"
@@ -253,118 +260,124 @@ export default function FilterSidebar({
       </div>
 
       {/* Side Layout (Vertical list on larger viewports) */}
-      <aside className={`w-full min-[1056px]:w-64 shrink-0 flex-col gap-5 bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs ${
-        layout === "side" ? "hidden min-[1056px]:flex" : "hidden"
-      }`}>
-        {/* Active Sidebar Filters Header */}
-        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-          <div className="flex items-center gap-2 font-bold text-slate-900 text-sm">
-            <Filter size={16} className="text-slate-400" />
-            <span>Filters</span>
-            {activeFiltersCount > 0 && (
-              <span className="bg-neutral-100 text-black border border-neutral-300 text-[10px] px-2 py-0.2 rounded-full font-bold">
-                {activeFiltersCount}
-              </span>
-            )}
+        <aside
+          key="filter-sidebar-side-panel"
+          ref={asideRef}
+          className={`w-full min-[1056px]:w-64 shrink-0 flex-col bg-white rounded-2xl border border-slate-200 shadow-2xs min-[1056px]:sticky min-[1056px]:top-20 min-[1056px]:self-start min-[1056px]:max-h-[calc(100vh-6rem)] overflow-hidden ${layout === "side" ? "hidden min-[1056px]:flex" : "hidden"
+            }`}
+        >
+          {/* Active Sidebar Filters Header - Fixed at the top of the panel */}
+          <div className="flex items-center justify-between p-4 pb-3 border-b border-slate-100 shrink-0 bg-white">
+            <div className="flex items-center gap-2 font-bold text-slate-900 text-sm">
+              <Filter size={16} className="text-slate-400" />
+              <span>Filters</span>
+              {activeFiltersCount > 0 && (
+                <span className="bg-neutral-100 text-black border border-neutral-300 text-[10px] px-2 py-0.2 rounded-full font-bold">
+                  {activeFiltersCount}
+                </span>
+              )}
+            </div>
+
+            <button
+              onClick={resetAllFilters}
+              className="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-800 transition-colors cursor-pointer font-medium"
+            >
+              <RotateCcw size={12} className="text-slate-400" />
+              <span>Reset All</span>
+            </button>
           </div>
 
-          <button
-            onClick={resetAllFilters}
-            className="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-800 transition-colors cursor-pointer font-medium"
-          >
-            <RotateCcw size={12} className="text-slate-400" />
-            <span>Reset All</span>
-          </button>
-        </div>
+          {/* Scrollable Filters Body */}
+            <div className="flex flex-col gap-5 p-4 pr-3 pt-3 overflow-y-auto overscroll-contain min-h-0 grow">
+              <div className="border-b border-slate-100 pb-4">
+                <FilterDropdown
+                  title="Degree & Major"
+                  isOpen={true}
+                  onToggle={() => { }}
+                  isActive={selectedMajors.length > 0}
+                  layout="side"
+                >
+                  <MajorsFilter
+                    availableMajors={availableMajors}
+                    selectedMajors={selectedMajors}
+                    onMajorToggle={handleMajorToggle}
+                  />
+                </FilterDropdown>
+              </div>
 
-        <div className="border-b border-slate-100 pb-4">
-          <FilterDropdown
-            title="Degree & Major"
-            isOpen={true}
-            onToggle={() => {}}
-            isActive={selectedMajors.length > 0}
-            layout="side"
-          >
-            <MajorsFilter
-              availableMajors={availableMajors}
-              selectedMajors={selectedMajors}
-              onMajorToggle={handleMajorToggle}
-            />
-          </FilterDropdown>
-        </div>
+              <div className="border-b border-slate-100 pb-4">
+                <FilterDropdown
+                  title="Technical Skills"
+                  isOpen={true}
+                  onToggle={() => { }}
+                  isActive={selectedSkills.length > 0}
+                  layout="side"
+                  headerAction={
+                    <SkillModeSelector
+                      skillFilterMode={skillFilterMode}
+                      setSkillFilterMode={setSkillFilterMode}
+                    />
+                  }
+                >
+                  <SkillsFilter
+                    availableSkills={availableSkills}
+                    selectedSkills={selectedSkills}
+                    onSkillToggle={handleSkillToggle}
+                  />
+                </FilterDropdown>
+              </div>
 
-        <div className="border-b border-slate-100 pb-4">
-          <FilterDropdown
-            title="Technical Skills"
-            isOpen={true}
-            onToggle={() => {}}
-            isActive={selectedSkills.length > 0}
-            layout="side"
-            headerAction={
-              <SkillModeSelector
-                skillFilterMode={skillFilterMode}
-                setSkillFilterMode={setSkillFilterMode}
-              />
-            }
-          >
-            <SkillsFilter
-              availableSkills={availableSkills}
-              selectedSkills={selectedSkills}
-              onSkillToggle={handleSkillToggle}
-            />
-          </FilterDropdown>
-        </div>
+              <div className="border-b border-slate-100 pb-4">
+                <FilterDropdown
+                  title="Graduation Date"
+                  isOpen={true}
+                  onToggle={() => { }}
+                  isActive={selectedGradDates.length > 0}
+                  layout="side"
+                >
+                  <GradDatesFilter
+                    availableGradDates={availableGradDates}
+                    selectedGradDates={selectedGradDates}
+                    onGradToggle={handleGradToggle}
+                  />
+                </FilterDropdown>
+              </div>
 
-        <div className="border-b border-slate-100 pb-4">
-          <FilterDropdown
-            title="Graduation Date"
-            isOpen={true}
-            onToggle={() => {}}
-            isActive={selectedGradDates.length > 0}
-            layout="side"
-          >
-            <GradDatesFilter
-              availableGradDates={availableGradDates}
-              selectedGradDates={selectedGradDates}
-              onGradToggle={handleGradToggle}
-            />
-          </FilterDropdown>
-        </div>
+              <div className="border-b border-slate-100 pb-4">
+                <FilterDropdown
+                  title="Events Attended"
+                  isOpen={true}
+                  onToggle={() => { }}
+                  isActive={selectedEvents.length > 0}
+                  layout="side"
+                >
+                  <EventsFilter
+                    availableEvents={availableEvents}
+                    selectedEvents={selectedEvents}
+                    onEventToggle={handleEventToggle}
+                    layout="side"
+                  />
+                </FilterDropdown>
+              </div>
 
-        <div className="border-b border-slate-100 pb-4">
-          <FilterDropdown
-            title="Events Attended"
-            isOpen={true}
-            onToggle={() => {}}
-            isActive={selectedEvents.length > 0}
-            layout="side"
-          >
-            <EventsFilter
-              availableEvents={availableEvents}
-              selectedEvents={selectedEvents}
-              onEventToggle={handleEventToggle}
-              layout="side"
-            />
-          </FilterDropdown>
-        </div>
-
-        <div>
-          <FilterDropdown
-            title="Projects Participated In"
-            isOpen={true}
-            onToggle={() => {}}
-            isActive={selectedProjects.length > 0}
-            layout="side"
-          >
-            <ProjectsFilter
-              availableProjects={availableProjects}
-              selectedProjects={selectedProjects}
-              onProjectToggle={handleProjectToggle}
-              layout="side"
-            />
-          </FilterDropdown>
-        </div>
-      </aside>
-    </>
-  );
+              <div>
+                <FilterDropdown
+                  title="Projects Participated In"
+                  isOpen={true}
+                  onToggle={() => { }}
+                  isActive={selectedProjects.length > 0}
+                  layout="side"
+                >
+                  <ProjectsFilter
+                    availableProjects={availableProjects}
+                    selectedProjects={selectedProjects}
+                    onProjectToggle={handleProjectToggle}
+                    layout="side"
+                  />
+                </FilterDropdown>
+              </div>
+            </div>
+        </aside>
+      </>
+      );
 }

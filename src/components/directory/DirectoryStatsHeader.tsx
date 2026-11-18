@@ -18,7 +18,7 @@ export interface DirectoryStatsHeaderProps {
  */
 export default function DirectoryStatsHeader({
   title = "Member Candidate Directory",
-  description = "Explore UCF engineering and computer science student resumes, portfolios, and project achievements.",
+  description = "Explore USF engineering and computer science student resumes, portfolios, and project achievements.",
   children,
 }: DirectoryStatsHeaderProps) {
   return (

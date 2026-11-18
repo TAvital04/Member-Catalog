@@ -30,7 +30,7 @@ interface CustomDropdownProps {
 }
 
 /**
- * Official IEEE UCF Custom Dropdown Component
+ * Official RSO USF Custom Dropdown Component
  * Modern, accessible replacement for native browser `<select>` boxes.
  * Supports `variant="input"` to match adjacent form `<input>` height, width, and surface colors.
  */

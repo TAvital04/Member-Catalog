@@ -87,7 +87,7 @@ export default function StudentLowerInfo({
           {leadershipRole && (
             <div className="bg-white border border-neutral-300 rounded-xl px-3.5 py-2.5 text-xs font-bold flex items-center gap-2.5 shadow-2xs">
               <div>
-                <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider block leading-none mb-1">IEEE UCF Chapter Leadership</span>
+                <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider block leading-none mb-1">RSO USF Chapter Leadership</span>
                 <span className="leading-tight font-extrabold text-black">{leadershipRole}</span>
               </div>
             </div>
@@ -120,7 +120,7 @@ export default function StudentLowerInfo({
             >
               <div className="min-w-0">
                 <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider block leading-none mb-1">
-                  Primary IEEE Project Affiliation
+                  Primary RSO Project Affiliation
                 </span>
                 <span className="leading-tight font-extrabold text-black truncate block">
                   {student.mainProjectName}

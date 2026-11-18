@@ -23,7 +23,7 @@ describe("Corporate Sponsors Hub & Initiatives Page", () => {
 
     expect(screen.getByText("Corporate Sponsors & Industry Initiatives")).toBeInTheDocument();
     expect(
-      screen.getByText(/Explore active corporate partners supporting IEEE UCF build projects/i)
+      screen.getByText(/Explore active corporate partners supporting RSO USF build projects/i)
     ).toBeInTheDocument();
 
     // Verify all premier sponsors are displayed

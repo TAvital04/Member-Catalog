@@ -132,7 +132,7 @@ export default function EventModal({
         {event.partner ? (
           <Subheading variant="modal">Co-hosted with {event.partner}</Subheading>
         ) : (
-          <Subheading variant="modal">IEEE UCF Technical Chapter Workshop</Subheading>
+          <Subheading variant="modal">RSO USF Technical Chapter Workshop</Subheading>
         )}
       </div>
 

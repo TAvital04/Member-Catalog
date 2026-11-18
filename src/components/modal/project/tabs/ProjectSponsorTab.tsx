@@ -31,7 +31,7 @@ export default function ProjectSponsorTab({ project }: ProjectSponsorTabProps) {
 
     try {
       const payload = {
-        to: "ta616249@ucf.edu",
+        to: "sponsorship@rsousf.org",
         recipientType: "admin",
         subject: `[Project Sponsorship Inquiry] ${project.title} - ${sponsorCompany || sponsorName}`,
         senderName: sponsorName,
@@ -81,7 +81,7 @@ ${message || "No additional notes provided."}`,
         </div>
         <p className="text-xs text-slate-700 leading-relaxed font-sans">
           {sponsorship?.overview ||
-            "Sponsoring this IEEE UCF student initiative directly accelerates hands-on engineering development, hardware fabrication, and technical competition participation."}
+            "Sponsoring this RSO USF student initiative directly accelerates hands-on engineering development, hardware fabrication, and technical competition participation."}
         </p>
       </div>
 
@@ -149,14 +149,14 @@ ${message || "No additional notes provided."}`,
           <div className="p-3.5 rounded-xl bg-neutral-100 border border-neutral-300 text-black text-xs flex items-center gap-2">
             <CheckCircle2 size={16} className="text-black shrink-0" />
             <span>
-              Thank you for supporting student innovation at UCF! Our project team and corporate relations chairs will respond within 24 hours.
+              Thank you for supporting student innovation at USF! Our project team and corporate relations chairs will respond within 24 hours.
             </span>
           </div>
         ) : (
           <form onSubmit={handleSubmitPledge} noValidate className="flex flex-col gap-3">
             {submissionStatus === "error" && (
               <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs">
-                Failed to submit sponsorship inquiry. Please try again or email ieee@ucf.edu directly.
+                Failed to submit sponsorship inquiry. Please try again or email leadership@rsousf.org directly.
               </div>
             )}
 
@@ -241,7 +241,7 @@ ${message || "No additional notes provided."}`,
 
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-1">
               <span className="text-[11px] text-slate-500">
-                Routed directly to IEEE UCF leadership.
+                Routed directly to RSO USF leadership.
               </span>
               <button
                 type="submit"

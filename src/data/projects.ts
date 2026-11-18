@@ -1,6 +1,6 @@
 /**
  * @file projects.ts
- * @description Domain models, interfaces, and sample datasets for IEEE UCF Chapter Projects.
+ * @description Domain models, interfaces, and sample datasets for RSO USF Chapter Projects.
  * Includes tooling definitions, milestone timelines, participant rosters, skills taught,
  * and sponsorship benefits for corporate and individual partners.
  */
@@ -67,8 +67,8 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
     description: "The RSO Micromouse is an autonomous, battery-powered robotics competition platform. The robot navigates and maps an unknown 16x16 maze, computes the optimal shortest path using flood-fill and A* graph traversal, and executes high-speed runs with active yaw stabilization and PID motor velocity control.",
     category: "Robotics",
     status: "Active",
-    repositoryUrl: "https://github.com/ieee-ucf/micromouse-maze-solver",
-    demoUrl: "https://ieee.ucf.edu/projects/micromouse",
+    repositoryUrl: "https://github.com/rso-usf/micromouse-maze-solver",
+    demoUrl: "https://rso.usf.edu/projects/micromouse",
     active: true,
     tools: [
       { name: "STM32F4 Cortex-M4", category: "Embedded & Firmware" },
@@ -136,7 +136,7 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
         },
         {
           title: "Dedicated Technical Tech-Talk & Recruiting Session",
-          description: "Host an exclusive 1-hour presentation with RSO UCF members on campus or virtually during the academic semester.",
+          description: "Host an exclusive 1-hour presentation with RSO USF members on campus or virtually during the academic semester.",
           category: "Recruiting & Talent",
         },
         {
@@ -182,11 +182,11 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
     title: "RSO Solar Knight Racing ESC",
     slug: "ieee-solar-knight-racing-esc",
     tagline: "400V high-efficiency silicon-carbide (SiC) motor inverter engineered for maximum efficiency solar endurance racing.",
-    description: "The Solar Knight Electronic Speed Controller (ESC) is a custom three-phase inverter switching up to 400V DC bus voltages at 100A peak current with >98.5% electrical efficiency. Designed in collaboration with UCF Solar Car, it uses Silicon Carbide (SiC) MOSFETs, isolated gate drivers, and CAN bus telemetry.",
+    description: "The Solar Knight Electronic Speed Controller (ESC) is a custom three-phase inverter switching up to 400V DC bus voltages at 100A peak current with >98.5% electrical efficiency. Designed in collaboration with USF Solar Car, it uses Silicon Carbide (SiC) MOSFETs, isolated gate drivers, and CAN bus telemetry.",
     category: "Power",
     status: "Active",
-    repositoryUrl: "https://github.com/ieee-ucf/solar-knight-esc",
-    demoUrl: "https://ieee.ucf.edu/projects/solar-esc",
+    repositoryUrl: "https://github.com/rso-usf/solar-knight-esc",
+    demoUrl: "https://rso.usf.edu/projects/solar-esc",
     active: true,
     tools: [
       { name: "Altium Designer 24", category: "Hardware & PCB" },
@@ -232,7 +232,7 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
       "Thermal Resistance Calculations & Heatsink Sizing",
     ],
     sponsorshipInfo: {
-      overview: "Support high-voltage power electronics research and race-ready student engineering at UCF.",
+      overview: "Support high-voltage power electronics research and race-ready student engineering at USF.",
       benefits: [
         {
           title: "Branding on Solar Vehicle Exterior Body & Inverter Enclosure",
@@ -253,7 +253,7 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
         },
         {
           title: "Private Vehicle Demo Day & Track Testing Invitation",
-          description: "VIP access to witness dynamometer testing and track days at the UCF engineering testing grounds.",
+          description: "VIP access to witness dynamometer testing and track days at the USF engineering testing grounds.",
           category: "Event & Community",
         },
       ],
@@ -290,7 +290,7 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
     description: "The RSO Quadcopter Swarm project develops low-cost autonomous micro aerial vehicles that communicate peer-to-peer over an ad-hoc 802.11s mesh network. The drones perform collaborative spatial exploration, vision-based obstacle avoidance using Google Coral Edge TPUs, and decentralized target tracking.",
     category: "Autonomous Systems",
     status: "Active",
-    repositoryUrl: "https://github.com/ieee-ucf/quadcopter-swarm",
+    repositoryUrl: "https://github.com/rso-usf/quadcopter-swarm",
     active: true,
     tools: [
       { name: "PX4 Autopilot & MAVLink", category: "Embedded & Firmware" },
@@ -391,10 +391,10 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
     title: "RSO Smart Campus IoT Beacon Network",
     slug: "ieee-smart-campus-iot-beacon-network",
     tagline: "Low-power Bluetooth 5.4 telemetry nodes with AES-256 encryption providing campus spatial analytics and event tracking.",
-    description: "The Smart Campus IoT Beacon Network is a multi-node sensor mesh deployed across UCF engineering buildings. Featuring solar energy harvesting and coin-cell operation, each beacon broadcasts encrypted indoor environmental metrics, ambient noise levels, and room occupancy heatmaps to a central Next.js dashboard.",
+    description: "The Smart Campus IoT Beacon Network is a multi-node sensor mesh deployed across USF engineering buildings. Featuring solar energy harvesting and coin-cell operation, each beacon broadcasts encrypted indoor environmental metrics, ambient noise levels, and room occupancy heatmaps to a central Next.js dashboard.",
     category: "IoT & Networking",
     status: "Active",
-    repositoryUrl: "https://github.com/ieee-ucf/smart-campus-iot",
+    repositoryUrl: "https://github.com/rso-usf/smart-campus-iot",
     active: true,
     tools: [
       { name: "Nordic nRF52840 SoC", category: "Embedded & Firmware" },
@@ -427,7 +427,7 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
       {
         date: "Apr 2025",
         title: "Campus Web Dashboard & Public API Launch",
-        description: "Publish live open data portal for UCF student researchers and building facilities.",
+        description: "Publish live open data portal for USF student researchers and building facilities.",
         status: "upcoming",
       },
     ],
@@ -440,11 +440,11 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
       "Rapid Prototyping & Enclosure 3D Printing for Deployments",
     ],
     sponsorshipInfo: {
-      overview: "Enable campus-wide environmental and spatial analytics deployed throughout UCF engineering facilities.",
+      overview: "Enable campus-wide environmental and spatial analytics deployed throughout USF engineering facilities.",
       benefits: [
         {
           title: "Branding on Campus Beacon Enclosures",
-          description: "Company logo engraved on all physical beacon enclosures mounted throughout UCF engineering corridors.",
+          description: "Company logo engraved on all physical beacon enclosures mounted throughout USF engineering corridors.",
           category: "Brand Placement",
           highlight: true,
         },
@@ -483,10 +483,10 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
     title: "RSO PCB Design & Surface Mount Workshop Series",
     slug: "ieee-pcb-design-surface-mount-workshop",
     tagline: "Interactive electronic badges designed for semester workshops teaching 200+ students CAD layout and SMD soldering.",
-    description: "This initiative designs and produces interactive, programmable electronic conference badges given to UCF engineering students. Each participant learns schematic design in KiCAD, trace routing, component selection, hands-on hot air/reflow soldering, and flashes their first custom firmware via USB-C.",
+    description: "This initiative designs and produces interactive, programmable electronic conference badges given to USF engineering students. Each participant learns schematic design in KiCAD, trace routing, component selection, hands-on hot air/reflow soldering, and flashes their first custom firmware via USB-C.",
     category: "Hardware",
     status: "Active",
-    repositoryUrl: "https://github.com/ieee-ucf/pcb-workshop-badge",
+    repositoryUrl: "https://github.com/rso-usf/pcb-workshop-badge",
     active: true,
     tools: [
       { name: "KiCAD 8.0 EDA", category: "Hardware & PCB" },
@@ -507,7 +507,7 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
       {
         date: "Nov 2024",
         title: "100-Badge Fabrication Batch & Stencil QA",
-        description: "Fabricated batch of matte-black and gold ENIG badges with custom UCF Pegasus art.",
+        description: "Fabricated batch of matte-black and gold ENIG badges with custom USF Bulls art.",
         status: "completed",
       },
       {
@@ -532,7 +532,7 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
       "Hardware Debugging with Digital Multimeters",
     ],
     sponsorshipInfo: {
-      overview: "Directly sponsor hands-on hardware engineering education for over 200 UCF engineering undergraduates each semester.",
+      overview: "Directly sponsor hands-on hardware engineering education for over 200 USF engineering undergraduates each semester.",
       benefits: [
         {
           title: "Copper / Silkscreen Logo on 200+ Student Badges",
@@ -580,7 +580,7 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
     title: "CubeSat UHF/VHF Ground Station Transceiver",
     slug: "cubesat-uhf-vhf-ground-station-transceiver",
     tagline: "Automated satellite tracking antenna pedestal and software-defined radio transceiver communicating with low-Earth orbit CubeSats.",
-    description: "Developed in collaboration with Students for the Exploration and Development of Space (SEDS UCF), this automated ground station tracks amateur radio CubeSats passing overhead. Integrates an Az/El dual-axis rotator with GNU Radio DSP chains for real-time telemetry demodulation.",
+    description: "Developed in collaboration with Students for the Exploration and Development of Space (SEDS USF), this automated ground station tracks amateur radio CubeSats passing overhead. Integrates an Az/El dual-axis rotator with GNU Radio DSP chains for real-time telemetry demodulation.",
     category: "Autonomous Systems",
     status: "Active",
     active: true,
@@ -675,7 +675,7 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
     description: "Submersible multi-thruster driver board featuring waterproof potted enclosures, current sensing, and ROS2 motor control nodes for autonomous underwater navigation and depth holding.",
     category: "Robotics",
     status: "Active",
-    repositoryUrl: "https://github.com/ieee-ucf/auv-thruster-control",
+    repositoryUrl: "https://github.com/rso-usf/auv-thruster-control",
     active: true,
     tools: [],
     timeline: [
@@ -707,7 +707,7 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
     description: "A hardware-accelerated network pipeline receiving UDP/IP multicast market data, parsing FIX/FAST financial protocol packets directly in silicon logic, and executing risk check validations within 80 nanoseconds of wire arrival.",
     category: "Hardware",
     status: "Active",
-    repositoryUrl: "https://github.com/ieee-ucf/fpga-packet-filter",
+    repositoryUrl: "https://github.com/rso-usf/fpga-packet-filter",
     active: true,
     tools: [
       { name: "Xilinx Vivado ML", category: "Hardware & PCB" },
@@ -740,8 +740,8 @@ export const SAMPLE_IEEE_PROJECTS: IEEEProject[] = [
     description: "Event badge firmware enabling 800+ hackathon attendees to exchange digital contact information, play interactive trivia games, and verify workshop check-ins via high-frequency NFC.",
     category: "Embedded & Firmware",
     status: "Completed",
-    repositoryUrl: "https://github.com/ieee-ucf/knighthacks-nfc-badge",
-    demoUrl: "https://ieee.ucf.edu/badges/knighthacks2024",
+    repositoryUrl: "https://github.com/rso-usf/knighthacks-nfc-badge",
+    demoUrl: "https://rso.usf.edu/badges/knighthacks2024",
     active: true,
     tools: [
       { name: "ESP32-S3 Dual-Core", category: "Embedded & Firmware" },

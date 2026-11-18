@@ -78,7 +78,7 @@ export function getPrimaryEducation(student: Student): EducationEntry | null {
  */
 export function getIeeeLeadershipRole(student: Student): string | null {
   if (!student.clubs || student.clubs.length === 0) return null;
-  const ieeeClub = student.clubs.find((c) => /ieee|institute of electrical/i.test(c.name));
+  const ieeeClub = student.clubs.find((c) => /rso|ieee|institute of electrical/i.test(c.name));
   return ieeeClub ? ieeeClub.title : null;
 }
 

@@ -1,7 +1,7 @@
 /**
  * @file route.ts — GET & POST /api/projects
  * @description Standard REST API endpoint for chapter projects matching the /projects page nomenclature.
- * Seamlessly delivers IEEE UCF projects with team rosters and tooling specifications, and allows RSO Leadership
+ * Seamlessly delivers RSO USF projects with team rosters and tooling specifications, and allows RSO Leadership
  * to publish new chapter build projects and assign team members.
  */
 
@@ -191,7 +191,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const cleanTagline = tagline ? String(tagline).trim() : `${cleanTitle} — IEEE UCF Engineering Build Initiative`;
+    const cleanTagline = tagline ? String(tagline).trim() : `${cleanTitle} — RSO USF Engineering Build Initiative`;
     const cleanSlug = cleanTitle
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")

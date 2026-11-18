@@ -195,34 +195,12 @@ export default function QuickJobPostModal({
             Post an Engineering Opportunity
           </h2>
           <p className="text-xs text-slate-500 mt-1">
-            Pick a quick 1-click template or enter role specs to source IEEE UCF candidates.
+            Enter role specs to source RSO USF candidates.
           </p>
         </div>
 
         {/* Scrollable Form */}
         <form onSubmit={handleSubmit} noValidate className="overflow-y-auto p-6 flex flex-col gap-5 flex-1">
-          {/* Quick Templates Bar */}
-          <div className="p-4 rounded-xl bg-neutral-100 border border-neutral-300 flex flex-col gap-2 shadow-2xs">
-            <div className="flex items-center gap-1.5 text-xs font-bold text-black">
-              <span>1-Click Role Presets (Fill in Seconds)</span>
-            </div>
-            <div className="flex flex-wrap gap-2 pt-1">
-              {JOB_TEMPLATES.map((tpl) => (
-                <button
-                  key={tpl.name}
-                  type="button"
-                  onClick={() => handleApplyTemplate(tpl)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold border cursor-pointer shadow-2xs ${selectedTemplate === tpl.name
-                    ? "bg-black text-white border-black font-bold"
-                    : "bg-white hover:bg-neutral-200 text-black border-neutral-300"
-                    }`}
-                >
-                  {tpl.name}
-                </button>
-              ))}
-            </div>
-          </div>
-
           {/* Company & Email row */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1.5">
@@ -339,7 +317,7 @@ export default function QuickJobPostModal({
                       : "bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-black"
                       }`}
                   >
-                    {skill} {isSelected && "✓"}
+                    {skill}
                   </button>
                 );
               })}

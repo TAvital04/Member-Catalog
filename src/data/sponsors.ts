@@ -1,7 +1,7 @@
 /**
- * @file sponsors.ts — Current IEEE UCF Corporate Sponsors & Industry Partners
+ * @file sponsors.ts — Current RSO USF Corporate Sponsors & Industry Partners
  * @description Comprehensive domain models and data for corporate partners supporting
- * IEEE UCF build projects, workshops, job recruiting pipelines, and student equipment grants.
+ * RSO USF build projects, workshops, job recruiting pipelines, and student equipment grants.
  */
 
 import { IEEEProject, SAMPLE_IEEE_PROJECTS } from "./projects";
@@ -43,7 +43,7 @@ export const CURRENT_CHAPTER_SPONSORS: ChapterSponsor[] = [
     tier: "Platinum",
     tagline: "Aerospace, Defense & Radar Engineering",
     description:
-      "Global security and aerospace leader headquartered with major Missiles and Fire Control operations in Orlando, FL. Lockheed Martin actively partners with IEEE UCF to mentor hardware teams, host defense electronics tech talks, and recruit top embedded systems talent.",
+      "Global security and aerospace leader headquartered with major Missiles and Fire Control operations in Orlando, FL. Lockheed Martin actively partners with RSO USF to mentor hardware teams, host defense electronics tech talks, and recruit top embedded systems talent.",
     logoText: "LM",
     website: "https://www.lockheedmartin.com",
     careersUrl: "https://www.lockheedmartinjobs.com",
@@ -54,19 +54,19 @@ export const CURRENT_CHAPTER_SPONSORS: ChapterSponsor[] = [
     initiatives: [
       {
         title: "Defense Electronics & Radar Tech Talks",
-        description: "Senior radar architects host deep dives on AESA beamforming, RF signal chains, and real-time DSP pipelines for UCF engineering students.",
+        description: "Senior radar architects host deep dives on AESA beamforming, RF signal chains, and real-time DSP pipelines for USF engineering students.",
         category: "Technical Workshops",
         metrics: "120+ attendees annually",
       },
       {
         title: "Autonomous Systems & Robotics Sponsorship",
-        description: "Equips the IEEE UCF autonomous robotics teams with flight hardware, telemetry testbeds, and FPGA development kits.",
+        description: "Equips the RSO USF autonomous robotics teams with flight hardware, telemetry testbeds, and FPGA development kits.",
         category: "Lab & Hardware Grants",
         metrics: "$15,000 in hardware grants",
       },
       {
         title: "Direct Defense Internship Pipeline",
-        description: "Priority resume reviews and fast-track interviews for UCF IEEE students targeting Summer Embedded Software and RF engineering internships.",
+        description: "Priority resume reviews and fast-track interviews for USF RSO students targeting Summer Embedded Software and RF engineering internships.",
         category: "Recruiting & Careers",
         metrics: "18 interns hired in last 2 years",
       },
@@ -82,7 +82,7 @@ export const CURRENT_CHAPTER_SPONSORS: ChapterSponsor[] = [
     tier: "Platinum",
     tagline: "Semiconductors & Embedded Processing",
     description:
-      "Pioneer in analog IC design, power management semiconductors, and low-power embedded processors. TI supports the IEEE UCF hardware labs with precision bench instrumentation, reference silicon, and hands-on power electronics workshops.",
+      "Pioneer in analog IC design, power management semiconductors, and low-power embedded processors. TI supports the RSO USF hardware labs with precision bench instrumentation, reference silicon, and hands-on power electronics workshops.",
     logoText: "TI",
     website: "https://www.ti.com",
     careersUrl: "https://careers.ti.com",
@@ -107,7 +107,7 @@ export const CURRENT_CHAPTER_SPONSORS: ChapterSponsor[] = [
         title: "Analog & Power Applications Co-Op Pipeline",
         description: "Recruits student co-ops and full-time applications engineers for high-voltage power conversion and signal chain design.",
         category: "Recruiting & Careers",
-        metrics: "Top hiring partner for UCF EE",
+        metrics: "Top hiring partner for USF EE",
       },
     ],
     sponsoredProjectSlugs: ["ieee-sic-high-efficiency-power-inverter", "ieee-micromouse-autonomous-maze-solver"],
@@ -138,13 +138,13 @@ export const CURRENT_CHAPTER_SPONSORS: ChapterSponsor[] = [
       },
       {
         title: "IoT Environmental Sensor Mesh Sponsorship",
-        description: "Underwrites low-power LoRa mesh sensor development across the UCF campus for distributed environmental monitoring.",
+        description: "Underwrites low-power LoRa mesh sensor development across the USF campus for distributed environmental monitoring.",
         category: "Lab & Hardware Grants",
         metrics: "$8,000 grant funding",
       },
       {
         title: "Space Coast Avionics Co-Op Program",
-        description: "Fast-track interview pipelines for UCF electrical and computer engineers for multi-term aerospace engineering co-ops in Melbourne.",
+        description: "Fast-track interview pipelines for USF electrical and computer engineers for multi-term aerospace engineering co-ops in Melbourne.",
         category: "Recruiting & Careers",
         metrics: "12 co-ops placed annually",
       },
@@ -160,7 +160,7 @@ export const CURRENT_CHAPTER_SPONSORS: ChapterSponsor[] = [
     tier: "Gold",
     tagline: "Autonomous Systems & Space Payloads",
     description:
-      "Premier aerospace and defense systems provider advancing autonomous aircraft, orbital spacecraft, and cyber defense. Northrop Grumman mentors UCF competition teams and delivers hands-on embedded security seminars.",
+      "Premier aerospace and defense systems provider advancing autonomous aircraft, orbital spacecraft, and cyber defense. Northrop Grumman mentors USF competition teams and delivers hands-on embedded security seminars.",
     logoText: "NG",
     website: "https://www.northropgrumman.com",
     careersUrl: "https://www.northropgrumman.com/careers",
@@ -380,7 +380,7 @@ export function getSponsorRelatedData(
       gradDate: appMatch?.portfolioSnapshot?.gradDate || "May 2026",
       status: "Seeking Internship",
       flagged: false,
-      bio: appMatch?.portfolioSnapshot?.bio || "IEEE UCF student engineer.",
+      bio: appMatch?.portfolioSnapshot?.bio || "RSO USF student engineer.",
       skills: mergedSkills,
       links: [],
       education: [],
@@ -419,7 +419,7 @@ export function getSponsorRelatedData(
       const student = resolveStudent(
         app.memberId,
         app.portfolioSnapshot?.name || "Candidate",
-        app.portfolioSnapshot?.email || "candidate@knights.ucf.edu",
+        app.portfolioSnapshot?.email || "candidate@usf.edu",
         app.portfolioSnapshot?.major || "Engineering",
         []
       );

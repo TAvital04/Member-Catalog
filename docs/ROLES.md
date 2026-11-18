@@ -1,4 +1,4 @@
-# IEEE UCF Member Catalog — Role-Based Access & Sequential Form Implementation Plan (`ROLES.md`)
+# RSO USF Member Catalog — Role-Based Access & Sequential Form Implementation Plan (`ROLES.md`)
 
 ## 1. Classic Database Architecture: Standard PostgreSQL (`node-postgres`)
 
@@ -17,9 +17,9 @@ The Member Catalog defines two authenticated roles accessible via [`/login`](../
 
 | Role Identifier | Display Name | Who Uses It | Form & Management Permissions |
 | :--- | :--- | :--- | :--- |
-| `rso_leadership` *(maps to `admin`)* | **RSO Leadership** | IEEE UCF Executive Board, Project Leads, Workshop Directors | • **Form 1**: Onboard Chapter Sponsors & provision Sponsor logins<br>• **Form 2**: Create Events / Workshops & record Member Attendance<br>• **Form 3**: Create Chapter Projects & assign Project Team / Leads<br>• Full candidate directory access, list view, and profile deletion |
+| `rso_leadership` *(maps to `admin`)* | **RSO Leadership** | RSO USF Executive Board, Project Leads, Workshop Directors | • **Form 1**: Onboard Chapter Sponsors & provision Sponsor logins<br>• **Form 2**: Create Events / Workshops & record Member Attendance<br>• **Form 3**: Create Chapter Projects & assign Project Team / Leads<br>• Full candidate directory access, list view, and profile deletion |
 | `sponsor` | **Corporate Sponsor** | Official Corporate Partners & University Recruiters | • **Form 4**: Create & manage Corporate Job Postings<br>• **Form 5**: Manage Company Sponsorship Initiatives & Partner Profile<br>• Multi-parametric candidate filtering (Major, Skills, Graduation, Projects, Events)<br>• View FERPA-consented GPA & applicant analytics |
-| `standard` *(unauthenticated)* | **Guest / Member** | UCF Students & General Visitors | • Browse candidate directory by name<br>• Browse chapter projects, workshops, and sponsors<br>• Apply to open jobs via the existing 1-Click Portfolio Application form |
+| `standard` *(unauthenticated)* | **Guest / Member** | USF Students & General Visitors | • Browse candidate directory by name<br>• Browse chapter projects, workshops, and sponsors<br>• Apply to open jobs via the existing 1-Click Portfolio Application form |
 
 ### Supporting PostgreSQL Schema Additions (`src/db/schema.ts`)
 

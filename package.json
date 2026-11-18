@@ -2,7 +2,7 @@
   "name": "member-catalog",
   "version": "0.1.0",
   "private": true,
-  "description": "UCF IEEE Member Catalog candidate directory and chapter portfolio portal.",
+  "description": "RSO USF Member Catalog candidate directory and chapter portfolio portal.",
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",

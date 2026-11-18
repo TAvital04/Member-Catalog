@@ -509,7 +509,7 @@ export default function EmployerApplicantsModal({
                                       : "bg-neutral-100 border-neutral-300 text-neutral-700"
                                   }`}
                                 >
-                                  {skill} {isMatch && "✓"}
+                                  {skill}
                                 </span>
                               );
                             })}

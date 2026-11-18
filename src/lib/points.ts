@@ -1,16 +1,16 @@
 /**
  * @file points.ts
- * @description IEEE UCF Chapter Contribution & Engagement Point System
+ * @description RSO USF Chapter Contribution & Engagement Point System
  *
  * Point Rules:
- *  - Board Member of IEEE: 10 points
+ *  - Board Member of RSO: 10 points
  *  - Leading a Project: 15 points each
  *  - Being a part of a university project (excludes personal projects): 5 points each
  *  - Going to a workshop or other event (social, service): 3 points each
  *  - Being a committee member: 5 points each
  *
  * Core Purpose:
- *  Puts the members who contribute the most to the IEEE chapter and university build
+ *  Puts the members who contribute the most to the RSO chapter and university build
  *  teams first in recruiter discovery, elevating verified engagement over passive resumes.
  */
 
@@ -88,7 +88,7 @@ export function isUniversityProject(projectName: string, description?: string): 
 }
 
 /**
- * Checks if a member role indicates IEEE UCF board leadership.
+ * Checks if a member role indicates RSO USF board leadership.
  */
 export function isIeeeBoardMember(
   clubs: Array<{ name?: string; clubName?: string; title?: string; roleTitle?: string; description?: string }>
@@ -173,7 +173,7 @@ export function calculateCandidatePoints(candidate: {
   const projectsList = candidate.projects || [];
   const eventsList = candidate.events || [];
 
-  // 1. Board member of IEEE gives 10 points
+  // 1. Board member of RSO gives 10 points
   const boardCheck = isIeeeBoardMember(clubsList);
   if (boardCheck.isBoard) {
     boardPoints = 10;
