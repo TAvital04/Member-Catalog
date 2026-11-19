@@ -11,11 +11,11 @@ This document is the authoritative master specification for all data-capture for
 | **1** | [Onboard Chapter Sponsor](#form-1-rso-leadership--onboard-chapter-sponsor) | `rso_leadership` | `/sponsors` | `src/components/forms/LeadershipSponsorForm.tsx` | **Completed** |
 | **2** | [Create Event & Workshop](#form-2-rso-leadership--create-event--workshop) | `rso_leadership` | `/events` | `src/components/forms/LeadershipEventForm.tsx` | **Completed** |
 | **3** | [Create Project & Team Roster](#form-3-rso-leadership--create-chapter-project--team-roster) | `rso_leadership` | `/projects` | [`src/components/forms/LeadershipProjectForm.tsx`](../src/components/forms/LeadershipProjectForm.tsx) | **Completed** |
-| **4** | [Sponsor Job Posting](#form-4-sponsor--create--manage-job-postings) | `sponsor` / `admin` | `/jobs` | `src/components/forms/SponsorJobPostingForm.tsx` | **Planned** |
-| **5** | [Sponsor Initiatives & Profile](#form-5-sponsor--manage-sponsorship-initiatives--partner-profile) | `sponsor` / `admin` | `/sponsors` | `src/components/forms/SponsorInitiativeForm.tsx` | **Planned** |
-| **6** | [Member Portfolio & Resume Form](#form-6-member--portfolio--resume-data-integration-form) | `standard` (Member) | `/settings` | `src/components/settings/MemberResumeForm.tsx` | **Specified** |
-| **7** | [1-Click Job Application](#form-7-member--1-click-portfolio-job-application-form) | `standard` (Member) | `/jobs` | `src/components/modal/job/JobDetailModal.tsx` | **Completed** |
-| **8** | [Profile Moderation & Flagging](#form-8-rso-leadership--candidate-profile-flagging--moderation) | `rso_leadership` | `/` | `src/components/dialogs/FlagDialog.tsx` | **Completed** |
+| **4** | [Sponsor Job Posting](#form-4-sponsor--create--manage-job-postings) | `sponsor` / `admin` | `/jobs` | `src/components/forms/SponsorJobPostingForm.tsx` | **Completed** |
+| **5** | [Sponsor Initiatives & Profile](#form-5-sponsor--manage-sponsorship-initiatives--partner-profile) | `sponsor` / `admin` | `/sponsors` | `src/components/forms/SponsorInitiativeForm.tsx` | **Completed** |
+| **6** | [Member Portfolio & Resume Form](#form-6-member--portfolio--resume-data-integration-form) | `standard` (Member) | External (`/settings`) | External Primary Website | **External / Out of Scope** |
+| **7** | [1-Click Job Application](#form-7-member--1-click-portfolio-job-application-form) | `standard` (Member) | `/jobs` | [`src/components/forms/JobApplicationForm.tsx`](../src/components/forms/JobApplicationForm.tsx) | **Completed** |
+| **8** | [Profile Moderation & Flagging](#form-8-rso-leadership--candidate-profile-flagging--moderation) | `rso_leadership` | `/` | `src/components/dialogs/FlagDialog.tsx` | **Decommissioned** |
 
 ---
 
@@ -218,7 +218,7 @@ The comprehensive self-service portfolio form where students maintain their bio,
 
 * **Role**: `standard` (Authenticated Student Member)
 * **Where It Lives**: [`/jobs`](../src/app/jobs/page.tsx) inside `JobDetailModal.tsx` (**"Apply with 1-Click Portfolio"**)
-* **Component Path**: [`src/components/modal/job/JobDetailModal.tsx`](../src/components/modal/job/JobDetailModal.tsx)
+* **Component Path**: [`src/components/forms/JobApplicationForm.tsx`](../src/components/forms/JobApplicationForm.tsx) (integrated into [`src/components/modal/job/JobDetailModal.tsx`](../src/components/modal/job/JobDetailModal.tsx))
 * **API Route**: `POST /api/jobs/applications`
 * **Target Table**: `job_applications`
 

@@ -15,6 +15,18 @@ import { getSeededEventsForCandidate } from "@/lib/eventSeeding";
 import { canAwardSkills } from "@/lib/skills";
 import { eq, inArray } from "drizzle-orm";
 
+const globalForMembers = globalThis as unknown as {
+  __ieeeDynamicMembers?: Student[];
+};
+
+if (!globalForMembers.__ieeeDynamicMembers) {
+  globalForMembers.__ieeeDynamicMembers = [];
+}
+
+export function getDynamicMembers(): Student[] {
+  return globalForMembers.__ieeeDynamicMembers!;
+}
+
 export async function GET(request?: Request) {
   try {
     const url = request ? new URL(request.url) : null;
@@ -245,7 +257,16 @@ export async function GET(request?: Request) {
                 },
               ],
           projects: chapterProjects,
-          workExperiences: [],
+          workExperiences: Array.isArray(row.workExperience)
+            ? row.workExperience.map((w: any) => ({
+                name: w.companyName || w.name || "",
+                title: w.jobTitle || w.title || "",
+                description: w.description || "",
+                startDate: w.startDate || "",
+                endDate: w.endDate,
+                currentJob: Boolean(w.isCurrentJob ?? w.currentJob),
+              }))
+            : [],
           clubs: (Array.isArray(row.clubMemberships) ? row.clubMemberships : [])
             .filter((c: any) => /ieee|rso|institute of electrical/i.test(c.clubName || ""))
             .map((c: any) => ({
@@ -256,13 +277,22 @@ export async function GET(request?: Request) {
               endDate: c.endDate,
               current: Boolean(c.isActive),
             })),
-          certifications: [],
+          certifications: Array.isArray(row.certifications)
+            ? row.certifications.map((c: any) => ({
+                name: c.certificationName || c.name || "",
+                issuer: c.issuer || "",
+                issueDate: c.issueDate || "",
+                expirationDate: c.expirationDate,
+                credentialId: c.credentialId,
+                credentialUrl: c.credentialUrl,
+              }))
+            : [],
           events: candidateEvents,
           resumeLink: row.resumePdfUrl || undefined,
           major: row.memberMajor || primaryEdu.major || "Computer Science",
-          degree: "Bachelor of Science",
+          degree: primaryEdu.degreeType || "Bachelor of Science",
           gradDate: row.memberGradYear ? `May ${row.memberGradYear}` : "May 2026",
-          status: "Employed",
+          status: row.status || "Seeking Internship",
           flagged: false,
           flagReason: undefined,
           mainProjectName: row.mainProjectName || undefined,
@@ -274,14 +304,47 @@ export async function GET(request?: Request) {
         };
       });
 
+    // Merge in-memory dynamic members (replacing existing matches or prepending)
+    const dynamicList = getDynamicMembers();
+    const dynamicMap = new Map<string, Student>();
+    dynamicList.forEach((m) => {
+      if (m.id) dynamicMap.set(m.id.toLowerCase(), m);
+      if (m.email) dynamicMap.set(m.email.toLowerCase(), m);
+    });
+
+    const finalStudentsList: Student[] = [];
+    const processedDynamicIds = new Set<string>();
+
+    transformedStudents.forEach((student) => {
+      const match =
+        (student.id && dynamicMap.get(student.id.toLowerCase())) ||
+        (student.email && dynamicMap.get(student.email.toLowerCase()));
+      if (match) {
+        finalStudentsList.push(match);
+        if (match.id) processedDynamicIds.add(match.id.toLowerCase());
+        if (match.email) processedDynamicIds.add(match.email.toLowerCase());
+      } else {
+        finalStudentsList.push(student);
+      }
+    });
+
+    dynamicList.forEach((dyn) => {
+      const alreadyIn =
+        (dyn.id && processedDynamicIds.has(dyn.id.toLowerCase())) ||
+        (dyn.email && processedDynamicIds.has(dyn.email.toLowerCase()));
+      if (!alreadyIn) {
+        finalStudentsList.unshift(dyn);
+      }
+    });
+
     // Primary ranking pillar: Put members who contribute the most first
-    transformedStudents.sort((a, b) => (b.points ?? 0) - (a.points ?? 0));
+    finalStudentsList.sort((a, b) => (b.points ?? 0) - (a.points ?? 0));
 
     return Response.json({
       success: true,
       source: "database",
-      count: transformedStudents.length,
-      data: transformedStudents,
+      count: finalStudentsList.length,
+      data: finalStudentsList,
     });
   } catch (error: any) {
     console.error("[API Error] Failed to query database member records:", error);

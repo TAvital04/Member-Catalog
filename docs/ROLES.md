@@ -225,3 +225,5 @@ Once Sponsors are onboarded (Form 1) and Students have verified skills and proje
   - [x] Build [`SponsorJobPostingForm.tsx`](../src/components/forms/SponsorJobPostingForm.tsx) with Sponsor session auto-fill, dynamic bullet list builders, and role guard on `POST /api/jobs` ([`src/app/api/jobs/route.ts`](../src/app/api/jobs/route.ts)).
 - [x] **Step 6: Form 5 — Sponsor Initiatives & Profile Form (`/sponsors`) (Completed)**
   - [x] Build [`SponsorInitiativeForm.tsx`](../src/components/forms/SponsorInitiativeForm.tsx) and `PATCH /api/sponsors/[id]` ([`src/app/api/sponsors/[id]/route.ts`](../src/app/api/sponsors/[id]/route.ts)).
+- [x] **Step 7: Form 7 — Member 1-Click Portfolio Job Application Form (`/jobs`)**
+  - [x] Dedicated [`JobApplicationForm.tsx`](../src/components/forms/JobApplicationForm.tsx) extracting application workflow, snapshot verification, and cover note dispatch into `src/components/forms/`.

@@ -19,6 +19,8 @@ import { JobPosting, JobApplication } from "@/data/jobs";
 import { Student } from "@/data/students";
 import Avatar from "@/components/common/Avatar";
 import { Heading, Subheading, Badge } from "@/components/ui";
+import JobApplicationForm from "@/components/forms/JobApplicationForm";
+import PortfolioModal from "@/components/modal/PortfolioModal";
 
 export type JobTabType = "info" | "overview" | "skills" | "apply";
 
@@ -42,10 +44,8 @@ export default function JobDetailModal({
   onApplySuccess,
 }: JobDetailModalProps) {
   const [activeTab, setActiveTab] = useState<JobTabType>("overview");
-  const [coverNote, setCoverNote] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState("");
   const [hasAppliedLocally, setHasAppliedLocally] = useState(Boolean(existingApplication));
+  const [isViewingPortfolio, setIsViewingPortfolio] = useState(false);
 
   // Compute matched skills between active candidate and job requirements
   const matchedSkills = (job.skillsRequired || []).filter((skill) =>
@@ -62,6 +62,10 @@ export default function JobDetailModal({
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
       if (e.key === "Escape") {
+        if (isViewingPortfolio) {
+          setIsViewingPortfolio(false);
+          return;
+        }
         onClose();
       }
     }
@@ -71,7 +75,7 @@ export default function JobDetailModal({
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "unset";
     };
-  }, [onClose]);
+  }, [onClose, isViewingPortfolio]);
 
   // Handle responsive tab switching between desktop and mobile
   useEffect(() => {
@@ -88,50 +92,6 @@ export default function JobDetailModal({
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
-  const handleApply = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitError("");
-
-    try {
-      const payload = {
-        jobId: job.id,
-        memberId: activeStudent.id,
-        coverNote,
-        portfolioSnapshot: {
-          name: activeStudent.name,
-          email: activeStudent.email,
-          major: activeStudent.major,
-          gradDate: activeStudent.gradDate,
-          skills: activeStudent.skills || [],
-          mainProjectName: activeStudent.mainProjectName || undefined,
-          resumePdfUrl:
-            activeStudent.resumeLink ||
-            activeStudent.links?.find((l) => /resume|cv/i.test(l.name))?.text,
-          bio: activeStudent.bio,
-        },
-      };
-
-      const res = await fetch("/api/jobs/applications", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        throw new Error(data.error || "Failed to submit application");
-      }
-
-      setHasAppliedLocally(true);
-      onApplySuccess(data.data);
-    } catch (err: any) {
-      setSubmitError(err.message || "An error occurred while submitting.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   const tabsList: Array<{
     id: JobTabType;
@@ -247,10 +207,13 @@ export default function JobDetailModal({
   );
 
   return (
-    <div
-      onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center p-0 md:p-4 bg-modal-overlay backdrop-blur-md cursor-pointer animate-fade-in"
-    >
+    <>
+      <div
+        onClick={onClose}
+        className={`fixed inset-0 z-50 flex items-center justify-center p-0 md:p-4 bg-modal-overlay backdrop-blur-md cursor-pointer animate-fade-in ${
+          isViewingPortfolio ? "hidden" : ""
+        }`}
+      >
       <div
         role="dialog"
         aria-modal="true"
@@ -429,12 +392,9 @@ export default function JobDetailModal({
 
                   {/* Verified Matched Skills */}
                   <div className="flex flex-col gap-2">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
-                        Matched Skills ({matchedSkills.length})
-                      </h3>
-                      <span className="text-[11px] text-neutral-500">Verified in your portfolio</span>
-                    </div>
+                    <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
+                      Matched Skills ({matchedSkills.length})
+                    </h3>
                     <div className="p-4 rounded-2xl bg-white border border-neutral-200 shadow-2xs">
                       {matchedSkills.length > 0 ? (
                         <div className="flex flex-wrap gap-2">
@@ -459,12 +419,9 @@ export default function JobDetailModal({
                   {/* Remaining Role Requirements */}
                   {missingSkills.length > 0 && (
                     <div className="flex flex-col gap-2">
-                      <div className="flex items-center justify-between">
-                        <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
-                          Additional Technologies & Tools ({missingSkills.length})
-                        </h3>
-                        <span className="text-[11px] text-neutral-500">Desired for position</span>
-                      </div>
+                      <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
+                        Additional Technologies & Tools ({missingSkills.length})
+                      </h3>
                       <div className="p-4 rounded-2xl bg-white border border-neutral-200 shadow-2xs">
                         <div className="flex flex-wrap gap-2">
                           {missingSkills.map((skill, idx) => (
@@ -482,102 +439,19 @@ export default function JobDetailModal({
                 </div>
               )}
 
-              {/* Apply Tab Content */}
+              {/* Apply Tab Content (Form 7: 1-Click Portfolio Application Form) */}
               {activeTab === "apply" && (
                 <div className="flex flex-col gap-5 animate-fade-in pb-6">
-                  {hasAppliedLocally ? (
-                    <div className="p-6 rounded-2xl bg-white border border-neutral-200 shadow-2xs flex flex-col items-center text-center gap-3 py-10">
-                      <div className="w-12 h-12 rounded-full bg-neutral-100 border border-neutral-300 text-black flex items-center justify-center">
-                        <CheckCircle2 size={24} />
-                      </div>
-                      <h4 className="font-black text-lg text-black">Application Successfully Transmitted</h4>
-                      <p className="text-xs text-neutral-600 max-w-md leading-relaxed font-sans">
-                        Your complete verified RSO USF engineering portfolio, resume attachment, and project endorsements have been routed directly to{" "}
-                        <span className="font-bold text-black">{job.companyName}</span>&apos;s university recruiting department.
-                      </p>
-                      <div className="mt-2 text-xs font-bold text-neutral-500 uppercase tracking-wider">
-                        Status: Under Review
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="p-5 rounded-2xl bg-white border border-neutral-200 shadow-2xs flex flex-col gap-4">
-                      <div className="flex items-center justify-between border-b border-neutral-200 pb-3">
-                        <div>
-                          <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
-                            Apply with RSO Engineering Portfolio
-                          </h3>
-                          <p className="text-[11px] text-neutral-500 mt-0.5 font-sans">
-                            Fast-track submission transmitting your active profile directly to corporate recruiters.
-                          </p>
-                        </div>
-                        <span className="text-[10px] font-bold text-neutral-600 uppercase tracking-wider bg-neutral-100 px-2.5 py-1 rounded-md border border-neutral-200 shrink-0">
-                          Verified Candidate
-                        </span>
-                      </div>
-
-                      <form onSubmit={handleApply} className="flex flex-col gap-4">
-                        {/* Candidate Snapshot Box */}
-                        <div className="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 flex items-center justify-between gap-3">
-                          <div className="flex items-center gap-3 min-w-0">
-                            <Avatar name={activeStudent.name} size="sm" />
-                            <div className="min-w-0">
-                              <h4 className="text-xs font-bold text-black truncate">
-                                {activeStudent.name}
-                              </h4>
-                              <p className="text-[11px] text-neutral-500 truncate font-sans">
-                                {activeStudent.major} • Graduating {activeStudent.gradDate}
-                              </p>
-                            </div>
-                          </div>
-                          <div className="text-right shrink-0">
-                            <span className="text-[10.5px] font-semibold text-neutral-700 bg-white px-2.5 py-1 rounded-lg border border-neutral-200">
-                              Portfolio Linked
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Optional Candidate Cover Note */}
-                        <div className="flex flex-col gap-1.5">
-                          <label className="text-[11px] font-bold text-neutral-700 uppercase tracking-wider">
-                            Quick Note to {job.companyName} (Optional)
-                          </label>
-                          <textarea
-                            rows={3}
-                            value={coverNote}
-                            onChange={(e) => setCoverNote(e.target.value)}
-                            placeholder="Briefly highlight why you're interested in this role or mention relevant chapter projects and lab experience..."
-                            className="w-full text-xs p-3 rounded-xl border border-neutral-200 focus:outline-none focus:border-black focus:ring-1 focus:ring-black resize-none font-sans bg-neutral-50/50"
-                          />
-                        </div>
-
-                        {submitError && (
-                          <div className="p-2.5 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
-                            <AlertCircle size={14} className="shrink-0" />
-                            <span>{submitError}</span>
-                          </div>
-                        )}
-
-                        {/* Submit Button */}
-                        <button
-                          type="submit"
-                          disabled={isSubmitting}
-                          className="w-full py-3 px-4 rounded-xl bg-black hover:bg-neutral-800 text-white font-bold text-xs cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50 transition-all shadow-xs"
-                        >
-                          {isSubmitting ? (
-                            <>
-                              <Loader2 size={14} className="animate-spin" />
-                              <span>Transmitting Portfolio...</span>
-                            </>
-                          ) : (
-                            <>
-                              <Send size={13} />
-                              <span>Submit Application With Portfolio</span>
-                            </>
-                          )}
-                        </button>
-                      </form>
-                    </div>
-                  )}
+                  <JobApplicationForm
+                    job={job}
+                    activeStudent={activeStudent}
+                    existingApplication={existingApplication}
+                    onApplySuccess={(app) => {
+                      setHasAppliedLocally(true);
+                      onApplySuccess(app);
+                    }}
+                    onViewPortfolio={() => setIsViewingPortfolio(true)}
+                  />
                 </div>
               )}
             </div>
@@ -585,5 +459,15 @@ export default function JobDetailModal({
         </div>
       </div>
     </div>
+
+    {/* Full Portfolio Modal (shown cleanly when reviewing candidate portfolio from Apply tab) */}
+    {isViewingPortfolio && (
+      <PortfolioModal
+        student={activeStudent}
+        onClose={() => setIsViewingPortfolio(false)}
+        role="standard"
+      />
+    )}
+  </>
   );
 }
