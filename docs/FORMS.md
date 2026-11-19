@@ -13,9 +13,11 @@ This document is the authoritative master specification for all data-capture for
 | **3** | [Create Project & Team Roster](#form-3-rso-leadership--create-chapter-project--team-roster) | `rso_leadership` | `/projects` | [`src/components/forms/LeadershipProjectForm.tsx`](../src/components/forms/LeadershipProjectForm.tsx) | **Completed** |
 | **4** | [Sponsor Job Posting](#form-4-sponsor--create--manage-job-postings) | `sponsor` / `admin` | `/jobs` | `src/components/forms/SponsorJobPostingForm.tsx` | **Completed** |
 | **5** | [Sponsor Initiatives & Profile](#form-5-sponsor--manage-sponsorship-initiatives--partner-profile) | `sponsor` / `admin` | `/sponsors` | `src/components/forms/SponsorInitiativeForm.tsx` | **Completed** |
-| **6** | [Member Portfolio & Resume Form](#form-6-member--portfolio--resume-data-integration-form) | `standard` (Member) | External (`/settings`) | External Primary Website | **External / Out of Scope** |
+| **6** | [Recruiter Direct Outreach Form](#form-6-sponsor--recruiter-direct-candidate-outreach-form) | `sponsor` / `admin` | Candidate Portfolio (`Contact` Tab) | [`src/components/forms/RecruiterContactForm.tsx`](../src/components/forms/RecruiterContactForm.tsx) | **Completed** |
 | **7** | [1-Click Job Application](#form-7-member--1-click-portfolio-job-application-form) | `standard` (Member) | `/jobs` | [`src/components/forms/JobApplicationForm.tsx`](../src/components/forms/JobApplicationForm.tsx) | **Completed** |
-| **8** | [Profile Moderation & Flagging](#form-8-rso-leadership--candidate-profile-flagging--moderation) | `rso_leadership` | `/` | `src/components/dialogs/FlagDialog.tsx` | **Decommissioned** |
+| **8** | [Project Sponsorship Pledge & Equipment Grant](#form-9-sponsor--project-sponsorship-pledge--equipment-grant-form) | `sponsor` / `admin` | `/projects` (Project Modal `Sponsor` Tab) | [`src/components/forms/ProjectSponsorshipForm.tsx`](../src/components/forms/ProjectSponsorshipForm.tsx) | **Completed** |
+| **9** | [Member Portfolio & Resume Form](#form-8-member--portfolio--resume-data-integration-form) | `standard` (Member) | External (`/settings`) | External Primary Website | **External / Future** |
+| **10** | [Profile Moderation & Flagging](#form-9-rso-leadership--candidate-profile-flagging--moderation) | `rso_leadership` | `/` | `src/components/dialogs/FlagDialog.tsx` | **Decommissioned** |
 
 ---
 
@@ -236,7 +238,39 @@ Allows student candidates to apply directly to corporate sponsor postings using 
 
 ---
 
-## Form 8: RSO Leadership — Candidate Profile Flagging & Moderation
+## Form 9: Sponsor — Project Sponsorship Pledge & Equipment Grant Form
+
+* **Role**: `sponsor` / `admin` / `standard`
+* **Where It Lives**: [`/projects`](../src/app/projects/page.tsx) inside `ProjectModal.tsx` (**"Sponsor"** Tab)
+* **Component Path**: [`src/components/forms/ProjectSponsorshipForm.tsx`](../src/components/forms/ProjectSponsorshipForm.tsx) (integrated into [`src/components/modal/project/tabs/ProjectSponsorTab.tsx`](../src/components/modal/project/tabs/ProjectSponsorTab.tsx))
+* **API Route**: `POST /api/send-email` (recipient: `sponsorship@rsousf.org`)
+* **Design Standard**: Multi-card monochrome layout matching `JobApplicationForm` and `RecruiterContactForm`.
+
+### Purpose
+Enables corporate partners, recruiters, and alumni benefactors to submit custom sponsorship pledges, hardware equipment donations, lab component grants, chassis competition branding, and technical mentorship proposals directly for specific RSO engineering build projects.
+
+### Multi-Card Layout & Fields
+
+| Card Container | Field Label | Input Type | Invariants & Behavior |
+| :--- | :--- | :--- | :--- |
+| **Card 1: Project Target Snapshot** | Project Title & Status | Read-only | Shows project name, category, status badge, and funding progress ($current / $goal). |
+| **Card 2: Sponsor & Organization Identity** | Sponsor Full Name | Text input | Required (`aria-required="true"`). Auto-prefilled from authenticated session if available. |
+| | Company / Organization | Text input | Auto-prefilled from authenticated session organization. |
+| | Work / Contact Email | Email input | Required (`aria-required="true"`). Auto-prefilled from session email. |
+| | Sponsorship Focus | Dropdown | `Custom Project Grant / Funding`, `Hardware & Component Donation`, `Chassis & Competition Branding`, `Technical Mentorship & Advisory`, `Lab Equipment & PCB Fabrication Grant`, `General Corporate Sponsorship`. |
+| **Card 3: Scope & Collaboration Vision** | Estimated Funding / Equipment Value | Text input | Optional (e.g., *$5,000 grant*, *20 FPGA dev kits*, *PCB fabrication credit*). |
+| | Collaboration Vision & Notes | Textarea | Optional scope notes, milestones, and branding requests. |
+| **Action Bar** | Submit Sponsorship Pledge | Button | Dispatches structured email payload to chapter sponsorship directors with loading spinner and inline feedback. |
+
+### Completed & Concluded Project Invariant
+When a build project or workshop event has concluded (`project.status === "Completed"` or `project.active === false`, or `event.endTime/startTime` in the past):
+- The direct sponsorship input form is disabled and suppressed.
+- The Sponsor Tab displays a clean status notice (`Sponsorship Closed — Project Concluded`).
+- A prominent call-to-action is rendered directing sponsors to explore and support other active chapter projects (`/projects`) and chapter initiatives (`/sponsors`).
+
+---
+
+## Form 10: RSO Leadership — Candidate Profile Flagging & Moderation
 
 * **Role**: `rso_leadership` (`role === "admin"`)
 * **Where It Lives**: [`/`](../src/app/page.tsx) (Candidate Directory card moderation controls)

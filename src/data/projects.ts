@@ -37,6 +37,8 @@ export interface SponsorshipBenefit {
 export interface ProjectSponsorship {
   overview?: string;
   benefits: SponsorshipBenefit[];
+  currentFunding?: number;
+  fundingGoal?: number;
 }
 
 export interface IEEEProject {

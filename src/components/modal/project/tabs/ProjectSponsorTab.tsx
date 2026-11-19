@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
+import Link from "next/link";
 import { IEEEProject } from "@/data/projects";
-import { CheckCircle2, HeartHandshake, Sparkles, Send, Building2, Award } from "lucide-react";
-import CustomDropdown from "@/components/common/CustomDropdown";
-import Tooltip from "@/components/common/Tooltip";
+import { CheckCircle2, ArrowRight, ShieldCheck } from "lucide-react";
+import ProjectSponsorshipForm from "@/components/forms/ProjectSponsorshipForm";
 
 interface ProjectSponsorTabProps {
   project: IEEEProject;
@@ -12,72 +12,78 @@ interface ProjectSponsorTabProps {
 
 export default function ProjectSponsorTab({ project }: ProjectSponsorTabProps) {
   const sponsorship = project.sponsorshipInfo;
-
-  // Sponsorship inquiry form state
-  const [sponsorName, setSponsorName] = useState("");
-  const [sponsorCompany, setSponsorCompany] = useState("");
-  const [sponsorEmail, setSponsorEmail] = useState("");
-  const [sponsorTier, setSponsorTier] = useState("Custom Project Grant");
-  const [message, setMessage] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submissionStatus, setSubmissionStatus] = useState<"idle" | "success" | "error">("idle");
-
-  const handleSubmitPledge = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!sponsorName || !sponsorEmail) return;
-
-    setIsSubmitting(true);
-    setSubmissionStatus("idle");
-
-    try {
-      const payload = {
-        to: "sponsorship@rsousf.org",
-        recipientType: "admin",
-        subject: `[Project Sponsorship Inquiry] ${project.title} - ${sponsorCompany || sponsorName}`,
-        senderName: sponsorName,
-        senderEmail: sponsorEmail,
-        message: `Project Sponsorship Inquiry received for "${project.title}"!
-Sponsor: ${sponsorName}
-Organization / Company: ${sponsorCompany || "Individual Sponsor"}
-Contact Email: ${sponsorEmail}
-Sponsorship Interest: ${sponsorTier}
-Message / Partnership Interests:
-${message || "No additional notes provided."}`,
-      };
-
-      const res = await fetch("/api/send-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (res.ok) {
-        setSubmissionStatus("success");
-      } else {
-        setSubmissionStatus("error");
-      }
-    } catch (err) {
-      console.error("Failed to submit sponsorship inquiry:", err);
-      setSubmissionStatus("error");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const isDone = project.status === "Completed" || project.active === false;
 
   return (
     <div className="flex flex-col gap-5 animate-fade-in pt-1 pb-4">
       {/* Header */}
       <div className="flex items-center justify-between pb-3 border-b border-slate-100">
         <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider py-1 leading-normal min-w-0">
-          <span className="hidden sm:inline">Sponsorship Opportunities & Partner Benefits</span>
-          <span className="sm:hidden">Sponsor Benefits</span>
+          <span className="hidden sm:inline">
+            {isDone ? "Sponsorship Overview & Concluded Initiative" : "Sponsorship Opportunities & Partner Benefits"}
+          </span>
+          <span className="sm:hidden">{isDone ? "Sponsorship Overview" : "Sponsor Benefits"}</span>
         </div>
+        {isDone && (
+          <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-neutral-100 text-neutral-700 border border-neutral-300">
+            Concluded
+          </span>
+        )}
       </div>
+
+      {/* When Concluded: Display Concluded Notice Card First */}
+      {isDone && (
+        <div className="p-5 md:p-6 rounded-2xl bg-neutral-50 border border-neutral-300 shadow-2xs flex flex-col gap-4">
+          <div className="flex items-start gap-3.5">
+            <div className="w-10 h-10 rounded-xl bg-white border border-neutral-300 text-black flex items-center justify-center shrink-0 shadow-2xs">
+              <ShieldCheck size={20} />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-neutral-200 text-black border border-neutral-300">
+                  Sponsorship Closed
+                </span>
+                <span className="text-[10px] text-neutral-500 font-mono">Status: Completed</span>
+              </div>
+              <h4 className="text-sm font-bold text-black mt-1.5">
+                {project.title} Has Concluded
+              </h4>
+              <p className="text-xs text-neutral-600 mt-1 leading-relaxed font-sans">
+                This project has completed its development timeline and competition schedule. Direct equipment pledges and sponsorship inquiries are no longer being accepted for this specific initiative.
+              </p>
+            </div>
+          </div>
+
+          <div className="p-4 rounded-xl bg-white border border-neutral-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex flex-col gap-0.5">
+              <span className="text-xs font-bold text-black">Interested in Sponsoring Active Student Engineering?</span>
+              <span className="text-[11px] text-neutral-500 font-sans">
+                Explore our ongoing robotics, power electronics, and embedded systems build teams seeking partner funding and equipment grants.
+              </span>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <Link
+                href="/projects"
+                className="px-4 py-2 rounded-xl bg-black text-white text-xs font-bold cursor-pointer inline-flex items-center gap-1.5"
+              >
+                <span>Explore Active Projects</span>
+                <ArrowRight size={13} />
+              </Link>
+              <Link
+                href="/sponsors"
+                className="px-3.5 py-2 rounded-xl bg-white border border-neutral-300 text-black text-xs font-bold cursor-pointer"
+              >
+                <span>Chapter Sponsorships</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Hero Overview */}
       <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col gap-2 shadow-2xs">
         <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
-          <span>Why Partner With This Project?</span>
+          <span>{isDone ? "About Sponsoring This Project" : "Why Partner With This Project?"}</span>
         </div>
         <p className="text-xs text-slate-700 leading-relaxed font-sans">
           {sponsorship?.overview ||
@@ -89,7 +95,7 @@ ${message || "No additional notes provided."}`,
       {sponsorship?.benefits && sponsorship.benefits.length > 0 ? (
         <div className="flex flex-col gap-3">
           <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-            Possible Benefits For Your Organization
+            {isDone ? "Recognized Partner Benefits" : "Possible Benefits For Your Organization"}
           </h4>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -121,139 +127,20 @@ ${message || "No additional notes provided."}`,
             ))}
           </div>
         </div>
-      ) : (
+      ) : !isDone ? (
         <div className="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-200 flex flex-col gap-1.5 shadow-2xs">
           <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
             Sponsorship Package Pending
           </h4>
           <p className="text-xs text-slate-500 leading-relaxed font-sans">
             Formal corporate sponsorship tiers have not been published for this project yet.
-            However, your organization can still submit custom partnership or equipment sponsorship proposals using the inquiry form below.
+            However, your organization can still submit custom partnership or equipment sponsorship proposals using the pledge form below.
           </p>
         </div>
-      )}
+      ) : null}
 
-      {/* Direct Sponsorship Inquiry Form */}
-      <div className="p-4 md:p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-4">
-        <div className="flex flex-col gap-1">
-          <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-            <span>Inquire to Sponsor This Project</span>
-          </h4>
-          <p className="text-xs text-slate-500">
-            Connect directly with our student directors and RSO chapter leadership to discuss custom sponsorship, equipment grants, or branding.
-          </p>
-        </div>
-
-        {submissionStatus === "success" ? (
-          <div className="p-3.5 rounded-xl bg-neutral-100 border border-neutral-300 text-black text-xs flex items-center gap-2">
-            <CheckCircle2 size={16} className="text-black shrink-0" />
-            <span>
-              Thank you for supporting student innovation at USF! Our project team and corporate relations chairs will respond within 24 hours.
-            </span>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmitPledge} noValidate className="flex flex-col gap-3">
-            {submissionStatus === "error" && (
-              <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs">
-                Failed to submit sponsorship inquiry. Please try again or email leadership@rsousf.org directly.
-              </div>
-            )}
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-slate-700">
-                  Your Full Name <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  aria-required="true"
-                  value={sponsorName}
-                  onChange={(e) => setSponsorName(e.target.value)}
-                  placeholder="e.g. Dr. Jane Smith"
-                  className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-black transition-colors"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-slate-700">
-                  Company / Organization
-                </label>
-                <input
-                  type="text"
-                  value={sponsorCompany}
-                  onChange={(e) => setSponsorCompany(e.target.value)}
-                  placeholder="e.g. Lockheed Martin, TI, or Independent"
-                  className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-black transition-colors"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-slate-700">
-                  Contact Email <span className="text-black font-bold">*</span>
-                </label>
-                <input
-                  type="text"
-                  inputMode="email"
-                  aria-required="true"
-                  value={sponsorEmail}
-                  onChange={(e) => setSponsorEmail(e.target.value)}
-                  placeholder="contact@company.com"
-                  className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-black transition-colors"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-slate-700">
-                  Sponsorship Interest
-                </label>
-                <CustomDropdown
-                  value={sponsorTier}
-                  onChange={(val) => setSponsorTier(val)}
-                  options={[
-                    { value: "Custom Project Grant", label: "Custom Project Grant / Funding" },
-                    { value: "Hardware & Component Donation", label: "Hardware & Component Donation" },
-                    { value: "Chassis / Banner Branding", label: "Chassis & Competition Branding" },
-                    { value: "Technical Mentorship", label: "Technical Mentorship & Advisory" },
-                    { value: "General Corporate Sponsorship", label: "General Corporate Sponsorship" },
-                  ]}
-                  variant="input"
-                  className="w-full"
-                  aria-label="Sponsorship Interest"
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-bold text-slate-700">
-                How Would You Like to Partner? (Optional)
-              </label>
-              <textarea
-                rows={3}
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="Tell us about your interests (e.g., logo placement on robot chassis, sponsoring component fabrication, hosting a tech talk, or lab equipment donation)..."
-                className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-black transition-colors resize-none"
-              />
-            </div>
-
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-1">
-              <span className="text-[11px] text-slate-500">
-                Routed directly to RSO USF leadership.
-              </span>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-black hover:bg-neutral-800 disabled:opacity-50 text-white font-bold text-xs flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <Send size={13} />
-                <span>{isSubmitting ? "Sending..." : "Send Sponsorship Inquiry"}</span>
-              </button>
-            </div>
-          </form>
-        )}
-      </div>
+      {/* If Active: Standalone Project Sponsorship & Equipment Grant Form */}
+      {!isDone && <ProjectSponsorshipForm project={project} />}
     </div>
   );
 }
