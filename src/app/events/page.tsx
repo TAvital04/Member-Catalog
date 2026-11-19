@@ -25,21 +25,33 @@ import { IEEEEvent, SAMPLE_IEEE_EVENTS } from "@/data/events";
 import { Student } from "@/data/students";
 import { findMatchingIeeeEvent } from "@/lib/rsoAffiliation";
 import { CURRENT_CHAPTER_SPONSORS } from "@/data/sponsors";
+import { getStudentSlug, findStudentBySlugOrId } from "@/lib/studentSlug";
 
 function IEEEEventsContent() {
   const { theme, toggleTheme } = useThemeManager();
   const { role, session, handleRoleChange, isAdmin, isStudent, isSponsor } = useRoleManager();
   const { students } = useStudentData();
+  const searchParams = useSearchParams();
+  const eventParam = searchParams.get("event") || searchParams.get("eventId") || searchParams.get("slug");
+  const qParam = searchParams.get("q") || searchParams.get("search");
+  const categoryParam = searchParams.get("category");
+  const timeParam = searchParams.get("time");
+  const myParam = searchParams.get("my");
+  const sponsoredParam = searchParams.get("sponsored");
+  const memberParam = searchParams.get("member") || searchParams.get("student");
+
   const [eventsList, setEventsList] = useState<IEEEEvent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [timeFilter, setTimeFilter] = useState<"all" | "upcoming" | "past">("all");
+  const [selectedCategory, setSelectedCategory] = useState<string>(() => categoryParam || "All");
+  const [searchQuery, setSearchQuery] = useState<string>(() => qParam || "");
+  const [timeFilter, setTimeFilter] = useState<"all" | "upcoming" | "past">(() =>
+    timeParam === "upcoming" || timeParam === "past" ? timeParam : "all"
+  );
 
-  const [onlyMyEvents, setOnlyMyEvents] = useState(false);
-  const [onlySponsoredEvents, setOnlySponsoredEvents] = useState(false);
+  const [onlyMyEvents, setOnlyMyEvents] = useState(() => myParam === "true");
+  const [onlySponsoredEvents, setOnlySponsoredEvents] = useState(() => sponsoredParam === "true");
 
-  // Match active student profile from authenticated session
+  // Match active logged-in student profile
   const loggedInStudent = useMemo(() => {
     if (!isStudent || students.length === 0) return null;
     const targetId = session?.studentId?.toLowerCase();
@@ -73,10 +85,44 @@ function IEEEEventsContent() {
     );
   }, [isSponsor, session]);
 
-  // Modal inspection states
-  const searchParams = useSearchParams();
-  const eventParam = searchParams.get("event") || searchParams.get("eventId") || searchParams.get("slug");
+  const updateEventUrl = (updates: Record<string, string | null | undefined>) => {
+    const url = new URL(window.location.href);
+    Object.entries(updates).forEach(([key, val]) => {
+      if (val === null || val === undefined || val === "") {
+        url.searchParams.delete(key);
+      } else {
+        url.searchParams.set(key, val);
+      }
+    });
+    window.history.pushState(null, "", url.pathname + (url.search ? url.search : ""));
+  };
 
+  const handleCategoryChange = (cat: string) => {
+    setSelectedCategory(cat);
+    updateEventUrl({ category: cat !== "All" ? cat : null });
+  };
+
+  const handleSearchChange = (q: string) => {
+    setSearchQuery(q);
+    updateEventUrl({ q: q.trim() ? q : null, search: null });
+  };
+
+  const handleTimeFilterChange = (t: "all" | "upcoming" | "past") => {
+    setTimeFilter(t);
+    updateEventUrl({ time: t !== "all" ? t : null });
+  };
+
+  const handleToggleMyEvents = (val: boolean) => {
+    setOnlyMyEvents(val);
+    updateEventUrl({ my: val ? "true" : null });
+  };
+
+  const handleToggleSponsoredEvents = (val: boolean) => {
+    setOnlySponsoredEvents(val);
+    updateEventUrl({ sponsored: val ? "true" : null });
+  };
+
+  // Modal inspection states
   const [activeModalEvent, setActiveModalEvent] = useState<IEEEEvent | null>(null);
   const [selectedMemberStudent, setSelectedMemberStudent] = useState<Student | null>(null);
   const [isEventFormOpen, setIsEventFormOpen] = useState(false);
@@ -85,18 +131,50 @@ function IEEEEventsContent() {
   const handleOpenEventModal = (event: IEEEEvent) => {
     setActiveModalEvent(event);
     setSelectedMemberStudent(null);
-    const url = new URL(window.location.href);
-    url.searchParams.set("event", event.slug);
-    window.history.pushState(null, "", url.pathname + (url.search ? url.search : ""));
+    updateEventUrl({ event: event.slug });
   };
 
   const handleCloseEventModal = () => {
     setActiveModalEvent(null);
-    const url = new URL(window.location.href);
-    url.searchParams.delete("event");
-    url.searchParams.delete("eventId");
-    url.searchParams.delete("slug");
-    window.history.pushState(null, "", url.pathname + (url.search ? url.search : ""));
+    updateEventUrl({ event: null, eventId: null, slug: null });
+  };
+
+  const handleSelectMember = (memberId?: string, name?: string, email?: string) => {
+    if (!students || students.length === 0) return;
+
+    let match = memberId ? findStudentBySlugOrId(students, memberId) : undefined;
+    const cleanName = (name || "").toLowerCase().trim();
+    const cleanEmail = (email || "").toLowerCase().trim();
+
+    if (!match && cleanEmail) {
+      match = students.find((s) => s.email.toLowerCase() === cleanEmail);
+    }
+    if (!match && cleanName) {
+      match = students.find((s) => s.name.toLowerCase() === cleanName);
+    }
+    if (!match && memberId) {
+      const cleanId = memberId.toLowerCase().trim();
+      const slugName = cleanId.replace(/^mem-/, "").replace(/^(cand|candidate)-/, "").replace(/[-_]/g, " ");
+      match = students.find((s) => {
+        const sName = s.name.toLowerCase();
+        return (
+          sName === slugName ||
+          sName.includes(slugName) ||
+          slugName.includes(sName) ||
+          s.email.toLowerCase().includes(slugName.replace(/\s+/g, ""))
+        );
+      });
+    }
+
+    if (match) {
+      setSelectedMemberStudent(match);
+      updateEventUrl({ member: getStudentSlug(match) });
+    }
+  };
+
+  const handleCloseMemberModal = () => {
+    setSelectedMemberStudent(null);
+    updateEventUrl({ member: null, student: null });
   };
 
   useEffect(() => {
@@ -114,6 +192,17 @@ function IEEEEventsContent() {
       setActiveModalEvent(matched);
     }
   }, [eventsList, eventParam]);
+
+  useEffect(() => {
+    if (students.length === 0 || !memberParam) {
+      if (!memberParam) setSelectedMemberStudent(null);
+      return;
+    }
+    const match = findStudentBySlugOrId(students, memberParam);
+    if (match) {
+      setSelectedMemberStudent(match);
+    }
+  }, [students, memberParam]);
 
   const handleEventCreated = (newEvent: IEEEEvent) => {
     setEventsList((prev) => [newEvent, ...prev]);
@@ -269,39 +358,6 @@ function IEEEEventsContent() {
     loggedInSponsor,
   ]);
 
-  // Handle member click inside event modal
-  const handleSelectMember = (memberId?: string, name?: string, email?: string) => {
-    if (!students || students.length === 0) return;
-
-    const cleanId = (memberId || "").toLowerCase().trim();
-    const cleanName = (name || "").toLowerCase().trim();
-    const cleanEmail = (email || "").toLowerCase().trim();
-
-    let match = cleanId ? students.find((s) => s.id.toLowerCase() === cleanId) : undefined;
-    if (!match && cleanEmail) {
-      match = students.find((s) => s.email.toLowerCase() === cleanEmail);
-    }
-    if (!match && cleanName) {
-      match = students.find((s) => s.name.toLowerCase() === cleanName);
-    }
-    if (!match && cleanId) {
-      const slugName = cleanId.replace(/^mem-/, "").replace(/^(cand|candidate)-/, "").replace(/[-_]/g, " ");
-      match = students.find((s) => {
-        const sName = s.name.toLowerCase();
-        return (
-          sName === slugName ||
-          sName.includes(slugName) ||
-          slugName.includes(sName) ||
-          s.email.toLowerCase().includes(slugName.replace(/\s+/g, ""))
-        );
-      });
-    }
-
-    if (match) {
-      setSelectedMemberStudent(match);
-    }
-  };
-
   return (
     <div className="page-wrapper">
       {/* Primary Header Navbar */}
@@ -324,7 +380,7 @@ function IEEEEventsContent() {
             <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
               <button
                 type="button"
-                onClick={() => setOnlyMyEvents(false)}
+                onClick={() => handleToggleMyEvents(false)}
                 className={`px-3 py-1.5 rounded-lg cursor-pointer ${
                   !onlyMyEvents
                     ? "bg-white text-black shadow-2xs font-black"
@@ -335,7 +391,7 @@ function IEEEEventsContent() {
               </button>
               <button
                 type="button"
-                onClick={() => setOnlyMyEvents(true)}
+                onClick={() => handleToggleMyEvents(true)}
                 className={`px-3 py-1.5 rounded-lg cursor-pointer ${
                   onlyMyEvents
                     ? "bg-black text-white shadow-2xs font-black"
@@ -351,7 +407,7 @@ function IEEEEventsContent() {
             <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
               <button
                 type="button"
-                onClick={() => setOnlySponsoredEvents(false)}
+                onClick={() => handleToggleSponsoredEvents(false)}
                 className={`px-3 py-1.5 rounded-lg cursor-pointer ${
                   !onlySponsoredEvents
                     ? "bg-white text-black shadow-2xs font-black"
@@ -362,7 +418,7 @@ function IEEEEventsContent() {
               </button>
               <button
                 type="button"
-                onClick={() => setOnlySponsoredEvents(true)}
+                onClick={() => handleToggleSponsoredEvents(true)}
                 className={`px-3 py-1.5 rounded-lg cursor-pointer ${
                   onlySponsoredEvents
                     ? "bg-black text-white shadow-2xs font-black"
@@ -410,12 +466,12 @@ function IEEEEventsContent() {
       {/* Search & Category Filter Controls */}
       <EventFilters
         searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
+        setSearchQuery={handleSearchChange}
         categories={categories}
         selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
+        setSelectedCategory={handleCategoryChange}
         timeFilter={timeFilter}
-        setTimeFilter={setTimeFilter}
+        setTimeFilter={handleTimeFilterChange}
       />
 
       {/* Events Grid */}
@@ -446,6 +502,7 @@ function IEEEEventsContent() {
               setSelectedCategory("All");
               setSearchQuery("");
               setTimeFilter("all");
+              updateEventUrl({ category: null, q: null, search: null, time: null });
             }}
           />
         ) : (
@@ -488,7 +545,7 @@ function IEEEEventsContent() {
       {selectedMemberStudent && (
         <PortfolioModal
           student={selectedMemberStudent}
-          onClose={() => setSelectedMemberStudent(null)}
+          onClose={handleCloseMemberModal}
           adminMode={isAdmin}
           role={role}
           onToggleFlag={() => { }}

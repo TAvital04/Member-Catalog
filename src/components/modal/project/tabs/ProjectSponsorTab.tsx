@@ -113,9 +113,8 @@ ${message || "No additional notes provided."}`,
                 </div>
 
                 {benefit.category && (
-                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-500 font-mono">
+                  <div className="pt-2 border-t border-slate-100 text-[10px] text-slate-500 font-mono">
                     <span>{benefit.category}</span>
-                    {benefit.highlight && <span className="text-black font-sans font-bold">Featured Perk</span>}
                   </div>
                 )}
               </div>

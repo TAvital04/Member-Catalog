@@ -38,6 +38,7 @@ import ProjectModal from "@/components/modal/project/ProjectModal";
 import EventModal from "@/components/modal/event/EventModal";
 import JobDetailModal from "@/components/modal/job/JobDetailModal";
 import { ProjectTabType } from "@/components/modal/project/ProjectTabNavigation";
+import { getStudentSlug, findStudentBySlugOrId } from "@/lib/studentSlug";
 
 function SponsorsPageContent() {
   const { theme, toggleTheme } = useThemeManager();
@@ -46,18 +47,49 @@ function SponsorsPageContent() {
 
   const searchParams = useSearchParams();
   const sponsorParam = searchParams.get("sponsor") || searchParams.get("company");
+  const memberParam = searchParams.get("member") || searchParams.get("student");
   const viewParam = searchParams.get("view");
+  const tierParam = searchParams.get("tier");
+  const qParam = searchParams.get("q") || searchParams.get("search");
+  const myParam = searchParams.get("my");
 
   const [sponsorsList, setSponsorsList] = useState<ChapterSponsor[]>(CURRENT_CHAPTER_SPONSORS);
   const [selectedSponsorId, setSelectedSponsorId] = useState<string | null>(sponsorParam);
   const [hasExplicitlyChosenAll, setHasExplicitlyChosenAll] = useState<boolean>(viewParam === "all");
-  const [selectedTier, setSelectedTier] = useState<string>("All");
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [selectedTier, setSelectedTier] = useState<string>(() => tierParam || "All");
+  const [searchQuery, setSearchQuery] = useState<string>(() => qParam || "");
   const [isSponsorFormOpen, setIsSponsorFormOpen] = useState(false);
   const [isInitiativeFormOpen, setIsInitiativeFormOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  const [onlyMySponsors, setOnlyMySponsors] = useState(false);
+  const [onlyMySponsors, setOnlyMySponsors] = useState(() => myParam === "true");
+
+  const updateSponsorUrl = (updates: Record<string, string | null | undefined>) => {
+    const url = new URL(window.location.href);
+    Object.entries(updates).forEach(([key, val]) => {
+      if (val === null || val === undefined || val === "") {
+        url.searchParams.delete(key);
+      } else {
+        url.searchParams.set(key, val);
+      }
+    });
+    window.history.pushState(null, "", url.pathname + (url.search ? url.search : ""));
+  };
+
+  const handleTierChange = (t: string) => {
+    setSelectedTier(t);
+    updateSponsorUrl({ tier: t !== "All" ? t : null });
+  };
+
+  const handleSearchChange = (q: string) => {
+    setSearchQuery(q);
+    updateSponsorUrl({ q: q.trim() ? q : null, search: null });
+  };
+
+  const handleToggleMySponsors = (val: boolean) => {
+    setOnlyMySponsors(val);
+    updateSponsorUrl({ my: val ? "true" : null });
+  };
 
   // Match active student profile from authenticated session
   const loggedInStudent = useMemo(() => {
@@ -151,6 +183,18 @@ function SponsorsPageContent() {
       setHasExplicitlyChosenAll(false);
     }
   }, [sponsorParam, viewParam]);
+
+  // Sync member profile with URL search param
+  useEffect(() => {
+    if (students.length === 0 || !memberParam) {
+      if (!memberParam) setInspectedStudent(null);
+      return;
+    }
+    const match = findStudentBySlugOrId(students, memberParam);
+    if (match) {
+      setInspectedStudent(match);
+    }
+  }, [students, memberParam]);
 
   // When role === "sponsor", default to userSponsor's page unless user explicitly chose to see all sponsors
   const effectiveSponsorId = useMemo(() => {
@@ -322,7 +366,7 @@ function SponsorsPageContent() {
             <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
               <button
                 type="button"
-                onClick={() => setOnlyMySponsors(false)}
+                onClick={() => handleToggleMySponsors(false)}
                 className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
                   !onlyMySponsors
                     ? "bg-white text-black shadow-2xs font-black"
@@ -333,7 +377,7 @@ function SponsorsPageContent() {
               </button>
               <button
                 type="button"
-                onClick={() => setOnlyMySponsors(true)}
+                onClick={() => handleToggleMySponsors(true)}
                 className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
                   onlyMySponsors
                     ? "bg-black text-white shadow-2xs font-black"
@@ -409,7 +453,7 @@ function SponsorsPageContent() {
             <section className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
               <SearchInput
                 value={searchQuery}
-                onChange={setSearchQuery}
+                onChange={handleSearchChange}
                 placeholder="Search sponsors by name, technology, or focus..."
                 className="w-full sm:max-w-md"
                 ariaLabel="Search corporate sponsors"
@@ -418,7 +462,7 @@ function SponsorsPageContent() {
               <FilterPills
                 options={tiers}
                 selected={selectedTier}
-                onSelect={setSelectedTier}
+                onSelect={handleTierChange}
                 ariaLabel="Filter sponsors by tier"
               />
             </section>
@@ -436,6 +480,7 @@ function SponsorsPageContent() {
                 onAction={() => {
                   setSearchQuery("");
                   setSelectedTier("All");
+                  updateSponsorUrl({ q: null, search: null, tier: null });
                 }}
               />
             ) : (
@@ -495,7 +540,10 @@ function SponsorsPageContent() {
       {inspectedStudent && (
         <PortfolioModal
           student={inspectedStudent}
-          onClose={() => setInspectedStudent(null)}
+          onClose={() => {
+            setInspectedStudent(null);
+            updateSponsorUrl({ member: null, student: null });
+          }}
           adminMode={isAdmin}
           role={role}
           allStudents={students}
@@ -521,8 +569,11 @@ function SponsorsPageContent() {
           onClose={() => setInspectedEvent(null)}
           students={students}
           onSelectMember={(memberId) => {
-            const match = students.find((s) => s.id === memberId);
-            if (match) setInspectedStudent(match);
+            const match = findStudentBySlugOrId(students, memberId);
+            if (match) {
+              setInspectedStudent(match);
+              updateSponsorUrl({ member: getStudentSlug(match) });
+            }
           }}
         />
       )}

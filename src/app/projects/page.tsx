@@ -25,6 +25,7 @@ import EmptyState from "@/components/common/EmptyState";
 import { IEEEProject } from "@/data/projects";
 import { Student } from "@/data/students";
 import { CURRENT_CHAPTER_SPONSORS } from "@/data/sponsors";
+import { getStudentSlug, findStudentBySlugOrId } from "@/lib/studentSlug";
 
 function IEEEProjectsContent() {
   const { theme, toggleTheme } = useThemeManager();
@@ -33,8 +34,42 @@ function IEEEProjectsContent() {
   const [projects, setProjects] = useState<IEEEProject[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const [onlyMyProjects, setOnlyMyProjects] = useState(false);
-  const [onlySponsoredProjects, setOnlySponsoredProjects] = useState(false);
+  const searchParams = useSearchParams();
+  const searchParam = searchParams.get("search") || searchParams.get("q");
+  const myParam = searchParams.get("my");
+  const sponsoredParam = searchParams.get("sponsored");
+  const memberParam = searchParams.get("member") || searchParams.get("student");
+
+  const [onlyMyProjects, setOnlyMyProjects] = useState(() => myParam === "true");
+  const [onlySponsoredProjects, setOnlySponsoredProjects] = useState(() => sponsoredParam === "true");
+  const [searchQuery, setSearchQuery] = useState<string>(() => searchParam || "");
+
+  const updateProjectUrl = (updates: Record<string, string | null | undefined>) => {
+    const url = new URL(window.location.href);
+    Object.entries(updates).forEach(([key, val]) => {
+      if (val === null || val === undefined || val === "") {
+        url.searchParams.delete(key);
+      } else {
+        url.searchParams.set(key, val);
+      }
+    });
+    window.history.pushState(null, "", url.pathname + (url.search ? url.search : ""));
+  };
+
+  const handleSearchChange = (q: string) => {
+    setSearchQuery(q);
+    updateProjectUrl({ q: q.trim() ? q : null, search: null });
+  };
+
+  const handleToggleMyProjects = (val: boolean) => {
+    setOnlyMyProjects(val);
+    updateProjectUrl({ my: val ? "true" : null });
+  };
+
+  const handleToggleSponsoredProjects = (val: boolean) => {
+    setOnlySponsoredProjects(val);
+    updateProjectUrl({ sponsored: val ? "true" : null });
+  };
 
   // Match active student profile from authenticated session
   const loggedInStudent = useMemo(() => {
@@ -69,11 +104,6 @@ function IEEEProjectsContent() {
       ) || CURRENT_CHAPTER_SPONSORS[0]
     );
   }, [isSponsor, session]);
-
-  const searchParams = useSearchParams();
-  const searchParam = searchParams.get("search") || searchParams.get("q");
-
-  const [searchQuery, setSearchQuery] = useState<string>(() => searchParam || "");
 
   // Modal inspection state
   const [activeModalProject, setActiveModalProject] = useState<IEEEProject | null>(null);
@@ -225,34 +255,37 @@ function IEEEProjectsContent() {
   const handleSelectMember = (memberId?: string, name?: string, email?: string) => {
     if (!students || students.length === 0) return;
 
-    const cleanId = (memberId || "").toLowerCase().trim();
-    const cleanName = (name || "").toLowerCase().trim();
-    const cleanEmail = (email || "").toLowerCase().trim();
-
-    let match = cleanId ? students.find((s) => s.id.toLowerCase() === cleanId) : undefined;
-    if (!match && cleanEmail) {
-      match = students.find((s) => s.email.toLowerCase() === cleanEmail);
+    let match = findStudentBySlugOrId(students, memberId);
+    if (!match && email) {
+      match = students.find((s) => s.email.toLowerCase() === email.toLowerCase().trim());
     }
-    if (!match && cleanName) {
-      match = students.find((s) => s.name.toLowerCase() === cleanName);
-    }
-    if (!match && cleanId) {
-      const slugName = cleanId.replace(/^mem-/, "").replace(/^(cand|candidate)-/, "").replace(/[-_]/g, " ");
-      match = students.find((s) => {
-        const sName = s.name.toLowerCase();
-        return (
-          sName === slugName ||
-          sName.includes(slugName) ||
-          slugName.includes(sName) ||
-          s.email.toLowerCase().includes(slugName.replace(/\s+/g, ""))
-        );
-      });
+    if (!match && name) {
+      match = students.find((s) => s.name.toLowerCase() === name.toLowerCase().trim());
     }
 
     if (match) {
       setSelectedMemberStudent(match);
+      updateProjectUrl({ member: getStudentSlug(match) });
     }
   };
+
+  const handleCloseMemberModal = () => {
+    setSelectedMemberStudent(null);
+    updateProjectUrl({ member: null, student: null });
+  };
+
+  // Automatically open student portfolio if member is in URL
+  useEffect(() => {
+    if (students.length === 0) return;
+    if (memberParam) {
+      const match = findStudentBySlugOrId(students, memberParam);
+      if (match) {
+        setSelectedMemberStudent(match);
+      }
+    } else {
+      setSelectedMemberStudent(null);
+    }
+  }, [students, memberParam]);
 
   return (
     <div className="page-wrapper">
@@ -276,7 +309,7 @@ function IEEEProjectsContent() {
             <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
               <button
                 type="button"
-                onClick={() => setOnlyMyProjects(false)}
+                onClick={() => handleToggleMyProjects(false)}
                 className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
                   !onlyMyProjects
                     ? "bg-white text-black shadow-2xs font-black"
@@ -287,7 +320,7 @@ function IEEEProjectsContent() {
               </button>
               <button
                 type="button"
-                onClick={() => setOnlyMyProjects(true)}
+                onClick={() => handleToggleMyProjects(true)}
                 className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
                   onlyMyProjects
                     ? "bg-black text-white shadow-2xs font-black"
@@ -303,7 +336,7 @@ function IEEEProjectsContent() {
             <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
               <button
                 type="button"
-                onClick={() => setOnlySponsoredProjects(false)}
+                onClick={() => handleToggleSponsoredProjects(false)}
                 className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
                   !onlySponsoredProjects
                     ? "bg-white text-black shadow-2xs font-black"
@@ -314,7 +347,7 @@ function IEEEProjectsContent() {
               </button>
               <button
                 type="button"
-                onClick={() => setOnlySponsoredProjects(true)}
+                onClick={() => handleToggleSponsoredProjects(true)}
                 className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
                   onlySponsoredProjects
                     ? "bg-black text-white shadow-2xs font-black"
@@ -362,7 +395,7 @@ function IEEEProjectsContent() {
       {/* Controls Bar: Search */}
       <ProjectFilters
         searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
+        setSearchQuery={handleSearchChange}
       />
 
       {/* Main Content Area */}
@@ -424,7 +457,7 @@ function IEEEProjectsContent() {
       {selectedMemberStudent && (
         <PortfolioModal
           student={selectedMemberStudent}
-          onClose={() => setSelectedMemberStudent(null)}
+          onClose={handleCloseMemberModal}
           adminMode={isAdmin}
           role={role}
           allStudents={students}

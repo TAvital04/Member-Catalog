@@ -6,8 +6,10 @@
  * Orchestrates multi-parametric filtering, layout toggling, and real-time student profile modals.
  */
 
-import React, { useState, useRef, Suspense } from "react";
+import React, { useState, useRef, Suspense, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { Student } from "@/data/students";
+import { getStudentSlug, findStudentBySlugOrId } from "@/lib/studentSlug";
 import { useDirectoryFilters } from "@/hooks/useDirectoryFilters";
 import { useThemeManager } from "@/hooks/useThemeManager";
 import { useStudentData } from "@/hooks/useStudentData";
@@ -59,6 +61,11 @@ function StudentDirectoryContent() {
     resetAllFilters,
   } = useDirectoryFilters();
 
+  const searchParams = useSearchParams();
+  const memberParam = searchParams.get("member") || searchParams.get("student") || searchParams.get("candidate");
+  const myParam = searchParams.get("my");
+  const interactingParam = searchParams.get("interacting");
+
   // Visual layout & role states
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [filterLayout, setFilterLayout] = useState<"side" | "top">("side");
@@ -66,8 +73,57 @@ function StudentDirectoryContent() {
   const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [onlyLeadersFilter, setOnlyLeadersFilter] = useState(false);
-  const [filterByMyself, setFilterByMyself] = useState(false);
-  const [sponsorInteractingFilter, setSponsorInteractingFilter] = useState(false);
+  const [filterByMyself, setFilterByMyself] = useState(() => myParam === "true");
+  const [sponsorInteractingFilter, setSponsorInteractingFilter] = useState(() => interactingParam === "true");
+
+  // Auto-open student portfolio when member/student is in URL
+  useEffect(() => {
+    if (students.length === 0) return;
+    if (memberParam) {
+      const match = findStudentBySlugOrId(students, memberParam);
+      if (match) {
+        setSelectedStudent(match);
+      }
+    } else {
+      setSelectedStudent(null);
+    }
+  }, [students, memberParam]);
+
+  // Sync my / interacting flags from URL params
+  useEffect(() => {
+    setFilterByMyself(myParam === "true");
+    setSponsorInteractingFilter(interactingParam === "true");
+  }, [myParam, interactingParam]);
+
+  const handleSelectStudent = (student: Student | null) => {
+    setSelectedStudent(student);
+    const url = new URL(window.location.href);
+    if (student) {
+      const slug = getStudentSlug(student);
+      url.searchParams.set("member", slug);
+    } else {
+      url.searchParams.delete("member");
+      url.searchParams.delete("student");
+      url.searchParams.delete("candidate");
+    }
+    window.history.pushState(null, "", url.pathname + (url.search ? url.search : ""));
+  };
+
+  const handleSetFilterByMyself = (val: boolean) => {
+    setFilterByMyself(val);
+    const url = new URL(window.location.href);
+    if (val) url.searchParams.set("my", "true");
+    else url.searchParams.delete("my");
+    window.history.pushState(null, "", url.pathname + (url.search ? url.search : ""));
+  };
+
+  const handleSetSponsorInteractingFilter = (val: boolean) => {
+    setSponsorInteractingFilter(val);
+    const url = new URL(window.location.href);
+    if (val) url.searchParams.set("interacting", "true");
+    else url.searchParams.delete("interacting");
+    window.history.pushState(null, "", url.pathname + (url.search ? url.search : ""));
+  };
 
   // Match active student profile from authenticated session
   const loggedInStudent = React.useMemo(() => {
@@ -285,7 +341,7 @@ function StudentDirectoryContent() {
           <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
             <button
               type="button"
-              onClick={() => setFilterByMyself(false)}
+              onClick={() => handleSetFilterByMyself(false)}
               className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
                 !filterByMyself
                   ? "bg-white text-black shadow-2xs font-black"
@@ -296,7 +352,7 @@ function StudentDirectoryContent() {
             </button>
             <button
               type="button"
-              onClick={() => setFilterByMyself(true)}
+              onClick={() => handleSetFilterByMyself(true)}
               className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
                 filterByMyself
                   ? "bg-black text-white shadow-2xs font-black"
@@ -312,7 +368,7 @@ function StudentDirectoryContent() {
           <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
             <button
               type="button"
-              onClick={() => setSponsorInteractingFilter(false)}
+              onClick={() => handleSetSponsorInteractingFilter(false)}
               className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
                 !sponsorInteractingFilter
                   ? "bg-white text-black shadow-2xs font-black"
@@ -323,7 +379,7 @@ function StudentDirectoryContent() {
             </button>
             <button
               type="button"
-              onClick={() => setSponsorInteractingFilter(true)}
+              onClick={() => handleSetSponsorInteractingFilter(true)}
               className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
                 sponsorInteractingFilter
                   ? "bg-black text-white shadow-2xs font-black"
@@ -418,11 +474,12 @@ function StudentDirectoryContent() {
             viewMode={viewMode}
             adminMode={adminMode}
             canFilter={hasFilterPermission}
-            onSelectStudent={setSelectedStudent}
+            onSelectStudent={handleSelectStudent}
             onDeleteStudent={handleDeleteStudent}
             onResetAllFilters={() => {
               resetAllFilters();
-              setFilterByMyself(false);
+              handleSetFilterByMyself(false);
+              handleSetSponsorInteractingFilter(false);
             }}
           />
         </div>
@@ -432,7 +489,7 @@ function StudentDirectoryContent() {
       {selectedStudent && (
         <PortfolioModal
           student={selectedStudent}
-          onClose={() => setSelectedStudent(null)}
+          onClose={() => handleSelectStudent(null)}
           adminMode={adminMode}
           role={role}
           allStudents={students}

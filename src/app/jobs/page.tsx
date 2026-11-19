@@ -8,6 +8,7 @@
 
 import React, { useState, useEffect, useMemo, Suspense } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   Briefcase,
   Building2,
@@ -41,6 +42,7 @@ import CustomDropdown from "@/components/common/CustomDropdown";
 import Avatar from "@/components/common/Avatar";
 import EmptyState from "@/components/common/EmptyState";
 import SearchInput from "@/components/common/SearchInput";
+import { getStudentSlug, findStudentBySlugOrId } from "@/lib/studentSlug";
 
 function JobsPageContent() {
   const { theme, toggleTheme } = useThemeManager();
@@ -93,17 +95,79 @@ function JobsPageContent() {
     );
   }, [isSponsor, session]);
 
+  // URL search parameter synchronization
+  const searchParams = useSearchParams();
+  const jobParam = searchParams.get("job") || searchParams.get("jobId") || searchParams.get("slug");
+  const qParam = searchParams.get("q") || searchParams.get("search");
+  const typesParam = searchParams.get("types") || searchParams.get("employment");
+  const locationsParam = searchParams.get("locations");
+  const skillsParam = searchParams.get("skills");
+  const companiesParam = searchParams.get("companies");
+  const myParam = searchParams.get("my");
+  const portalParam = searchParams.get("portal");
+  const memberParam = searchParams.get("member") || searchParams.get("student");
+
   // Jobs and applications state
   const [jobsList, setJobsList] = useState<JobPosting[]>([]);
   const [applicationsList, setApplicationsList] = useState<JobApplication[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Filters for Member view
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedEmploymentTypes, setSelectedEmploymentTypes] = useState<string[]>([]);
-  const [selectedLocationTypes, setSelectedLocationTypes] = useState<string[]>([]);
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
-  const [selectedCompanies, setSelectedCompanies] = useState<string[]>([]);
+  // Filters for Member view initialized from URL params
+  const [searchQuery, setSearchQuery] = useState(() => qParam || "");
+  const [selectedEmploymentTypes, setSelectedEmploymentTypes] = useState<string[]>(() =>
+    typesParam ? typesParam.split(",").filter(Boolean) : []
+  );
+  const [selectedLocationTypes, setSelectedLocationTypes] = useState<string[]>(() =>
+    locationsParam ? locationsParam.split(",").filter(Boolean) : []
+  );
+  const [selectedSkills, setSelectedSkills] = useState<string[]>(() =>
+    skillsParam ? skillsParam.split(",").filter(Boolean) : []
+  );
+  const [selectedCompanies, setSelectedCompanies] = useState<string[]>(() =>
+    companiesParam ? companiesParam.split(",").filter(Boolean) : []
+  );
+
+  const updateJobUrl = (updates: Record<string, string | null | undefined>) => {
+    const url = new URL(window.location.href);
+    Object.entries(updates).forEach(([key, val]) => {
+      if (val === null || val === undefined || val === "") {
+        url.searchParams.delete(key);
+      } else {
+        url.searchParams.set(key, val);
+      }
+    });
+    window.history.pushState(null, "", url.pathname + (url.search ? url.search : ""));
+  };
+
+  const handleSearchChange = (q: string) => {
+    setSearchQuery(q);
+    updateJobUrl({ q: q.trim() ? q : null });
+  };
+
+  const handleEmploymentTypesChange = (types: string[]) => {
+    setSelectedEmploymentTypes(types);
+    updateJobUrl({ types: types.length ? types.join(",") : null });
+  };
+
+  const handleLocationTypesChange = (locs: string[]) => {
+    setSelectedLocationTypes(locs);
+    updateJobUrl({ locations: locs.length ? locs.join(",") : null });
+  };
+
+  const handleSkillsChange = (skills: string[]) => {
+    setSelectedSkills(skills);
+    updateJobUrl({ skills: skills.length ? skills.join(",") : null });
+  };
+
+  const handleCompaniesChange = (companies: string[]) => {
+    setSelectedCompanies(companies);
+    updateJobUrl({ companies: companies.length ? companies.join(",") : null });
+  };
+
+  const handleOnlyMyApplicationsChange = (val: boolean) => {
+    setOnlyMyApplications(val);
+    updateJobUrl({ my: val ? "true" : null });
+  };
 
   const resetAllFilters = () => {
     setSearchQuery("");
@@ -111,32 +175,67 @@ function JobsPageContent() {
     setSelectedLocationTypes([]);
     setSelectedSkills([]);
     setSelectedCompanies([]);
+    setOnlyMyApplications(false);
+    updateJobUrl({
+      q: null,
+      types: null,
+      locations: null,
+      skills: null,
+      companies: null,
+      my: null,
+    });
   };
 
   // Filters for Employer view
   const [selectedEmployerCompany, setSelectedEmployerCompany] = useState<string>("All");
   const [employerSubTab, setEmployerSubTab] = useState<"postings" | "analytics">("postings");
 
-  // Sync mode and default company when login role changes
-  useEffect(() => {
-    if (isAdmin) {
-      setPortalMode("employer");
-      setSelectedEmployerCompany("All");
-    } else if (isSponsor) {
-      setPortalMode("employer");
-      if (loggedInSponsor) {
-        setSelectedEmployerCompany(loggedInSponsor.name);
-      }
-    } else {
-      setPortalMode("member");
-    }
-  }, [isAdmin, isSponsor, loggedInSponsor]);
-
   // Modals state
   const [selectedJobForDetail, setSelectedJobForDetail] = useState<JobPosting | null>(null);
   const [isPostJobModalOpen, setIsPostJobModalOpen] = useState(false);
   const [selectedJobForApplicants, setSelectedJobForApplicants] = useState<JobPosting | null>(null);
   const [inspectedStudent, setInspectedStudent] = useState<Student | null>(null);
+
+  const handleSelectJob = (job: JobPosting) => {
+    setSelectedJobForDetail(job);
+    updateJobUrl({ job: job.slug });
+  };
+
+  const handleCloseJobModal = () => {
+    setSelectedJobForDetail(null);
+    updateJobUrl({ job: null, jobId: null, slug: null });
+  };
+
+  // Automatically open job detail modal when job query param is present
+  useEffect(() => {
+    if (jobsList.length === 0) return;
+    if (jobParam) {
+      const clean = jobParam.toLowerCase().trim();
+      const matched = jobsList.find(
+        (j) =>
+          j.slug.toLowerCase() === clean ||
+          j.id.toLowerCase() === clean ||
+          j.title.toLowerCase().replace(/[^a-z0-9]+/g, "-") === clean
+      );
+      if (matched) {
+        setSelectedJobForDetail(matched);
+      }
+    } else {
+      setSelectedJobForDetail(null);
+    }
+  }, [jobsList, jobParam]);
+
+  // Automatically open inspected candidate portfolio if member is in URL
+  useEffect(() => {
+    if (students.length === 0 || !memberParam) {
+      if (!memberParam) setInspectedStudent(null);
+      return;
+    }
+    const match = findStudentBySlugOrId(students, memberParam);
+    if (match) {
+      setInspectedStudent(match);
+    }
+  }, [students, memberParam]);
 
   // Initialize active student
   useEffect(() => {
@@ -374,15 +473,15 @@ function JobsPageContent() {
           isAdmin
             ? "Engineering Opportunities Management"
             : isSponsor
-            ? `${loggedInSponsor?.name || "Corporate Partner"} Hiring Portal`
-            : "Engineering Opportunities Hub"
+              ? `${loggedInSponsor?.name || "Corporate Partner"} Hiring Portal`
+              : "Engineering Opportunities Hub"
         }
         description={
           isAdmin
             ? "Oversee active corporate sponsor job postings, review student application portfolios, and monitor chapter career outcomes."
             : isSponsor
-            ? `Manage active engineering opportunities, review USF candidate portfolios, and track hiring analytics for ${loggedInSponsor?.name || "your company"}.`
-            : "Explore direct internships, co-ops, and full-time engineering roles from corporate partners. Apply with your verified RSO USF engineering portfolio."
+              ? `Manage active engineering opportunities, review USF candidate portfolios, and track hiring analytics for ${loggedInSponsor?.name || "your company"}.`
+              : "Explore direct internships, co-ops, and full-time engineering roles from corporate partners. Apply with your verified RSO USF engineering portfolio."
         }
       >
         <div className="flex items-center gap-3 shrink-0 flex-wrap">
@@ -404,11 +503,10 @@ function JobsPageContent() {
               <button
                 type="button"
                 onClick={() => setPortalMode("employer")}
-                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs cursor-pointer select-none ${
-                  portalMode === "employer"
-                    ? "bg-black text-white font-bold border border-black shadow-xs"
-                    : "bg-transparent text-neutral-700 font-semibold border border-transparent"
-                }`}
+                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs cursor-pointer select-none ${portalMode === "employer"
+                  ? "bg-black text-white font-bold border border-black shadow-xs"
+                  : "bg-transparent text-neutral-700 font-semibold border border-transparent"
+                  }`}
               >
                 <Building2 size={13} />
                 <span>Chapter Job Management</span>
@@ -416,11 +514,10 @@ function JobsPageContent() {
               <button
                 type="button"
                 onClick={() => setPortalMode("member")}
-                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs cursor-pointer select-none ${
-                  portalMode === "member"
-                    ? "bg-black text-white font-bold border border-black shadow-xs"
-                    : "bg-transparent text-neutral-700 font-semibold border border-transparent"
-                }`}
+                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs cursor-pointer select-none ${portalMode === "member"
+                  ? "bg-black text-white font-bold border border-black shadow-xs"
+                  : "bg-transparent text-neutral-700 font-semibold border border-transparent"
+                  }`}
               >
                 <Users size={13} />
                 <span>Student Directory View</span>
@@ -434,11 +531,10 @@ function JobsPageContent() {
               <button
                 type="button"
                 onClick={() => setPortalMode("employer")}
-                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs cursor-pointer select-none ${
-                  portalMode === "employer"
-                    ? "bg-black text-white font-bold border border-black shadow-xs"
-                    : "bg-transparent text-neutral-700 font-semibold border border-transparent"
-                }`}
+                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs cursor-pointer select-none ${portalMode === "employer"
+                  ? "bg-black text-white font-bold border border-black shadow-xs"
+                  : "bg-transparent text-neutral-700 font-semibold border border-transparent"
+                  }`}
               >
                 <Building2 size={13} />
                 <span>My Company Postings</span>
@@ -446,11 +542,10 @@ function JobsPageContent() {
               <button
                 type="button"
                 onClick={() => setPortalMode("member")}
-                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs cursor-pointer select-none ${
-                  portalMode === "member"
-                    ? "bg-black text-white font-bold border border-black shadow-xs"
-                    : "bg-transparent text-neutral-700 font-semibold border border-transparent"
-                }`}
+                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs cursor-pointer select-none ${portalMode === "member"
+                  ? "bg-black text-white font-bold border border-black shadow-xs"
+                  : "bg-transparent text-neutral-700 font-semibold border border-transparent"
+                  }`}
               >
                 <Users size={13} />
                 <span>Browse Chapter Board</span>
@@ -463,23 +558,21 @@ function JobsPageContent() {
             <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
               <button
                 type="button"
-                onClick={() => setOnlyMyApplications(false)}
-                className={`px-3 py-1.5 rounded-lg cursor-pointer ${
-                  !onlyMyApplications
-                    ? "bg-white text-black shadow-2xs font-black"
-                    : "text-neutral-500 font-semibold"
-                }`}
+                onClick={() => handleOnlyMyApplicationsChange(false)}
+                className={`px-3 py-1.5 rounded-lg cursor-pointer ${!onlyMyApplications
+                  ? "bg-white text-black shadow-2xs font-black"
+                  : "text-neutral-500 font-semibold"
+                  }`}
               >
                 All Opportunities
               </button>
               <button
                 type="button"
-                onClick={() => setOnlyMyApplications(true)}
-                className={`px-3 py-1.5 rounded-lg cursor-pointer ${
-                  onlyMyApplications
-                    ? "bg-black text-white shadow-2xs font-black"
-                    : "text-neutral-500 font-semibold"
-                }`}
+                onClick={() => handleOnlyMyApplicationsChange(true)}
+                className={`px-3 py-1.5 rounded-lg cursor-pointer ${onlyMyApplications
+                  ? "bg-black text-white shadow-2xs font-black"
+                  : "text-neutral-500 font-semibold"
+                  }`}
               >
                 My Applications ({studentApplicationsCount})
               </button>
@@ -613,7 +706,7 @@ function JobsPageContent() {
             <div className="w-full">
               <SearchInput
                 value={searchQuery}
-                onChange={setSearchQuery}
+                onChange={handleSearchChange}
                 placeholder="Search by job title, company, skills (e.g. C++, RTOS, Altium)..."
                 ariaLabel="Search by job title, company, skills"
               />
@@ -624,13 +717,13 @@ function JobsPageContent() {
               {/* Job Filters (Top on mobile/tablet, Sidebar on min-[1056px]) */}
               <JobFilters
                 selectedEmploymentTypes={selectedEmploymentTypes}
-                setSelectedEmploymentTypes={setSelectedEmploymentTypes}
+                setSelectedEmploymentTypes={handleEmploymentTypesChange}
                 selectedLocationTypes={selectedLocationTypes}
-                setSelectedLocationTypes={setSelectedLocationTypes}
+                setSelectedLocationTypes={handleLocationTypesChange}
                 selectedSkills={selectedSkills}
-                setSelectedSkills={setSelectedSkills}
+                setSelectedSkills={handleSkillsChange}
                 selectedCompanies={selectedCompanies}
-                setSelectedCompanies={setSelectedCompanies}
+                setSelectedCompanies={handleCompaniesChange}
                 availableSkills={allJobSkills}
                 availableCompanies={hiringCompanies}
                 onResetAll={resetAllFilters}
@@ -778,7 +871,7 @@ function JobsPageContent() {
                           job={job}
                           hasApplied={hasApplied}
                           application={application}
-                          onSelectJob={setSelectedJobForDetail}
+                          onSelectJob={handleSelectJob}
                         />
                       );
                     })}
@@ -824,8 +917,8 @@ function JobsPageContent() {
                 applications={
                   isSponsor
                     ? applicationsList.filter((a) =>
-                        employerJobs.some((j) => j.id === a.jobId)
-                      )
+                      employerJobs.some((j) => j.id === a.jobId)
+                    )
                     : applicationsList
                 }
               />
@@ -856,7 +949,7 @@ function JobsPageContent() {
           existingApplication={applicationsList.find(
             (a) => a.jobId === selectedJobForDetail.id && a.memberId === activeStudent.id
           )}
-          onClose={() => setSelectedJobForDetail(null)}
+          onClose={handleCloseJobModal}
           onApplySuccess={handleApplySuccess}
         />
       )}
@@ -878,7 +971,10 @@ function JobsPageContent() {
           applications={applicationsList.filter((a) => a.jobId === selectedJobForApplicants.id)}
           students={students}
           onClose={() => setSelectedJobForApplicants(null)}
-          onViewPortfolio={(student: Student) => setInspectedStudent(student)}
+          onViewPortfolio={(student: Student) => {
+            setInspectedStudent(student);
+            updateJobUrl({ member: getStudentSlug(student) });
+          }}
           onStatusUpdate={handleStatusUpdate}
         />
       )}
@@ -887,7 +983,10 @@ function JobsPageContent() {
       {inspectedStudent && (
         <PortfolioModal
           student={inspectedStudent}
-          onClose={() => setInspectedStudent(null)}
+          onClose={() => {
+            setInspectedStudent(null);
+            updateJobUrl({ member: null });
+          }}
           adminMode={true}
           role="admin"
           allStudents={students}
