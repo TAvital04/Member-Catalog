@@ -262,6 +262,16 @@ Enables corporate partners, recruiters, and alumni benefactors to submit custom 
 | | Collaboration Vision & Notes | Textarea | Optional scope notes, milestones, and branding requests. |
 | **Action Bar** | Submit Sponsorship Pledge | Button | Dispatches structured email payload to chapter sponsorship directors with loading spinner and inline feedback. |
 
+### Dual-Tier Architecture: Grassroots Backer vs. Corporate Partner
+Inside the Project Modal **"Sponsor"** tab, active projects provide a dual-tier segmented toggle:
+1. **Tier A: Project Backer (`ProjectBackerForm.tsx`)**:
+   - For individuals, alumni, parents, and community engineers.
+   - Micro-grants, prototype PCB fabrication orders, sensors/microcontrollers, lab tools, or build sprint food.
+   - Zero corporate deliverables, logo requirements, or marketing contracts.
+   - Includes anonymous public roster display toggle and affiliation selection (`USF Engineering Alum`, `Industry Engineer`, `Parent / Family`, `Maker`).
+2. **Tier B: Corporate Sponsorship (`ProjectSponsorshipForm.tsx`)**:
+   - For official companies and corporate recruiters seeking brand placement, chassis branding, resume book access, or technical advisory partnerships.
+
 ### Completed & Concluded Project Invariant
 When a build project or workshop event has concluded (`project.status === "Completed"` or `project.active === false`, or `event.endTime/startTime` in the past):
 - The direct sponsorship input form is disabled and suppressed.

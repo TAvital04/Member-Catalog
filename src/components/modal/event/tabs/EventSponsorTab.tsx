@@ -120,12 +120,10 @@ ${sponsorMessage || "Interested in learning more about corporate workshop sponso
         <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider py-1 leading-normal min-w-0">
           <span>{isDone ? "Event Sponsorship Overview (Concluded)" : "Sponsor This Workshop & Event"}</span>
         </div>
-        {isDone ? (
+        {isDone && (
           <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-neutral-100 text-neutral-700 border border-neutral-300">
             Concluded
           </span>
-        ) : (
-          <span className="text-[11px] text-slate-500 font-medium">RSO USF Corporate Partnerships</span>
         )}
       </div>
 

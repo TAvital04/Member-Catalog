@@ -19,11 +19,12 @@ describe("ProjectModal Component & Interactive Tabs", () => {
     expect(screen.getByText(/Project Mission & Technical Overview/i)).toBeInTheDocument();
   });
 
-  test("switches between interactive tabs (Tools, Timeline, People, Skills, Sponsor)", () => {
+  test("switches between interactive tabs (Tools, Timeline, People, Skills, Backer in standard role)", () => {
     render(
       <ProjectModal
         project={sampleProject}
         onClose={jest.fn()}
+        role="standard"
       />
     );
 
@@ -48,25 +49,27 @@ describe("ProjectModal Component & Interactive Tabs", () => {
     expect(screen.getByText(/Student Team & Contributors/i)).toBeInTheDocument();
     expect(screen.getByText("Alex Rivera")).toBeInTheDocument();
 
-    // Click Sponsor Benefits Tab
-    const sponsorTabButton = screen.getByRole("button", { name: /sponsor/i });
-    fireEvent.click(sponsorTabButton);
-    expect(screen.getByText(/Sponsorship Opportunities & Partner Benefits/i)).toBeInTheDocument();
-    expect(screen.getByText(/Branding on Robot Carbon-Fiber Chassis/i)).toBeInTheDocument();
+    // Click Back Tab (standard role)
+    const backTabButton = screen.getByRole("button", { name: /^back$/i });
+    fireEvent.click(backTabButton);
+    expect(screen.getByText(/Project Target & Community Backing/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Back This Project/i })).toBeInTheDocument();
   });
 
-  test("renders direct sponsorship inquiry form with input fields", () => {
+  test("renders Corporate Sponsor tab and corporate pledge form when role is sponsor", () => {
     render(
       <ProjectModal
         project={sampleProject}
         onClose={jest.fn()}
-        initialTab="sponsor"
+        role="sponsor"
       />
     );
 
-    expect(screen.getByPlaceholderText(/e\.g\. Dr\. Jane Smith/i)).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/contact@company\.com/i)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Send Sponsorship Inquiry/i })).toBeInTheDocument();
+    // Click Sponsor Tab (sponsor role)
+    const sponsorTabButton = screen.getByRole("button", { name: /sponsor/i });
+    fireEvent.click(sponsorTabButton);
+    expect(screen.getByText(/Why Partner With This Project\?/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Submit Sponsorship Pledge/i })).toBeInTheDocument();
   });
 
   test("renders tools and skills as clickable filter links even in standard role", () => {

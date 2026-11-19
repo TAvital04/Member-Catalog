@@ -99,6 +99,7 @@ export default function ProjectModal({
             <ProjectTabNavigation
               activeTab={activeTab}
               setActiveTab={setActiveTab}
+              role={role}
             />
 
             {/* Tab Content Display */}
@@ -154,7 +155,7 @@ export default function ProjectModal({
 
               {/* Sponsor & Partner Benefits Tab */}
               {activeTab === "sponsor" && (
-                <ProjectSponsorTab project={project} />
+                <ProjectSponsorTab project={project} role={role} />
               )}
             </div>
           </div>

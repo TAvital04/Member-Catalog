@@ -74,11 +74,30 @@ describe("Sponsor Tab Concluded State Tests", () => {
     active: true,
   };
 
-  test("active project renders active ProjectSponsorshipForm", () => {
-    render(<ProjectSponsorTab project={activeProject} />);
+  test("active project renders only ProjectBackerForm when not logged in as corporate sponsor", () => {
+    render(<ProjectSponsorTab project={activeProject} role="standard" />);
 
-    expect(screen.getByRole("button", { name: /Submit Sponsorship Pledge/i })).toBeInTheDocument();
+    // Renders Project Backer tier
+    expect(screen.getByRole("button", { name: /Back This Project/i })).toBeInTheDocument();
+    expect(screen.getByText(/Project Target & Community Backing/i)).toBeInTheDocument();
     expect(screen.queryByText(/Has Concluded/i)).not.toBeInTheDocument();
+
+    // Does NOT render corporate pledge button or corporate partner tier
+    expect(screen.queryByRole("button", { name: /Submit Sponsorship Pledge/i })).not.toBeInTheDocument();
+    expect(screen.queryByText(/Why Partner With This Project\?/i)).not.toBeInTheDocument();
+  });
+
+  test("active project renders only Corporate Sponsorship Partner Tier when logged in as corporate sponsor", () => {
+    render(<ProjectSponsorTab project={activeProject} role="sponsor" />);
+
+    // Renders Corporate Sponsorship tier
+    expect(screen.getByRole("button", { name: /Submit Sponsorship Pledge/i })).toBeInTheDocument();
+    expect(screen.getByText(/Why Partner With This Project\?/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Has Concluded/i)).not.toBeInTheDocument();
+
+    // Does NOT render backer tier
+    expect(screen.queryByRole("button", { name: /Back This Project/i })).not.toBeInTheDocument();
+    expect(screen.queryByText(/Project Target & Community Backing/i)).not.toBeInTheDocument();
   });
 
   test("completed project disables sponsoring and displays link to explore other projects", () => {

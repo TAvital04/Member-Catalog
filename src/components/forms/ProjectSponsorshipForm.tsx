@@ -278,7 +278,7 @@ export default function ProjectSponsorshipForm({
                   type="text"
                   value={estimatedAmount}
                   onChange={(e) => setEstimatedAmount(e.target.value)}
-                  placeholder="e.g. $5,000 cash grant, 20 FPGA evaluation kits, or custom PCB fab services"
+                  placeholder="e.g. Project grant, lab evaluation hardware, or fabrication services"
                   className="w-full px-3 py-2 rounded-xl bg-neutral-50 border border-neutral-200 text-xs text-black placeholder:text-neutral-400 focus:bg-white focus:outline-none focus:border-black font-sans"
                 />
               </div>
