@@ -18,7 +18,12 @@ if (!globalForEvents.__ieeeDynamicEvents) {
 }
 
 function getDynamicEvents(): IEEEEvent[] {
-  return globalForEvents.__ieeeDynamicEvents!;
+  // Always synchronize with fresh SAMPLE_IEEE_EVENTS while preserving runtime user-created dynamic events
+  const staticSlugs = new Set(SAMPLE_IEEE_EVENTS.map((e) => e.slug));
+  const dynamicOnly = (globalForEvents.__ieeeDynamicEvents || []).filter(
+    (e) => !staticSlugs.has(e.slug)
+  );
+  return [...SAMPLE_IEEE_EVENTS, ...dynamicOnly];
 }
 
 export async function GET() {
@@ -26,6 +31,23 @@ export async function GET() {
     let eventRows: any[] = [];
 
     try {
+      // Auto-synchronize timestamps in database if seeded rows exist
+      for (const sample of SAMPLE_IEEE_EVENTS) {
+        if (sample.slug && sample.startTime) {
+          try {
+            await db
+              .update(events)
+              .set({
+                startTime: new Date(sample.startTime),
+                endTime: sample.endTime ? new Date(sample.endTime) : null,
+              })
+              .where(eq(events.slug, sample.slug));
+          } catch {
+            // ignore non-matching or missing rows
+          }
+        }
+      }
+
       eventRows = await db
         .select({
           id: events.id,
@@ -112,8 +134,8 @@ export async function GET() {
         slug: row.slug || `event-${row.id}`,
         description: row.description,
         location: row.location || "USF Main Campus",
-        startTime: typeof row.startTime === "object" && row.startTime ? row.startTime.toISOString() : String(row.startTime),
-        endTime: row.endTime ? (typeof row.endTime === "object" ? row.endTime.toISOString() : String(row.endTime)) : undefined,
+        startTime: sampleMatch?.startTime || (typeof row.startTime === "object" && row.startTime ? row.startTime.toISOString() : String(row.startTime)),
+        endTime: sampleMatch?.endTime || (row.endTime ? (typeof row.endTime === "object" ? row.endTime.toISOString() : String(row.endTime)) : undefined),
         category: (sampleMatch?.category || "Technical Workshop") as EventCategory,
         host: sampleMatch?.host || "RSO USF Student Chapter",
         partner: sampleMatch?.partner,

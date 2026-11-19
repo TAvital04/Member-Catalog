@@ -202,8 +202,8 @@ export default function ProjectBackerForm({
                     { value: "Project Materials & Build Resources", label: "Project Materials & Build Resources" },
                     { value: "Equipment & Hardware Donation", label: "Equipment & Hardware Donation" },
                     { value: "Team Mentorship & Technical Advisory", label: "Team Mentorship & Technical Advisory" },
-                    { value: "Sprint Fuel & Build Supplies", label: "Sprint Fuel & Build Supplies" },
-                    { value: "General Project Support", label: "General Project Support" },
+                    { value: "Build Sprint Refreshments", label: "Build Sprint Refreshments (Food & Drinks)" },
+                    { value: "Other / General Support", label: "Other / General Support" },
                   ]}
                   variant="input"
                   className="w-full"

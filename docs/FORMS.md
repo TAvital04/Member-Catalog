@@ -16,8 +16,9 @@ This document is the authoritative master specification for all data-capture for
 | **6** | [Recruiter Direct Outreach Form](#form-6-sponsor--recruiter-direct-candidate-outreach-form) | `sponsor` / `admin` | Candidate Portfolio (`Contact` Tab) | [`src/components/forms/RecruiterContactForm.tsx`](../src/components/forms/RecruiterContactForm.tsx) | **Completed** |
 | **7** | [1-Click Job Application](#form-7-member--1-click-portfolio-job-application-form) | `standard` (Member) | `/jobs` | [`src/components/forms/JobApplicationForm.tsx`](../src/components/forms/JobApplicationForm.tsx) | **Completed** |
 | **8** | [Project Sponsorship Pledge & Equipment Grant](#form-9-sponsor--project-sponsorship-pledge--equipment-grant-form) | `sponsor` / `admin` | `/projects` (Project Modal `Sponsor` Tab) | [`src/components/forms/ProjectSponsorshipForm.tsx`](../src/components/forms/ProjectSponsorshipForm.tsx) | **Completed** |
-| **9** | [Member Portfolio & Resume Form](#form-8-member--portfolio--resume-data-integration-form) | `standard` (Member) | External (`/settings`) | External Primary Website | **External / Future** |
-| **10** | [Profile Moderation & Flagging](#form-9-rso-leadership--candidate-profile-flagging--moderation) | `rso_leadership` | `/` | `src/components/dialogs/FlagDialog.tsx` | **Decommissioned** |
+| **9** | [Event & Workshop Community Backer Form](#form-11-community--event--workshop-community-backer-form) | `standard` (Member / Guest) | `/events` (Event Modal `Back` Tab) | [`src/components/forms/EventBackerForm.tsx`](../src/components/forms/EventBackerForm.tsx) | **Completed** |
+| **10** | [Member Portfolio & Resume Form](#form-8-member--portfolio--resume-data-integration-form) | `standard` (Member) | External (`/settings`) | External Primary Website | **External / Future** |
+| **11** | [Profile Moderation & Flagging](#form-9-rso-leadership--candidate-profile-flagging--moderation) | `rso_leadership` | `/` | `src/components/dialogs/FlagDialog.tsx` | **Decommissioned** |
 
 ---
 
@@ -299,6 +300,28 @@ Allows RSO Leadership to moderate candidate profiles for unverified claims, FERP
 | **Custom Reason Text** | Textarea | `member_resumes.flag_reason` | Required if custom reason chosen |
 | **Notify Candidate** | Checkbox | — | Dispatches automated notification email to candidate explaining moderation status |
 | **Resolution Action** | Dialog buttons | `flagged = false` | Unflags profile or purges rejected entry upon review |
+
+---
+
+## Form 11: Community — Event & Workshop Community Backer Form
+
+* **Role**: `standard` (Guest, Student Member, Alum, Parent)
+* **Where It Lives**: [`/events`](../src/app/events/page.tsx) (Event Modal **"Back"** Tab)
+* **Component Path**: [`src/components/forms/EventBackerForm.tsx`](../src/components/forms/EventBackerForm.tsx)
+* **Preset Taxonomy**: [`src/lib/eventBackingPresets.ts`](../src/lib/eventBackingPresets.ts)
+* **API Route**: `POST /api/send-email` (`to: "sponsorship@rsousf.org"`, `recipientType: "admin"`)
+
+### Purpose
+Allows individuals, alumni, parents, and community engineers to back student engineering workshops, hackathons, GBMs, and tours with direct kit supplies, refreshments, or sprint fuel—without corporate branding contracts or marketing obligations.
+
+### Category-Driven Presets (Zero Work for Event Leads)
+The form automatically derives its options, scope text, and non-intimidating placeholder from `event.category`:
+- **Technical Workshop**: Lab Tools & Test Equipment Support, Other / General Support.
+- **Competition & Hackathon**: Student Prize Pool & Awards, Hardware Hack Pack, 24-Hour Midnight Sprint Fuel, Competition Cloud & Dev Resources, Other / General Support.
+- **General Body Meeting (GBM)**: Meeting Refreshments & Catering (Food & Drinks), Other / General Support.
+- **Career & Networking**: Networking Reception Refreshments & Coffee (Food & Drinks), Printed Resume Portfolios, Professional Preparation Materials, Other / General Support.
+- **Industry Tech Talk**: Seminar Refreshments & Coffee (Food & Drinks), Other / General Support.
+- **Special Event & Tour**: Student Transportation & Bus Subsidies, PPE Safety Gear & Badges, Group Travel Refreshments & Box Lunches (Food & Drinks), Other / General Support.
 
 ---
 

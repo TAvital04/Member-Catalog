@@ -136,7 +136,7 @@ function IEEEEventsContent() {
 
   const handleCloseEventModal = () => {
     setActiveModalEvent(null);
-    updateEventUrl({ event: null, eventId: null, slug: null });
+    updateEventUrl({ event: null, eventId: null, slug: null, tab: null });
   };
 
   const handleSelectMember = (memberId?: string, name?: string, email?: string) => {

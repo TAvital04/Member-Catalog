@@ -155,7 +155,7 @@ export default function ProjectModal({
 
               {/* Sponsor & Partner Benefits Tab */}
               {activeTab === "sponsor" && (
-                <ProjectSponsorTab project={project} role={role} />
+                <ProjectSponsorTab project={project} role={role} onClose={onClose} />
               )}
             </div>
           </div>

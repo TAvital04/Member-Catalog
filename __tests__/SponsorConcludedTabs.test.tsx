@@ -100,34 +100,57 @@ describe("Sponsor Tab Concluded State Tests", () => {
     expect(screen.queryByText(/Project Target & Community Backing/i)).not.toBeInTheDocument();
   });
 
-  test("completed project disables sponsoring and displays link to explore other projects", () => {
-    render(<ProjectSponsorTab project={completedProject} />);
+  test("completed project disables sponsoring and displays clean unspecific concluded notice", () => {
+    const onClose = jest.fn();
+    render(<ProjectSponsorTab project={completedProject} onClose={onClose} />);
 
     // Does not show pledge button
     expect(screen.queryByRole("button", { name: /Submit Sponsorship Pledge/i })).not.toBeInTheDocument();
 
-    // Displays concluded notice and redirect to active projects
-    expect(screen.getByText("Completed Mars Rover Has Concluded")).toBeInTheDocument();
+    // Displays unspecific concluded notice and redirect to active projects
+    expect(screen.getByText("This Has Concluded")).toBeInTheDocument();
     expect(screen.getByText("Sponsorship Closed")).toBeInTheDocument();
-    expect(screen.getByText("Explore Active Projects")).toBeInTheDocument();
+    const seeMoreBtn = screen.getByText("See More Projects");
+    expect(seeMoreBtn).toBeInTheDocument();
+    expect(screen.queryByText(/Completed Mars Rover/i)).not.toBeInTheDocument();
+
+    // Clicking See More Projects triggers modal close
+    fireEvent.click(seeMoreBtn);
+    expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  test("upcoming event renders event sponsorship inquiry form", () => {
-    render(<EventSponsorTab event={upcomingEvent} />);
+  test("upcoming event renders EventBackerForm when not logged in as corporate sponsor", () => {
+    render(<EventSponsorTab event={upcomingEvent} role="standard" />);
 
-    expect(screen.getByRole("button", { name: /Submit Event Sponsorship Inquiry/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Back This Event/i })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /Submit Event Sponsorship Inquiry/i })).not.toBeInTheDocument();
     expect(screen.queryByText(/Has Concluded/i)).not.toBeInTheDocument();
   });
 
-  test("past/concluded event disables sponsoring and displays link to explore active projects", () => {
-    render(<EventSponsorTab event={pastEvent} />);
+  test("upcoming event renders corporate inquiry form when logged in as corporate sponsor", () => {
+    render(<EventSponsorTab event={upcomingEvent} role="sponsor" />);
+
+    expect(screen.getByRole("button", { name: /Submit Event Sponsorship Inquiry/i })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /Back This Event/i })).not.toBeInTheDocument();
+    expect(screen.queryByText(/Has Concluded/i)).not.toBeInTheDocument();
+  });
+
+  test("past/concluded event disables sponsoring and displays clean unspecific concluded notice", () => {
+    const onClose = jest.fn();
+    render(<EventSponsorTab event={pastEvent} onClose={onClose} />);
 
     // Does not show inquiry button
     expect(screen.queryByRole("button", { name: /Submit Event Sponsorship Inquiry/i })).not.toBeInTheDocument();
 
-    // Displays concluded notice and link to other projects
-    expect(screen.getByText("Past Altium Seminar Has Concluded")).toBeInTheDocument();
+    // Displays unspecific concluded notice and redirect to events
+    expect(screen.getByText("This Has Concluded")).toBeInTheDocument();
     expect(screen.getByText("Sponsorship Closed")).toBeInTheDocument();
-    expect(screen.getByText("Explore Active Projects")).toBeInTheDocument();
+    const seeMoreBtn = screen.getByText("See More Events");
+    expect(seeMoreBtn).toBeInTheDocument();
+    expect(screen.queryByText(/Past Altium Seminar/i)).not.toBeInTheDocument();
+
+    // Clicking See More Events triggers modal close
+    fireEvent.click(seeMoreBtn);
+    expect(onClose).toHaveBeenCalledTimes(1);
   });
 });

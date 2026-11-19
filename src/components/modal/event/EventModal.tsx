@@ -19,6 +19,7 @@ import { CARD_INTERACTIVE, CARD_BASE, CARD_TITLE_HOVER } from "@/lib/cardStyles"
 import CurrentSponsorsSegment from "@/components/common/CurrentSponsorsSegment";
 import EventSponsorTab from "./tabs/EventSponsorTab";
 import { Heading, Subheading, Badge } from "@/components/ui";
+import { useRoleManager } from "@/hooks/useRoleManager";
 
 interface EventModalProps {
   event: IEEEEvent | null;
@@ -39,7 +40,13 @@ export default function EventModal({
   role,
   canFilter: explicitCanFilter,
 }: EventModalProps) {
-  const canFilter = explicitCanFilter ?? (role ? role !== "standard" : true);
+  const roleManager = useRoleManager();
+  const currentRole = role !== undefined ? role : roleManager.role;
+  const isCorporateSponsor = currentRole === "sponsor" || roleManager.session?.accountType === "sponsor";
+  const sponsorTabLabel = isCorporateSponsor ? "Sponsor" : "Back";
+  const sponsorTabAriaLabel = isCorporateSponsor ? "Sponsor an Event" : "Back This Event";
+
+  const canFilter = explicitCanFilter ?? (currentRole ? currentRole !== "standard" : true);
   const [activeTab, setActiveTab] = useState<EventTabType>("overview");
 
   // Handle escape key and body scroll lock
@@ -106,8 +113,8 @@ export default function EventModal({
     },
     {
       id: "sponsor",
-      label: "Sponsor",
-      ariaLabel: "Sponsor an Event",
+      label: sponsorTabLabel,
+      ariaLabel: sponsorTabAriaLabel,
       icon: HeartHandshake,
     },
   ];
@@ -428,9 +435,9 @@ export default function EventModal({
                 </div>
               )}
 
-              {/* Sponsor an Event Tab */}
+              {/* Sponsor / Back an Event Tab */}
               {activeTab === "sponsor" && (
-                <EventSponsorTab event={event} />
+                <EventSponsorTab event={event} role={currentRole} onClose={onClose} />
               )}
             </div>
           </div>
