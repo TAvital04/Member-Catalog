@@ -14,7 +14,6 @@ interface StudentRowProps {
   adminMode: boolean;
   canFilter?: boolean;
   onDelete?: (id: string) => void;
-  onToggleFlag?: (id: string) => void;
 }
 
 function StudentRow({

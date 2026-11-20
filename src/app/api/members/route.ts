@@ -86,8 +86,6 @@ export async function GET(request?: Request) {
           projects: c.projects,
           clubMemberships: c.clubMemberships,
           certifications: c.certifications,
-          flagged: false,
-          flagReason: undefined,
           mainProjectName: (c.projects && c.projects[0]) ? c.projects[0].projectName : undefined,
           ferpaConsentSigned: true,
           shareGpaWithRecruiters: true,
@@ -173,7 +171,7 @@ export async function GET(request?: Request) {
 
         const education = Array.isArray(row.education)
           ? row.education.map((e: any) => ({
-              schoolName: e.schoolName || "University of Central Florida",
+              schoolName: e.schoolName || "University of South Florida",
               degreeType: e.degreeType || "Bachelor of Science",
               major: e.major || "Computer Science",
               gpa: allowGpaView ? e.gpa : undefined,
@@ -237,8 +235,8 @@ export async function GET(request?: Request) {
 
         return {
           id: row.id,
-          name: row.fullName || "UCF Member",
-          email: row.email || "student@knights.ucf.edu",
+          name: row.fullName || "USF Member",
+          email: row.email || "student@usf.edu",
           bio: row.bio || "",
           skills: memberSkills,
           links: socialLinks,
@@ -246,7 +244,7 @@ export async function GET(request?: Request) {
             ? education
             : [
                 {
-                  schoolName: "University of Central Florida",
+                  schoolName: "University of South Florida",
                   degreeType: "Bachelor of Science",
                   major: row.memberMajor || primaryEdu.major || "Computer Science",
                   gpa: allowGpaView ? primaryEdu.gpa : undefined,
@@ -283,8 +281,6 @@ export async function GET(request?: Request) {
           degree: primaryEdu.degreeType || "Bachelor of Science",
           gradDate: row.memberGradYear ? `May ${row.memberGradYear}` : "May 2026",
           status: row.status || "Seeking Internship",
-          flagged: false,
-          flagReason: undefined,
           mainProjectName: row.mainProjectName || undefined,
           points,
           recentPoints,
@@ -357,34 +353,6 @@ export async function GET(request?: Request) {
       },
       { status: 500 }
     );
-  }
-}
-
-/**
- * PATCH /api/members — Deprecated moderation endpoint (retained for backward compatibility)
- */
-export async function PATCH(request: Request) {
-  try {
-    const role = request.headers.get("x-user-role") || "standard";
-    const isAuthorized = role === "admin" || role === "sponsor";
-    if (!isAuthorized) {
-      return Response.json(
-        { success: false, error: "Unauthorized. Admin or sponsor role required." },
-        { status: 403 }
-      );
-    }
-
-    const body = await request.json();
-    const { id } = body || {};
-
-    if (!id || typeof id !== "string") {
-      return Response.json({ success: false, error: "Valid member resume ID is required" }, { status: 400 });
-    }
-
-    return Response.json({ success: true, message: "Profile flagging is deprecated" });
-  } catch (error: any) {
-    console.error("[API Error] Failed to update member status:", error);
-    return Response.json({ success: false, error: error?.message || "Failed to update member status" }, { status: 500 });
   }
 }
 

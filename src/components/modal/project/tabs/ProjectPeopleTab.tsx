@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ProjectParticipant } from "@/data/projects";
 import Avatar from "@/components/common/Avatar";
 import { Users, GraduationCap, Crown, Shield } from "lucide-react";
@@ -18,8 +19,18 @@ export default function ProjectPeopleTab({
   onSelectMember,
   role = "admin",
 }: ProjectPeopleTabProps) {
+  const router = useRouter();
   const safeParticipants = Array.isArray(participants) ? participants : [];
   const isStandard = role === "standard";
+
+  const handleMemberClick = (person: ProjectParticipant) => {
+    if (onSelectMember) {
+      onSelectMember(person.memberId, person.name, person.email);
+    } else {
+      const slug = (person.name || person.memberId).toLowerCase().trim().replace(/[^a-z0-9]+/g, "-");
+      router.push(`/u/${slug}`);
+    }
+  };
 
   // When standard user views project team, filter to Leads/Directors only
   const leads = safeParticipants.filter((p) =>
@@ -84,11 +95,11 @@ export default function ProjectPeopleTab({
                 key={person.memberId}
                 role="button"
                 tabIndex={0}
-                onClick={() => onSelectMember?.(person.memberId, person.name, person.email)}
+                onClick={() => handleMemberClick(person)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
-                    onSelectMember?.(person.memberId, person.name, person.email);
+                    handleMemberClick(person);
                   }
                 }}
                 aria-label={`View member profile of ${person.name}`}

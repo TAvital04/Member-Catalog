@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 
 export type UserRole = "standard" | "sponsor" | "admin" | "student";
-export type AuthAccountType = "rso_leadership" | "sponsor" | "student" | "standard";
+export type AuthAccountType = "rso_leadership" | "sponsor" | "student";
 
 export interface AuthSession {
   accountType: AuthAccountType;
@@ -29,7 +29,7 @@ export function useRoleManager(defaultRole: UserRole = "standard") {
       const savedSessionRaw = localStorage.getItem(SESSION_STORAGE_KEY);
       if (savedSessionRaw) {
         const parsed = JSON.parse(savedSessionRaw) as AuthSession;
-        if (parsed && (parsed.role === "admin" || parsed.role === "sponsor" || parsed.role === "student" || parsed.role === "standard")) {
+        if (parsed && (parsed.role === "admin" || parsed.role === "sponsor" || parsed.role === "student")) {
           setSessionState(parsed);
           setRoleState(parsed.role);
           return;
@@ -131,7 +131,7 @@ export function useRoleManager(defaultRole: UserRole = "standard") {
   const isSponsor = role === "sponsor";
   const isStudent = role === "student";
   const isStandard = role === "standard";
-  const isAuthenticated = session !== null || role !== "standard";
+  const isAuthenticated = session !== null && role !== "standard";
 
   return {
     role,

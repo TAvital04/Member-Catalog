@@ -373,16 +373,16 @@ export const SAMPLE_JOB_POSTINGS: JobPosting[] = [
   {
     id: "job-6",
     title: "Robotics & Autonomous Vehicle Software Intern",
-    slug: "knighttech-robotics-autonomous-vehicle-intern",
-    companyName: "KnightTech Robotics",
-    companyLogo: "KTR",
+    slug: "bulltech-robotics-autonomous-vehicle-intern",
+    companyName: "BullTech Robotics",
+    companyLogo: "BTR",
     department: "Autonomy Core",
-    location: "Orlando, FL",
+    location: "Tampa, FL",
     locationType: "Hybrid",
     employmentType: "Internship",
     experienceLevel: "Internship / Student",
     salaryRange: "$26 - $32 / hr",
-    description: "KnightTech Robotics is a venture-backed autonomous delivery robotics startup located right in the USF Research Park. We are recruiting RSO USF student roboticists to build ROS2 perception and trajectory planning algorithms.",
+    description: "BullTech Robotics is a venture-backed autonomous delivery robotics startup located right in the USF Research Park. We are recruiting RSO USF student roboticists to build ROS2 perception and trajectory planning algorithms.",
     responsibilities: [
       "Develop ROS2 navigation and behavior tree packages for autonomous ground robots.",
       "Train edge computer vision models (YOLO / TensorRT) on embedded NVIDIA Jetson platforms.",
@@ -401,8 +401,8 @@ export const SAMPLE_JOB_POSTINGS: JobPosting[] = [
       "Equity grant participation options upon successful internship completion."
     ],
     skillsRequired: ["ROS", "Robotics", "Computer Vision", "Python", "C++"],
-    employerEmail: "careers@knighttechrobotics.com",
-    employerWebsite: "https://knighttechrobotics.com",
+    employerEmail: "careers@bulltechrobotics.com",
+    employerWebsite: "https://bulltechrobotics.com",
     status: "Active",
     featured: true,
     createdAt: "2026-10-17T13:00:00Z",
@@ -420,7 +420,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     coverNote: "I've spent the last year developing embedded motor control algorithms for the USF RSO Autonomous Rover and have hands-on experience with FreeRTOS and STM32.",
     portfolioSnapshot: {
       name: "Marcus Vance",
-      email: "marcus.vance@knights.ucf.edu",
+      email: "marcus.vance@usf.edu",
       major: "Computer Engineering",
       gradDate: "May 2026",
       skills: ["Robotics", "C++", "ROS", "Embedded Systems", "Linux", "RTOS"],
@@ -439,7 +439,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     coverNote: "Junior specializing in low-level flight firmware and Linux kernel drivers. Completed a previous co-op with HIL simulation tools and would love to return to MFC.",
     portfolioSnapshot: {
       name: "Alex Rivera",
-      email: "arivera@knights.ucf.edu",
+      email: "arivera@usf.edu",
       major: "Computer Engineering",
       gradDate: "May 2026",
       skills: ["C++", "FreeRTOS", "Embedded Linux", "Verilog", "STM32", "Git"],
@@ -458,7 +458,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     coverNote: "Experienced in real-time operating systems and C++ automated testing frameworks. Actively building flight telemetry parsers for the AIAA rocketry team.",
     portfolioSnapshot: {
       name: "Sarah Lin",
-      email: "slin@knights.ucf.edu",
+      email: "slin@usf.edu",
       major: "Computer Engineering",
       gradDate: "May 2027",
       skills: ["C++", "Python", "Linux", "Git", "Embedded Systems", "RTOS"],
@@ -477,7 +477,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     coverNote: "Computer Science major with extensive systems-level C/C++ experience and strong interest in aerospace defense software and secure telemetry links.",
     portfolioSnapshot: {
       name: "Liam O'Connor",
-      email: "loconnor@knights.ucf.edu",
+      email: "loconnor@usf.edu",
       major: "Computer Science",
       gradDate: "May 2026",
       skills: ["C++", "Linux", "Git", "Python", "Embedded Systems", "Cybersecurity"],
@@ -498,7 +498,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     coverNote: "I lead the USF RSO PCB Design Workshop and have routed high-speed 4-layer boards in Altium Designer. I would love to contribute to TI's evaluation module reference team.",
     portfolioSnapshot: {
       name: "Ethan Wright",
-      email: "ewright@knights.ucf.edu",
+      email: "ewright@usf.edu",
       major: "Electrical Engineering",
       gradDate: "May 2027",
       skills: ["PCB Layout", "Altium Designer", "Circuit Design", "Soldering", "Power Electronics"],
@@ -517,7 +517,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     coverNote: "Senior Electrical Engineer specializing in switched-mode power supplies (SMPS) and GaN FET gate drivers. Winner of the 2025 Collegiate Hardware Competition.",
     portfolioSnapshot: {
       name: "Maya Patel",
-      email: "mpatel@knights.ucf.edu",
+      email: "mpatel@usf.edu",
       major: "Electrical Engineering",
       gradDate: "May 2026",
       skills: ["Circuit Design", "Power Electronics", "Altium Designer", "Soldering", "Oscilloscopes"],
@@ -536,7 +536,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     coverNote: "Hands-on experience soldering 0402 surface-mount components, laying out multi-layer power distribution networks, and benchtop testing with high-bandwidth DSOs.",
     portfolioSnapshot: {
       name: "David Zhao",
-      email: "dzhao@knights.ucf.edu",
+      email: "dzhao@usf.edu",
       major: "Electrical Engineering",
       gradDate: "May 2026",
       skills: ["Circuit Design", "Altium Designer", "Soldering", "Analog Design", "PCB Layout"],
@@ -555,7 +555,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     coverNote: "Experienced with SPICE circuit simulations and Altium Designer component library management. Excited about TI's Orlando design center operations.",
     portfolioSnapshot: {
       name: "Elena Rostova",
-      email: "erostova@knights.ucf.edu",
+      email: "erostova@usf.edu",
       major: "Electrical Engineering",
       gradDate: "May 2027",
       skills: ["PCB Layout", "Circuit Design", "Altium Designer", "Soldering", "LTspice"],
@@ -576,7 +576,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     coverNote: "Conducted RF anechoic chamber testing for USF RSO CubeSat communications subsystem. Proficient in MATLAB antenna modeling and network analyzer calibration.",
     portfolioSnapshot: {
       name: "Jordan Hayes",
-      email: "jhayes@knights.ucf.edu",
+      email: "jhayes@usf.edu",
       major: "Electrical Engineering",
       gradDate: "May 2026",
       skills: ["RF Engineering", "Wireless Communications", "Antennas", "MATLAB", "Signal Processing"],
@@ -595,13 +595,13 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     coverNote: "Completed undergraduate research in phased-array beamforming and cascaded noise figure optimization. U.S. citizen eligible for defense security clearance.",
     portfolioSnapshot: {
       name: "Chloe Bennett",
-      email: "cbennett@knights.ucf.edu",
+      email: "cbennett@usf.edu",
       major: "Electrical Engineering",
       gradDate: "May 2026",
       skills: ["RF Engineering", "Wireless Communications", "Signal Processing", "MATLAB", "Antennas"],
       mainProjectName: "Digital Beamforming Receiver Front-End",
       resumePdfUrl: "https://drive.google.com/file/d/chloe-bennett-resume/view",
-      bio: "Burnett Honors College scholar focused on airborne radar front-ends, high-frequency S-parameter characterization, and satellite communications."
+      bio: "Judy Genshaft Honors College scholar focused on airborne radar front-ends, high-frequency S-parameter characterization, and satellite communications."
     },
     appliedAt: "2026-10-14T09:15:00Z",
     updatedAt: "2026-10-24T12:00:00Z"
@@ -614,7 +614,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     coverNote: "Experienced in RF microstrip routing, high-frequency PCB substrate selection (Rogers RO4350B), and impedance matching networks using Smith charts.",
     portfolioSnapshot: {
       name: "Ethan Wright",
-      email: "ewright@knights.ucf.edu",
+      email: "ewright@usf.edu",
       major: "Electrical Engineering",
       gradDate: "May 2027",
       skills: ["RF Engineering", "Antennas", "Wireless Communications", "PCB Layout", "Altium Designer"],
@@ -633,7 +633,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     coverNote: "Software-defined radio (SDR) enthusiast with experience implementing QPSK and OFDM modulation pipelines in GNU Radio and MATLAB.",
     portfolioSnapshot: {
       name: "Alex Rivera",
-      email: "arivera@knights.ucf.edu",
+      email: "arivera@usf.edu",
       major: "Computer Engineering",
       gradDate: "May 2026",
       skills: ["Signal Processing", "MATLAB", "C++", "Wireless Communications", "Linux"],
@@ -654,7 +654,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     coverNote: "Passionate about renewable energy grid integration. Completed power systems coursework in transmission line modeling, power flow analysis, and protective relaying.",
     portfolioSnapshot: {
       name: "Maya Patel",
-      email: "mpatel@knights.ucf.edu",
+      email: "mpatel@usf.edu",
       major: "Electrical Engineering",
       gradDate: "May 2026",
       skills: ["Power Electronics", "Control Systems", "Python", "Circuit Design"],
@@ -673,7 +673,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     coverNote: "Experience programming industrial PLCs (Structured Text, Ladder Logic) and building SCADA dashboards using Python and Modbus protocols.",
     portfolioSnapshot: {
       name: "Lucas Silva",
-      email: "lsilva@knights.ucf.edu",
+      email: "lsilva@usf.edu",
       major: "Electrical Engineering",
       gradDate: "May 2027",
       skills: ["Control Systems", "PLC Programming", "Python", "Power Electronics"],
@@ -692,7 +692,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     coverNote: "Experienced in real-time embedded monitoring systems and sensor data acquisition. Looking forward to applying IoT firmware skills to smart grid telemetry.",
     portfolioSnapshot: {
       name: "Marcus Vance",
-      email: "marcus.vance@knights.ucf.edu",
+      email: "marcus.vance@usf.edu",
       major: "Computer Engineering",
       gradDate: "May 2026",
       skills: ["Embedded Systems", "Python", "Control Systems", "C++"],
@@ -711,7 +711,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     coverNote: "Interested in high-voltage circuit breakers and power distribution substations across central Florida.",
     portfolioSnapshot: {
       name: "Elena Rostova",
-      email: "erostova@knights.ucf.edu",
+      email: "erostova@usf.edu",
       major: "Electrical Engineering",
       gradDate: "May 2027",
       skills: ["Power Electronics", "Control Systems", "Circuit Design"],
@@ -732,7 +732,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     coverNote: "Designed a pipelined FFT coprocessor in SystemVerilog for airborne radar signals on Xilinx Artix-7. Comfortable with timing closure and AXI4 stream interfaces.",
     portfolioSnapshot: {
       name: "Alex Rivera",
-      email: "arivera@knights.ucf.edu",
+      email: "arivera@usf.edu",
       major: "Computer Engineering",
       gradDate: "May 2026",
       skills: ["Verilog", "FPGA", "C++", "Signal Processing", "Linux"],
@@ -751,7 +751,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     coverNote: "Extensive coursework in VLSI design, digital signal processing, and high-speed hardware accelerators. Winner of the Dean's Undergraduate Engineering Showcase.",
     portfolioSnapshot: {
       name: "David Zhao",
-      email: "dzhao@knights.ucf.edu",
+      email: "dzhao@usf.edu",
       major: "Computer Engineering",
       gradDate: "May 2026",
       skills: ["Verilog", "FPGA", "C++", "Signal Processing"],
@@ -770,7 +770,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     coverNote: "Experienced writing synthesizable Verilog modules and testbenches using Icarus Verilog and GTKWave. Currently implementing an FIR filter core on Intel Cyclone IV.",
     portfolioSnapshot: {
       name: "Sarah Lin",
-      email: "slin@knights.ucf.edu",
+      email: "slin@usf.edu",
       major: "Computer Engineering",
       gradDate: "May 2027",
       skills: ["Verilog", "C++", "Signal Processing", "Git"],
@@ -789,7 +789,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     coverNote: "Strong theoretical and practical background in digital filter design, adaptive beamforming, and MATLAB fixed-point modeling for FPGA deployment.",
     portfolioSnapshot: {
       name: "Jordan Hayes",
-      email: "jhayes@knights.ucf.edu",
+      email: "jhayes@usf.edu",
       major: "Electrical Engineering",
       gradDate: "May 2026",
       skills: ["Signal Processing", "MATLAB", "C++", "Wireless Communications"],
@@ -801,16 +801,16 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     updatedAt: "2026-10-23T14:10:00Z"
   },
 
-  // --- JOB 6: KnightTech Robotics (Autonomous Vehicle Software Intern) ---
+  // --- JOB 6: BullTech Robotics (Autonomous Vehicle Software Intern) ---
   {
     id: "app-21",
     jobId: "job-6",
     memberId: "student-1",
     status: "Interviewing",
-    coverNote: "Excited by KnightTech's campus delivery missions. I have already configured ROS2 Navigation2 packages for our student club robot.",
+    coverNote: "Excited by BullTech's campus delivery missions. I have already configured ROS2 Navigation2 packages for our student club robot.",
     portfolioSnapshot: {
       name: "Marcus Vance",
-      email: "marcus.vance@knights.ucf.edu",
+      email: "marcus.vance@usf.edu",
       major: "Computer Engineering",
       gradDate: "May 2026",
       skills: ["ROS", "Robotics", "Computer Vision", "Python", "C++"],
@@ -829,7 +829,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     coverNote: "Built computer vision obstacle avoidance algorithms with OpenCV and deployed on Jetson Orin Nano. Familiar with CAN bus motor driver integration.",
     portfolioSnapshot: {
       name: "Alex Rivera",
-      email: "arivera@knights.ucf.edu",
+      email: "arivera@usf.edu",
       major: "Computer Engineering",
       gradDate: "May 2026",
       skills: ["Robotics", "Computer Vision", "C++", "Python", "Linux"],
@@ -848,7 +848,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     coverNote: "Passionate about autonomous ground robotics. Experience writing ROS publisher/subscriber nodes in C++ and Python for sensor telemetry.",
     portfolioSnapshot: {
       name: "Lucas Silva",
-      email: "lsilva@knights.ucf.edu",
+      email: "lsilva@usf.edu",
       major: "Computer Engineering",
       gradDate: "May 2027",
       skills: ["ROS", "Robotics", "Python", "C++", "Computer Vision"],
@@ -867,7 +867,7 @@ export const SAMPLE_JOB_APPLICATIONS: JobApplication[] = [
     coverNote: "Machine learning and computer vision student. Trained YOLOv8 object detection models for pedestrian and obstacle avoidance in real-time video streams.",
     portfolioSnapshot: {
       name: "Liam O'Connor",
-      email: "loconnor@knights.ucf.edu",
+      email: "loconnor@usf.edu",
       major: "Computer Science",
       gradDate: "May 2026",
       skills: ["Computer Vision", "Python", "C++", "Robotics", "Linux"],

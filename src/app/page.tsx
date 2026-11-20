@@ -14,7 +14,6 @@ import { useDirectoryFilters } from "@/hooks/useDirectoryFilters";
 import { useThemeManager } from "@/hooks/useThemeManager";
 import { useStudentData } from "@/hooks/useStudentData";
 import { useFilteredStudents } from "@/hooks/useFilteredStudents";
-import { useFlagDialogManager } from "@/hooks/useFlagDialogManager";
 
 import FilterSidebar from "@/components/directory/FilterSidebar";
 import FilterSidebarSkeleton from "@/components/directory/FilterSidebarSkeleton";
@@ -68,7 +67,6 @@ function StudentDirectoryContent() {
 
   // Visual layout & role states
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [filterLayout, setFilterLayout] = useState<"side" | "top">("side");
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
   const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -265,7 +263,6 @@ function StudentDirectoryContent() {
     onlyLeaders: onlyLeadersFilter,
     skillFilterMode,
     adminMode,
-    adminFilterFlagged: null,
     sortBy,
     hasFilterPermission: effectiveFilterPermission,
     role,
@@ -291,16 +288,35 @@ function StudentDirectoryContent() {
   }, [filteredStudents, isStudent, filterByMyself, loggedInStudent, isSponsor, sponsorInteractingFilter, sponsorInteractingStudentIds]);
 
   // Admin profile deletion handler
-  const { handleDeleteStudent } = useFlagDialogManager({
-    students,
-    setStudents,
-    selectedStudent,
-    setSelectedStudent,
-    adminMode,
-    role,
-    showConfirm,
-    setToastMessage,
-  });
+  const handleDeleteStudent = React.useCallback(
+    (id: string) => {
+      const student = students.find((s) => s.id === id);
+      if (!student) return;
+
+      showConfirm(
+        "Confirm Profile Deletion",
+        `Are you sure you want to permanently delete ${student.name}'s profile? This action is irreversible.`,
+        async () => {
+          try {
+            await fetch(`/api/members?id=${encodeURIComponent(id)}`, {
+              method: "DELETE",
+              headers: { "x-user-role": role },
+            });
+            const updated = students.filter((s) => s.id !== id);
+            setStudents(updated);
+            if (selectedStudent && selectedStudent.id === id) {
+              setSelectedStudent(null);
+            }
+            setToastMessage(`Deleted ${student.name}'s profile.`);
+            setTimeout(() => setToastMessage(null), 4000);
+          } catch (err) {
+            console.error("Failed to delete member:", err);
+          }
+        }
+      );
+    },
+    [students, setStudents, selectedStudent, role, showConfirm, setToastMessage]
+  );
 
   // Clear specific active filter chips
   const removeMajorFilter = (major: string) => setSelectedMajors(selectedMajors.filter((m) => m !== major));
@@ -397,8 +413,6 @@ function StudentDirectoryContent() {
       <DirectoryControlBar
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
-        filterLayout={filterLayout}
-        setFilterLayout={setFilterLayout}
         sortBy={sortBy}
         setSortBy={setSortBy}
         viewMode={viewMode}
@@ -407,11 +421,11 @@ function StudentDirectoryContent() {
         searchInputRef={searchInputRef}
       />
 
-      {/* Core Directory Layout (Sidebar + Results) */}
-      <main className={`max-w-7xl w-full mx-auto px-4 flex ${filterLayout === "side" ? "flex-col min-[1056px]:flex-row min-[1056px]:items-start gap-8" : "flex-col gap-6"} relative z-10`}>
-        {/* Filters Widget (Top or Side) */}
+      {/* Core Directory Layout (Responsive Sidebar + Results) */}
+      <main className="max-w-7xl w-full mx-auto px-4 flex flex-col min-[1056px]:flex-row min-[1056px]:items-start gap-8 relative z-10">
+        {/* Filters Widget (Auto-responsive sidebar) */}
         {isLoading ? (
-          <div className={`${filterLayout === "side" ? "w-full min-[1056px]:w-64 shrink-0 min-[1056px]:sticky min-[1056px]:top-20" : "w-full"}`}>
+          <div className="w-full min-[1056px]:w-64 shrink-0 min-[1056px]:sticky min-[1056px]:top-20">
             <FilterSidebarSkeleton />
           </div>
         ) : (
@@ -437,7 +451,6 @@ function StudentDirectoryContent() {
             availableEvents={availableEvents}
             availableProjects={availableProjects}
             availableCompanies={availableCompanies}
-            layout={filterLayout}
             role={role}
             onResetAll={resetAllFilters}
           />

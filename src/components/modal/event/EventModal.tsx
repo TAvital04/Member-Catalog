@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   X,
   Building2,
@@ -18,6 +19,7 @@ import Tooltip from "@/components/common/Tooltip";
 import { CARD_INTERACTIVE, CARD_BASE, CARD_TITLE_HOVER } from "@/lib/cardStyles";
 import { Heading, Subheading, Badge } from "@/components/ui";
 import { useRoleManager } from "@/hooks/useRoleManager";
+import { getStudentSlug } from "@/lib/studentSlug";
 
 interface EventModalProps {
   event: IEEEEvent | null;
@@ -38,6 +40,7 @@ export default function EventModal({
   role,
   canFilter: explicitCanFilter,
 }: EventModalProps) {
+  const router = useRouter();
   const roleManager = useRoleManager();
   const currentRole = role !== undefined ? role : roleManager.role;
 
@@ -430,6 +433,9 @@ export default function EventModal({
                                     onClick={() => {
                                       if (onSelectMember) {
                                         onSelectMember(student?.id || lead.memberId);
+                                      } else if (student) {
+                                        onClose();
+                                        router.push(`/u/${getStudentSlug(student)}`);
                                       }
                                     }}
                                     className={`${CARD_INTERACTIVE} p-3.5 flex items-center justify-between text-left group`}
@@ -489,6 +495,9 @@ export default function EventModal({
                             onClick={() => {
                               if (onSelectMember) {
                                 onSelectMember(student?.id || attendee.memberId);
+                              } else if (student) {
+                                onClose();
+                                router.push(`/u/${getStudentSlug(student)}`);
                               }
                             }}
                             className={`${CARD_INTERACTIVE} p-3.5 flex items-center justify-between text-left group`}

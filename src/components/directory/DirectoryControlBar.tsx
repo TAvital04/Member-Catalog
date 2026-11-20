@@ -9,8 +9,6 @@ import { DirectorySortOption } from "@/hooks/useDirectoryFilters";
 interface DirectoryControlBarProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
-  filterLayout?: "side" | "top";
-  setFilterLayout?: (layout: "side" | "top") => void;
   sortBy: DirectorySortOption;
   setSortBy: (sort: DirectorySortOption) => void;
   viewMode: "grid" | "list";

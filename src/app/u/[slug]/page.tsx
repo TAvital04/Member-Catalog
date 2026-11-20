@@ -21,9 +21,6 @@ import ModalTabNavigation, { TabType } from "@/components/modal/tabs/ModalTabNav
 import ProjectsTab from "@/components/modal/tabs/ProjectsTab";
 import SkillsTab from "@/components/modal/tabs/SkillsTab";
 import EventsTab from "@/components/modal/tabs/EventsTab";
-import EventModal from "@/components/modal/event/EventModal";
-import ProjectModal from "@/components/modal/project/ProjectModal";
-import { IEEEEvent } from "@/data/events";
 import { EventEntry, Student } from "@/data/students";
 import { findMatchingIeeeEvent } from "@/lib/rsoAffiliation";
 import {
@@ -48,8 +45,6 @@ function SharedMemberProfileContent() {
 
   const [activeTab, setActiveTab] = useState<TabType>("projects");
   const [copiedLink, setCopiedLink] = useState(false);
-  const [selectedEventModal, setSelectedEventModal] = useState<IEEEEvent | null>(null);
-  const [selectedProjectSlug, setSelectedProjectSlug] = useState<string | null>(null);
 
   // Find candidate by slug, identifier, or name
   const student = useMemo(() => {
@@ -87,8 +82,14 @@ function SharedMemberProfileContent() {
   const handleSelectEvent = (evt: EventEntry) => {
     const matched = findMatchingIeeeEvent(evt);
     if (matched) {
-      setSelectedEventModal(matched);
+      router.push(`/events?event=${matched.slug}`);
+    } else {
+      router.push(`/events?q=${encodeURIComponent(evt.title)}`);
     }
+  };
+
+  const handleSelectProject = (projectSlugOrId: string) => {
+    router.push(`/projects?project=${encodeURIComponent(projectSlugOrId)}`);
   };
 
   // Loading State
@@ -237,7 +238,7 @@ function SharedMemberProfileContent() {
               <StudentLowerInfo
                 student={student}
                 adminMode={isAdmin}
-                onSelectProject={(projSlug) => setSelectedProjectSlug(projSlug)}
+                onSelectProject={handleSelectProject}
                 onSelectTab={setActiveTab}
                 role={role}
               />
@@ -262,7 +263,7 @@ function SharedMemberProfileContent() {
                   projects={student.projects}
                   formatDateStr={formatDateStr}
                   student={student}
-                  onSelectProject={(projSlug) => setSelectedProjectSlug(projSlug)}
+                  onSelectProject={handleSelectProject}
                 />
               )}
 
@@ -286,26 +287,6 @@ function SharedMemberProfileContent() {
           </div>
         </div>
       </main>
-
-      {/* Workshop / Event Modal */}
-      {selectedEventModal && (
-        <EventModal
-          event={selectedEventModal}
-          role={role}
-          onClose={() => setSelectedEventModal(null)}
-          students={students}
-        />
-      )}
-
-      {/* Project Detail Modal if a project is selected */}
-      {selectedProjectSlug && (
-        <ProjectModal
-          projectSlugOrId={selectedProjectSlug}
-          onClose={() => setSelectedProjectSlug(null)}
-          role={role}
-          allStudents={students}
-        />
-      )}
     </div>
   );
 }

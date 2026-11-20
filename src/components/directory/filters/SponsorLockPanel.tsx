@@ -4,10 +4,10 @@ import React from "react";
 import { Lock } from "lucide-react";
 
 interface SponsorLockPanelProps {
-  layout: "top" | "side";
+  layout?: "top" | "side";
 }
 
-export default function SponsorLockPanel({ layout }: SponsorLockPanelProps) {
+export default function SponsorLockPanel({ layout = "side" }: SponsorLockPanelProps) {
   return (
     <>
       {/* Horizontal Top-bar Lock Placeholder */}

@@ -8,20 +8,20 @@ const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:post
 export const DENSE_CANDIDATES = [
   {
     name: "Alex Rivera",
-    email: "arivera@knights.ucf.edu",
+    email: "arivera@usf.edu",
     major: "Computer Engineering",
     graduationYear: "2026",
     status: "Seeking Internship",
     bio: "Computer Engineering junior specializing in embedded Linux systems, real-time operating systems (FreeRTOS), and FPGA hardware accelerators. Passionate about robotics and low-level firmware optimization.",
     resumePdfUrl: "https://drive.google.com/file/d/alex-rivera-resume/view",
     socialLinks: [
-      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/alex-rivera-ucf" },
-      { platformName: "GitHub", profileUrl: "https://github.com/arivera-ucf" },
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/alex-rivera-usf" },
+      { platformName: "GitHub", profileUrl: "https://github.com/arivera-usf" },
       { platformName: "Portfolio", profileUrl: "https://arivera.dev" }
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Computer Engineering",
         gpa: 3.92,
@@ -29,7 +29,7 @@ export const DENSE_CANDIDATES = [
         startDate: "2022-08-22",
         endDate: "2026-05-02",
         isCurrent: true,
-        description: "Burnett Honors College Scholar. Coursework: Computer Architecture, Embedded Systems, Real-Time Operating Systems, VLSI Design."
+        description: "Judy Genshaft Honors College Scholar. Coursework: Computer Architecture, Embedded Systems, Real-Time Operating Systems, VLSI Design."
       }
     ],
     skills: [
@@ -52,12 +52,12 @@ export const DENSE_CANDIDATES = [
         startDate: "2024-01-15",
         endDate: "2024-11-30",
         isOngoing: false,
-        projectLinks: ["https://github.com/arivera-ucf/micromouse"]
+        projectLinks: ["https://github.com/arivera-usf/micromouse"]
       }
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "Hardware Committee Chair",
         startDate: "2022-09-01",
         endDate: "2025-05-01",
@@ -76,19 +76,19 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Samantha Lin",
-    email: "slin@knights.ucf.edu",
+    email: "slin@usf.edu",
     major: "Computer Science",
     graduationYear: "2025",
     status: "Seeking Full-time",
     bio: "Senior CS major with extensive experience building high-throughput microservices, distributed systems, and modern full-stack web applications. Incoming software engineer seeking full-time backend or cloud engineering roles.",
     resumePdfUrl: "https://drive.google.com/file/d/samantha-lin-resume/view",
     socialLinks: [
-      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/samantha-lin-ucf" },
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/samantha-lin-usf" },
       { platformName: "GitHub", profileUrl: "https://github.com/slin-code" }
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Computer Science",
         gpa: 3.88,
@@ -122,7 +122,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "RSO UCF Member Catalog & Resume Hub",
+        projectName: "RSO USF Member Catalog & Resume Hub",
         description: "Full-stack Next.js 15 web application with tRPC, Tailwind CSS v4, Drizzle ORM, and Neon PostgreSQL serverless database.",
         startDate: "2024-08-01",
         endDate: "2025-04-15",
@@ -132,7 +132,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "Webmaster / Lead Software Engineer",
         startDate: "2022-08-25",
         endDate: "2025-05-01",
@@ -150,7 +150,7 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Marcus Vance",
-    email: "mvance@knights.ucf.edu",
+    email: "mvance@usf.edu",
     major: "Electrical Engineering",
     graduationYear: "2026",
     status: "Seeking Internship",
@@ -161,7 +161,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Electrical Engineering",
         gpa: 3.76,
@@ -187,7 +187,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "RSO Solar Knight Racing ESC",
+        projectName: "RSO Solar Bull Racing ESC",
         description: "High-efficiency motor speed controller PCB designed in Altium for solar racing vehicle telemetry.",
         startDate: "2024-08-25",
         endDate: "2024-12-10",
@@ -197,7 +197,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "Power & Energy Chapter Lead",
         startDate: "2023-01-15",
         endDate: "2025-05-01",
@@ -209,13 +209,13 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Elena Rostova",
-    email: "erostova@knights.ucf.edu",
+    email: "erostova@usf.edu",
     major: "Computer Science",
     graduationYear: "2025",
     status: "Employed",
     flagged: true,
     flagReason: "AI-generated profile content flagged for review",
-    bio: "Senior CS student & Machine Learning Researcher at UCF Center for Research in Computer Vision (CRCV). Specializing in PyTorch, computer vision, vision-language models, and edge AI deployment.",
+    bio: "Senior CS student & Machine Learning Researcher at USF Computer Vision & Pattern Recognition Lab. Specializing in PyTorch, computer vision, vision-language models, and edge AI deployment.",
     resumePdfUrl: "https://drive.google.com/file/d/elena-rostova-resume/view",
     socialLinks: [
       { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/elena-rostova-ai" },
@@ -223,7 +223,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Computer Science",
         gpa: 3.96,
@@ -259,7 +259,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "AI & Machine Learning Lead",
         startDate: "2022-09-01",
         endDate: "2025-05-01",
@@ -271,7 +271,7 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Jordan Taylor",
-    email: "jtaylor@knights.ucf.edu",
+    email: "jtaylor@usf.edu",
     major: "Mechanical Engineering",
     graduationYear: "2026",
     status: "Seeking Internship",
@@ -284,7 +284,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Mechanical Engineering",
         gpa: 3.82,
@@ -318,17 +318,17 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "RSO Solar Knight Racing ESC",
+        projectName: "RSO Solar Bull Racing ESC",
         description: "Designed ultra-lightweight carbon-fiber aerodynamic shell and solar panel mounting structure.",
         startDate: "2024-01-10",
         endDate: "2024-11-20",
         isOngoing: true,
-        projectLinks: ["https://github.com/ieee-ucf/solar-knight-esc"]
+        projectLinks: ["https://github.com/rso-usf/solar-bull-esc"]
       }
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "Solar Racing Lead",
         startDate: "2023-01-10",
         endDate: "2026-05-01",
@@ -340,19 +340,19 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "David Chen",
-    email: "dchen@knights.ucf.edu",
+    email: "dchen@usf.edu",
     major: "Computer Engineering",
     graduationYear: "2025",
     status: "Seeking Full-time",
-    bio: "RSO UCF Student Chapter Executive Chair. Senior Computer Engineering student specializing in computer architecture, semiconductor validation, and SoC design.",
+    bio: "RSO USF Student Chapter Executive Chair. Senior Computer Engineering student specializing in computer architecture, semiconductor validation, and SoC design.",
     resumePdfUrl: "https://drive.google.com/file/d/david-chen-resume/view",
     socialLinks: [
-      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/david-chen-ucf" },
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/david-chen-usf" },
       { platformName: "GitHub", profileUrl: "https://github.com/dchen-ece" }
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Computer Engineering",
         gpa: 3.95,
@@ -360,7 +360,7 @@ export const DENSE_CANDIDATES = [
         startDate: "2021-08-23",
         endDate: "2025-05-03",
         isCurrent: true,
-        description: "Burnett Honors College. Executive Chair of RSO UCF Chapter."
+        description: "Judy Genshaft Honors College. Executive Chair of RSO USF Chapter."
       }
     ],
     skills: [
@@ -396,7 +396,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "Executive Chair",
         startDate: "2022-08-25",
         endDate: "2025-05-01",
@@ -408,11 +408,11 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Brianna Morales",
-    email: "bmorales@knights.ucf.edu",
+    email: "bmorales@usf.edu",
     major: "Computer Science",
     graduationYear: "2025",
     status: "Seeking Full-time",
-    bio: "RSO UCF Vice Chair & Cyber Security specialist. Dual-focus in cloud security architecture, zero-trust network design, and secure software development.",
+    bio: "RSO USF Vice Chair & Cyber Security specialist. Dual-focus in cloud security architecture, zero-trust network design, and secure software development.",
     resumePdfUrl: "https://drive.google.com/file/d/brianna-morales-resume/view",
     socialLinks: [
       { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/brianna-morales-sec" },
@@ -420,7 +420,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Computer Science",
         gpa: 3.89,
@@ -447,7 +447,7 @@ export const DENSE_CANDIDATES = [
     projects: [
       {
         projectName: "RSO Smart Campus IoT Beacon Network",
-        description: "Implemented encrypted AES-256 BLE telemetry beacon network for real-time UCF campus event tracking.",
+        description: "Implemented encrypted AES-256 BLE telemetry beacon network for real-time USF campus event tracking.",
         startDate: "2024-01-15",
         endDate: "2024-11-30",
         isOngoing: true,
@@ -456,7 +456,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "Vice Chair",
         startDate: "2022-09-01",
         endDate: "2025-05-01",
@@ -474,7 +474,7 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Ethan Wright",
-    email: "ewright@knights.ucf.edu",
+    email: "ewright@usf.edu",
     major: "Electrical Engineering",
     graduationYear: "2027",
     status: "Seeking Internship",
@@ -485,7 +485,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Electrical Engineering",
         gpa: 3.70,
@@ -521,7 +521,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "Workshops Lead",
         startDate: "2023-09-01",
         endDate: "2027-05-01",
@@ -533,11 +533,11 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Maya Patel",
-    email: "mpatel@alumni.ucf.edu",
+    email: "mpatel@alumni.usf.edu",
     major: "Computer Science",
     graduationYear: "2024",
     status: "Employed",
-    bio: "UCF CS Alumna ('24) & Full-Stack Software Engineer at Google. Former RSO UCF Software Director passionate about cloud infrastructure, React, and scalable backend services.",
+    bio: "USF CS Alumna ('24) & Full-Stack Software Engineer at Google. Former RSO USF Software Director passionate about cloud infrastructure, React, and scalable backend services.",
     resumePdfUrl: "https://drive.google.com/file/d/maya-patel-resume/view",
     socialLinks: [
       { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/maya-patel-swe" },
@@ -545,7 +545,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Computer Science",
         gpa: 3.97,
@@ -579,7 +579,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "RSO UCF Member Catalog & Resume Hub",
+        projectName: "RSO USF Member Catalog & Resume Hub",
         description: "Architected initial SQL schema and API endpoints for student catalog.",
         startDate: "2023-08-15",
         endDate: "2024-04-30",
@@ -589,19 +589,19 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "Software Director (Alumni)",
         startDate: "2021-08-25",
         endDate: "2024-05-04",
         isActive: false,
-        description: "Led software workshops and managed RSO UCF chapter web platform."
+        description: "Led software workshops and managed RSO USF chapter web platform."
       }
     ],
     certifications: []
   },
   {
     name: "Lucas Rossi",
-    email: "lrossi@knights.ucf.edu",
+    email: "lrossi@usf.edu",
     major: "Aerospace Engineering",
     graduationYear: "2026",
     status: "Seeking Internship",
@@ -614,7 +614,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Aerospace Engineering",
         gpa: 3.79,
@@ -658,7 +658,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "Robotics Lead",
         startDate: "2023-01-10",
         endDate: "2026-05-01",
@@ -670,7 +670,7 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Chloe Bennett",
-    email: "cbennett@knights.ucf.edu",
+    email: "cbennett@usf.edu",
     major: "Computer Engineering",
     graduationYear: "2027",
     status: "Seeking Internship",
@@ -682,7 +682,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Computer Engineering",
         gpa: 3.85,
@@ -718,7 +718,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "Gaming & Graphics SIG Lead",
         startDate: "2023-09-01",
         endDate: "2027-05-01",
@@ -730,18 +730,18 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Gabriel Silva",
-    email: "gsilva@alumni.ucf.edu",
+    email: "gsilva@alumni.usf.edu",
     major: "Electrical Engineering",
     graduationYear: "2024",
     status: "Employed",
-    bio: "UCF EE Alumnus ('24) & Hardware Test Engineer at L3Harris Technologies. Specialized in RF circuit layout, microwave amplifiers, and automated spectral analysis.",
+    bio: "USF EE Alumnus ('24) & Hardware Test Engineer at L3Harris Technologies. Specialized in RF circuit layout, microwave amplifiers, and automated spectral analysis.",
     resumePdfUrl: "https://drive.google.com/file/d/gabriel-silva-resume/view",
     socialLinks: [
       { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/gabriel-silva-rf" }
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Electrical Engineering",
         gpa: 3.81,
@@ -777,7 +777,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "RF & Wireless Lead (Alumni)",
         startDate: "2021-09-01",
         endDate: "2024-05-04",
@@ -789,18 +789,18 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Sophia Martinez",
-    email: "smartinez@knights.ucf.edu",
+    email: "smartinez@usf.edu",
     major: "Industrial Engineering",
     graduationYear: "2026",
     status: "Seeking Internship",
-    bio: "RSO UCF Treasurer & Industrial Engineering junior. Focused on supply chain optimization, operations research, project management, and data analytics.",
+    bio: "RSO USF Treasurer & Industrial Engineering junior. Focused on supply chain optimization, operations research, project management, and data analytics.",
     resumePdfUrl: "https://drive.google.com/file/d/sophia-martinez-resume/view",
     socialLinks: [
       { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/sophia-martinez-ie" }
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Industrial Engineering",
         gpa: 3.88,
@@ -844,7 +844,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "Treasurer",
         startDate: "2022-09-01",
         endDate: "2026-05-01",
@@ -862,7 +862,7 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Noah Kim",
-    email: "nkim@knights.ucf.edu",
+    email: "nkim@usf.edu",
     major: "Computer Science",
     graduationYear: "2028",
     status: "Seeking Internship",
@@ -874,7 +874,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Computer Science",
         gpa: 4.0,
@@ -882,7 +882,7 @@ export const DENSE_CANDIDATES = [
         startDate: "2024-08-19",
         endDate: "2028-05-05",
         isCurrent: true,
-        description: "National Merit Scholar. Pegasus Gold Scholarship recipient."
+        description: "National Merit Scholar. USF Presidential Scholarship recipient."
       }
     ],
     skills: [
@@ -901,7 +901,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "Freshman Representative",
         startDate: "2024-08-25",
         endDate: "2028-05-01",
@@ -913,7 +913,7 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Hannah Al-Mansoor",
-    email: "halmansoor@knights.ucf.edu",
+    email: "halmansoor@usf.edu",
     major: "Computer Engineering",
     graduationYear: "2025",
     status: "Seeking Full-time",
@@ -925,7 +925,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Computer Engineering",
         gpa: 3.91,
@@ -933,7 +933,7 @@ export const DENSE_CANDIDATES = [
         startDate: "2021-08-23",
         endDate: "2025-05-03",
         isCurrent: true,
-        description: "Burnett Honors College. SoutheastCon Hardware Lead."
+        description: "Judy Genshaft Honors College. SoutheastCon Hardware Lead."
       }
     ],
     skills: [
@@ -969,7 +969,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "SoutheastCon Chair",
         startDate: "2022-09-01",
         endDate: "2025-05-01",
@@ -981,7 +981,7 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Caleb Jackson",
-    email: "cjackson@knights.ucf.edu",
+    email: "cjackson@usf.edu",
     major: "Physics",
     graduationYear: "2026",
     status: "Seeking Internship",
@@ -992,7 +992,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Physics",
         gpa: 3.86,
@@ -1000,7 +1000,7 @@ export const DENSE_CANDIDATES = [
         startDate: "2022-08-22",
         endDate: "2026-05-02",
         isCurrent: true,
-        description: "Double Major in Electrical Engineering. Undergraduate Research Fellow at CREOL (College of Optics and Photonics)."
+        description: "Double Major in Electrical Engineering. Undergraduate Research Fellow at USF Nanotechnology Research & Education Center (NREC)."
       }
     ],
     skills: [
@@ -1028,30 +1028,30 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "Quantum & Optics SIG Lead",
         startDate: "2023-01-15",
         endDate: "2026-05-01",
         isActive: true,
-        description: "Leading quantum computing Qiskit workshops in collaboration with CREOL."
+        description: "Leading quantum computing Qiskit workshops in collaboration with USF NREC."
       }
     ],
     certifications: []
   },
   {
     name: "Isabella Rossi",
-    email: "irossi@alumni.ucf.edu",
+    email: "irossi@alumni.usf.edu",
     major: "Computer Science",
     graduationYear: "2024",
     status: "Employed",
-    bio: "UCF CS Alumna ('24) & Cloud Systems Engineer at Microsoft. Former RSO UCF Corporate Liaison specializing in Azure infrastructure and distributed systems.",
+    bio: "USF CS Alumna ('24) & Cloud Systems Engineer at Microsoft. Former RSO USF Corporate Liaison specializing in Azure infrastructure and distributed systems.",
     resumePdfUrl: "https://drive.google.com/file/d/isabella-rossi-resume/view",
     socialLinks: [
       { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/isabella-rossi-cloud" }
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Computer Science",
         gpa: 3.93,
@@ -1085,7 +1085,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "RSO UCF Member Catalog & Resume Hub",
+        projectName: "RSO USF Member Catalog & Resume Hub",
         description: "Built initial authentication and role-based access control (RBAC) middleware.",
         startDate: "2023-10-01",
         endDate: "2024-04-15",
@@ -1095,7 +1095,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "Corporate Liaison (Alumni)",
         startDate: "2021-09-01",
         endDate: "2024-05-04",
@@ -1107,20 +1107,20 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Tyler Brooks",
-    email: "tbrooks@knights.ucf.edu",
+    email: "tbrooks@usf.edu",
     major: "Electrical Engineering",
     graduationYear: "2025",
     status: "Seeking Full-time",
     flagged: true,
     flagReason: "Portfolio contains unverified claims under review",
-    bio: "RSO UCF Secretary & Senior Electrical Engineering major. Focused on embedded firmware, digital signal processing (DSP), audio electronics, and microcontrollers.",
+    bio: "RSO USF Secretary & Senior Electrical Engineering major. Focused on embedded firmware, digital signal processing (DSP), audio electronics, and microcontrollers.",
     resumePdfUrl: "https://drive.google.com/file/d/tyler-brooks-resume/view",
     socialLinks: [
       { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/tyler-brooks-ee" }
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Electrical Engineering",
         gpa: 3.78,
@@ -1154,7 +1154,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "RSO Solar Knight Racing ESC",
+        projectName: "RSO Solar Bull Racing ESC",
         description: "Implemented digital filter firmware for battery voltage telemetry conditioning.",
         startDate: "2024-01-15",
         endDate: "2024-11-20",
@@ -1164,7 +1164,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "Secretary",
         startDate: "2022-09-01",
         endDate: "2025-05-01",
@@ -1176,7 +1176,7 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Victoria Zhang",
-    email: "vzhang@knights.ucf.edu",
+    email: "vzhang@usf.edu",
     major: "Computer Science",
     graduationYear: "2026",
     status: "Seeking Internship",
@@ -1188,7 +1188,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Computer Science",
         gpa: 3.94,
@@ -1196,7 +1196,7 @@ export const DENSE_CANDIDATES = [
         startDate: "2022-08-22",
         endDate: "2026-05-02",
         isCurrent: true,
-        description: "Data Science Track. President of UCF Data Science Club."
+        description: "Data Science Track. President of USF Data Science Club."
       }
     ],
     skills: [
@@ -1224,7 +1224,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "Data Analytics Lead",
         startDate: "2023-01-15",
         endDate: "2026-05-01",
@@ -1236,7 +1236,7 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Xavier Torres",
-    email: "xtorres@knights.ucf.edu",
+    email: "xtorres@usf.edu",
     major: "Computer Engineering",
     graduationYear: "2025",
     status: "Seeking Full-time",
@@ -1247,7 +1247,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Computer Engineering",
         gpa: 3.84,
@@ -1291,7 +1291,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "Embedded Systems Lead",
         startDate: "2022-09-01",
         endDate: "2025-05-01",
@@ -1303,18 +1303,18 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Zoe Jenkins",
-    email: "zjenkins@alumni.ucf.edu",
+    email: "zjenkins@alumni.usf.edu",
     major: "Mechanical Engineering",
     graduationYear: "2024",
     status: "Employed",
-    bio: "UCF ME Alumna ('24) & Propulsion Structures Engineer at SpaceX. Former RSO Solar Racing Mechanical Lead.",
+    bio: "USF ME Alumna ('24) & Propulsion Structures Engineer at SpaceX. Former RSO Solar Racing Mechanical Lead.",
     resumePdfUrl: "https://drive.google.com/file/d/zoe-jenkins-resume/view",
     socialLinks: [
       { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/zoe-jenkins-propulsion" }
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Mechanical Engineering",
         gpa: 3.90,
@@ -1340,7 +1340,7 @@ export const DENSE_CANDIDATES = [
     ],
     projects: [
       {
-        projectName: "RSO Solar Knight Racing ESC",
+        projectName: "RSO Solar Bull Racing ESC",
         description: "Designed structural roll cage and carbon composite suspension mounts.",
         startDate: "2023-08-15",
         endDate: "2024-04-30",
@@ -1350,7 +1350,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "Solar Racing Mechanical Lead (Alumni)",
         startDate: "2021-09-01",
         endDate: "2024-05-04",
@@ -1362,7 +1362,7 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Liam O'Connor",
-    email: "loconnor@knights.ucf.edu",
+    email: "loconnor@usf.edu",
     major: "Information Technology",
     graduationYear: "2027",
     status: "Seeking Internship",
@@ -1373,7 +1373,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Information Technology",
         gpa: 3.75,
@@ -1389,7 +1389,7 @@ export const DENSE_CANDIDATES = [
     ],
     workExperience: [
       {
-        companyName: "UCF Information Technology",
+        companyName: "USF Information Technology",
         jobTitle: "Student Systems Administrator",
         startDate: "2023-10-01",
         endDate: "2026-09-28",
@@ -1409,7 +1409,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "Infrastructure Lead",
         startDate: "2023-09-01",
         endDate: "2027-05-01",
@@ -1427,11 +1427,11 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Amara Okafor",
-    email: "aokafor@knights.ucf.edu",
+    email: "aokafor@usf.edu",
     major: "Computer Science",
     graduationYear: "2026",
     status: "Seeking Internship",
-    bio: "RSO UCF Corporate Liaison & CS junior. Passionate about software engineering, corporate relations, technical event coordination, and web development.",
+    bio: "RSO USF Corporate Liaison & CS junior. Passionate about software engineering, corporate relations, technical event coordination, and web development.",
     resumePdfUrl: "https://drive.google.com/file/d/amara-okafor-resume/view",
     socialLinks: [
       { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/amara-okafor-cs" },
@@ -1439,7 +1439,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Computer Science",
         gpa: 3.87,
@@ -1475,7 +1475,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "Corporate Liaison",
         startDate: "2023-01-10",
         endDate: "2026-05-01",
@@ -1487,18 +1487,18 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Benjamin Foster",
-    email: "bfoster@alumni.ucf.edu",
+    email: "bfoster@alumni.usf.edu",
     major: "Electrical Engineering",
     graduationYear: "2024",
     status: "Employed",
-    bio: "UCF EE Alumnus ('24) & Senior RF Test Engineer at Lockheed Martin. Former RSO UCF Vice Chair specialized in radar signal processing and microwave systems.",
+    bio: "USF EE Alumnus ('24) & Senior RF Test Engineer at Lockheed Martin. Former RSO USF Vice Chair specialized in radar signal processing and microwave systems.",
     resumePdfUrl: "https://drive.google.com/file/d/benjamin-foster-resume/view",
     socialLinks: [
       { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/benjamin-foster-rf" }
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Electrical Engineering",
         gpa: 3.94,
@@ -1534,7 +1534,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "Vice Chair (Alumni)",
         startDate: "2021-09-01",
         endDate: "2024-05-04",
@@ -1552,19 +1552,19 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Austin Miller",
-    email: "amiller@knights.ucf.edu",
+    email: "amiller@usf.edu",
     major: "Aerospace Engineering",
     graduationYear: "2026",
     status: "Seeking Internship",
     bio: "Aerospace junior focused on spacecraft guidance, navigation, and control (GNC) alongside dual-axis satellite tracking ground stations. Experienced in orbital propagation algorithms and attitude determination.",
     resumePdfUrl: "https://drive.google.com/file/d/austin-miller-resume/view",
     socialLinks: [
-      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/austin-miller-ucf" },
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/austin-miller-usf" },
       { platformName: "GitHub", profileUrl: "https://github.com/amiller-aero" }
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Aerospace Engineering",
         gpa: 3.84,
@@ -1578,7 +1578,7 @@ export const DENSE_CANDIDATES = [
     skills: ["MATLAB", "Simulink", "Python", "Orbital Mechanics", "C++", "SolidWorks", "Git", "TLE Tracking"],
     workExperience: [
       {
-        companyName: "SEDS UCF Space Initiative",
+        companyName: "SEDS USF Space Initiative",
         jobTitle: "GNC Subsystem Specialist",
         startDate: "2023-09-01",
         endDate: "2024-12-15",
@@ -1592,12 +1592,12 @@ export const DENSE_CANDIDATES = [
         description: "Designed dual-axis antenna azimuth/elevation rotator control loop with TLE Doppler compensation in Python.",
         startDate: "2024-09-10",
         isOngoing: true,
-        projectLinks: ["https://github.com/ieee-ucf/cubesat-ground-station"]
+        projectLinks: ["https://github.com/rso-usf/cubesat-ground-station"]
       }
     ],
     clubMemberships: [
       {
-        clubName: "AIAA UCF Student Branch",
+        clubName: "AIAA USF Student Branch",
         roleTitle: "Ground Operations Lead",
         startDate: "2023-01-10",
         isActive: true,
@@ -1608,19 +1608,19 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Danielle Foster",
-    email: "dfoster@knights.ucf.edu",
+    email: "dfoster@usf.edu",
     major: "Optics & Photonics",
     graduationYear: "2025",
     status: "Seeking Full-time",
-    bio: "CREOL senior specializing in fiber-optic communications, semiconductor laser diode drivers, and free-space optical (FSO) transceivers. Passionate about photonic integrated circuits and high-speed optical testing.",
+    bio: "USF senior specializing in fiber-optic communications, semiconductor laser diode drivers, and free-space optical (FSO) transceivers. Passionate about photonic integrated circuits and high-speed optical testing.",
     resumePdfUrl: "https://drive.google.com/file/d/danielle-foster-resume/view",
     socialLinks: [
-      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/danielle-foster-creol" },
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/danielle-foster-optics" },
       { platformName: "GitHub", profileUrl: "https://github.com/dfoster-optics" }
     ],
     education: [
       {
-        schoolName: "University of Central Florida (CREOL)",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Photonic Science and Engineering",
         gpa: 3.95,
@@ -1628,7 +1628,7 @@ export const DENSE_CANDIDATES = [
         startDate: "2021-08-23",
         endDate: "2025-05-03",
         isCurrent: true,
-        description: "National Science Foundation CREOL Research Fellow. Coursework: Optical Fiber Communications, Semiconductor Optoelectronics, Laser Engineering."
+        description: "National Science Foundation Research Fellow. Coursework: Optical Fiber Communications, Semiconductor Optoelectronics, Laser Engineering."
       }
     ],
     skills: ["Fiber Optics", "Laser Diode Drivers", "Optical Spectrum Analyzers", "Python", "MATLAB", "COMSOL Multiphysics", "Photodetectors"],
@@ -1653,7 +1653,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO Photonics Society UCF",
+        clubName: "RSO Photonics Society USF",
         roleTitle: "Vice President",
         startDate: "2023-08-15",
         isActive: true,
@@ -1664,18 +1664,18 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Ryan Gallagher",
-    email: "rgallagher@knights.ucf.edu",
+    email: "rgallagher@usf.edu",
     major: "Materials Science",
     graduationYear: "2026",
     status: "Seeking Internship",
     bio: "Materials Science and Engineering junior focusing on wide-bandgap semiconductors (GaN, SiC), microelectronic packaging, and thermal interface materials (TIMs) for extreme power density electronics.",
     resumePdfUrl: "https://drive.google.com/file/d/ryan-gallagher-resume/view",
     socialLinks: [
-      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/ryan-gallagher-ucf" }
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/ryan-gallagher-usf" }
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Materials Science and Engineering",
         gpa: 3.79,
@@ -1699,7 +1699,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "Materials Research Society UCF",
+        clubName: "Materials Research Society USF",
         roleTitle: "Treasurer",
         startDate: "2023-09-01",
         isActive: true,
@@ -1710,18 +1710,18 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Katelyn Becker",
-    email: "kbecker@knights.ucf.edu",
+    email: "kbecker@usf.edu",
     major: "Mechanical Engineering",
     graduationYear: "2025",
     status: "Employed",
     bio: "Graduating senior with full-time offer at Siemens Energy. Specializes in thermal fluid simulations, turbomachinery FEA, and rapid additive manufacturing with metal alloy powders.",
     resumePdfUrl: "https://drive.google.com/file/d/katelyn-becker-resume/view",
     socialLinks: [
-      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/katelyn-becker-ucf" }
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/katelyn-becker-usf" }
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Mechanical Engineering",
         gpa: 3.91,
@@ -1749,12 +1749,12 @@ export const DENSE_CANDIDATES = [
         description: "Designed 3D-printed aluminum liquid cooling cold plate with micro-fins for the RSO Solar Car ESC.",
         startDate: "2024-03-01",
         isOngoing: false,
-        projectLinks: ["https://github.com/ieee-ucf/solar-esc-cooling"]
+        projectLinks: ["https://github.com/rso-usf/solar-esc-cooling"]
       }
     ],
     clubMemberships: [
       {
-        clubName: "ASME UCF Student Chapter",
+        clubName: "ASME USF Student Chapter",
         roleTitle: "Senior Advisor",
         startDate: "2022-09-01",
         isActive: true,
@@ -1771,7 +1771,7 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Sean O'Reilly",
-    email: "soreilly@knights.ucf.edu",
+    email: "soreilly@usf.edu",
     major: "Computer Science",
     graduationYear: "2027",
     status: "Seeking Internship",
@@ -1783,7 +1783,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Computer Science",
         gpa: 3.88,
@@ -1807,7 +1807,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "Software Committee Member",
         startDate: "2023-09-01",
         isActive: true,
@@ -1818,19 +1818,19 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Priya Sharma",
-    email: "psharma@knights.ucf.edu",
+    email: "psharma@usf.edu",
     major: "Electrical Engineering",
     graduationYear: "2026",
     status: "Seeking Full-time",
     bio: "Junior EE passionate about high-efficiency power electronics, bidirectional DC-DC converters, and wide-bandgap GaN/SiC power topologies. Experienced in Altium Designer 4-layer layout and magnetics simulation.",
     resumePdfUrl: "https://drive.google.com/file/d/priya-sharma-resume/view",
     socialLinks: [
-      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/priya-sharma-ucf" },
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/priya-sharma-usf" },
       { platformName: "GitHub", profileUrl: "https://github.com/psharma-ee" }
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Electrical Engineering",
         gpa: 3.94,
@@ -1858,12 +1858,12 @@ export const DENSE_CANDIDATES = [
         description: "Implemented digital MPPT tracking on STM32G4 mixed-signal microcontroller switching at 500kHz.",
         startDate: "2024-10-01",
         isOngoing: true,
-        projectLinks: ["https://github.com/ieee-ucf/gan-solar-mppt"]
+        projectLinks: ["https://github.com/rso-usf/gan-solar-mppt"]
       }
     ],
     clubMemberships: [
       {
-        clubName: "RSO Power & Energy Society (PES) UCF",
+        clubName: "RSO Power & Energy Society (PES) USF",
         roleTitle: "Technical Director",
         startDate: "2023-08-20",
         isActive: true,
@@ -1874,19 +1874,19 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Dominic Rossi",
-    email: "drossi@knights.ucf.edu",
+    email: "drossi@usf.edu",
     major: "Computer Engineering",
     graduationYear: "2025",
     status: "Seeking Full-time",
     bio: "Senior computer engineer with deep interest in custom RISC-V SoC microarchitecture, hardware security, and FPGA emulation. Experienced in Verilog, SystemVerilog, and Chisel HDL.",
     resumePdfUrl: "https://drive.google.com/file/d/dominic-rossi-resume/view",
     socialLinks: [
-      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/dominic-rossi-ucf" },
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/dominic-rossi-usf" },
       { platformName: "GitHub", profileUrl: "https://github.com/drossi-chips" }
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Computer Engineering",
         gpa: 3.86,
@@ -1919,7 +1919,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "Digital Systems Instructor",
         startDate: "2022-09-01",
         isActive: true,
@@ -1930,7 +1930,7 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Jessica Vance",
-    email: "jvance@knights.ucf.edu",
+    email: "jvance@usf.edu",
     major: "Biomedical Engineering",
     graduationYear: "2026",
     status: "Seeking Internship",
@@ -1941,7 +1941,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Biomedical Engineering",
         gpa: 3.81,
@@ -1965,7 +1965,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "Biomedical Engineering Society (BMES) UCF",
+        clubName: "Biomedical Engineering Society (BMES) USF",
         roleTitle: "Hardware Project Lead",
         startDate: "2023-08-25",
         isActive: true,
@@ -1976,7 +1976,7 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Trevor Hayes",
-    email: "thayes@knights.ucf.edu",
+    email: "thayes@usf.edu",
     major: "Information Technology",
     graduationYear: "2025",
     status: "Employed",
@@ -1987,7 +1987,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Information Technology",
         gpa: 3.73,
@@ -2012,7 +2012,7 @@ export const DENSE_CANDIDATES = [
     projects: [],
     clubMemberships: [
       {
-        clubName: "Hack@UCF (Collegiate Cyber Defense Club)",
+        clubName: "Whitehatters Computer Security Club (WCSC at USF)",
         roleTitle: "Network Defense Member",
         startDate: "2022-09-01",
         isActive: true,
@@ -2029,7 +2029,7 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Megan Sullivan",
-    email: "msullivan@knights.ucf.edu",
+    email: "msullivan@usf.edu",
     major: "Computer Engineering",
     graduationYear: "2027",
     status: "Seeking Internship",
@@ -2041,7 +2041,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Computer Engineering",
         gpa: 3.90,
@@ -2049,7 +2049,7 @@ export const DENSE_CANDIDATES = [
         startDate: "2023-08-21",
         endDate: "2027-05-01",
         isCurrent: true,
-        description: "Burnett Honors Scholar. Coursework: Embedded Systems, Computer Organization, Object-Oriented Programming."
+        description: "Judy Genshaft Honors Scholar. Coursework: Embedded Systems, Computer Organization, Object-Oriented Programming."
       }
     ],
     skills: ["C", "C++", "Linux Kernel", "Yocto Project", "Device Trees", "ARM", "Bash", "Git"],
@@ -2065,7 +2065,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "Embedded Workshop Volunteer",
         startDate: "2023-09-15",
         isActive: true,
@@ -2076,7 +2076,7 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Carlos Mendoza",
-    email: "cmendoza@knights.ucf.edu",
+    email: "cmendoza@usf.edu",
     major: "Electrical Engineering",
     graduationYear: "2028",
     status: "Seeking Internship",
@@ -2087,7 +2087,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Electrical Engineering",
         gpa: 3.75,
@@ -2111,7 +2111,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "General Member",
         startDate: "2024-08-25",
         isActive: true,
@@ -2122,7 +2122,7 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Lindsey Wu",
-    email: "lwu@knights.ucf.edu",
+    email: "lwu@usf.edu",
     major: "Computer Science",
     graduationYear: "2026",
     status: "Seeking Full-time",
@@ -2134,7 +2134,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Computer Science",
         gpa: 3.93,
@@ -2167,7 +2167,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "AI@UCF",
+        clubName: "AI@USF",
         roleTitle: "Research Director",
         startDate: "2023-08-20",
         isActive: true,
@@ -2178,7 +2178,7 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Brandon Cruz",
-    email: "bcruz@knights.ucf.edu",
+    email: "bcruz@usf.edu",
     major: "Mechanical Engineering",
     graduationYear: "2026",
     status: "Seeking Internship",
@@ -2189,7 +2189,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Mechanical Engineering",
         gpa: 3.70,
@@ -2213,7 +2213,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "Marine Technology Society UCF",
+        clubName: "Marine Technology Society USF",
         roleTitle: "Machining Lead",
         startDate: "2023-09-10",
         isActive: true,
@@ -2224,7 +2224,7 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Natalie Gomez",
-    email: "ngomez@knights.ucf.edu",
+    email: "ngomez@usf.edu",
     major: "Electrical Engineering",
     graduationYear: "2025",
     status: "Seeking Full-time",
@@ -2236,7 +2236,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Electrical Engineering",
         gpa: 3.87,
@@ -2269,7 +2269,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "Treasurer",
         startDate: "2023-05-01",
         isActive: true,
@@ -2280,7 +2280,7 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Jason Patel",
-    email: "jpatel@knights.ucf.edu",
+    email: "jpatel@usf.edu",
     major: "Computer Engineering",
     graduationYear: "2026",
     status: "Seeking Internship",
@@ -2292,7 +2292,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Computer Engineering",
         gpa: 3.82,
@@ -2316,7 +2316,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "RSO UCF Student Chapter",
+        clubName: "RSO USF Student Chapter",
         roleTitle: "PCB Design Co-Lead",
         startDate: "2023-09-01",
         isActive: true,
@@ -2327,7 +2327,7 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Courtney Hall",
-    email: "chall@knights.ucf.edu",
+    email: "chall@usf.edu",
     major: "Aerospace Engineering",
     graduationYear: "2025",
     status: "Seeking Full-time",
@@ -2338,7 +2338,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Aerospace Engineering",
         gpa: 3.77,
@@ -2363,7 +2363,7 @@ export const DENSE_CANDIDATES = [
     projects: [],
     clubMemberships: [
       {
-        clubName: "Knights Experimental Rocketry (KXR)",
+        clubName: "Bulls Experimental Rocketry",
         roleTitle: "Telemetry Lead",
         startDate: "2022-09-01",
         isActive: true,
@@ -2374,7 +2374,7 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Derek Washington",
-    email: "dwashington@knights.ucf.edu",
+    email: "dwashington@usf.edu",
     major: "Computer Science",
     graduationYear: "2027",
     status: "Seeking Internship",
@@ -2386,7 +2386,7 @@ export const DENSE_CANDIDATES = [
     ],
     education: [
       {
-        schoolName: "University of Central Florida",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Computer Science",
         gpa: 3.80,
@@ -2410,7 +2410,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "KnightHacks",
+        clubName: "BullHacks",
         roleTitle: "Web Development Committee",
         startDate: "2023-09-10",
         isActive: true,
@@ -2421,18 +2421,18 @@ export const DENSE_CANDIDATES = [
   },
   {
     name: "Alyssa Chang",
-    email: "achang@knights.ucf.edu",
+    email: "achang@usf.edu",
     major: "Optics & Photonics",
     graduationYear: "2026",
     status: "Seeking Internship",
-    bio: "CREOL junior focusing on photodetector arrays, spectrometer design, optical breadboard alignment, and optical thin-film anti-reflective coatings.",
+    bio: "USF junior focusing on photodetector arrays, spectrometer design, optical breadboard alignment, and optical thin-film anti-reflective coatings.",
     resumePdfUrl: "https://drive.google.com/file/d/alyssa-chang-resume/view",
     socialLinks: [
-      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/alyssa-chang-creol" }
+      { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/alyssa-chang-optics" }
     ],
     education: [
       {
-        schoolName: "University of Central Florida (CREOL)",
+        schoolName: "University of South Florida",
         degreeType: "Bachelor of Science",
         major: "Photonic Science and Engineering",
         gpa: 3.89,
@@ -2456,7 +2456,7 @@ export const DENSE_CANDIDATES = [
     ],
     clubMemberships: [
       {
-        clubName: "SPIE UCF Student Chapter",
+        clubName: "SPIE USF Student Chapter",
         roleTitle: "Secretary",
         startDate: "2023-08-20",
         isActive: true,
@@ -2475,8 +2475,8 @@ const SEED_IEEE_PROJECTS = [
     category: "Robotics",
     status: "Active",
     description: "The RSO Micromouse is an autonomous, battery-powered robotics competition platform. The robot must navigate and map an unknown 16x16 maze, compute the optimal shortest path using flood-fill and A* graph traversal, and execute high-speed speed runs with active yaw stabilization and PID motor velocity control.",
-    repositoryUrl: "https://github.com/ieee-ucf/micromouse-maze-solver",
-    demoUrl: "https://ieee.ucf.edu/projects/micromouse",
+    repositoryUrl: "https://github.com/rso-usf/micromouse-maze-solver",
+    demoUrl: "https://rso.usf.edu/projects/micromouse",
     tools: [
       { name: "STM32F4 Cortex-M4", category: "Embedded & Firmware" },
       { name: "FreeRTOS", category: "Embedded & Firmware" },
@@ -2539,7 +2539,7 @@ const SEED_IEEE_PROJECTS = [
           description: "Fund our sensor arrays and prototype PCB fabrication batches.",
           perks: [
             "Company logo on project GitHub repository and open-source documentation",
-            "Special mention in RSO UCF general body meetings",
+            "Special mention in RSO USF general body meetings",
           ],
         },
         {
@@ -2558,7 +2558,7 @@ const SEED_IEEE_PROJECTS = [
           description: "Full title partner powering the RSO SoutheastCon championship run.",
           perks: [
             "Prominent physical logo placement on the robot chassis and lab test banner",
-            "Exclusive 1-hour private recruiting/tech talk with RSO UCF members",
+            "Exclusive 1-hour private recruiting/tech talk with RSO USF members",
             "VIP invitation to competition demo and final showcase dinner",
           ],
         },
@@ -2566,14 +2566,14 @@ const SEED_IEEE_PROJECTS = [
     },
   },
   {
-    title: "RSO Solar Knight Racing ESC",
+    title: "RSO Solar Bull Racing ESC",
     slug: "ieee-solar-knight-racing-esc",
     tagline: "400V high-efficiency silicon-carbide (SiC) motor inverter engineered for maximum efficiency solar endurance racing.",
     category: "Power",
     status: "Active",
-    description: "The Solar Knight Electronic Speed Controller (ESC) is a custom three-phase inverter capable of switching up to 400V DC bus voltages at 100A peak current with >98.5% electrical efficiency. Designed in collaboration with UCF Solar Car, it uses Silicon Carbide (SiC) MOSFETs, isolated gate drivers, and CAN bus telemetry.",
-    repositoryUrl: "https://github.com/ieee-ucf/solar-knight-esc",
-    demoUrl: "https://ieee.ucf.edu/projects/solar-esc",
+    description: "The Solar Bull Electronic Speed Controller (ESC) is a custom three-phase inverter capable of switching up to 400V DC bus voltages at 100A peak current with >98.5% electrical efficiency. Designed in collaboration with USF Solar Car, it uses Silicon Carbide (SiC) MOSFETs, isolated gate drivers, and CAN bus telemetry.",
+    repositoryUrl: "https://github.com/rso-usf/solar-bull-esc",
+    demoUrl: "https://rso.usf.edu/projects/solar-esc",
     tools: [
       { name: "Altium Designer 24", category: "Hardware & PCB" },
       { name: "Wolfspeed SiC MOSFETs", category: "Hardware & PCB" },
@@ -2605,7 +2605,7 @@ const SEED_IEEE_PROJECTS = [
       {
         date: "May 2025",
         title: "Vehicle Integration & Road Endurance Trials",
-        description: "Mounting the inverter in the Solar Knight vehicle chassis for 500-mile endurance track trials.",
+        description: "Mounting the inverter in the Solar Bull vehicle chassis for 500-mile endurance track trials.",
         status: "upcoming",
       },
     ],
@@ -2654,7 +2654,7 @@ const SEED_IEEE_PROJECTS = [
           perks: [
             "Large company logo on vehicle exterior side pod alongside RSO crest",
             "Exclusive on-campus demo day and private student recruiting event",
-            "Featured video case study shared across UCF Engineering channels",
+            "Featured video case study shared across USF Engineering channels",
           ],
         },
       ],
@@ -2667,7 +2667,7 @@ const SEED_IEEE_PROJECTS = [
     category: "Autonomous Systems",
     status: "Active",
     description: "The RSO Quadcopter Swarm project develops low-cost autonomous micro aerial vehicles that communicate peer-to-peer over an ad-hoc 802.11s mesh network. The drones perform collaborative spatial exploration, vision-based obstacle avoidance using Google Coral Edge TPUs, and decentralized target tracking without a centralized ground station.",
-    repositoryUrl: "https://github.com/ieee-ucf/quadcopter-swarm",
+    repositoryUrl: "https://github.com/rso-usf/quadcopter-swarm",
     tools: [
       { name: "PX4 Autopilot & MAVLink", category: "Embedded & Firmware" },
       { name: "ROS 2 Humble", category: "Software & AI" },
@@ -2757,8 +2757,8 @@ const SEED_IEEE_PROJECTS = [
     tagline: "Low-power Bluetooth 5.4 telemetry nodes with AES-256 encryption providing campus spatial analytics and event tracking.",
     category: "IoT & Networking",
     status: "Active",
-    description: "The Smart Campus IoT Beacon Network is a multi-node sensor mesh deployed across UCF engineering buildings. Featuring solar energy harvesting and coin-cell operation, each beacon broadcasts encrypted indoor environmental metrics, ambient noise levels, and room occupancy heatmaps to a central Next.js dashboard.",
-    repositoryUrl: "https://github.com/ieee-ucf/smart-campus-iot",
+    description: "The Smart Campus IoT Beacon Network is a multi-node sensor mesh deployed across USF engineering buildings. Featuring solar energy harvesting and coin-cell operation, each beacon broadcasts encrypted indoor environmental metrics, ambient noise levels, and room occupancy heatmaps to a central Next.js dashboard.",
+    repositoryUrl: "https://github.com/rso-usf/smart-campus-iot",
     tools: [
       { name: "Nordic nRF52840 SoC", category: "Embedded & Firmware" },
       { name: "Zephyr RTOS", category: "Embedded & Firmware" },
@@ -2783,14 +2783,14 @@ const SEED_IEEE_PROJECTS = [
       },
       {
         date: "Feb 2025",
-        title: "Campus Pilot Deployment in HEC & ENG1",
+        title: "Campus Pilot Deployment in ENB & ENG",
         description: "Installed 15 test beacons collecting real-time humidity, temperature, and indoor air quality.",
         status: "in_progress",
       },
       {
         date: "Apr 2025",
         title: "Campus Web Dashboard & Public API Launch",
-        description: "Publish live open data portal for UCF student researchers and building facilities.",
+        description: "Publish live open data portal for USF student researchers and building facilities.",
         status: "upcoming",
       },
     ],
@@ -2838,8 +2838,8 @@ const SEED_IEEE_PROJECTS = [
     tagline: "Interactive electronic badges designed for semester workshops teaching 200+ students CAD layout and SMD soldering.",
     category: "Hardware",
     status: "Active",
-    description: "This initiative designs and produces interactive, programmable electronic conference badges given to UCF engineering students. Each participant learns schematic design in KiCAD, trace routing, component selection, hands-on hot air/reflow soldering, and flashes their first custom firmware via USB-C.",
-    repositoryUrl: "https://github.com/ieee-ucf/pcb-workshop-badge",
+    description: "This initiative designs and produces interactive, programmable electronic conference badges given to USF engineering students. Each participant learns schematic design in KiCAD, trace routing, component selection, hands-on hot air/reflow soldering, and flashes their first custom firmware via USB-C.",
+    repositoryUrl: "https://github.com/rso-usf/pcb-workshop-badge",
     tools: [
       { name: "KiCAD 8.0 EDA", category: "Hardware & PCB" },
       { name: "USB-C Power Delivery", category: "Hardware & PCB" },
@@ -2859,7 +2859,7 @@ const SEED_IEEE_PROJECTS = [
       {
         date: "Nov 2024",
         title: "100-Badge Fabrication Batch & Stencil QA",
-        description: "Fabricated batch of matte-black and gold ENIG badges with custom UCF Pegasus art.",
+        description: "Fabricated batch of matte-black and gold ENIG badges with custom USF Bulls art.",
         status: "completed",
       },
       {
@@ -2886,7 +2886,7 @@ const SEED_IEEE_PROJECTS = [
     sponsorshipInfo: {
       fundingGoal: 2000,
       currentFunding: 1650,
-      needsDescription: "Subsidizes workshop materials so that every UCF student can design, assemble, and take home their own custom electronic hardware for free.",
+      needsDescription: "Subsidizes workshop materials so that every USF student can design, assemble, and take home their own custom electronic hardware for free.",
       budgetBreakdown: [
         { item: "200x Custom ENIG PCB Badges & Stainless Stencils", cost: 700 },
         { item: "SMD Component Reels (LEDs, MCUs, Passives)", cost: 450 },
@@ -2928,7 +2928,7 @@ const SEED_IEEE_PROJECTS = [
     tagline: "Automated satellite tracking antenna pedestal and software-defined radio transceiver communicating with low-Earth orbit CubeSats.",
     category: "Autonomous Systems",
     status: "Active",
-    description: "Developed in collaboration with Students for the Exploration and Development of Space (SEDS UCF), this automated ground station tracks amateur radio CubeSats passing overhead. Integrates an Az/El dual-axis rotator with GNU Radio DSP chains for real-time telemetry demodulation.",
+    description: "Developed in collaboration with Students for the Exploration and Development of Space (SEDS USF), this automated ground station tracks amateur radio CubeSats passing overhead. Integrates an Az/El dual-axis rotator with GNU Radio DSP chains for real-time telemetry demodulation.",
     repositoryUrl: undefined,
     demoUrl: undefined,
     tools: [
@@ -2992,7 +2992,7 @@ const SEED_IEEE_PROJECTS = [
     category: "Robotics",
     status: "In Development",
     description: "Submersible multi-thruster driver board featuring waterproof potted enclosures, current sensing, and ROS2 motor control nodes for autonomous underwater navigation and depth holding.",
-    repositoryUrl: "https://github.com/ieee-ucf/auv-thruster-control",
+    repositoryUrl: "https://github.com/rso-usf/auv-thruster-control",
     demoUrl: undefined,
     tools: [],
     timeline: [
@@ -3023,7 +3023,7 @@ const SEED_IEEE_PROJECTS = [
     category: "Hardware",
     status: "Active",
     description: "A hardware-accelerated network pipeline receiving UDP/IP multicast market data, parsing FIX/FAST financial protocol packets directly in silicon logic, and executing risk check validations within 80 nanoseconds of wire arrival.",
-    repositoryUrl: "https://github.com/ieee-ucf/fpga-packet-filter",
+    repositoryUrl: "https://github.com/rso-usf/fpga-packet-filter",
     demoUrl: undefined,
     tools: [
       { name: "Xilinx Vivado ML", category: "Hardware & PCB" },
@@ -3042,14 +3042,14 @@ const SEED_IEEE_PROJECTS = [
     sponsorshipInfo: undefined,
   },
   {
-    title: "KnightHacks Smart Badge NFC Firmware",
-    slug: "knighthacks-smart-badge-nfc-firmware",
+    title: "BullHacks Smart Badge NFC Firmware",
+    slug: "bullhacks-smart-badge-nfc-firmware",
     tagline: undefined,
     category: "Embedded & Firmware",
     status: "Completed",
     description: "Event badge firmware enabling 800+ hackathon attendees to exchange digital contact information, play interactive trivia games, and verify workshop check-ins via high-frequency NFC.",
-    repositoryUrl: "https://github.com/ieee-ucf/knighthacks-nfc-badge",
-    demoUrl: "https://ieee.ucf.edu/badges/knighthacks2024",
+    repositoryUrl: "https://github.com/rso-usf/bullhacks-nfc-badge",
+    demoUrl: "https://rso.usf.edu/badges/bullhacks2024",
     tools: [
       { name: "ESP32-S3 Dual-Core", category: "Embedded & Firmware" },
       { name: "ST25DV Dynamic NFC Tag", category: "Hardware & PCB" },
@@ -3072,7 +3072,7 @@ const SEED_IEEE_PROJECTS = [
       },
       {
         date: "Oct 2024",
-        title: "KnightHacks 2024 Event Deployment",
+        title: "BullHacks 2024 Event Deployment",
         description: "Live badge operation throughout 36-hour hackathon with zero firmware panics reported.",
         status: "completed",
       },
@@ -3140,7 +3140,7 @@ const SEED_IEEE_PROJECTS = [
 export const SEED_EVENTS = [
   {
     title: "RSO Fall Kickoff General Body Meeting (GBM 1)",
-    location: "Harris Engineering Center (HEC 101)",
+    location: "Engineering Building II (ENB 109)",
     description: "Overview of semester technical build projects, committee workshops, free pizza, and networking with IEEE student officers.",
     startTime: "2024-09-04T18:00:00Z",
     endTime: "2024-09-04T20:00:00Z",
@@ -3148,7 +3148,7 @@ export const SEED_EVENTS = [
   },
   {
     title: "Hands-On PCB Design & Altium Workshop",
-    location: "RSO Innovation Lab (ENG2 135)",
+    location: "RSO Innovation Lab (ENB 118)",
     description: "Practical workshop covering schematic entry, PCB layout guidelines, trace routing, component selection, and surface-mount soldering techniques.",
     startTime: "2026-11-28T17:30:00Z",
     endTime: "2026-11-28T19:30:00Z",
@@ -3156,23 +3156,23 @@ export const SEED_EVENTS = [
   },
   {
     title: "Embedded Linux & FreeRTOS Microcontroller Night",
-    location: "Harris Engineering Center (HEC 118)",
+    location: "Engineering Building II (ENB 118)",
     description: "Deep dive into real-time kernel task scheduling, IPC queues, hardware interrupts, and flashing custom C firmware on STM32 microcontrollers.",
     startTime: "2026-12-03T18:00:00Z",
     endTime: "2026-12-03T20:30:00Z",
     slug: "embedded-linux-freertos-night",
   },
   {
-    title: "RSO UCF Technical Resume & Recruiter Showcase",
-    location: "Student Union Pegasus Ballroom",
-    description: "Exclusive member networking session with defense, cloud, and semiconductor industry recruiters ahead of UCF STEM Career Fair.",
+    title: "RSO USF Technical Resume & Recruiter Showcase",
+    location: "Marshall Student Center (MSC Ballroom)",
+    description: "Exclusive member networking session with defense, cloud, and semiconductor industry recruiters ahead of USF STEM Career Fair.",
     startTime: "2024-10-23T16:00:00Z",
     endTime: "2024-10-23T19:00:00Z",
     slug: "resume-recruiter-showcase-2024",
   },
   {
     title: "Region 3 SoutheastCon Hardware Competition Build Sprint",
-    location: "RSO Innovation Lab (ENG2 135)",
+    location: "RSO Innovation Lab (ENB 118)",
     description: "Collaborative hackathon & build session programming autonomous rovers and testing sensor arrays for RSO Region 3 competition.",
     startTime: "2026-12-10T17:00:00Z",
     endTime: "2026-12-10T21:00:00Z",
@@ -3180,7 +3180,7 @@ export const SEED_EVENTS = [
   },
   {
     title: "PyTorch & Edge AI Computer Vision Bootcamp",
-    location: "Harris Engineering Center (HEC 101)",
+    location: "Engineering Building II (ENB 109)",
     description: "Hands-on workshop building zero-shot object detection models and deploying quantization pipelines on Raspberry Pi and Edge TPU devices.",
     startTime: "2026-12-18T18:00:00Z",
     endTime: "2026-12-18T20:00:00Z",
@@ -3188,7 +3188,7 @@ export const SEED_EVENTS = [
   },
   {
     title: "RSO Spring General Body Meeting & Project Showcase",
-    location: "Harris Engineering Center (HEC 101)",
+    location: "Engineering Building II (ENB 109)",
     description: "Unveiling 2025 student projects, announcing officer elections, and connecting with corporate sponsors.",
     startTime: "2025-01-22T18:00:00Z",
     endTime: "2025-01-22T20:00:00Z",
@@ -3196,7 +3196,7 @@ export const SEED_EVENTS = [
   },
   {
     title: "Lockheed Martin Defense Electronics & Radar Systems Tech Talk",
-    location: "Harris Engineering Center (HEC 101)",
+    location: "Engineering Building II (ENB 109)",
     description: "Technical presentation by Lockheed Martin radar systems architects on phased-array beamforming and FPGA DSP pipelines.",
     startTime: "2027-01-14T17:30:00Z",
     endTime: "2027-01-14T19:30:00Z",
@@ -3204,7 +3204,7 @@ export const SEED_EVENTS = [
   },
   {
     title: "IPC Soldering & Surface Mount Certification Bootcamp",
-    location: "RSO Innovation Lab (ENG2 135)",
+    location: "RSO Innovation Lab (ENB 118)",
     description: "Full-day intensive training in lead-free solder metallurgy, fine-pitch QFN rework, and ESD workstation safety compliance.",
     startTime: "2026-11-25T10:00:00Z",
     endTime: "2026-11-25T16:00:00Z",
@@ -3220,7 +3220,7 @@ export const SEED_EVENTS = [
   },
   {
     title: "Texas Instruments Analog Power Management Deep Dive",
-    location: "Engineering II (ENG2 102)",
+    location: "Engineering Building II (ENB 102)",
     description: "Guest lecture and lab demo on buck/boost topology optimization, EMI suppression, and battery charge management ICs.",
     startTime: "2027-01-28T18:00:00Z",
     endTime: "2027-01-28T20:00:00Z",
@@ -3228,7 +3228,7 @@ export const SEED_EVENTS = [
   },
   {
     title: "Autonomous Rover Hackathon & Line-Tracking Challenge",
-    location: "Harris Engineering Center Atrium",
+    location: "Engineering Building II Atrium",
     description: "12-hour student team robotics hackathon programming autonomous navigation, line-following, and obstacle avoidance algorithms.",
     startTime: "2027-02-06T09:00:00Z",
     endTime: "2027-02-06T21:00:00Z",
@@ -3236,15 +3236,15 @@ export const SEED_EVENTS = [
   },
   {
     title: "Northrop Grumman Cyber & Embedded Security Workshop",
-    location: "Harris Engineering Center (HEC 118)",
+    location: "Engineering Building II (ENB 118)",
     description: "Interactive security lab exploring side-channel analysis, JTAG hardware debugging, and secure boot cryptographic validation.",
     startTime: "2027-02-24T17:30:00Z",
     endTime: "2027-02-24T19:30:00Z",
     slug: "northrop-grumman-cyber-embedded-security",
   },
   {
-    title: "RSO UCF Senior Design Pitch & Sponsor Feedback Night",
-    location: "Engineering I Atrium",
+    title: "RSO USF Senior Design Pitch & Sponsor Feedback Night",
+    location: "Engineering Building II Atrium",
     description: "Graduating seniors present capstone engineering prototypes to industry sponsor judges and engineering faculty.",
     startTime: "2027-03-10T18:00:00Z",
     endTime: "2027-03-10T21:00:00Z",
@@ -3252,15 +3252,15 @@ export const SEED_EVENTS = [
   },
   {
     title: "L3Harris High-Frequency RF Communications Seminar",
-    location: "Harris Engineering Center (HEC 101)",
+    location: "Engineering Building II (ENB 109)",
     description: "Seminar on wideband satellite transceivers, phased-array antenna designs, and mil-spec electronic warfare communication links.",
     startTime: "2027-03-24T17:00:00Z",
     endTime: "2027-03-24T19:00:00Z",
     slug: "l3harris-rf-comms-seminar",
   },
   {
-    title: "RSO UCF Industry Dinner & End-of-Year Banquet",
-    location: "UCF Alumni Center",
+    title: "RSO USF Industry Dinner & End-of-Year Banquet",
+    location: "USF Alumni Center",
     description: "Annual celebration honoring graduating seniors, outstanding committee chairs, and student competition winners.",
     startTime: "2025-04-18T18:30:00Z",
     endTime: "2025-04-18T21:30:00Z",
@@ -3381,26 +3381,26 @@ export async function seedDatabase() {
 
     const projectAssigments: string[] = [
       "RSO Micromouse Autonomous Maze Solver",
-      "RSO UCF Member Catalog & Resume Hub",
-      "RSO Solar Knight Racing ESC",
+      "RSO USF Member Catalog & Resume Hub",
+      "RSO Solar Bull Racing ESC",
       "RSO Quadcopter Swarm",
-      "RSO Solar Knight Racing ESC",
+      "RSO Solar Bull Racing ESC",
       "RSO Micromouse Autonomous Maze Solver",
       "RSO Smart Campus IoT Beacon Network",
       "RSO PCB Design & Surface Mount Workshop Series",
-      "RSO UCF Member Catalog & Resume Hub",
+      "RSO USF Member Catalog & Resume Hub",
       "RSO Quadcopter Swarm",
       "RSO Micromouse Autonomous Maze Solver",
-      "RSO Solar Knight Racing ESC",
+      "RSO Solar Bull Racing ESC",
       "RSO Smart Campus IoT Beacon Network",
       "RSO PCB Design & Surface Mount Workshop Series",
       "RSO Micromouse Autonomous Maze Solver",
       "RSO Quadcopter Swarm",
-      "RSO UCF Member Catalog & Resume Hub",
-      "RSO Solar Knight Racing ESC",
+      "RSO USF Member Catalog & Resume Hub",
+      "RSO Solar Bull Racing ESC",
       "RSO Quadcopter Swarm",
       "RSO Micromouse Autonomous Maze Solver",
-      "RSO Solar Knight Racing ESC",
+      "RSO Solar Bull Racing ESC",
       "RSO Smart Campus IoT Beacon Network",
       "RSO PCB Design & Surface Mount Workshop Series",
       "RSO Micromouse Autonomous Maze Solver"
@@ -3484,7 +3484,7 @@ export async function seedDatabase() {
       console.log(`  ✓ Successfully seeded candidate with FERPA consent: ${candidate.name} (${candidate.email}) [ID: ${memberId}]`);
     }
 
-    console.log(`Seeding ${SEED_IEEE_PROJECTS.length} IEEE UCF Projects...`);
+    console.log(`Seeding ${SEED_IEEE_PROJECTS.length} IEEE USF Projects...`);
     const createdProjectIds: string[] = [];
 
     for (const prj of SEED_IEEE_PROJECTS) {
@@ -3541,7 +3541,7 @@ export async function seedDatabase() {
       console.log(`  ✓ Linked member roster to IEEE project ID ${prjId}`);
     }
 
-    console.log(`Seeding ${SEED_EVENTS.length} IEEE UCF events...`);
+    console.log(`Seeding ${SEED_EVENTS.length} IEEE USF events...`);
     const createdEventIds: string[] = [];
 
     for (const evt of SEED_EVENTS) {

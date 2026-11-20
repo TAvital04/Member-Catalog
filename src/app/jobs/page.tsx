@@ -991,6 +991,8 @@ function JobsPageContent() {
           students={students}
           onClose={() => setSelectedJobForApplicants(null)}
           onViewPortfolio={(student: Student) => {
+            setSelectedJobForApplicants(null);
+            setSelectedJobForDetail(null);
             setInspectedStudent(student);
             updateJobUrl({ member: getStudentSlug(student) });
           }}

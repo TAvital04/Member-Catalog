@@ -266,8 +266,16 @@ function IEEEProjectsContent() {
     }
 
     if (match) {
+      setActiveModalProject(null);
+      setActiveModalTab("overview");
       setSelectedMemberStudent(match);
-      updateProjectUrl({ member: getStudentSlug(match) });
+      updateProjectUrl({
+        member: getStudentSlug(match),
+        project: null,
+        projectId: null,
+        slug: null,
+        tab: null,
+      });
     }
   };
 
@@ -282,6 +290,7 @@ function IEEEProjectsContent() {
     if (memberParam) {
       const match = findStudentBySlugOrId(students, memberParam);
       if (match) {
+        setActiveModalProject(null);
         setSelectedMemberStudent(match);
       }
     } else {

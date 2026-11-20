@@ -167,8 +167,14 @@ function IEEEEventsContent() {
     }
 
     if (match) {
+      setActiveModalEvent(null);
       setSelectedMemberStudent(match);
-      updateEventUrl({ member: getStudentSlug(match) });
+      updateEventUrl({
+        member: getStudentSlug(match),
+        event: null,
+        eventId: null,
+        slug: null,
+      });
     }
   };
 
@@ -200,6 +206,7 @@ function IEEEEventsContent() {
     }
     const match = findStudentBySlugOrId(students, memberParam);
     if (match) {
+      setActiveModalEvent(null);
       setSelectedMemberStudent(match);
     }
   }, [students, memberParam]);
@@ -550,7 +557,6 @@ function IEEEEventsContent() {
           onClose={handleCloseMemberModal}
           adminMode={isAdmin}
           role={role}
-          onToggleFlag={() => { }}
           allStudents={students}
           onSelectEvent={(evt) => {
             setSelectedMemberStudent(null);

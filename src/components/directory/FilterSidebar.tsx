@@ -26,11 +26,7 @@ interface FilterSidebarProps {
   setSelectedCompanies?: (companies: string[]) => void;
   skillFilterMode: "AND" | "OR";
   setSkillFilterMode: (mode: "AND" | "OR") => void;
-
-  // Admin filters (deprecated flagging)
   adminMode?: boolean;
-  adminFilterFlagged?: boolean | null;
-  setAdminFilterFlagged?: (flagged: boolean | null) => void;
 
   // Available metadata
   availableMajors: string[];
@@ -148,9 +144,8 @@ export default function FilterSidebar({
 
   return (
     <>
-      {/* Horizontal Top-bar Dropdowns Layout */}
-      <div className={`w-full flex-col min-[1056px]:flex-row items-stretch min-[1056px]:items-center gap-3 bg-white p-3 rounded-2xl border border-slate-200/90 shadow-2xs relative z-30 ${layout === "side" ? "flex min-[1056px]:hidden" : "flex"
-        }`}>
+      {/* Mobile/Tablet Horizontal Filters (<1056px) */}
+      <div className="w-full flex min-[1056px]:hidden flex-col gap-3 bg-white p-3 rounded-2xl border border-slate-200/90 shadow-2xs relative z-30">
         {activeDropdown && (
           <div
             className="fixed inset-0 z-20 cursor-default"
@@ -259,13 +254,12 @@ export default function FilterSidebar({
         </button>
       </div>
 
-      {/* Side Layout (Vertical list on larger viewports) */}
-        <aside
-          key="filter-sidebar-side-panel"
-          ref={asideRef}
-          className={`w-full min-[1056px]:w-64 shrink-0 flex-col bg-white rounded-2xl border border-slate-200 shadow-2xs min-[1056px]:sticky min-[1056px]:top-20 min-[1056px]:self-start min-[1056px]:max-h-[calc(100vh-6rem)] overflow-hidden ${layout === "side" ? "hidden min-[1056px]:flex" : "hidden"
-            }`}
-        >
+      {/* Desktop Vertical Sidebar Panel (>=1056px) */}
+      <aside
+        key="filter-sidebar-side-panel"
+        ref={asideRef}
+        className="w-full min-[1056px]:w-64 shrink-0 hidden min-[1056px]:flex flex-col bg-white rounded-2xl border border-slate-200 shadow-2xs min-[1056px]:sticky min-[1056px]:top-20 min-[1056px]:self-start min-[1056px]:max-h-[calc(100vh-6rem)] overflow-hidden"
+      >
           {/* Active Sidebar Filters Header - Fixed at the top of the panel */}
           <div className="flex items-center justify-between p-4 pb-3 border-b border-slate-100 shrink-0 bg-white">
             <div className="flex items-center gap-2 font-bold text-slate-900 text-sm">

@@ -41,8 +41,7 @@ export default function DirectoryNavbar({
   const isSponsor = role === "sponsor";
   const isRsoLeadership = role === "admin";
   const isStudent = role === "student";
-  const isStandard = role === "standard";
-  const isAuthenticated = isSponsor || isRsoLeadership || isStudent || (isStandard && Boolean(session));
+  const isAuthenticated = isSponsor || isRsoLeadership || isStudent;
 
   const handleSignOut = () => {
     logout();
@@ -101,9 +100,7 @@ export default function DirectoryNavbar({
             ? "RSO Leadership"
             : isSponsor
             ? "Sponsor"
-            : isStudent
-            ? "Student"
-            : "Standard"}
+            : "Student"}
         </span>
       </Link>
 

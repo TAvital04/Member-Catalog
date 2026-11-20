@@ -37,9 +37,9 @@ describe("Standard Login & Premium Profile Locking Tests", () => {
     expect(
       screen.getByText(/This is unavailable because you aren't one of the premium profiles/i)
     ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Learn More About Sponsoring/i })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: /Sign In with Premium Profile/i })).toHaveAttribute(
       "href",
-      "/sponsors"
+      "/login"
     );
   });
 

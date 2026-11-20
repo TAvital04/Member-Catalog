@@ -1,4 +1,4 @@
-import { GET, PATCH, DELETE } from "@/app/api/members/route";
+import { GET, DELETE } from "@/app/api/members/route";
 
 describe("GET /api/members Route Handler", () => {
   test("returns HTTP 200 response with student array payload directly from database", async () => {
@@ -12,15 +12,14 @@ describe("GET /api/members Route Handler", () => {
   });
 });
 
-describe("PATCH & DELETE /api/members Authorization & Security", () => {
-  test("rejects unauthorized PATCH requests without admin/sponsor role", async () => {
-    const req = new Request("http://localhost:3001/api/members", {
-      method: "PATCH",
+describe("DELETE /api/members Authorization & Security", () => {
+  test("rejects unauthorized DELETE requests from guest or non-admin roles", async () => {
+    const req = new Request("http://localhost:3001/api/members?id=candidate-1", {
+      method: "DELETE",
       headers: { "x-user-role": "standard" },
-      body: JSON.stringify({ id: "candidate-1", flagged: true }),
     });
 
-    const response = await PATCH(req);
+    const response = await DELETE(req);
     expect(response.status).toBe(403);
     const json = await response.json();
     expect(json.success).toBe(false);

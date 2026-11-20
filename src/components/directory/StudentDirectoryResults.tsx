@@ -14,7 +14,6 @@ interface StudentDirectoryResultsProps {
   canFilter?: boolean;
   onSelectStudent: (student: Student | null) => void;
   onDeleteStudent?: (id: string) => void;
-  onToggleFlagStudent?: (id: string) => void;
   onResetAllFilters: () => void;
 }
 

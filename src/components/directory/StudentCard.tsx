@@ -11,7 +11,6 @@ interface StudentCardProps {
   onClick: (student: Student) => void;
   adminMode?: boolean;
   canFilter?: boolean;
-  onToggleFlag?: (id: string) => void;
 }
 
 function StudentCard({

@@ -1,7 +1,7 @@
 import { pgTable, uuid, varchar, text, boolean, jsonb, timestamp, integer, unique } from 'drizzle-orm/pg-core';
 
 /**
- * Members Table - Core Member Identity Entity in UCF IEEE Member Catalog
+ * Members Table - Core Member Identity Entity in RSO USF Member Catalog
  */
 export const members = pgTable('members', {
   id: uuid('id').defaultRandom().primaryKey(),
@@ -101,8 +101,6 @@ export const memberResumes = pgTable('member_resumes', {
     .default([])
     .notNull(),
 
-  flagged: boolean('flagged').default(false).notNull(),
-  flagReason: varchar('flag_reason', { length: 300 }),
   mainProjectName: varchar('main_project_name', { length: 255 }),
 
   // Chapter Contribution & Point System
@@ -143,7 +141,7 @@ export const studentConsents = pgTable('student_consents', {
 });
 
 /**
- * Events Table - IEEE UCF Events & Activities
+ * Events Table - RSO USF Events & Activities
  */
 export const events = pgTable('events', {
   id: uuid('id').defaultRandom().primaryKey(),
@@ -236,7 +234,7 @@ export const projectParticipants = pgTable(
 );
 
 /**
- * Job Postings Table - Corporate Partner & IEEE UCF Job/Internship Opportunities
+ * Job Postings Table - Corporate Partner & RSO USF Job/Internship Opportunities
  */
 export const jobPostings = pgTable('job_postings', {
   id: uuid('id').defaultRandom().primaryKey(),
@@ -296,7 +294,7 @@ export const jobApplications = pgTable(
 
 
 /**
- * Chapter Sponsors Table - Corporate Partners supporting IEEE UCF projects, workshops, and recruiting
+ * Chapter Sponsors Table - Corporate Partners supporting RSO USF projects, workshops, and recruiting
  */
 export const chapterSponsors = pgTable('chapter_sponsors', {
   id: varchar('id', { length: 64 }).primaryKey(),

@@ -27,7 +27,6 @@ interface UseFilteredStudentsProps {
   onlyLeaders?: boolean;
   skillFilterMode: "AND" | "OR";
   adminMode?: boolean;
-  adminFilterFlagged?: boolean | null;
   sortBy: DirectorySortOption | string;
   hasFilterPermission?: boolean;
   role?: UserRole;

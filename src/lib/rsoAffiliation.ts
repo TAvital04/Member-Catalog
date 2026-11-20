@@ -136,7 +136,7 @@ export function isRsoProject(project: ProjectEntry, student?: Student): boolean 
 
   // Description references RSO chapter or technical committee build
   if (
-    /\b(rso ucf|ieee ucf|rso chapter|chapter project|rso competition|rso innovation lab|southeastcon)\b/i.test(
+    /\b(rso usf|ieee usf|rso ucf|ieee ucf|rso chapter|chapter project|rso competition|rso innovation lab|southeastcon)\b/i.test(
       descLower
     )
   ) {
@@ -314,7 +314,7 @@ export function findMatchingIeeeProject(
   if (matchBySlug) return matchBySlug;
 
   // 5. Keyword token overlap matching
-  const stopWords = new Set(["rso", "ieee", "ucf", "the", "and", "project", "chapter", "autonomous", "system", "systems", "platform"]);
+  const stopWords = new Set(["rso", "ieee", "usf", "ucf", "the", "and", "project", "chapter", "autonomous", "system", "systems", "platform"]);
   const cleanTokens = cleanName
     .replace(/[^a-z0-9\s]/g, " ")
     .split(/\s+/)
@@ -392,11 +392,11 @@ export function findMatchingIeeeEvent(
   });
   if (matchBySubstring) return matchBySubstring;
 
-  // 4. Normalized match (stripping RSO, IEEE, UCF, chapter, etc.)
+  // 4. Normalized match (stripping RSO, IEEE, USF, chapter, etc.)
   const normalize = (str: string) =>
     str
       .toLowerCase()
-      .replace(/\b(rso|ieee|ucf|chapter|event|workshop)\b/g, "")
+      .replace(/\b(rso|ieee|usf|ucf|chapter|event|workshop)\b/g, "")
       .replace(/[^a-z0-9]/g, " ")
       .trim();
 

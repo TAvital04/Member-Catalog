@@ -7,9 +7,9 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { accountType, email, password, organization } = body || {};
 
-    if (accountType !== "rso_leadership" && accountType !== "sponsor" && accountType !== "student" && accountType !== "standard") {
+    if (accountType !== "rso_leadership" && accountType !== "sponsor" && accountType !== "student") {
       return Response.json(
-        { success: false, error: "Please select a valid role (Student, Standard, RSO Leadership, or Sponsor)." },
+        { success: false, error: "Please select a valid account role (Student, Corporate Sponsor, or RSO Leadership)." },
         { status: 400 }
       );
     }
@@ -67,7 +67,6 @@ export async function POST(request: Request) {
         "sponsor-access",
         "rso-usf-leadership",
         "student-access",
-        "standard-access",
       ].filter(Boolean)
     );
 

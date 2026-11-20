@@ -453,13 +453,31 @@ function SponsorsPageContent() {
               <SponsorDetailView
                 relations={activeSponsorRelations}
                 onBack={handleBackToAll}
-                onSelectStudent={(student) => setInspectedStudent(student)}
+                onSelectStudent={(student) => {
+                  setInspectedProject(null);
+                  setInspectedEvent(null);
+                  setInspectedJob(null);
+                  setInspectedStudent(student);
+                }}
                 onSelectProject={(project, tab) => {
+                  setInspectedStudent(null);
+                  setInspectedEvent(null);
+                  setInspectedJob(null);
                   setInspectedProject(project);
                   setProjectTab(tab || "overview");
                 }}
-                onSelectEvent={(event) => setInspectedEvent(event)}
-                onSelectJob={(job) => setInspectedJob(job)}
+                onSelectEvent={(event) => {
+                  setInspectedStudent(null);
+                  setInspectedProject(null);
+                  setInspectedJob(null);
+                  setInspectedEvent(event);
+                }}
+                onSelectJob={(job) => {
+                  setInspectedStudent(null);
+                  setInspectedProject(null);
+                  setInspectedEvent(null);
+                  setInspectedJob(job);
+                }}
                 role={role}
                 onRequestInitiative={role === "sponsor" ? () => setIsInitiativeFormOpen(true) : undefined}
               />
@@ -605,6 +623,14 @@ function SponsorsPageContent() {
           role={role}
           initialTab={projectTab}
           onClose={() => setInspectedProject(null)}
+          onSelectMember={(memberId) => {
+            const match = findStudentBySlugOrId(students, memberId);
+            if (match) {
+              setInspectedProject(null);
+              setInspectedStudent(match);
+              updateSponsorUrl({ member: getStudentSlug(match) });
+            }
+          }}
         />
       )}
 
@@ -618,6 +644,7 @@ function SponsorsPageContent() {
           onSelectMember={(memberId) => {
             const match = findStudentBySlugOrId(students, memberId);
             if (match) {
+              setInspectedEvent(null);
               setInspectedStudent(match);
               updateSponsorUrl({ member: getStudentSlug(match) });
             }

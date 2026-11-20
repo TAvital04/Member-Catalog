@@ -13,14 +13,6 @@ export interface PortalUserRecord {
 
 const INITIAL_PORTAL_USERS: PortalUserRecord[] = [
   {
-    accountType: "standard",
-    role: "standard",
-    email: "standard@usf.edu",
-    password: "standard-access",
-    displayName: "Standard Member",
-    organization: "USF General Community",
-  },
-  {
     accountType: "student",
     role: "student",
     email: "student@usf.edu",
@@ -76,15 +68,15 @@ const INITIAL_PORTAL_USERS: PortalUserRecord[] = [
 
 // Global fallback registry for local dev when Postgres is offline
 const globalForAuth = globalThis as unknown as {
-  __ieeePortalUsers?: PortalUserRecord[];
+  __portalUsers?: PortalUserRecord[];
 };
 
-if (!globalForAuth.__ieeePortalUsers) {
-  globalForAuth.__ieeePortalUsers = [...INITIAL_PORTAL_USERS];
+if (!globalForAuth.__portalUsers) {
+  globalForAuth.__portalUsers = [...INITIAL_PORTAL_USERS];
 }
 
 export function getPortalUsers(): PortalUserRecord[] {
-  return globalForAuth.__ieeePortalUsers!;
+  return globalForAuth.__portalUsers!;
 }
 
 export function registerPortalUser(user: PortalUserRecord): void {

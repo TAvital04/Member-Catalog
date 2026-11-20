@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Student, EventEntry } from "@/data/students";
 import { useFocusTrap } from "../common/useFocusTrap";
 import Tooltip from "../common/Tooltip";
@@ -11,7 +12,6 @@ import ProjectsTab from "./tabs/ProjectsTab";
 import SkillsTab from "./tabs/SkillsTab";
 import EventsTab from "./tabs/EventsTab";
 import ContactTab from "./tabs/ContactTab";
-import EventModal from "./event/EventModal";
 import { IEEEEvent } from "@/data/events";
 import { findMatchingIeeeEvent } from "@/lib/rsoAffiliation";
 import { UserRole } from "@/hooks/useRoleManager";
@@ -21,8 +21,6 @@ import { getStudentSlug } from "@/lib/studentSlug";
 interface PortfolioModalProps {
   student: Student;
   onClose: () => void;
-  onToggleFlag?: (id: string) => void;
-  onResolve?: (student: Student) => void;
   adminMode?: boolean;
   role?: UserRole;
   onSelectProject?: (projectSlugOrId: string) => void;
@@ -39,9 +37,9 @@ export default function PortfolioModal({
   onSelectEvent,
   allStudents,
 }: PortfolioModalProps) {
+  const router = useRouter();
   const [currentStudent, setCurrentStudent] = useState<Student>(student);
   const [activeTab, setActiveTab] = useState<TabType>("about");
-  const [activeEventModal, setActiveEventModal] = useState<IEEEEvent | null>(null);
   const [copiedShareLink, setCopiedShareLink] = useState(false);
   const focusTrapRef = useFocusTrap(true, onClose);
 
@@ -69,9 +67,11 @@ export default function PortfolioModal({
       return;
     }
     const matched = findMatchingIeeeEvent(evt);
-    if (matched) {
-      setActiveEventModal(matched);
-    }
+    const targetUrl = matched
+      ? `/events?event=${matched.slug}`
+      : `/events?q=${encodeURIComponent(evt.title)}`;
+    onClose();
+    router.push(targetUrl);
   };
 
   useEffect(() => {
@@ -103,11 +103,10 @@ export default function PortfolioModal({
   };
 
   return (
-    <>
-      <div
-        onClick={onClose}
-        className="fixed inset-0 z-50 flex items-center justify-center p-0 md:p-4 bg-modal-overlay backdrop-blur-md cursor-pointer"
-      >
+    <div
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center p-0 md:p-4 bg-modal-overlay backdrop-blur-md cursor-pointer"
+    >
       <div
         ref={focusTrapRef}
         role="dialog"
@@ -236,26 +235,5 @@ export default function PortfolioModal({
         </div>
       </div>
     </div>
-
-    {activeEventModal && (
-      <EventModal
-        event={activeEventModal}
-        role={role}
-        onClose={() => setActiveEventModal(null)}
-        students={allStudents}
-        onSelectMember={(memberId) => {
-          if (allStudents && allStudents.length > 0) {
-            const found = allStudents.find(
-              (s) => s.id === memberId || s.name.toLowerCase() === memberId.toLowerCase()
-            );
-            if (found) {
-              setCurrentStudent(found);
-              setActiveEventModal(null);
-            }
-          }
-        }}
-      />
-    )}
-  </>
-);
+  );
 }
