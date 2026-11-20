@@ -36,7 +36,7 @@ export type { UserRole };
 function StudentDirectoryContent() {
   const { theme, toggleTheme } = useThemeManager();
   const { role, setRole, hasFilterPermission, isAdmin, isStudent, isSponsor, session } = useRoleManager();
-  const { students, setStudents, isLoading } = useStudentData();
+  const { students, setStudents, isLoading } = useStudentData(role);
 
   // Synced directory filter state from URL search params
   const {
@@ -200,20 +200,21 @@ function StudentDirectoryContent() {
     }
     if (newRole === "standard") {
       resetAllFilters();
+      setSearchQuery("");
       setOnlyLeadersFilter(false);
       setFilterByMyself(false);
       setSponsorInteractingFilter(false);
     }
   };
 
-  // If standard user navigates with a skill filter (e.g. clicked from a portfolio modal), automatically activate sponsor access
+  // If standard user has no filter or search permission, ensure all filters & search query remain cleared
   React.useEffect(() => {
-    if (!hasFilterPermission) {
-      if (selectedSkills.length > 0) {
-        setRole("sponsor");
-        return;
+    if (!hasFilterPermission || role === "standard") {
+      if (searchQuery) {
+        setSearchQuery("");
       }
       if (
+        selectedSkills.length > 0 ||
         selectedMajors.length > 0 ||
         selectedGradDates.length > 0 ||
         selectedEvents.length > 0 ||
@@ -223,7 +224,7 @@ function StudentDirectoryContent() {
         resetAllFilters();
       }
     }
-  }, [hasFilterPermission, selectedMajors, selectedSkills, selectedGradDates, selectedEvents, selectedProjects, selectedCompanies, resetAllFilters, setRole]);
+  }, [hasFilterPermission, role, searchQuery, setSearchQuery, selectedMajors, selectedSkills, selectedGradDates, selectedEvents, selectedProjects, selectedCompanies, resetAllFilters]);
 
   // Keyboard shortcut Ctrl+K to search
   React.useEffect(() => {

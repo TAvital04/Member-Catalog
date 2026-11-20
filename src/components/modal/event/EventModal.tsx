@@ -10,6 +10,7 @@ import {
   BookOpen,
   Info,
   HeartHandshake,
+  Lock,
 } from "lucide-react";
 import { IEEEEvent, EventAttendee } from "@/data/events";
 import { Student } from "@/data/students";
@@ -107,8 +108,10 @@ export default function EventModal({
     { id: "skills", label: "Skills", ariaLabel: "Skills & Topics", icon: Sparkles },
     {
       id: "attendees",
-      label: `Attending Members (${event.attendees ? event.attendees.length : 0})`,
-      ariaLabel: "Attending Members",
+      label: currentRole === "standard"
+        ? `Attendance (${event.attendees ? event.attendees.length : 0})`
+        : `Attendees (${event.attendees ? event.attendees.length : 0})`,
+      ariaLabel: "Workshop Attendance & Leads",
       icon: Users,
     },
     {
@@ -173,8 +176,8 @@ export default function EventModal({
         </p>
       </div>
 
-      {/* Current Chapter Sponsors Segment */}
-      <CurrentSponsorsSegment variant="panel" />
+      {/* Current Chapter Sponsors Segment (Hidden from Standard View) */}
+      {currentRole !== "standard" && <CurrentSponsorsSegment variant="panel" />}
     </div>
   );
 
@@ -382,15 +385,108 @@ export default function EventModal({
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider py-1 leading-normal">
                       <span>
-                        Member Attendees ({event.attendees ? event.attendees.length : 0})
+                        {currentRole === "standard"
+                          ? `Workshop Attendance (${event.attendees ? event.attendees.length : 0} Students)`
+                          : `Member Attendees (${event.attendees ? event.attendees.length : 0})`}
                       </span>
                     </div>
-                    <span className="text-[11px] text-slate-400">
-                      Click candidate to inspect portfolio
-                    </span>
+                    {currentRole !== "standard" && (
+                      <span className="text-[11px] text-slate-400">
+                        Click candidate to inspect portfolio
+                      </span>
+                    )}
                   </div>
 
-                  {(!event.attendees || event.attendees.length === 0) ? (
+                  {currentRole === "standard" ? (
+                    <div className="flex flex-col gap-4">
+                      {/* Attendance Count Stat Card */}
+                      <div className="p-4 sm:p-5 rounded-2xl bg-neutral-50 border border-neutral-300 shadow-2xs flex items-center justify-between gap-4">
+                        <div className="flex items-center gap-3.5">
+                          <div className="w-11 h-11 rounded-xl bg-white border border-neutral-300 text-black flex items-center justify-center shrink-0 shadow-2xs">
+                            <Users size={20} />
+                          </div>
+                          <div>
+                            <div className="text-base sm:text-lg font-black text-black">
+                              {event.attendees ? event.attendees.length : 0} Students Attended
+                            </div>
+                            <p className="text-xs text-neutral-600 font-sans mt-0.5">
+                              Total verified engineering student members who checked into and completed this hands-on workshop session.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Workshop & Session Leads Only */}
+                      {(() => {
+                        const leads = (event.leads && event.leads.length > 0)
+                          ? event.leads
+                          : (event.attendees || []).filter(
+                              (a) => a.role === "Lead" || a.role === "Speaker" || a.role === "Officer"
+                            );
+                        const effectiveLeads = leads.length > 0 ? leads : (event.attendees && event.attendees.length > 0 ? [event.attendees[0]] : []);
+                        const otherAttendeesCount = Math.max(0, (event.attendees?.length || 0) - effectiveLeads.length);
+
+                        return (
+                          <div className="flex flex-col gap-3">
+                            <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider">
+                              <span>Workshop & Session Leads ({effectiveLeads.length})</span>
+                            </div>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                              {effectiveLeads.map((lead, idx) => {
+                                const student = getStudentForAttendee(lead);
+                                const displayName = student?.name || lead.name;
+                                const displayMajor = student?.major || lead.major;
+
+                                return (
+                                  <button
+                                    key={idx}
+                                    type="button"
+                                    onClick={() => {
+                                      if (onSelectMember) {
+                                        onSelectMember(student?.id || lead.memberId);
+                                      }
+                                    }}
+                                    className={`${CARD_INTERACTIVE} p-3.5 flex items-center justify-between text-left group`}
+                                  >
+                                    <div className="flex items-center gap-3 min-w-0 pr-2">
+                                      <Avatar
+                                        name={displayName}
+                                        size="md"
+                                        className="shrink-0 bg-slate-100 text-slate-800 font-bold border border-slate-200"
+                                      />
+                                      <div className="min-w-0">
+                                        <div className="flex items-center gap-1.5">
+                                          <span className={`text-xs font-bold block truncate ${CARD_TITLE_HOVER}`}>
+                                            {displayName}
+                                          </span>
+                                          <span className="text-[9.5px] font-bold px-1.5 py-0.5 rounded bg-neutral-100 text-black border border-neutral-300 shrink-0">
+                                            Workshop Lead
+                                          </span>
+                                        </div>
+                                        <span className="text-[11px] text-slate-500 block truncate mt-0.5">
+                                          {displayMajor}
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </button>
+                                );
+                              })}
+                            </div>
+
+                            {otherAttendeesCount > 0 && (
+                              <div className="p-3.5 rounded-xl bg-white border border-neutral-200 text-xs text-neutral-600 flex items-center gap-2.5 shadow-2xs font-sans mt-1">
+                                <Lock size={14} className="text-neutral-500 shrink-0" />
+                                <span>
+                                  +{otherAttendeesCount} other student members attended this session. Individual participant names are kept private to protect student privacy.
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })()}
+                    </div>
+                  ) : (!event.attendees || event.attendees.length === 0) ? (
                     <div className="p-8 text-center text-slate-400 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
                       No member attendance records logged for this session yet.
                     </div>

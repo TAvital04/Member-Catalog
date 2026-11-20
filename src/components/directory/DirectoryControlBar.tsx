@@ -154,43 +154,50 @@ export default function DirectoryControlBar({
 
   return (
     <section className="max-w-7xl w-full mx-auto px-4 mb-5 flex flex-col sm:flex-row items-center gap-3">
-      {/* Search Input Box */}
-      <div className="relative w-full grow">
-        <Search
-          size={16}
-          className="absolute left-3.5 top-3.5 text-slate-400 pointer-events-none"
-        />
-        <input
-          type="text"
-          ref={searchInputRef}
-          placeholder={
-            role === "standard"
-              ? "Search by candidate name (Ctrl+K)..."
-              : "Search by candidate name, skill, coursework, bio (Ctrl+K)..."
-          }
-          value={localQuery}
-          onChange={(e) => setLocalQuery(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Escape" && localQuery) {
-              setLocalQuery("");
-              setSearchQuery("");
-            }
-          }}
-          className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-9 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-black focus:ring-1 focus:ring-black shadow-2xs transition-all"
-        />
-        {localQuery && (
-          <button
-            onClick={() => {
-              setLocalQuery("");
-              setSearchQuery("");
+      {/* Search Input Box (Suppressed for standard role to prevent candidate fuzzing & automated scraping) */}
+      {role !== "standard" ? (
+        <div className="relative w-full grow">
+          <Search
+            size={16}
+            className="absolute left-3.5 top-3.5 text-slate-400 pointer-events-none"
+          />
+          <input
+            type="text"
+            ref={searchInputRef}
+            placeholder="Search by candidate name, skill, coursework, bio (Ctrl+K)..."
+            value={localQuery}
+            onChange={(e) => setLocalQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Escape" && localQuery) {
+                setLocalQuery("");
+                setSearchQuery("");
+              }
             }}
-            className="absolute right-3 top-3 text-slate-400 hover:text-slate-600 p-0.5 cursor-pointer"
-            aria-label="Clear search"
-          >
-            <X size={15} />
-          </button>
-        )}
-      </div>
+            className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-9 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-black focus:ring-1 focus:ring-black shadow-2xs transition-all"
+          />
+          {localQuery && (
+            <button
+              onClick={() => {
+                setLocalQuery("");
+                setSearchQuery("");
+              }}
+              className="absolute right-3 top-3 text-slate-400 hover:text-slate-600 p-0.5 cursor-pointer"
+              aria-label="Clear search"
+            >
+              <X size={15} />
+            </button>
+          )}
+        </div>
+      ) : (
+        <div className="w-full grow flex items-center gap-2 py-1 select-none">
+          <span className="text-xs font-black uppercase tracking-wider text-black">
+            Featured Engineering Showcase
+          </span>
+          <span className="text-[11px] text-neutral-500 font-medium">
+            (Candidate search and contact private to premium profiles)
+          </span>
+        </div>
+      )}
 
       {/* Control Actions & Utility Switchers */}
       <div className="flex flex-wrap items-center gap-2.5 shrink-0 w-full sm:w-auto justify-end">

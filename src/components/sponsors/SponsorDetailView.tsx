@@ -14,6 +14,7 @@ import {
   Sparkles,
   Wrench,
   Mail,
+  Lock,
 } from "lucide-react";
 import { ChapterSponsor, SponsorDetailedRelations } from "@/data/sponsors";
 import { Student } from "@/data/students";
@@ -59,6 +60,7 @@ export default function SponsorDetailView({
   role,
 }: SponsorDetailViewProps) {
   const { sponsor, projects, events, jobs, skills, interactions } = relations;
+  const isPremium = role !== "standard";
   const [activeTab, setActiveTab] = useState<SponsorSubTab>("initiatives");
 
   const tierColor = "bg-white text-black border-neutral-300 font-bold";
@@ -178,6 +180,18 @@ export default function SponsorDetailView({
                 </span>
                 <span>•</span>
                 <span>Official Partner Since {sponsor.partnerSince}</span>
+                {sponsor.contactEmail && (
+                  <>
+                    <span>•</span>
+                    <a
+                      href={`mailto:${sponsor.contactEmail}`}
+                      className="flex items-center gap-1 text-slate-600 hover:text-black cursor-pointer font-medium"
+                    >
+                      <Mail size={12} className="text-slate-400" />
+                      <span>{sponsor.contactEmail}</span>
+                    </a>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -463,6 +477,7 @@ export default function SponsorDetailView({
             interactions={interactions}
             sponsorName={sponsor.name}
             onSelectStudent={onSelectStudent}
+            role={role}
           />
         </section>
       </div>

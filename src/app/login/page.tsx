@@ -52,6 +52,8 @@ function LoginPageContent() {
       ? "rso-usf-leadership"
       : session?.accountType === "student"
       ? "student-access"
+      : session?.accountType === "standard"
+      ? "standard-access"
       : "sponsor-access"
   );
   const [showPassword, setShowPassword] = useState(false);
@@ -69,6 +71,10 @@ function LoginPageContent() {
         setEmail(session.email || "recruiting@lockheedmartin.com");
         setOrganization(session.organization || "Lockheed Martin");
         setPassword("sponsor-access");
+      } else if (session.accountType === "standard") {
+        setEmail(session.email || "standard@usf.edu");
+        setOrganization(session.organization || "USF General Community");
+        setPassword("standard-access");
       } else {
         setEmail(session.email || "student@usf.edu");
         setOrganization(session.organization || "USF Computer Engineering");
@@ -88,6 +94,10 @@ function LoginPageContent() {
       setEmail("recruiting@lockheedmartin.com");
       setOrganization("Lockheed Martin");
       setPassword("sponsor-access");
+    } else if (accountType === "standard") {
+      setEmail("standard@usf.edu");
+      setOrganization("USF General Community");
+      setPassword("standard-access");
     } else {
       setEmail("student@usf.edu");
       setOrganization("USF Computer Engineering");
@@ -118,8 +128,12 @@ function LoginPageContent() {
         }),
       });
 
+      if (!response.ok || !response.headers.get("content-type")?.includes("application/json")) {
+        throw new Error("Unable to sign in with the provided credentials.");
+      }
+
       const result = await response.json();
-      if (!response.ok || !result.success) {
+      if (!result.success) {
         throw new Error(result.error || "Unable to sign in with the provided credentials.");
       }
 
@@ -153,6 +167,7 @@ function LoginPageContent() {
           <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
             Select your portal role below to authenticate as a{" "}
             <strong className="text-slate-900 font-bold">Student Member</strong>,{" "}
+            <strong className="text-slate-900 font-bold">Standard Member</strong>,{" "}
             <strong className="text-slate-900 font-bold">RSO Leadership</strong>, or a{" "}
             <strong className="text-slate-900 font-bold">Corporate Sponsor</strong>.
           </p>
@@ -173,6 +188,8 @@ function LoginPageContent() {
                       ? "RSO Leadership"
                       : session.accountType === "sponsor"
                       ? "Corporate Sponsor"
+                      : session.accountType === "standard"
+                      ? "Standard Member"
                       : "Student Member"}
                   </span>
                   <span className="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-slate-700 font-semibold">
@@ -356,6 +373,53 @@ function LoginPageContent() {
                 </span>
               </div>
             </button>
+
+            {/* Role Card 4: Standard Login */}
+            <button
+              type="button"
+              onClick={() => handleSelectRoleCard("standard")}
+              aria-pressed={selectedRole === "standard"}
+              className={`w-full text-left p-5 rounded-2xl border cursor-pointer flex flex-col gap-3 ${
+                selectedRole === "standard"
+                  ? "bg-white border-black ring-2 ring-black/10 shadow-sm"
+                  : "bg-white border-neutral-300 shadow-2xs"
+              }`}
+            >
+              <div className="flex items-center justify-between gap-2">
+                <div>
+                  <h2 className="text-sm font-black text-black">Standard Login</h2>
+                  <span className="text-[11px] text-neutral-600 font-medium">
+                    General Member & Community Account
+                  </span>
+                </div>
+                <span
+                  className={`w-4 h-4 rounded-full border flex items-center justify-center ${
+                    selectedRole === "standard"
+                      ? "border-black bg-black"
+                      : "border-neutral-300"
+                  }`}
+                >
+                  {selectedRole === "standard" && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                  )}
+                </span>
+              </div>
+
+              <p className="text-xs text-neutral-700 leading-relaxed">
+                Browse candidate directory profiles, chapter engineering build projects, and technical workshops. Job openings, filtering, and candidate outreach are private to premium profiles.
+              </p>
+
+              <div className="pt-2 border-t border-neutral-200 flex flex-wrap gap-1.5">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-neutral-100 border border-neutral-300 text-[10.5px] font-semibold text-black">
+                  <FolderGit2 size={11} className="text-black" />
+                  <span>Browse Projects & Events</span>
+                </span>
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-neutral-100 border border-neutral-300 text-[10.5px] font-semibold text-black">
+                  <Lock size={11} className="text-black" />
+                  <span>Job Openings Locked</span>
+                </span>
+              </div>
+            </button>
           </div>
 
           {/* Right Column: Login Credentials Form */}
@@ -366,6 +430,8 @@ function LoginPageContent() {
                 ? "RSO Leadership"
                 : selectedRole === "sponsor"
                 ? "Sponsor"
+                : selectedRole === "standard"
+                ? "Standard"
                 : "Student"}{" "}
               Credentials
             </span>
@@ -383,6 +449,8 @@ function LoginPageContent() {
                       ? "RSO Leadership Sign In"
                       : selectedRole === "sponsor"
                       ? "Corporate Sponsor Sign In"
+                      : selectedRole === "standard"
+                      ? "Standard Account Sign In"
                       : "Student Member Sign In"}
                   </h3>
                   <p className="text-xs text-slate-500">
@@ -390,6 +458,8 @@ function LoginPageContent() {
                       ? "Authenticate with your RSO USF officer credentials"
                       : selectedRole === "sponsor"
                       ? "Authenticate with your partner organization account"
+                      : selectedRole === "standard"
+                      ? "Authenticate with your standard USF community credentials"
                       : "Authenticate with your USF student credentials"}
                   </p>
                 </div>
@@ -405,6 +475,8 @@ function LoginPageContent() {
                     ? "Officer Email"
                     : selectedRole === "sponsor"
                     ? "Corporate Email"
+                    : selectedRole === "standard"
+                    ? "Account Email"
                     : "Student Email"}
                 </label>
                 <div className="relative flex items-center">
@@ -421,6 +493,8 @@ function LoginPageContent() {
                         ? "leadership@rsousf.org"
                         : selectedRole === "sponsor"
                         ? "recruiting@company.com"
+                        : selectedRole === "standard"
+                        ? "standard@usf.edu"
                         : "student@usf.edu"
                     }
                     className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm rounded-xl bg-neutral-50 border border-neutral-300 text-black focus:outline-none focus:ring-1 focus:ring-black"
@@ -438,6 +512,8 @@ function LoginPageContent() {
                     ? "Chapter Division / Board"
                     : selectedRole === "sponsor"
                     ? "Partner Company Name"
+                    : selectedRole === "standard"
+                    ? "Organization / Community"
                     : "Major / Department"}
                 </label>
                 <div className="relative flex items-center">
@@ -452,6 +528,8 @@ function LoginPageContent() {
                         ? "RSO USF Student Chapter"
                         : selectedRole === "sponsor"
                         ? "Lockheed Martin / Texas Instruments"
+                        : selectedRole === "standard"
+                        ? "USF General Community"
                         : "USF Computer Engineering"
                     }
                     className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm rounded-xl bg-neutral-50 border border-neutral-300 text-black focus:outline-none focus:ring-1 focus:ring-black"
@@ -510,6 +588,8 @@ function LoginPageContent() {
                     ? "Sign In as RSO Leadership"
                     : selectedRole === "sponsor"
                     ? "Sign In as Corporate Sponsor"
+                    : selectedRole === "standard"
+                    ? "Sign In as Standard Member"
                     : "Sign In as Student Member"}
                 </span>
               </button>
@@ -523,6 +603,8 @@ function LoginPageContent() {
                       ? "RSO Leadership"
                       : selectedRole === "sponsor"
                       ? "Sponsor"
+                      : selectedRole === "standard"
+                      ? "Standard"
                       : "Student Member"}
                   </strong>{" "}
                   credentials for testing.

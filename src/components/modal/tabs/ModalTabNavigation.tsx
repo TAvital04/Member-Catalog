@@ -1,20 +1,29 @@
 "use client";
 
 import React from "react";
+import { UserRole } from "@/hooks/useRoleManager";
 
 export type TabType = "about" | "projects" | "events" | "contact" | "experience" | "skills";
 
 interface ModalTabNavigationProps {
   activeTab: TabType;
   setActiveTab: (tab: TabType) => void;
-  role?: "standard" | "sponsor" | "admin";
+  role?: UserRole;
+  hideContact?: boolean;
 }
 
 export default function ModalTabNavigation({
   activeTab,
   setActiveTab,
+  role,
+  hideContact = false,
 }: ModalTabNavigationProps) {
-  const tabsList = ["projects", "skills", "events", "contact"] as const;
+  const isStandard = role === "standard";
+  const shouldHideContact = hideContact || isStandard;
+
+  const tabsList = shouldHideContact
+    ? (["projects", "skills", "events"] as const)
+    : (["projects", "skills", "events", "contact"] as const);
 
   return (
     <div

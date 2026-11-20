@@ -7,9 +7,9 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { accountType, email, password, organization } = body || {};
 
-    if (accountType !== "rso_leadership" && accountType !== "sponsor" && accountType !== "student") {
+    if (accountType !== "rso_leadership" && accountType !== "sponsor" && accountType !== "student" && accountType !== "standard") {
       return Response.json(
-        { success: false, error: "Please select a valid role (Student, RSO Leadership, or Sponsor)." },
+        { success: false, error: "Please select a valid role (Student, Standard, RSO Leadership, or Sponsor)." },
         { status: 400 }
       );
     }
@@ -67,6 +67,7 @@ export async function POST(request: Request) {
         "sponsor-access",
         "rso-usf-leadership",
         "student-access",
+        "standard-access",
       ].filter(Boolean)
     );
 
@@ -77,8 +78,14 @@ export async function POST(request: Request) {
       );
     }
 
-    const derivedRole: Exclude<UserRole, "standard"> =
-      accountType === "rso_leadership" ? "admin" : accountType === "sponsor" ? "sponsor" : "student";
+    const derivedRole: UserRole =
+      accountType === "rso_leadership"
+        ? "admin"
+        : accountType === "sponsor"
+        ? "sponsor"
+        : accountType === "student"
+        ? "student"
+        : "standard";
 
     const derivedName = matchedAccount
       ? matchedAccount.displayName
@@ -86,7 +93,9 @@ export async function POST(request: Request) {
       ? "RSO Leadership Officer"
       : accountType === "sponsor"
       ? "Corporate Sponsor Representative"
-      : "Alex Rivera";
+      : accountType === "student"
+      ? "Alex Rivera"
+      : "Standard Member";
 
     const derivedOrg = matchedAccount
       ? matchedAccount.organization
@@ -96,7 +105,9 @@ export async function POST(request: Request) {
       ? "RSO USF Student Chapter"
       : accountType === "sponsor"
       ? cleanEmail.split("@")[1]?.split(".")[0]?.toUpperCase() || "Partner Organization"
-      : "USF Computer Engineering";
+      : accountType === "student"
+      ? "USF Computer Engineering"
+      : "USF General Community";
 
     const session: AuthSession = {
       accountType,

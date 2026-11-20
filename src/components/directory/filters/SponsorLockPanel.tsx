@@ -19,17 +19,17 @@ export default function SponsorLockPanel({ layout }: SponsorLockPanelProps) {
             <Lock size={16} />
           </div>
           <div>
-            <span className="text-xs font-bold text-slate-900">Advanced Filtering Locked</span>
+            <span className="text-xs font-bold text-slate-900">Candidate Filtering Unavailable</span>
             <p className="text-[11px] text-slate-500 leading-normal mt-0.5">
-              Sponsor access is required to filter candidates by degree program, specific skills, graduation date, or achievements.
+              This is unavailable because you aren't one of the premium profiles. Premium sponsor or leadership access is required to filter candidates by degree program, specific skills, graduation date, or achievements.
             </p>
           </div>
         </div>
         <a
-          href="/sponsors"
+          href="/login"
           className="w-full sm:w-auto shrink-0 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 font-bold text-xs rounded-xl shadow-2xs transition-all flex items-center justify-center cursor-pointer whitespace-nowrap text-center"
         >
-          Learn More About Sponsoring
+          Sign In with Premium Profile
         </a>
       </div>
 
@@ -42,16 +42,16 @@ export default function SponsorLockPanel({ layout }: SponsorLockPanelProps) {
             <Lock size={18} />
           </div>
           <div className="my-auto">
-            <h3 className="text-sm font-bold text-slate-900">Advanced Filters Locked</h3>
+            <h3 className="text-sm font-bold text-slate-900">Candidate Filtering Unavailable</h3>
             <p className="text-xs text-slate-500 mt-2 leading-relaxed px-1">
-              Sponsor access is required to filter candidates by degree program, specific skills, graduation date, or achievements.
+              This is unavailable because you aren't one of the premium profiles. Premium sponsor or leadership access is required to filter candidates by degree program, specific skills, graduation date, or achievements.
             </p>
           </div>
           <a
-            href="/sponsors"
+            href="/login"
             className="w-full px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 font-bold text-xs rounded-xl shadow-2xs transition-all flex items-center justify-center cursor-pointer text-center"
           >
-            Learn More About Sponsoring
+            Sign In with Premium Profile
           </a>
         </div>
       </aside>

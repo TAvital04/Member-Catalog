@@ -7,8 +7,9 @@
  */
 
 import React, { useState, useEffect, useMemo, Suspense } from "react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Building2, Plus, Shield, Users } from "lucide-react";
+import { Building2, Plus, Shield, Users, Lock } from "lucide-react";
 import DirectoryNavbar from "@/components/directory/DirectoryNavbar";
 import DirectoryStatsHeader from "@/components/directory/DirectoryStatsHeader";
 import { useThemeManager } from "@/hooks/useThemeManager";
@@ -43,7 +44,8 @@ import { getStudentSlug, findStudentBySlugOrId } from "@/lib/studentSlug";
 function SponsorsPageContent() {
   const { theme, toggleTheme } = useThemeManager();
   const { role, session, handleRoleChange, isAdmin, isStudent, isSponsor } = useRoleManager();
-  const { students } = useStudentData();
+  const isPremium = isAdmin || isSponsor || isStudent;
+  const { students } = useStudentData(role);
 
   const searchParams = useSearchParams();
   const sponsorParam = searchParams.get("sponsor") || searchParams.get("company");
@@ -160,18 +162,21 @@ function SponsorsPageContent() {
   // Fetch sponsors from /api/sponsors on mount
   useEffect(() => {
     async function loadSponsors() {
+      if (!isPremium) return;
       try {
         const res = await fetch("/api/sponsors");
-        const json = await res.json();
-        if (json.success && Array.isArray(json.data) && json.data.length > 0) {
-          setSponsorsList(json.data);
+        if (res.ok && res.headers.get("content-type")?.includes("application/json")) {
+          const json = await res.json();
+          if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+            setSponsorsList(json.data);
+          }
         }
       } catch {
         // Keep CURRENT_CHAPTER_SPONSORS fallback
       }
     }
     loadSponsors();
-  }, []);
+  }, [isPremium]);
 
   // Sync URL search param with selected sponsor
   useEffect(() => {
@@ -324,191 +329,233 @@ function SponsorsPageContent() {
       {/* Directory Page Header */}
       <DirectoryStatsHeader
         title={
-          role === "sponsor" && activeSponsor && activeSponsor.id === userSponsor?.id
+          !isPremium
+            ? "Corporate Sponsors & Industry Initiatives"
+            : role === "sponsor" && activeSponsor && activeSponsor.id === userSponsor?.id
             ? `${activeSponsor.name} Partner Portal`
             : "Corporate Sponsors & Industry Initiatives"
         }
         description={
-          role === "sponsor" && activeSponsor && activeSponsor.id === userSponsor?.id
+          !isPremium
+            ? "Official chapter industry partnerships and corporate sponsorship initiatives are private to premium profiles."
+            : role === "sponsor" && activeSponsor && activeSponsor.id === userSponsor?.id
             ? `Welcome, ${session?.displayName || activeSponsor.name}. Review your sponsored build projects, technical workshops, active job postings, and student interactions.`
             : "Explore active corporate partners supporting RSO USF build projects, technical workshops, equipment grants, recruiting pipelines, and member engagement."
         }
+        badgeText={isPremium ? `${sponsorsList.length} Active Partners` : "Private Partner Network"}
+        badgeIcon={isPremium ? <Building2 size={13} className="text-black" /> : <Lock size={13} className="text-black" />}
+        theme={theme}
       >
-        <div className="flex items-center gap-2 flex-wrap">
-          {role === "sponsor" && userSponsor && (
-            <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
-              <button
-                type="button"
-                onClick={handleBackToAll}
-                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-                  !effectiveSponsorId
-                    ? "bg-white text-black shadow-2xs font-black"
-                    : "text-neutral-500 hover:text-black font-semibold"
-                }`}
-              >
-                All Sponsors
-              </button>
-              <button
-                type="button"
-                onClick={handleGoToMyHub}
-                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-                  effectiveSponsorId === userSponsor.id
-                    ? "bg-black text-white shadow-2xs font-black"
-                    : "text-neutral-500 hover:text-black font-semibold"
-                }`}
-              >
-                My Company Hub
-              </button>
-            </div>
-          )}
-
-          {isStudent && loggedInStudent && (
-            <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
-              <button
-                type="button"
-                onClick={() => handleToggleMySponsors(false)}
-                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-                  !onlyMySponsors
-                    ? "bg-white text-black shadow-2xs font-black"
-                    : "text-neutral-500 hover:text-black font-semibold"
-                }`}
-              >
-                All Sponsors
-              </button>
-              <button
-                type="button"
-                onClick={() => handleToggleMySponsors(true)}
-                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-                  onlyMySponsors
-                    ? "bg-black text-white shadow-2xs font-black"
-                    : "text-neutral-500 hover:text-black font-semibold"
-                }`}
-              >
-                My Project Sponsors
-              </button>
-            </div>
-          )}
-
-          {isAdmin && (
-            <button
-              type="button"
-              onClick={() => setIsSponsorFormOpen(true)}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-black text-white font-bold text-xs cursor-pointer shrink-0"
-            >
-              <Plus size={14} />
-              <span>Onboard Chapter Sponsor</span>
-            </button>
-          )}
-        </div>
-      </DirectoryStatsHeader>
-
-      <main className="max-w-7xl w-full mx-auto px-4 pb-8 flex flex-col gap-6">
-        {/* If a sponsor is selected, display their comprehensive Hub */}
-        {activeSponsor && activeSponsorRelations ? (
-          <SponsorDetailView
-            relations={activeSponsorRelations}
-            onBack={handleBackToAll}
-            onSelectStudent={(student) => setInspectedStudent(student)}
-            onSelectProject={(project, tab) => {
-              setInspectedProject(project);
-              setProjectTab(tab || "overview");
-            }}
-            onSelectEvent={(event) => setInspectedEvent(event)}
-            onSelectJob={(job) => setInspectedJob(job)}
-            role={role}
-            onRequestInitiative={role === "sponsor" ? () => setIsInitiativeFormOpen(true) : undefined}
-          />
-        ) : (
-          /* Catalog View: Search, Filter Pills & Sponsor Cards */
-          <div className="flex flex-col gap-6">
-            {/* Wide Open Banner Introducing Initiative Creation & Services (Only visible to Sponsors) */}
-            {role === "sponsor" && (
-              <SponsorInitiativesBanner
-                onRequestInitiative={() => setIsInitiativeFormOpen(true)}
-                sponsorName={userSponsor?.name}
-                isLoggedInSponsor={true}
-              />
-            )}
-
-            {/* Fast-return to My Hub alert when viewing All Sponsors */}
+        {isPremium && (
+          <div className="flex items-center gap-2 flex-wrap">
             {role === "sponsor" && userSponsor && (
-              <div className="p-3.5 rounded-xl bg-neutral-100 border border-neutral-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs shadow-2xs">
-                <div className="flex items-center gap-2.5">
-                  <Building2 size={16} className="text-black shrink-0" />
-                  <span className="text-neutral-800">
-                    Browsing the directory as <strong className="text-black font-bold">{userSponsor.name}</strong>.
-                  </span>
-                </div>
+              <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
+                <button
+                  type="button"
+                  onClick={handleBackToAll}
+                  className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                    !effectiveSponsorId
+                      ? "bg-white text-black shadow-2xs font-black"
+                      : "text-neutral-500 hover:text-black font-semibold"
+                  }`}
+                >
+                  All Sponsors
+                </button>
                 <button
                   type="button"
                   onClick={handleGoToMyHub}
-                  className="px-3.5 py-1.5 rounded-lg bg-black hover:bg-neutral-800 text-white font-bold text-xs cursor-pointer self-start sm:self-auto transition-all shadow-2xs"
+                  className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                    effectiveSponsorId === userSponsor.id
+                      ? "bg-black text-white shadow-2xs font-black"
+                      : "text-neutral-500 hover:text-black font-semibold"
+                  }`}
                 >
-                  Return to My Partner Hub &rarr;
+                  My Company Hub
                 </button>
               </div>
             )}
 
-            {/* Controls Bar */}
-            <section className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-              <SearchInput
-                value={searchQuery}
-                onChange={handleSearchChange}
-                placeholder="Search sponsors by name, technology, or focus..."
-                className="w-full sm:max-w-md"
-                ariaLabel="Search corporate sponsors"
-              />
-
-              <FilterPills
-                options={tiers}
-                selected={selectedTier}
-                onSelect={handleTierChange}
-                ariaLabel="Filter sponsors by tier"
-              />
-            </section>
-
-            {/* Aggregate Interacting Student & Talent Statistics */}
-            <SponsorEngagementStats interactions={aggregateInteractions} />
-
-            {/* Results Grid */}
-            {filteredSponsors.length === 0 ? (
-              <EmptyState
-                icon={<Building2 size={32} />}
-                headline="No corporate sponsors found"
-                subtext="No partners matched your search query or tier filters. Try adjusting your search criteria."
-                actionLabel="Reset Filters"
-                onAction={() => {
-                  setSearchQuery("");
-                  setSelectedTier("All");
-                  updateSponsorUrl({ q: null, search: null, tier: null });
-                }}
-              />
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {filteredSponsors.map((sponsor) => {
-                  const details = getSponsorRelatedData(
-                    sponsor,
-                    SAMPLE_IEEE_PROJECTS,
-                    SAMPLE_IEEE_EVENTS,
-                    SAMPLE_JOB_POSTINGS,
-                    undefined,
-                    students
-                  );
-                  return (
-                    <SponsorCard
-                      key={sponsor.id}
-                      sponsor={sponsor}
-                      projectCount={details.projects.length}
-                      eventCount={details.events.length}
-                      jobCount={details.jobs.length}
-                      interactionCount={details.interactions.length}
-                      onSelect={handleSelectSponsor}
-                    />
-                  );
-                })}
+            {isStudent && loggedInStudent && (
+              <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
+                <button
+                  type="button"
+                  onClick={() => handleToggleMySponsors(false)}
+                  className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                    !onlyMySponsors
+                      ? "bg-white text-black shadow-2xs font-black"
+                      : "text-neutral-500 hover:text-black font-semibold"
+                  }`}
+                >
+                  All Sponsors
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleToggleMySponsors(true)}
+                  className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                    onlyMySponsors
+                      ? "bg-black text-white shadow-2xs font-black"
+                      : "text-neutral-500 hover:text-black font-semibold"
+                  }`}
+                >
+                  My Project Sponsors
+                </button>
               </div>
             )}
+
+            {isAdmin && (
+              <button
+                type="button"
+                onClick={() => setIsSponsorFormOpen(true)}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-black text-white font-bold text-xs cursor-pointer shrink-0"
+              >
+                <Plus size={14} />
+                <span>Onboard Chapter Sponsor</span>
+              </button>
+            )}
           </div>
+        )}
+      </DirectoryStatsHeader>
+
+      <main className="max-w-7xl w-full mx-auto px-4 pb-8 flex flex-col gap-6">
+        {!isPremium ? (
+          <div className="flex flex-col gap-6 animate-fade-in pt-8 pb-16 w-full max-w-lg mx-auto">
+            <div className="p-8 sm:p-10 rounded-2xl border border-neutral-300 bg-white flex flex-col items-center justify-between text-center relative overflow-hidden shadow-2xs">
+              <div className="w-14 h-14 rounded-full bg-neutral-100 text-black border border-neutral-300 flex items-center justify-center shrink-0 mb-4">
+                <Lock size={22} className="text-black" />
+              </div>
+
+              <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-neutral-100 text-black border border-neutral-300 mb-2">
+                Private Partner Network
+              </span>
+
+              <h2 className="text-base sm:text-lg font-black text-black mb-2">
+                Sponsor Directory Unavailable
+              </h2>
+
+              <p className="text-xs text-neutral-600 leading-relaxed mb-6 max-w-sm font-sans">
+                This is unavailable because you aren&apos;t one of the premium profiles. Corporate sponsor showcases, partnership initiatives, and industry engagement metrics are completely private to premium profiles.
+              </p>
+
+              <div className="flex flex-col sm:flex-row items-center gap-2.5 w-full justify-center">
+                <Link
+                  href="/login"
+                  className="w-full sm:w-auto px-5 py-2.5 bg-black text-white font-bold rounded-xl text-xs cursor-pointer text-center"
+                >
+                  Sign In with Premium Profile
+                </Link>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <>
+            {/* If a sponsor is selected, display their comprehensive Hub */}
+            {activeSponsor && activeSponsorRelations ? (
+              <SponsorDetailView
+                relations={activeSponsorRelations}
+                onBack={handleBackToAll}
+                onSelectStudent={(student) => setInspectedStudent(student)}
+                onSelectProject={(project, tab) => {
+                  setInspectedProject(project);
+                  setProjectTab(tab || "overview");
+                }}
+                onSelectEvent={(event) => setInspectedEvent(event)}
+                onSelectJob={(job) => setInspectedJob(job)}
+                role={role}
+                onRequestInitiative={role === "sponsor" ? () => setIsInitiativeFormOpen(true) : undefined}
+              />
+            ) : (
+              /* Catalog View: Search, Filter Pills & Sponsor Cards */
+              <div className="flex flex-col gap-6">
+                {/* Wide Open Banner Introducing Initiative Creation & Services (Only visible to Sponsors) */}
+                {role === "sponsor" && (
+                  <SponsorInitiativesBanner
+                    onRequestInitiative={() => setIsInitiativeFormOpen(true)}
+                    sponsorName={userSponsor?.name}
+                    isLoggedInSponsor={true}
+                  />
+                )}
+
+                {/* Fast-return to My Hub alert when viewing All Sponsors */}
+                {role === "sponsor" && userSponsor && (
+                  <div className="p-3.5 rounded-xl bg-neutral-100 border border-neutral-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs shadow-2xs">
+                    <div className="flex items-center gap-2.5">
+                      <Building2 size={16} className="text-black shrink-0" />
+                      <span className="text-neutral-800">
+                        Browsing the directory as <strong className="text-black font-bold">{userSponsor.name}</strong>.
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleGoToMyHub}
+                      className="px-3.5 py-1.5 rounded-lg bg-black hover:bg-neutral-800 text-white font-bold text-xs cursor-pointer self-start sm:self-auto transition-all shadow-2xs"
+                    >
+                      Return to My Partner Hub &rarr;
+                    </button>
+                  </div>
+                )}
+
+                {/* Controls Bar */}
+                <section className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                  <SearchInput
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    placeholder="Search sponsors by name, technology, or focus..."
+                    className="w-full sm:max-w-md"
+                    ariaLabel="Search corporate sponsors"
+                  />
+
+                  <FilterPills
+                    options={tiers}
+                    selected={selectedTier}
+                    onSelect={handleTierChange}
+                    ariaLabel="Filter sponsors by tier"
+                  />
+                </section>
+
+                {/* Aggregate Interacting Student & Talent Statistics */}
+                <SponsorEngagementStats interactions={aggregateInteractions} />
+
+                {/* Results Grid */}
+                {filteredSponsors.length === 0 ? (
+                  <EmptyState
+                    icon={<Building2 size={32} />}
+                    headline="No corporate sponsors found"
+                    subtext="No partners matched your search query or tier filters. Try adjusting your search criteria."
+                    actionLabel="Reset Filters"
+                    onAction={() => {
+                      setSearchQuery("");
+                      setSelectedTier("All");
+                      updateSponsorUrl({ q: null, search: null, tier: null });
+                    }}
+                  />
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    {filteredSponsors.map((sponsor) => {
+                      const details = getSponsorRelatedData(
+                        sponsor,
+                        SAMPLE_IEEE_PROJECTS,
+                        SAMPLE_IEEE_EVENTS,
+                        SAMPLE_JOB_POSTINGS,
+                        undefined,
+                        students
+                      );
+                      return (
+                        <SponsorCard
+                          key={sponsor.id}
+                          sponsor={sponsor}
+                          projectCount={details.projects.length}
+                          eventCount={details.events.length}
+                          jobCount={details.jobs.length}
+                          interactionCount={details.interactions.length}
+                          onSelect={handleSelectSponsor}
+                        />
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            )}
+          </>
         )}
       </main>
 
@@ -578,8 +625,8 @@ function SponsorsPageContent() {
         />
       )}
 
-      {/* Job Detail Modal */}
-      {inspectedJob && students.length > 0 && (
+      {/* Job Detail Modal (Private to Premium Profiles) */}
+      {isPremium && inspectedJob && students.length > 0 && (
         <JobDetailModal
           job={inspectedJob}
           activeStudent={students[0]}

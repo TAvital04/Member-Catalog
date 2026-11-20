@@ -35,13 +35,14 @@ export default function DirectoryNavbar({
   handleRoleChange,
 }: DirectoryNavbarProps) {
   const pathname = usePathname();
-  const { role: hookRole, logout } = useRoleManager();
+  const { role: hookRole, session, logout } = useRoleManager();
   const role = propRole ?? hookRole;
 
   const isSponsor = role === "sponsor";
   const isRsoLeadership = role === "admin";
   const isStudent = role === "student";
-  const isAuthenticated = isSponsor || isRsoLeadership || isStudent;
+  const isStandard = role === "standard";
+  const isAuthenticated = isSponsor || isRsoLeadership || isStudent || (isStandard && Boolean(session));
 
   const handleSignOut = () => {
     logout();
@@ -90,10 +91,20 @@ export default function DirectoryNavbar({
           <Shield size={13} className="text-black" />
         ) : isSponsor ? (
           <Award size={13} className="text-black" />
-        ) : (
+        ) : isStudent ? (
           <GraduationCap size={13} className="text-black" />
+        ) : (
+          <Users size={13} className="text-black" />
         )}
-        <span>{isRsoLeadership ? "RSO Leadership" : isSponsor ? "Sponsor" : "Student"}</span>
+        <span>
+          {isRsoLeadership
+            ? "RSO Leadership"
+            : isSponsor
+            ? "Sponsor"
+            : isStudent
+            ? "Student"
+            : "Standard"}
+        </span>
       </Link>
 
       <button

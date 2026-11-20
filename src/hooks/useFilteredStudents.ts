@@ -88,30 +88,24 @@ export function useFilteredStudents({
   const filteredStudents = useMemo(() => {
     return students
       .filter((student) => {
-        if (searchQuery.trim()) {
+        const isStandardView = role === "standard" || (!role && hasFilterPermission === false);
+
+        // Standard profiles do not have access to student search queries (anti-scraping protection)
+        if (searchQuery.trim() && !isStandardView) {
           const query = searchQuery.toLowerCase();
           const matchesName = student.name.toLowerCase().includes(query);
+          const matchesMajor = student.major.toLowerCase().includes(query);
+          const matchesBio = student.bio.toLowerCase().includes(query);
+          const matchesSkills = student.skills.some((s) => s.toLowerCase().includes(query));
+          const matchesCompany = (student.workExperiences || []).some((w) =>
+            w.name.toLowerCase().includes(query) || w.title.toLowerCase().includes(query)
+          );
+          const matchesProject = (student.projects || []).some((p) =>
+            p.name.toLowerCase().includes(query) || p.description.toLowerCase().includes(query)
+          );
 
-          const isStandardView = role === "standard" || (!role && hasFilterPermission === false);
-
-          if (isStandardView) {
-            if (!matchesName) {
-              return false;
-            }
-          } else {
-            const matchesMajor = student.major.toLowerCase().includes(query);
-            const matchesBio = student.bio.toLowerCase().includes(query);
-            const matchesSkills = student.skills.some((s) => s.toLowerCase().includes(query));
-            const matchesCompany = (student.workExperiences || []).some((w) =>
-              w.name.toLowerCase().includes(query) || w.title.toLowerCase().includes(query)
-            );
-            const matchesProject = (student.projects || []).some((p) =>
-              p.name.toLowerCase().includes(query) || p.description.toLowerCase().includes(query)
-            );
-
-            if (!matchesName && !matchesMajor && !matchesBio && !matchesSkills && !matchesCompany && !matchesProject) {
-              return false;
-            }
+          if (!matchesName && !matchesMajor && !matchesBio && !matchesSkills && !matchesCompany && !matchesProject) {
+            return false;
           }
         }
 

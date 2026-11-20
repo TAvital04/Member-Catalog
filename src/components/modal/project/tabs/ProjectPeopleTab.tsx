@@ -1,33 +1,84 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { ProjectParticipant } from "@/data/projects";
 import Avatar from "@/components/common/Avatar";
-import { Users, GraduationCap, Crown, ExternalLink } from "lucide-react";
-import { CARD_TITLE_HOVER } from "@/lib/cardStyles";
+import { Users, GraduationCap, Crown, Shield } from "lucide-react";
+import { UserRole } from "@/hooks/useRoleManager";
 
 interface ProjectPeopleTabProps {
   participants: ProjectParticipant[];
   onSelectMember?: (memberId: string, name?: string, email?: string) => void;
+  role?: UserRole;
 }
 
-export default function ProjectPeopleTab({ participants = [], onSelectMember }: ProjectPeopleTabProps) {
+export default function ProjectPeopleTab({
+  participants = [],
+  onSelectMember,
+  role = "admin",
+}: ProjectPeopleTabProps) {
   const safeParticipants = Array.isArray(participants) ? participants : [];
+  const isStandard = role === "standard";
+
+  // When standard user views project team, filter to Leads/Directors only
+  const leads = safeParticipants.filter((p) =>
+    /director|lead|chair|captain|manager|head/i.test(p.roleTitle || "")
+  );
+  const effectiveLeads = leads.length > 0 ? leads : safeParticipants.slice(0, 1);
+  const otherContributorsCount = Math.max(0, safeParticipants.length - effectiveLeads.length);
+
+  const displayedMembers = isStandard ? effectiveLeads : safeParticipants;
 
   return (
     <div className="flex flex-col gap-4 animate-fade-in pt-1 pb-4">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider py-1 leading-normal">
-          <span>Student Team & Contributors ({safeParticipants.length})</span>
+          <span>
+            {isStandard
+              ? `Project Team & Leadership (${safeParticipants.length} Contributors)`
+              : `Student Team & Contributors (${safeParticipants.length})`}
+          </span>
         </div>
+        {!isStandard && (
+          <span className="text-[11px] text-slate-400">
+            Click candidate to inspect portfolio
+          </span>
+        )}
       </div>
 
+      {/* Standard Role: Verified Contributor Count Card */}
+      {isStandard && (
+        <div className="p-4 sm:p-5 rounded-2xl bg-neutral-50 border border-neutral-300 shadow-2xs flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5">
+            <div className="w-11 h-11 rounded-xl bg-white border border-neutral-300 text-black flex items-center justify-center shrink-0 shadow-2xs">
+              <Users size={20} />
+            </div>
+            <div>
+              <div className="text-base sm:text-lg font-black text-black">
+                {safeParticipants.length} Engineering Contributors
+              </div>
+              <p className="text-xs text-neutral-600 font-sans mt-0.5">
+                Verified student engineering team members and build contributors active on this chapter hardware project.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Standard Role Section Header for Leads */}
+      {isStandard && effectiveLeads.length > 0 && (
+        <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider">
+          <span>Project Leads & Technical Directors ({effectiveLeads.length})</span>
+        </div>
+      )}
+
       {/* Roster Grid */}
-      {safeParticipants.length > 0 ? (
+      {displayedMembers.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-1">
-          {safeParticipants.map((person) => {
-            const isDirector = /director|lead|chair/i.test(person.roleTitle);
+          {displayedMembers.map((person) => {
+            const isDirector = /director|lead|chair|captain|manager|head/i.test(person.roleTitle || "");
             return (
               <div
                 key={person.memberId}
@@ -72,6 +123,24 @@ export default function ProjectPeopleTab({ participants = [], onSelectMember }: 
           <h4 className="text-sm font-bold text-slate-800">No Team Members Listed Yet</h4>
           <p className="text-slate-500 text-xs mt-1">This project roster has not been populated yet — active recruitment is currently open.</p>
           <p className="text-slate-400 text-[11px] mt-0.5">Students can reach out to chapter officers or attend weekly project work sessions to join.</p>
+        </div>
+      )}
+
+      {/* Standard Role Privacy Notice for Regular Contributors */}
+      {isStandard && otherContributorsCount > 0 && (
+        <div className="p-4 rounded-2xl bg-white border border-neutral-300 shadow-2xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-neutral-600 mt-2">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <Shield size={16} className="text-neutral-500 shrink-0" />
+            <span className="font-sans leading-relaxed">
+              +{otherContributorsCount} additional student contributor profiles are private to premium sponsor profiles.
+            </span>
+          </div>
+          <Link
+            href="/login"
+            className="px-3.5 py-1.5 rounded-xl bg-black text-white text-xs font-bold cursor-pointer shrink-0"
+          >
+            Sign In with Premium Profile
+          </Link>
         </div>
       )}
     </div>

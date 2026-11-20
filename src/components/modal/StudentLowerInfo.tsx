@@ -2,8 +2,9 @@
 
 import React from "react";
 import { Student, getIeeeLeadershipRole } from "@/data/students";
-import { Globe, ShieldCheck, Sparkles, Calendar, Mail, FileText, ExternalLink } from "lucide-react";
+import { Globe, ShieldCheck, Sparkles, Calendar, Mail, FileText, ExternalLink, Lock } from "lucide-react";
 import { getSafeUrl } from "@/shared";
+import { UserRole } from "@/hooks/useRoleManager";
 
 // Custom SVG brand icons since newer lucide-react versions have deprecated them
 const Github = ({ size = 18, ...props }: React.SVGProps<SVGSVGElement> & { size?: number }) => (
@@ -29,6 +30,7 @@ import Tooltip from "@/components/common/Tooltip";
 interface StudentLowerInfoProps {
   student: Student;
   adminMode?: boolean;
+  role?: UserRole;
   onResolve?: (student: Student) => void;
   onSelectProject?: (projectSlugOrId: string) => void;
   onClose?: () => void;
@@ -38,6 +40,7 @@ interface StudentLowerInfoProps {
 export default function StudentLowerInfo({
   student,
   adminMode,
+  role,
   onResolve,
   onSelectProject,
   onClose,
@@ -137,10 +140,17 @@ export default function StudentLowerInfo({
           <Calendar size={12} className="text-neutral-500 shrink-0" />
           <span>Grad: {student.gradDate}</span>
         </span>
-        <span className="bg-neutral-100 border border-neutral-200 text-black px-3 py-1.5 rounded-full flex items-center justify-center gap-1.5 shadow-2xs font-semibold grow min-w-0">
-          <Mail size={12} className="text-neutral-500 shrink-0" />
-          <span className="truncate">{student.email}</span>
-        </span>
+        {role === "standard" ? (
+          <span className="bg-neutral-100 border border-neutral-200 text-neutral-500 px-3 py-1.5 rounded-full flex items-center justify-center gap-1.5 shadow-2xs font-semibold grow min-w-0 select-none">
+            <Lock size={12} className="text-neutral-400 shrink-0" />
+            <span className="truncate">Contact: Premium Only</span>
+          </span>
+        ) : (
+          <span className="bg-neutral-100 border border-neutral-200 text-black px-3 py-1.5 rounded-full flex items-center justify-center gap-1.5 shadow-2xs font-semibold grow min-w-0">
+            <Mail size={12} className="text-neutral-500 shrink-0" />
+            <span className="truncate">{student.email}</span>
+          </span>
+        )}
       </div>
 
       {/* Candidate Biography & Skills Card */}
@@ -205,41 +215,55 @@ export default function StudentLowerInfo({
       {/* External Profile Links & Actions */}
       <div className="flex flex-col gap-3 shrink-0">
         {student.links && student.links.length > 0 && (
-          <div className="flex flex-wrap items-center gap-2 w-full links-stack">
-            {student.links.map((link, idx) => {
-              const lowerName = link.name.toLowerCase();
-              const isGithub = lowerName.includes("github");
-              const isLinkedin = lowerName.includes("linkedin");
+          role === "standard" ? (
+            <div className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-neutral-100 border border-neutral-300 text-xs font-semibold text-neutral-500 select-none shadow-2xs">
+              <Lock size={13} className="text-neutral-400" />
+              <span>External Profiles (Premium Sponsor Only)</span>
+            </div>
+          ) : (
+            <div className="flex flex-wrap items-center gap-2 w-full links-stack">
+              {student.links.map((link, idx) => {
+                const lowerName = link.name.toLowerCase();
+                const isGithub = lowerName.includes("github");
+                const isLinkedin = lowerName.includes("linkedin");
 
-              const safeLinkUrl = getSafeUrl(link.text) || "#";
-              return (
-                <a
-                  key={idx}
-                  href={safeLinkUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-white border border-neutral-300 text-xs font-semibold text-black cursor-pointer grow shadow-2xs"
-                >
-                  {isGithub && <Github size={13} className="text-black" />}
-                  {isLinkedin && <Linkedin size={13} className="text-black" />}
-                  {!isGithub && !isLinkedin && <Globe size={13} className="text-black" />}
-                  <span>{link.name}</span>
-                </a>
-              );
-            })}
-          </div>
+                const safeLinkUrl = getSafeUrl(link.text) || "#";
+                return (
+                  <a
+                    key={idx}
+                    href={safeLinkUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-white border border-neutral-300 text-xs font-semibold text-black cursor-pointer grow shadow-2xs"
+                  >
+                    {isGithub && <Github size={13} className="text-black" />}
+                    {isLinkedin && <Linkedin size={13} className="text-black" />}
+                    {!isGithub && !isLinkedin && <Globe size={13} className="text-black" />}
+                    <span>{link.name}</span>
+                  </a>
+                );
+              })}
+            </div>
+          )
         )}
 
         {/* View Resume PDF Button */}
-        <a
-          href={getSafeUrl(resumeUrl) || "#"}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-black text-white font-bold text-xs cursor-pointer group/resume"
-        >
-          <FileText size={14} className="text-white" />
-          <span>View Resume PDF</span>
-        </a>
+        {role === "standard" ? (
+          <div className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-neutral-100 border border-neutral-300 text-neutral-500 font-bold text-xs select-none">
+            <Lock size={14} className="text-neutral-400" />
+            <span>Resume PDF (Premium Only)</span>
+          </div>
+        ) : (
+          <a
+            href={getSafeUrl(resumeUrl) || "#"}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-black text-white font-bold text-xs cursor-pointer group/resume"
+          >
+            <FileText size={14} className="text-white" />
+            <span>View Resume PDF</span>
+          </a>
+        )}
       </div>
     </div>
   );

@@ -284,9 +284,13 @@ export default function SponsorJobPostingForm({
         body: JSON.stringify(payload),
       });
 
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        throw new Error(data.error || "Failed to create corporate job posting.");
+      let data: any = null;
+      if (res.headers.get("content-type")?.includes("application/json")) {
+        data = await res.json();
+      }
+
+      if (!res.ok || !data?.success) {
+        throw new Error(data?.error || `Failed to create corporate job posting (HTTP ${res.status}).`);
       }
 
       onJobCreated(data.data);

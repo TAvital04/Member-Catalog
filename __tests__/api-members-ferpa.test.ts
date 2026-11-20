@@ -18,6 +18,11 @@ describe("GET /api/members FERPA Privacy & Redaction Logic", () => {
     // Each member returned should have GPA redacted or verified
     if (json.data && json.data.length > 0) {
       json.data.forEach((member: any) => {
+        // Anti-scraping sanitization for standard profiles
+        expect(member.email).toBe("Contact: Premium Only");
+        expect(member.links).toEqual([]);
+        expect(member.resumeLink).toBeUndefined();
+
         if (member.education && Array.isArray(member.education)) {
           member.education.forEach((edu: any) => {
             if (!member.shareGpaWithRecruiters) {
@@ -26,6 +31,25 @@ describe("GET /api/members FERPA Privacy & Redaction Logic", () => {
           });
         }
       });
+    }
+  });
+
+  it("delivers full candidate contact details and external links to verified sponsors", async () => {
+    const mockReq = {
+      headers: new Headers({
+        "x-user-role": "sponsor",
+      }),
+      url: "http://localhost:3001/api/members",
+    } as any;
+
+    const response = await GET(mockReq);
+    const json = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(json.success).toBe(true);
+    if (json.data && json.data.length > 0) {
+      const first = json.data[0];
+      expect(first.email).not.toBe("Contact: Premium Only");
     }
   });
 

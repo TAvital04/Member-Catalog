@@ -81,9 +81,13 @@ export default function LeadershipSponsorForm({
         }),
       });
 
-      const result = await response.json();
-      if (!response.ok || !result.success) {
-        throw new Error(result.error || "Failed to onboard chapter sponsor.");
+      let result: any = null;
+      if (response.headers.get("content-type")?.includes("application/json")) {
+        result = await response.json();
+      }
+
+      if (!response.ok || !result?.success) {
+        throw new Error(result?.error || `Failed to onboard chapter sponsor (HTTP ${response.status}).`);
       }
 
       onSponsorCreated(result.data);

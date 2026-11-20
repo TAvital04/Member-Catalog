@@ -15,7 +15,8 @@ import EventModal from "./event/EventModal";
 import { IEEEEvent } from "@/data/events";
 import { findMatchingIeeeEvent } from "@/lib/rsoAffiliation";
 import { UserRole } from "@/hooks/useRoleManager";
-import { X } from "lucide-react";
+import { X, Share2, Check } from "lucide-react";
+import { getStudentSlug } from "@/lib/studentSlug";
 
 interface PortfolioModalProps {
   student: Student;
@@ -41,7 +42,22 @@ export default function PortfolioModal({
   const [currentStudent, setCurrentStudent] = useState<Student>(student);
   const [activeTab, setActiveTab] = useState<TabType>("about");
   const [activeEventModal, setActiveEventModal] = useState<IEEEEvent | null>(null);
+  const [copiedShareLink, setCopiedShareLink] = useState(false);
   const focusTrapRef = useFocusTrap(true, onClose);
+
+  const handleShareProfile = async () => {
+    const slug = getStudentSlug(currentStudent);
+    const shareUrl = typeof window !== "undefined" ? `${window.location.origin}/u/${slug}` : `/u/${slug}`;
+    try {
+      if (navigator.clipboard) {
+        await navigator.clipboard.writeText(shareUrl);
+        setCopiedShareLink(true);
+        setTimeout(() => setCopiedShareLink(false), 2000);
+      }
+    } catch {
+      // Fallback
+    }
+  };
 
   useEffect(() => {
     setCurrentStudent(student);
@@ -100,15 +116,37 @@ export default function PortfolioModal({
         onClick={(e) => e.stopPropagation()}
         className="relative w-full max-w-5xl h-full md:h-[80vh] rounded-none md:rounded-3xl bg-white border-0 md:border border-neutral-300 shadow-2xl flex flex-col max-h-screen md:max-h-[85vh] animate-scale-in cursor-default overflow-hidden"
       >
-        {/* Close Button */}
-        <button
-          onClick={onClose}
-          type="button"
-          aria-label="Close candidate portfolio modal"
-          className="absolute top-4 right-4 z-50 p-2 rounded-full bg-neutral-100 border border-neutral-300 text-black focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none cursor-pointer"
-        >
-          <X size={18} />
-        </button>
+        {/* Action Header Controls (Share & Close) */}
+        <div className="absolute top-4 right-4 z-50 flex items-center gap-2">
+          <button
+            onClick={handleShareProfile}
+            type="button"
+            aria-label="Copy shareable member portfolio link"
+            title="Copy shareable link to this member's portfolio"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-neutral-300 text-black text-xs font-bold shadow-2xs hover:bg-neutral-50 cursor-pointer transition-colors"
+          >
+            {copiedShareLink ? (
+              <>
+                <Check size={14} className="text-black stroke-[2.5]" />
+                <span>Link Copied</span>
+              </>
+            ) : (
+              <>
+                <Share2 size={13} className="text-black" />
+                <span className="hidden sm:inline">Share Profile</span>
+              </>
+            )}
+          </button>
+
+          <button
+            onClick={onClose}
+            type="button"
+            aria-label="Close candidate portfolio modal"
+            className="p-2 rounded-full bg-neutral-100 border border-neutral-300 text-black focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none cursor-pointer hover:bg-neutral-200 transition-colors"
+          >
+            <X size={18} />
+          </button>
+        </div>
 
         {/* Scrollable Container Wrapper */}
         <div className="w-full flex flex-col md:flex-row overflow-hidden h-full">
@@ -124,6 +162,7 @@ export default function PortfolioModal({
                 onSelectProject={onSelectProject}
                 onClose={onClose}
                 onSelectTab={setActiveTab}
+                role={role}
               />
             </div>
           </div>
@@ -149,6 +188,7 @@ export default function PortfolioModal({
                         onSelectProject={onSelectProject}
                         onClose={onClose}
                         onSelectTab={setActiveTab}
+                        role={role}
                       />
                     </div>
                   </div>
@@ -187,8 +227,8 @@ export default function PortfolioModal({
                 />
               )}
 
-              {/* Recruiter Contact Panel */}
-              {activeTab === "contact" && (
+              {/* Recruiter Contact Panel (Private to Premium Recruiters & Sponsors) */}
+              {activeTab === "contact" && role !== "standard" && (
                 <ContactTab student={currentStudent} role={role} />
               )}
             </div>

@@ -3,11 +3,11 @@
 import { useState, useEffect, useCallback } from "react";
 
 export type UserRole = "standard" | "sponsor" | "admin" | "student";
-export type AuthAccountType = "rso_leadership" | "sponsor" | "student";
+export type AuthAccountType = "rso_leadership" | "sponsor" | "student" | "standard";
 
 export interface AuthSession {
   accountType: AuthAccountType;
-  role: Exclude<UserRole, "standard">;
+  role: UserRole;
   email: string;
   displayName: string;
   organization?: string;
@@ -29,7 +29,7 @@ export function useRoleManager(defaultRole: UserRole = "standard") {
       const savedSessionRaw = localStorage.getItem(SESSION_STORAGE_KEY);
       if (savedSessionRaw) {
         const parsed = JSON.parse(savedSessionRaw) as AuthSession;
-        if (parsed && (parsed.role === "admin" || parsed.role === "sponsor" || parsed.role === "student")) {
+        if (parsed && (parsed.role === "admin" || parsed.role === "sponsor" || parsed.role === "student" || parsed.role === "standard")) {
           setSessionState(parsed);
           setRoleState(parsed.role);
           return;
@@ -130,7 +130,8 @@ export function useRoleManager(defaultRole: UserRole = "standard") {
   const isRsoLeadership = role === "admin";
   const isSponsor = role === "sponsor";
   const isStudent = role === "student";
-  const isAuthenticated = role !== "standard";
+  const isStandard = role === "standard";
+  const isAuthenticated = session !== null || role !== "standard";
 
   return {
     role,
@@ -144,6 +145,7 @@ export function useRoleManager(defaultRole: UserRole = "standard") {
     isRsoLeadership,
     isSponsor,
     isStudent,
+    isStandard,
     isAuthenticated,
   };
 }

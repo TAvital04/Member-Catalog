@@ -90,7 +90,7 @@ export default function ProjectModal({
         <div className="w-full flex flex-col md:flex-row overflow-hidden h-full">
           {/* Left Side Panel: Hero & Quick Project Stats (Desktop) */}
           <div className="w-full md:w-2/5 p-6 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col justify-between md:overflow-y-auto overflow-x-hidden relative z-10 bg-slate-50/70 hidden md:flex">
-            <ProjectUpperInfo project={project} />
+            <ProjectUpperInfo project={project} role={role} />
           </div>
 
           {/* Right Side Panel: Interactive Tabs */}
@@ -107,7 +107,7 @@ export default function ProjectModal({
               {/* Info Panel (Mobile Only) */}
               {activeTab === "info" && (
                 <div className="flex flex-col h-full md:hidden relative overflow-y-auto pb-10 pr-1 animate-fade-in">
-                  <ProjectUpperInfo project={project} />
+                  <ProjectUpperInfo project={project} role={role} />
                 </div>
               )}
 
@@ -150,6 +150,7 @@ export default function ProjectModal({
                 <ProjectPeopleTab
                   participants={project.participants}
                   onSelectMember={onSelectMember}
+                  role={role}
                 />
               )}
 

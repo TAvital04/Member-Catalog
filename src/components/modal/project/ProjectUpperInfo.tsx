@@ -1,15 +1,18 @@
 "use client";
 
 import React from "react";
+import { Lock } from "lucide-react";
 import { IEEEProject } from "@/data/projects";
 import CurrentSponsorsSegment from "@/components/common/CurrentSponsorsSegment";
 import { getSafeUrl } from "@/shared";
+import { UserRole } from "@/hooks/useRoleManager";
 
 interface ProjectUpperInfoProps {
   project: IEEEProject;
+  role?: UserRole;
 }
 
-export default function ProjectUpperInfo({ project }: ProjectUpperInfoProps) {
+export default function ProjectUpperInfo({ project, role }: ProjectUpperInfoProps) {
   const completedMilestones = (project.timeline || []).filter((m) => m.status === "completed").length;
 
   return (
@@ -63,6 +66,31 @@ export default function ProjectUpperInfo({ project }: ProjectUpperInfoProps) {
         </div>
       </div>
 
+      {/* Project Funding / Sponsorship Metric */}
+      {project.sponsorshipInfo?.fundingGoal ? (
+        <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+          <div className="flex flex-col">
+            <span className="text-[9.5px] text-slate-500 font-bold uppercase tracking-wider">
+              Budget Target
+            </span>
+            <span className="text-[10px] text-neutral-400 font-sans">
+              Hardware Grants
+            </span>
+          </div>
+
+          {role === "standard" ? (
+            <span className="text-[10.5px] font-bold text-neutral-400 select-none flex items-center gap-1 bg-neutral-100 border border-neutral-200 px-2.5 py-1 rounded-lg">
+              <Lock size={10} className="text-neutral-400" />
+              <span>Sponsor / Leadership Only</span>
+            </span>
+          ) : (
+            <span className="text-xs font-bold text-black font-mono">
+              ${project.sponsorshipInfo.currentFunding?.toLocaleString() || 0} / ${project.sponsorshipInfo.fundingGoal.toLocaleString()}
+            </span>
+          )}
+        </div>
+      ) : null}
+
       {/* External Repository & Demo Links */}
       <div className="flex flex-col gap-2 pt-2 border-t border-slate-200">
         <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Project Links</span>
@@ -98,8 +126,8 @@ export default function ProjectUpperInfo({ project }: ProjectUpperInfoProps) {
         </div>
       </div>
 
-      {/* Current Sponsors Segment */}
-      <CurrentSponsorsSegment variant="panel" />
+      {/* Current Sponsors Segment (Hidden from Standard View) */}
+      {role !== "standard" && <CurrentSponsorsSegment variant="panel" />}
     </div>
   );
 }

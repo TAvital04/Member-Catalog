@@ -8,28 +8,32 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { Student } from "@/data/students";
-export function useStudentData() {
+export function useStudentData(role?: string) {
   const [students, setStudents] = useState<Student[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchDatabaseStudents = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/members");
-      const resData = await response.json();
-
-      if (resData.success && Array.isArray(resData.data)) {
-        setStudents(resData.data);
-      } else {
-        setStudents([]);
+      const url = role ? `/api/members?role=${encodeURIComponent(role)}` : "/api/members";
+      const response = await fetch(url, {
+        headers: role ? { "x-user-role": role } : undefined,
+      });
+      if (response.ok && response.headers.get("content-type")?.includes("application/json")) {
+        const resData = await response.json();
+        if (resData.success && Array.isArray(resData.data)) {
+          setStudents(resData.data);
+          return;
+        }
       }
+      setStudents([]);
     } catch (err) {
-      console.error("[useStudentData Error] Failed to fetch database student profiles:", err);
+      console.warn("[useStudentData] Could not load database members, using empty state:", err);
       setStudents([]);
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [role]);
 
   useEffect(() => {
     fetchDatabaseStudents();

@@ -30,7 +30,7 @@ import { getStudentSlug, findStudentBySlugOrId } from "@/lib/studentSlug";
 function IEEEEventsContent() {
   const { theme, toggleTheme } = useThemeManager();
   const { role, session, handleRoleChange, isAdmin, isStudent, isSponsor } = useRoleManager();
-  const { students } = useStudentData();
+  const { students } = useStudentData(role);
   const searchParams = useSearchParams();
   const eventParam = searchParams.get("event") || searchParams.get("eventId") || searchParams.get("slug");
   const qParam = searchParams.get("q") || searchParams.get("search");
@@ -214,12 +214,14 @@ function IEEEEventsContent() {
     async function fetchEvents() {
       try {
         const res = await fetch("/api/events");
-        const json = await res.json();
-        if (json.success && Array.isArray(json.data) && json.data.length > 0) {
-          setEventsList(json.data);
-        } else {
-          setEventsList(SAMPLE_IEEE_EVENTS);
+        if (res.ok && res.headers.get("content-type")?.includes("application/json")) {
+          const json = await res.json();
+          if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+            setEventsList(json.data);
+            return;
+          }
         }
+        setEventsList(SAMPLE_IEEE_EVENTS);
       } catch (err) {
         console.warn("Could not load /api/events, using fallback events:", err);
         setEventsList(SAMPLE_IEEE_EVENTS);

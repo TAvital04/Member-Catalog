@@ -179,8 +179,12 @@ export default function LeadershipProjectForm({
         }),
       });
 
+      if (!response.ok || !response.headers.get("content-type")?.includes("application/json")) {
+        throw new Error("Failed to create chapter project. Server returned an invalid response.");
+      }
+
       const result = await response.json();
-      if (!response.ok || !result.success) {
+      if (!result.success) {
         throw new Error(result.error || "Failed to create chapter project.");
       }
 

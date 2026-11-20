@@ -30,7 +30,7 @@ import { getStudentSlug, findStudentBySlugOrId } from "@/lib/studentSlug";
 function IEEEProjectsContent() {
   const { theme, toggleTheme } = useThemeManager();
   const { role, session, handleRoleChange, isAdmin, isStudent, isSponsor } = useRoleManager();
-  const { students } = useStudentData();
+  const { students } = useStudentData(role);
   const [projects, setProjects] = useState<IEEEProject[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -145,9 +145,11 @@ function IEEEProjectsContent() {
     async function fetchProjects() {
       try {
         const res = await fetch("/api/projects");
-        const json = await res.json();
-        if (json.success && Array.isArray(json.data)) {
-          setProjects(json.data);
+        if (res.ok && res.headers.get("content-type")?.includes("application/json")) {
+          const json = await res.json();
+          if (json.success && Array.isArray(json.data)) {
+            setProjects(json.data);
+          }
         }
       } catch (err) {
         console.error("Failed to load IEEE projects:", err);

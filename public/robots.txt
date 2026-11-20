@@ -1,0 +1,38 @@
+# Anti-Scraping Directives for RSO USF Member Catalog
+User-agent: *
+Allow: /
+Allow: /projects
+Allow: /events
+Allow: /u/
+Disallow: /api/
+Disallow: /jobs
+Disallow: /sponsors
+Disallow: /*?*member=*
+Disallow: /*?*search=*
+Disallow: /*?*q=*
+Disallow: /*?*skills=*
+Disallow: /*?*majors=*
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /

@@ -12,6 +12,7 @@ export interface SponsorMemberRosterProps {
   interactions: StudentInteraction[];
   sponsorName: string;
   onSelectStudent: (student: Student) => void;
+  role?: string;
 }
 
 /**
@@ -22,13 +23,25 @@ export default function SponsorMemberRoster({
   interactions,
   sponsorName,
   onSelectStudent,
+  role,
 }: SponsorMemberRosterProps) {
+  const isPremium = role !== "standard";
   const [activeFilter, setActiveFilter] = useState<"All" | "Event Attendee" | "Job Applicant" | "Project Contributor">("All");
 
-  const filteredInteractions = interactions.filter((item) => {
+  // Private job applicant interactions must never be exposed to standard role
+  const visibleInteractions = interactions.filter((item) => {
+    if (!isPremium && item.interactionType === "Job Applicant") return false;
+    return true;
+  });
+
+  const filteredInteractions = visibleInteractions.filter((item) => {
     if (activeFilter === "All") return true;
     return item.interactionType === activeFilter;
   });
+
+  const availableFilters = isPremium
+    ? (["All", "Event Attendee", "Job Applicant", "Project Contributor"] as const)
+    : (["All", "Event Attendee", "Project Contributor"] as const);
 
   const getInteractionBadge = (type: StudentInteraction["interactionType"]) => {
     switch (type) {
@@ -64,21 +77,23 @@ export default function SponsorMemberRoster({
           <h3 className="section-title">
             <span>Engaged Members & Candidate Interactions</span>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
-              {interactions.length} Students
+              {visibleInteractions.length} Students
             </span>
           </h3>
           <p className="text-xs text-slate-500 mt-0.5">
-            Students who attended technical workshops, submitted job applications, or built hardware sponsored by {sponsorName}.
+            {isPremium
+              ? `Students who attended technical workshops, submitted job applications, or built hardware sponsored by ${sponsorName}.`
+              : `Students who attended technical workshops or built hardware sponsored by ${sponsorName}.`}
           </p>
         </div>
 
         {/* Filter Pills */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
-          {(["All", "Event Attendee", "Job Applicant", "Project Contributor"] as const).map((cat) => (
+          {availableFilters.map((cat) => (
             <button
               key={cat}
               type="button"
-              onClick={() => setActiveFilter(cat)}
+              onClick={() => setActiveFilter(cat as any)}
               className={`px-3 py-1 rounded-xl text-xs font-semibold border transition-all cursor-pointer whitespace-nowrap shadow-2xs ${
                 activeFilter === cat
                   ? "bg-white text-slate-950 font-bold border-slate-300 shadow-xs"

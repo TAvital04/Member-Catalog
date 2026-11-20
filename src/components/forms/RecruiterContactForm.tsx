@@ -136,16 +136,16 @@ export default function RecruiterContactForm({
             </svg>
           </div>
 
-          <h3 className="text-base font-extrabold text-black mb-2">Direct Candidate Messaging Locked</h3>
+          <h3 className="text-base font-extrabold text-black mb-2">Direct Candidate Messaging Unavailable</h3>
           <p className="text-xs text-neutral-600 leading-relaxed mb-6 max-w-sm">
-            Sponsor access is required to view candidate contact details, copy official USF student emails, and send direct recruiting inquiries.
+            This is unavailable because you aren't one of the premium profiles. Premium sponsor or leadership access is required to view candidate contact details, copy official student emails, and send direct recruiting inquiries.
           </p>
 
           <a
-            href="/sponsors"
+            href="/login"
             className="w-full sm:w-auto px-6 py-3 bg-black text-white font-extrabold rounded-xl text-xs tracking-wider uppercase flex items-center justify-center cursor-pointer"
           >
-            Learn More About Sponsoring
+            Sign In with Premium Profile
           </a>
         </div>
       </div>

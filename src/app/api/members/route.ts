@@ -31,7 +31,7 @@ export async function GET(request?: Request) {
   try {
     const url = request ? new URL(request.url) : null;
     const role = request?.headers.get("x-user-role") || url?.searchParams.get("role") || "standard";
-    const isAuthorizedRecruiter = role === "sponsor" || role === "admin";
+    const isAuthorizedRecruiter = role === "sponsor" || role === "admin" || role === "student";
 
     let candidateRows: any[] = [];
 
@@ -340,11 +340,21 @@ export async function GET(request?: Request) {
     // Primary ranking pillar: Put members who contribute the most first
     finalStudentsList.sort((a, b) => (b.points ?? 0) - (a.points ?? 0));
 
+    // Anti-scraping backend sanitization for unauthenticated or standard profiles
+    const sanitizedStudentsList = isAuthorizedRecruiter
+      ? finalStudentsList
+      : finalStudentsList.map((s) => ({
+          ...s,
+          email: "Contact: Premium Only",
+          links: [],
+          resumeLink: undefined,
+        }));
+
     return Response.json({
       success: true,
       source: "database",
-      count: finalStudentsList.length,
-      data: finalStudentsList,
+      count: sanitizedStudentsList.length,
+      data: sanitizedStudentsList,
     });
   } catch (error: any) {
     console.error("[API Error] Failed to query database member records:", error);

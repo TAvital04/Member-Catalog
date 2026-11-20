@@ -150,8 +150,12 @@ export default function LeadershipEventForm({
         }),
       });
 
+      if (!response.ok || !response.headers.get("content-type")?.includes("application/json")) {
+        throw new Error("Failed to create event. Server returned an invalid response.");
+      }
+
       const result = await response.json();
-      if (!response.ok || !result.success) {
+      if (!result.success) {
         throw new Error(result.error || "Failed to create event.");
       }
 

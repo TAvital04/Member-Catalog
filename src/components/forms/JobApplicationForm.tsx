@@ -80,10 +80,13 @@ export default function JobApplicationForm({
         body: JSON.stringify(payload),
       });
 
-      const data = await res.json();
+      let data: any = null;
+      if (res.headers.get("content-type")?.includes("application/json")) {
+        data = await res.json();
+      }
 
-      if (!res.ok || !data.success) {
-        throw new Error(data.error || "Failed to submit application.");
+      if (!res.ok || !data?.success) {
+        throw new Error(data?.error || `Failed to submit application (HTTP ${res.status}).`);
       }
 
       setHasAppliedLocally(true);

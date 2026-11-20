@@ -2,7 +2,7 @@ import { AuthAccountType } from "@/hooks/useRoleManager";
 
 export interface PortalUserRecord {
   accountType: AuthAccountType;
-  role: "admin" | "sponsor" | "student";
+  role: "admin" | "sponsor" | "student" | "standard";
   email: string;
   password: string;
   displayName: string;
@@ -12,6 +12,14 @@ export interface PortalUserRecord {
 }
 
 const INITIAL_PORTAL_USERS: PortalUserRecord[] = [
+  {
+    accountType: "standard",
+    role: "standard",
+    email: "standard@usf.edu",
+    password: "standard-access",
+    displayName: "Standard Member",
+    organization: "USF General Community",
+  },
   {
     accountType: "student",
     role: "student",
