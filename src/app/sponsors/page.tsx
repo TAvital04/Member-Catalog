@@ -9,7 +9,7 @@
 import React, { useState, useEffect, useMemo, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Building2, Plus, Shield, Users, Lock } from "lucide-react";
+import { Building2, Plus, Shield, Users, Lock, BookOpen } from "lucide-react";
 import DirectoryNavbar from "@/components/directory/DirectoryNavbar";
 import DirectoryStatsHeader from "@/components/directory/DirectoryStatsHeader";
 import { useThemeManager } from "@/hooks/useThemeManager";
@@ -400,6 +400,16 @@ function SponsorsPageContent() {
                   My Project Sponsors
                 </button>
               </div>
+            )}
+
+            {(role === "sponsor" || isAdmin) && (
+              <Link
+                href="/?resumeBook=true"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-neutral-300 text-xs font-bold text-black hover:bg-neutral-50 transition-colors shadow-2xs cursor-pointer shrink-0"
+              >
+                <BookOpen size={13} className="text-black" />
+                <span>Export Resume Book</span>
+              </Link>
             )}
 
             {isAdmin && (

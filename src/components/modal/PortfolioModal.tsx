@@ -12,10 +12,12 @@ import ProjectsTab from "./tabs/ProjectsTab";
 import SkillsTab from "./tabs/SkillsTab";
 import EventsTab from "./tabs/EventsTab";
 import ContactTab from "./tabs/ContactTab";
+import ShortlistTab from "./tabs/ShortlistTab";
 import { IEEEEvent } from "@/data/events";
 import { findMatchingIeeeEvent } from "@/lib/rsoAffiliation";
 import { UserRole } from "@/hooks/useRoleManager";
-import { X, Share2, Check } from "lucide-react";
+import { useRecruiterShortlist } from "@/hooks/useRecruiterShortlist";
+import { X, Share2, Check, Bookmark, BookmarkCheck } from "lucide-react";
 import { getStudentSlug } from "@/lib/studentSlug";
 
 interface PortfolioModalProps {
@@ -42,6 +44,20 @@ export default function PortfolioModal({
   const [activeTab, setActiveTab] = useState<TabType>("about");
   const [copiedShareLink, setCopiedShareLink] = useState(false);
   const focusTrapRef = useFocusTrap(true, onClose);
+
+  const isRecruiter = role === "sponsor" || role === "admin";
+  const {
+    isShortlisted,
+    getShortlistEntry,
+    toggleCandidate,
+    updateCandidateNotes,
+    updateCandidateTags,
+    updateCandidateListName,
+    availableListNames,
+  } = useRecruiterShortlist();
+
+  const isSaved = isShortlisted(currentStudent.id);
+  const shortlistEntry = getShortlistEntry(currentStudent.id);
 
   const handleShareProfile = async () => {
     const slug = getStudentSlug(currentStudent);
@@ -115,8 +131,33 @@ export default function PortfolioModal({
         onClick={(e) => e.stopPropagation()}
         className="relative w-full max-w-5xl h-full md:h-[80vh] rounded-none md:rounded-3xl bg-white border-0 md:border border-neutral-300 shadow-2xl flex flex-col max-h-screen md:max-h-[85vh] animate-scale-in cursor-default overflow-hidden"
       >
-        {/* Action Header Controls (Share & Close) */}
+        {/* Action Header Controls (Shortlist, Share & Close) */}
         <div className="absolute top-4 right-4 z-50 flex items-center gap-2">
+          {isRecruiter && (
+            <button
+              onClick={() => toggleCandidate(currentStudent)}
+              type="button"
+              aria-label={isSaved ? "Remove from shortlist" : "Save to shortlist"}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold shadow-2xs transition-colors cursor-pointer ${
+                isSaved
+                  ? "bg-black text-white border border-black hover:bg-neutral-800"
+                  : "bg-white border border-neutral-300 text-black hover:bg-neutral-50"
+              }`}
+            >
+              {isSaved ? (
+                <>
+                  <BookmarkCheck size={13} className="text-white stroke-[2.5]" />
+                  <span className="hidden sm:inline">Shortlisted</span>
+                </>
+              ) : (
+                <>
+                  <Bookmark size={13} className="text-black" />
+                  <span className="hidden sm:inline">Save Candidate</span>
+                </>
+              )}
+            </button>
+          )}
+
           <button
             onClick={handleShareProfile}
             type="button"
@@ -229,6 +270,21 @@ export default function PortfolioModal({
               {/* Recruiter Contact Panel (Private to Premium Recruiters & Sponsors) */}
               {activeTab === "contact" && role !== "standard" && (
                 <ContactTab student={currentStudent} role={role} />
+              )}
+
+              {/* Recruiter Shortlist & Evaluation Notes Panel */}
+              {activeTab === "shortlist" && isRecruiter && (
+                <ShortlistTab
+                  student={currentStudent}
+                  isShortlisted={isSaved}
+                  shortlistEntry={shortlistEntry}
+                  availableLists={availableListNames}
+                  onToggleShortlist={() => toggleCandidate(currentStudent)}
+                  onUpdateNotes={(notes) => updateCandidateNotes(currentStudent.id, notes)}
+                  onUpdateTags={(tags) => updateCandidateTags(currentStudent.id, tags)}
+                  onUpdateListName={(listName) => updateCandidateListName(currentStudent.id, listName)}
+                  onSwitchToContact={() => setActiveTab("contact")}
+                />
               )}
             </div>
           </div>

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Student } from "@/data/students";
-import { Calendar, Trash2, Eye } from "lucide-react";
+import { Calendar, Trash2, Eye, Bookmark, BookmarkCheck } from "lucide-react";
 import Avatar from "../common/Avatar";
 import TruncatedText from "../common/TruncatedText";
 import Tooltip from "../common/Tooltip";
@@ -14,6 +14,9 @@ interface StudentRowProps {
   adminMode: boolean;
   canFilter?: boolean;
   onDelete?: (id: string) => void;
+  isRecruiter?: boolean;
+  isShortlisted?: boolean;
+  onToggleShortlist?: (student: Student) => void;
 }
 
 function StudentRow({
@@ -21,6 +24,9 @@ function StudentRow({
   onClick,
   adminMode,
   onDelete,
+  isRecruiter,
+  isShortlisted,
+  onToggleShortlist,
 }: StudentRowProps) {
   return (
     <div
@@ -63,6 +69,22 @@ function StudentRow({
       {/* Right: Actions */}
       <div className="flex items-center gap-3 min-w-[100px] justify-end">
         <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+          {isRecruiter && onToggleShortlist && (
+            <button
+              onClick={() => onToggleShortlist(student)}
+              type="button"
+              aria-label={isShortlisted ? `Remove ${student.name} from shortlist` : `Save ${student.name} to shortlist`}
+              title={isShortlisted ? "Remove from shortlist" : "Save candidate to shortlist"}
+              className={`p-1.5 rounded-lg border transition-all cursor-pointer ${
+                isShortlisted
+                  ? "bg-black text-white border-black shadow-2xs opacity-100"
+                  : "bg-white text-neutral-400 border-neutral-300 hover:text-black hover:border-black opacity-0 group-hover:opacity-100"
+              }`}
+            >
+              {isShortlisted ? <BookmarkCheck size={13} className="stroke-[2.5]" /> : <Bookmark size={13} />}
+            </button>
+          )}
+
           <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5">
             {/* Delete Button in Admin Mode */}
             {adminMode && onDelete && (

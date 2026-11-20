@@ -3,8 +3,6 @@
  * @description API route handler delivering enriched candidate profile records from PostgreSQL via Drizzle ORM.
  * Joins memberResumes, members, and eventAttendees to aggregate student details, education history,
  * technical skills, project portfolios, work experiences, leadership titles, and verified workshop attendances.
- *
- * @returns {Promise<Response>} JSON response containing array of transformed Student domain entities
  */
 
 import { db, members, memberResumes, events, eventAttendees, DENSE_CANDIDATES } from "@/db";

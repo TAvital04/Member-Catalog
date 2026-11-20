@@ -24,10 +24,16 @@ import DirectoryNavbar from "@/components/directory/DirectoryNavbar";
 import DirectoryStatsHeader from "@/components/directory/DirectoryStatsHeader";
 import DirectoryControlBar from "@/components/directory/DirectoryControlBar";
 import ActiveFiltersBar from "@/components/directory/ActiveFiltersBar";
+import ShortlistToolbar from "@/components/directory/ShortlistToolbar";
+import ResumeBookModal from "@/components/modal/ResumeBookModal";
+import ResumeBookViewer from "@/components/resumebook/ResumeBookViewer";
 import ConfirmDialog from "@/components/dialogs/ConfirmDialog";
 import ToastNotification from "@/components/dialogs/ToastNotification";
-import { Shield } from "lucide-react";
+import { Shield, BookOpen } from "lucide-react";
 import { useRoleManager, UserRole } from "@/hooks/useRoleManager";
+import { useRecruiterShortlist } from "@/hooks/useRecruiterShortlist";
+import { ResumeBookOptions } from "@/types/resumeBook";
+import { compileResumeBookCandidates } from "@/lib/resumeBook";
 import { CURRENT_CHAPTER_SPONSORS, getSponsorRelatedData } from "@/data/sponsors";
 
 export type { UserRole };
@@ -64,6 +70,13 @@ function StudentDirectoryContent() {
   const memberParam = searchParams.get("member") || searchParams.get("student") || searchParams.get("candidate");
   const myParam = searchParams.get("my");
   const interactingParam = searchParams.get("interacting");
+  const shortlistParam = searchParams.get("shortlist");
+  const resumeBookParam = searchParams.get("resumeBook");
+
+  // Recruiter shortlist management
+  const isRecruiter = isSponsor || isAdmin;
+  const recruiterKey = session?.sponsorId || session?.organization || session?.email || (isAdmin ? "leadership" : "sponsor");
+  const shortlist = useRecruiterShortlist(recruiterKey);
 
   // Visual layout & role states
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
@@ -73,6 +86,12 @@ function StudentDirectoryContent() {
   const [onlyLeadersFilter, setOnlyLeadersFilter] = useState(false);
   const [filterByMyself, setFilterByMyself] = useState(() => myParam === "true");
   const [sponsorInteractingFilter, setSponsorInteractingFilter] = useState(() => interactingParam === "true");
+  const [onlyShortlisted, setOnlyShortlisted] = useState(() => shortlistParam === "true");
+  const [selectedShortlistCategory, setSelectedShortlistCategory] = useState<string>("all");
+  const [isResumeBookModalOpen, setIsResumeBookModalOpen] = useState(false);
+  const [resumeBookScope, setResumeBookScope] = useState<"filtered" | "shortlist" | "all">("filtered");
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
+  const [activeResumeBookOptions, setActiveResumeBookOptions] = useState<ResumeBookOptions | null>(null);
 
   // Auto-open student portfolio when member/student is in URL
   useEffect(() => {
@@ -87,11 +106,15 @@ function StudentDirectoryContent() {
     }
   }, [students, memberParam]);
 
-  // Sync my / interacting flags from URL params
+  // Sync my / interacting / shortlist flags from URL params
   useEffect(() => {
     setFilterByMyself(myParam === "true");
     setSponsorInteractingFilter(interactingParam === "true");
-  }, [myParam, interactingParam]);
+    setOnlyShortlisted(shortlistParam === "true");
+    if (resumeBookParam === "true") {
+      setIsResumeBookModalOpen(true);
+    }
+  }, [myParam, interactingParam, shortlistParam, resumeBookParam]);
 
   const handleSelectStudent = (student: Student | null) => {
     setSelectedStudent(student);
@@ -109,17 +132,48 @@ function StudentDirectoryContent() {
 
   const handleSetFilterByMyself = (val: boolean) => {
     setFilterByMyself(val);
+    if (val) {
+      setOnlyShortlisted(false);
+    }
     const url = new URL(window.location.href);
-    if (val) url.searchParams.set("my", "true");
-    else url.searchParams.delete("my");
+    if (val) {
+      url.searchParams.set("my", "true");
+      url.searchParams.delete("shortlist");
+    } else {
+      url.searchParams.delete("my");
+    }
     window.history.pushState(null, "", url.pathname + (url.search ? url.search : ""));
   };
 
   const handleSetSponsorInteractingFilter = (val: boolean) => {
     setSponsorInteractingFilter(val);
+    if (val) {
+      setOnlyShortlisted(false);
+    }
     const url = new URL(window.location.href);
-    if (val) url.searchParams.set("interacting", "true");
-    else url.searchParams.delete("interacting");
+    if (val) {
+      url.searchParams.set("interacting", "true");
+      url.searchParams.delete("shortlist");
+    } else {
+      url.searchParams.delete("interacting");
+    }
+    window.history.pushState(null, "", url.pathname + (url.search ? url.search : ""));
+  };
+
+  const handleSetShortlistFilter = (val: boolean) => {
+    setOnlyShortlisted(val);
+    if (val) {
+      setSponsorInteractingFilter(false);
+      setFilterByMyself(false);
+    }
+    const url = new URL(window.location.href);
+    if (val) {
+      url.searchParams.set("shortlist", "true");
+      url.searchParams.delete("interacting");
+      url.searchParams.delete("my");
+    } else {
+      url.searchParams.delete("shortlist");
+    }
     window.history.pushState(null, "", url.pathname + (url.search ? url.search : ""));
   };
 
@@ -202,6 +256,7 @@ function StudentDirectoryContent() {
       setOnlyLeadersFilter(false);
       setFilterByMyself(false);
       setSponsorInteractingFilter(false);
+      setOnlyShortlisted(false);
     }
   };
 
@@ -268,7 +323,7 @@ function StudentDirectoryContent() {
     role,
   });
 
-  // When self-filtering is enabled, narrow directory results strictly to the authenticated student or interacting candidates
+  // When self-filtering is enabled, narrow directory results strictly to the authenticated student, shortlisted candidates, or interacting candidates
   const displayedStudents = React.useMemo(() => {
     if (isStudent && filterByMyself && loggedInStudent) {
       return filteredStudents.filter(
@@ -276,6 +331,14 @@ function StudentDirectoryContent() {
           s.id.toLowerCase() === loggedInStudent.id.toLowerCase() ||
           s.email.toLowerCase() === loggedInStudent.email.toLowerCase()
       );
+    }
+    if (isRecruiter && onlyShortlisted) {
+      const savedIds = new Set(
+        shortlist.shortlistedCandidates
+          .filter((c) => selectedShortlistCategory === "all" || c.listName === selectedShortlistCategory)
+          .map((c) => c.candidateId.toLowerCase())
+      );
+      return filteredStudents.filter((s) => savedIds.has(s.id.toLowerCase()));
     }
     if (isSponsor && sponsorInteractingFilter && sponsorInteractingStudentIds.size > 0) {
       return filteredStudents.filter(
@@ -285,7 +348,19 @@ function StudentDirectoryContent() {
       );
     }
     return filteredStudents;
-  }, [filteredStudents, isStudent, filterByMyself, loggedInStudent, isSponsor, sponsorInteractingFilter, sponsorInteractingStudentIds]);
+  }, [
+    filteredStudents,
+    isStudent,
+    filterByMyself,
+    loggedInStudent,
+    isRecruiter,
+    onlyShortlisted,
+    shortlist.shortlistedCandidates,
+    selectedShortlistCategory,
+    isSponsor,
+    sponsorInteractingFilter,
+    sponsorInteractingStudentIds,
+  ]);
 
   // Admin profile deletion handler
   const handleDeleteStudent = React.useCallback(
@@ -381,31 +456,103 @@ function StudentDirectoryContent() {
           </div>
         )}
 
-        {isSponsor && loggedInSponsor && (
+        {isSponsor && (
           <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
             <button
               type="button"
-              onClick={() => handleSetSponsorInteractingFilter(false)}
+              onClick={() => {
+                handleSetSponsorInteractingFilter(false);
+                handleSetShortlistFilter(false);
+              }}
               className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-                !sponsorInteractingFilter
+                !sponsorInteractingFilter && !onlyShortlisted
                   ? "bg-white text-black shadow-2xs font-black"
                   : "text-neutral-500 hover:text-black font-semibold"
               }`}
             >
               All Candidates
             </button>
+            {loggedInSponsor && (
+              <button
+                type="button"
+                onClick={() => handleSetSponsorInteractingFilter(true)}
+                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                  sponsorInteractingFilter
+                    ? "bg-black text-white shadow-2xs font-black"
+                    : "text-neutral-500 hover:text-black font-semibold"
+                }`}
+              >
+                Interacting Candidates
+              </button>
+            )}
             <button
               type="button"
-              onClick={() => handleSetSponsorInteractingFilter(true)}
-              className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-                sponsorInteractingFilter
+              onClick={() => handleSetShortlistFilter(true)}
+              className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
+                onlyShortlisted
                   ? "bg-black text-white shadow-2xs font-black"
                   : "text-neutral-500 hover:text-black font-semibold"
               }`}
             >
-              Interacting Candidates
+              <span>Saved Shortlist</span>
+              <span
+                className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
+                  onlyShortlisted ? "bg-white text-black" : "bg-neutral-200 text-neutral-700"
+                }`}
+              >
+                {shortlist.shortlistCount}
+              </span>
             </button>
           </div>
+        )}
+
+        {isAdmin && (
+          <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
+            <button
+              type="button"
+              onClick={() => handleSetShortlistFilter(false)}
+              className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                !onlyShortlisted
+                  ? "bg-white text-black shadow-2xs font-black"
+                  : "text-neutral-500 hover:text-black font-semibold"
+              }`}
+            >
+              All Members
+            </button>
+            <button
+              type="button"
+              onClick={() => handleSetShortlistFilter(true)}
+              className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
+                onlyShortlisted
+                  ? "bg-black text-white shadow-2xs font-black"
+                  : "text-neutral-500 hover:text-black font-semibold"
+              }`}
+            >
+              <span>Saved Shortlist</span>
+              <span
+                className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
+                  onlyShortlisted ? "bg-white text-black" : "bg-neutral-200 text-neutral-700"
+                }`}
+              >
+                {shortlist.shortlistCount}
+              </span>
+            </button>
+          </div>
+        )}
+
+        {isRecruiter && (
+          <button
+            type="button"
+            onClick={() => {
+              setResumeBookScope(onlyShortlisted ? "shortlist" : "filtered");
+              setIsResumeBookModalOpen(true);
+            }}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-neutral-300 text-xs font-bold text-black hover:bg-neutral-50 transition-colors cursor-pointer shadow-2xs shrink-0"
+          >
+            <BookOpen size={13} className="text-black" />
+            <span className="hidden sm:inline">Export Resume Book</span>
+            <span className="sm:hidden">Resume Book</span>
+          </button>
         )}
       </DirectoryStatsHeader>
 
@@ -482,18 +629,55 @@ function StudentDirectoryContent() {
             />
           )}
 
+          {/* Dedicated Recruiter Shortlist Toolbar */}
+          {isRecruiter && onlyShortlisted && (
+            <ShortlistToolbar
+              totalCount={displayedStudents.length}
+              availableLists={shortlist.availableListNames}
+              selectedList={selectedShortlistCategory}
+              onSelectList={setSelectedShortlistCategory}
+              onExportCsv={() => shortlist.exportCsv(students)}
+              onCopyEmails={shortlist.copyEmails}
+              onClearShortlist={() => {
+                showConfirm(
+                  "Clear Saved Shortlist",
+                  "Are you sure you want to remove all saved candidates from your shortlist?",
+                  () => {
+                    shortlist.clearShortlist();
+                    setToastMessage("Cleared your candidate shortlist.");
+                    setTimeout(() => setToastMessage(null), 3000);
+                  }
+                );
+              }}
+              onBrowseAll={() => handleSetShortlistFilter(false)}
+              onOpenResumeBook={() => {
+                setResumeBookScope("shortlist");
+                setIsResumeBookModalOpen(true);
+              }}
+            />
+          )}
+
           <StudentDirectoryResults
             isLoading={isLoading}
             filteredStudents={displayedStudents}
             viewMode={viewMode}
             adminMode={adminMode}
             canFilter={hasFilterPermission}
+            isRecruiter={isRecruiter}
+            isShortlisted={shortlist.isShortlisted}
+            onToggleShortlist={(student) => {
+              const saved = shortlist.toggleCandidate(student);
+              setToastMessage(saved ? `Added ${student.name} to shortlist` : `Removed ${student.name} from shortlist`);
+              setTimeout(() => setToastMessage(null), 3000);
+            }}
+            isShortlistView={onlyShortlisted}
             onSelectStudent={handleSelectStudent}
             onDeleteStudent={handleDeleteStudent}
             onResetAllFilters={() => {
               resetAllFilters();
               handleSetFilterByMyself(false);
               handleSetSponsorInteractingFilter(false);
+              handleSetShortlistFilter(false);
             }}
           />
         </div>
@@ -518,6 +702,45 @@ function StudentDirectoryContent() {
         confirmDialog={confirmDialog}
         onClose={() => setConfirmDialog(null)}
       />
+
+      {/* Corporate Sponsor Resume Book Modal */}
+      <ResumeBookModal
+        isOpen={isResumeBookModalOpen}
+        onClose={() => setIsResumeBookModalOpen(false)}
+        filteredStudents={displayedStudents}
+        allStudents={students}
+        shortlistedCandidates={shortlist.shortlistedCandidates}
+        initialScope={resumeBookScope}
+        sponsorName={session?.organization || loggedInSponsor?.name || "Corporate Partner"}
+        onOpenViewer={(opts) => {
+          setActiveResumeBookOptions(opts);
+          setIsViewerOpen(true);
+        }}
+      />
+
+      {/* Print-Ready Resume Book Full-Screen Viewer */}
+      {isViewerOpen && activeResumeBookOptions && (
+        <ResumeBookViewer
+          candidates={compileResumeBookCandidates(
+            activeResumeBookOptions.sourceScope === "shortlist"
+              ? students.filter((s) =>
+                  shortlist.shortlistedCandidates.some((c) => c.candidateId.toLowerCase() === s.id.toLowerCase())
+                )
+              : activeResumeBookOptions.sourceScope === "all"
+              ? students
+              : displayedStudents,
+            activeResumeBookOptions,
+            Object.fromEntries(
+              shortlist.shortlistedCandidates.map((c) => [
+                c.candidateId.toLowerCase(),
+                { notes: c.notes, tags: c.tags },
+              ])
+            )
+          )}
+          options={activeResumeBookOptions}
+          onClose={() => setIsViewerOpen(false)}
+        />
+      )}
     </div>
   );
 }

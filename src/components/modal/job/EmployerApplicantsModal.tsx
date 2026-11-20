@@ -10,6 +10,8 @@ import {
   Calendar,
   GraduationCap,
   Info,
+  Bookmark,
+  BookmarkCheck,
 } from "lucide-react";
 import { JobPosting, JobApplication } from "@/data/jobs";
 import { Student } from "@/data/students";
@@ -18,6 +20,7 @@ import Avatar from "@/components/common/Avatar";
 import Tooltip from "@/components/common/Tooltip";
 import { Heading, Subheading, Badge } from "@/components/ui";
 import CurrentSponsorsSegment from "@/components/common/CurrentSponsorsSegment";
+import { useRecruiterShortlist } from "@/hooks/useRecruiterShortlist";
 
 export type ApplicantTabType = "info" | "all" | "review" | "interviewing" | "offered";
 
@@ -59,6 +62,7 @@ export default function EmployerApplicantsModal({
 }: EmployerApplicantsModalProps) {
   const [activeTab, setActiveTab] = useState<ApplicantTabType>("all");
   const [updatingId, setUpdatingId] = useState<string | null>(null);
+  const shortlist = useRecruiterShortlist();
 
   // Body scroll locking and escape key listener
   useEffect(() => {
@@ -470,8 +474,26 @@ export default function EmployerApplicantsModal({
                               </div>
                             </div>
 
-                            {/* Status Selector Dropdown */}
+                            {/* Status Selector Dropdown & Shortlist Action */}
                             <div className="flex items-center gap-2">
+                              <button
+                                type="button"
+                                onClick={() => shortlist.toggleCandidate(student, job.title)}
+                                aria-label={shortlist.isShortlisted(student.id) ? "Remove applicant from shortlist" : "Save applicant to shortlist"}
+                                title={shortlist.isShortlisted(student.id) ? "Remove from shortlist" : "Save applicant to shortlist"}
+                                className={`p-2 rounded-xl border transition-all cursor-pointer shadow-2xs ${
+                                  shortlist.isShortlisted(student.id)
+                                    ? "bg-black text-white border-black"
+                                    : "bg-white text-neutral-400 border-neutral-300 hover:text-black hover:border-black"
+                                }`}
+                              >
+                                {shortlist.isShortlisted(student.id) ? (
+                                  <BookmarkCheck size={14} className="stroke-[2.5]" />
+                                ) : (
+                                  <Bookmark size={14} />
+                                )}
+                              </button>
+
                               <CustomDropdown
                                 value={app.status}
                                 disabled={updatingId === app.id}
