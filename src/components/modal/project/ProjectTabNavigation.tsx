@@ -2,9 +2,9 @@
 
 import React from "react";
 import { Info } from "lucide-react";
-import { useRoleManager, UserRole } from "@/hooks/useRoleManager";
+import { UserRole } from "@/hooks/useRoleManager";
 
-export type ProjectTabType = "info" | "overview" | "tools" | "timeline" | "people" | "skills" | "sponsor";
+export type ProjectTabType = "info" | "overview" | "tools" | "timeline" | "people" | "skills";
 
 interface ProjectTabNavigationProps {
   activeTab: ProjectTabType;
@@ -15,15 +15,7 @@ interface ProjectTabNavigationProps {
 export default function ProjectTabNavigation({
   activeTab,
   setActiveTab,
-  role: propRole,
 }: ProjectTabNavigationProps) {
-  const roleManager = useRoleManager();
-  const role = propRole !== undefined ? propRole : roleManager.role;
-  const isCorporateSponsor = role === "sponsor" || roleManager.session?.accountType === "sponsor";
-
-  const sponsorTabLabel = isCorporateSponsor ? "Sponsor" : "Back";
-  const sponsorTabAriaLabel = isCorporateSponsor ? "Corporate Sponsor Benefits" : "Back This Project";
-
   const tabsList: Array<{
     id: ProjectTabType;
     label: string;
@@ -33,7 +25,6 @@ export default function ProjectTabNavigation({
     { id: "tools", label: "Tools & Skills", ariaLabel: "Tools & Skills Stack" },
     { id: "timeline", label: "Timeline" },
     { id: "people", label: "Team" },
-    { id: "sponsor", label: sponsorTabLabel, ariaLabel: sponsorTabAriaLabel },
   ];
 
   return (

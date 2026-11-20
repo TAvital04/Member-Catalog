@@ -9,7 +9,6 @@ import {
   Sparkles,
   BookOpen,
   Info,
-  HeartHandshake,
   Lock,
 } from "lucide-react";
 import { IEEEEvent, EventAttendee } from "@/data/events";
@@ -17,8 +16,6 @@ import { Student } from "@/data/students";
 import Avatar from "@/components/common/Avatar";
 import Tooltip from "@/components/common/Tooltip";
 import { CARD_INTERACTIVE, CARD_BASE, CARD_TITLE_HOVER } from "@/lib/cardStyles";
-import CurrentSponsorsSegment from "@/components/common/CurrentSponsorsSegment";
-import EventSponsorTab from "./tabs/EventSponsorTab";
 import { Heading, Subheading, Badge } from "@/components/ui";
 import { useRoleManager } from "@/hooks/useRoleManager";
 
@@ -31,7 +28,7 @@ interface EventModalProps {
   canFilter?: boolean;
 }
 
-export type EventTabType = "info" | "overview" | "skills" | "attendees" | "sponsor";
+export type EventTabType = "info" | "overview" | "skills" | "attendees";
 
 export default function EventModal({
   event,
@@ -43,9 +40,6 @@ export default function EventModal({
 }: EventModalProps) {
   const roleManager = useRoleManager();
   const currentRole = role !== undefined ? role : roleManager.role;
-  const isCorporateSponsor = currentRole === "sponsor" || roleManager.session?.accountType === "sponsor";
-  const sponsorTabLabel = isCorporateSponsor ? "Sponsor" : "Back";
-  const sponsorTabAriaLabel = isCorporateSponsor ? "Sponsor an Event" : "Back This Event";
 
   const canFilter = explicitCanFilter ?? (currentRole ? currentRole !== "standard" : true);
   const [activeTab, setActiveTab] = useState<EventTabType>("overview");
@@ -114,12 +108,6 @@ export default function EventModal({
       ariaLabel: "Workshop Attendance & Leads",
       icon: Users,
     },
-    {
-      id: "sponsor",
-      label: sponsorTabLabel,
-      ariaLabel: sponsorTabAriaLabel,
-      icon: HeartHandshake,
-    },
   ];
 
   // Reusable Left Side Hero & Metadata Panel
@@ -175,9 +163,6 @@ export default function EventModal({
           {event.description}
         </p>
       </div>
-
-      {/* Current Chapter Sponsors Segment (Hidden from Standard View) */}
-      {currentRole !== "standard" && <CurrentSponsorsSegment variant="panel" />}
     </div>
   );
 
@@ -529,11 +514,6 @@ export default function EventModal({
                     </div>
                   )}
                 </div>
-              )}
-
-              {/* Sponsor / Back an Event Tab */}
-              {activeTab === "sponsor" && (
-                <EventSponsorTab event={event} role={currentRole} onClose={onClose} />
               )}
             </div>
           </div>

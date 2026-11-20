@@ -165,7 +165,7 @@ function IEEEProjectsContent() {
     if (projects.length === 0) return;
 
     const tabParam = searchParams.get("tab");
-    const validTab = tabParam && ["info", "overview", "tools", "timeline", "people", "skills", "sponsor"].includes(tabParam)
+    const validTab = tabParam && ["info", "overview", "tools", "timeline", "people", "skills"].includes(tabParam)
       ? (tabParam as ProjectTabType)
       : "overview";
 

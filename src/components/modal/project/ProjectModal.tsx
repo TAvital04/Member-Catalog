@@ -24,7 +24,6 @@ import ProjectToolsTab from "./tabs/ProjectToolsTab";
 import ProjectTimelineTab from "./tabs/ProjectTimelineTab";
 import ProjectPeopleTab from "./tabs/ProjectPeopleTab";
 import ProjectSkillsTab from "./tabs/ProjectSkillsTab";
-import ProjectSponsorTab from "./tabs/ProjectSponsorTab";
 import { X } from "lucide-react";
 
 interface ProjectModalProps {
@@ -152,11 +151,6 @@ export default function ProjectModal({
                   onSelectMember={onSelectMember}
                   role={role}
                 />
-              )}
-
-              {/* Sponsor & Partner Benefits Tab */}
-              {activeTab === "sponsor" && (
-                <ProjectSponsorTab project={project} role={role} onClose={onClose} />
               )}
             </div>
           </div>

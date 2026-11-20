@@ -39,7 +39,6 @@ import SponsorJobPostingForm from "@/components/forms/SponsorJobPostingForm";
 import EmployerApplicantsModal from "@/components/modal/job/EmployerApplicantsModal";
 import EmployerApplicantAnalytics from "@/components/modal/job/EmployerApplicantAnalytics";
 import PortfolioModal from "@/components/modal/PortfolioModal";
-import CustomDropdown from "@/components/common/CustomDropdown";
 import Avatar from "@/components/common/Avatar";
 import EmptyState from "@/components/common/EmptyState";
 import SearchInput from "@/components/common/SearchInput";
@@ -56,9 +55,6 @@ function JobsPageContent() {
   const [portalMode, setPortalMode] = useState<"member" | "employer">(
     isAdmin || isSponsor ? "employer" : "member"
   );
-
-  // Active student for member application (defaults to first student)
-  const [activeStudentId, setActiveStudentId] = useState<string>("");
 
   const [onlyMyApplications, setOnlyMyApplications] = useState(false);
   const [onlyMyCompanyJobs, setOnlyMyCompanyJobs] = useState(false);
@@ -239,19 +235,12 @@ function JobsPageContent() {
     }
   }, [students, memberParam]);
 
-  // Initialize active student
-  useEffect(() => {
-    if (students.length > 0 && !activeStudentId) {
-      setActiveStudentId(students[0].id);
-    }
-  }, [students, activeStudentId]);
-
   const activeStudent = useMemo(() => {
     if (isStudent && loggedInStudent) {
       return loggedInStudent;
     }
-    return students.find((s) => s.id === activeStudentId) || students[0];
-  }, [isStudent, loggedInStudent, students, activeStudentId]);
+    return students[0] || null;
+  }, [isStudent, loggedInStudent, students]);
 
   // Count applications submitted by the logged-in student
   const studentApplicationsCount = useMemo(() => {
@@ -537,7 +526,7 @@ function JobsPageContent() {
                     }`}
                 >
                   <Users size={13} />
-                  <span>Student Directory View</span>
+                  <span>Browse Chapter Board</span>
                 </button>
               </div>
             )}
@@ -682,39 +671,28 @@ function JobsPageContent() {
                 </button>
               </div>
             ) : isAdmin ? (
-              <div className="p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-wrap items-center justify-between gap-3">
+              <div className="p-3.5 rounded-2xl bg-white border border-neutral-300 shadow-2xs flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-3 min-w-0">
                   <div className="w-8 h-8 rounded-xl bg-neutral-100 border border-neutral-300 flex items-center justify-center text-black shrink-0">
                     <Shield size={15} />
                   </div>
                   <div className="min-w-0">
-                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block leading-none">
-                      RSO Leadership Student Board Preview
+                    <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider block leading-none">
+                      RSO Leadership Chapter View
                     </span>
-                    <span className="text-xs font-bold text-slate-900 truncate block mt-0.5">
-                      Simulating student 1-click application workflow • Active test profile: {activeStudent?.name}
+                    <span className="text-xs font-bold text-black truncate block mt-0.5">
+                      Reviewing live chapter job postings across corporate partners
                     </span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <span className="text-[11px] text-slate-500 font-medium hidden sm:inline">
-                    Switch Test Candidate:
-                  </span>
-                  <CustomDropdown
-                    value={activeStudentId}
-                    onChange={(val) => setActiveStudentId(val)}
-                    options={students.slice(0, 10).map((s) => ({
-                      value: s.id,
-                      label: `${s.name}`,
-                      sublabel: `${s.major} • Class of ${s.gradDate}`,
-                    }))}
-                    className="w-48 sm:w-64"
-                    buttonClassName="bg-white border-neutral-300 text-black text-xs font-semibold"
-                    align="right"
-                    aria-label="Switch Test Candidate"
-                  />
-                </div>
+                <button
+                  type="button"
+                  onClick={() => setPortalMode("employer")}
+                  className="px-3.5 py-1.5 rounded-xl bg-black text-white text-xs font-bold cursor-pointer"
+                >
+                  Return to Chapter Job Management
+                </button>
               </div>
             ) : (
               <div className="p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-wrap items-center justify-between gap-3">

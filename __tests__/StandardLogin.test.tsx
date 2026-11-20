@@ -8,6 +8,7 @@ import ProjectUpperInfo from "@/components/modal/project/ProjectUpperInfo";
 import EventModal from "@/components/modal/event/EventModal";
 import DirectoryControlBar from "@/components/directory/DirectoryControlBar";
 import ModalTabNavigation from "@/components/modal/tabs/ModalTabNavigation";
+import ProjectTabNavigation from "@/components/modal/project/ProjectTabNavigation";
 import ProjectPeopleTab from "@/components/modal/project/tabs/ProjectPeopleTab";
 import { Student } from "@/data/students";
 import { StudentInteraction } from "@/data/sponsors";
@@ -266,5 +267,47 @@ describe("Standard Login & Premium Profile Locking Tests", () => {
     );
     expect(screen.getByText("David Miller")).toBeInTheDocument();
     expect(screen.getByText("Secret Contributor")).toBeInTheDocument();
+  });
+
+  test("ProjectTabNavigation does not render a sponsor, back, or payment tab", () => {
+    const { rerender } = render(
+      <ProjectTabNavigation activeTab="overview" setActiveTab={() => {}} role="standard" />
+    );
+    expect(screen.queryByText("Sponsor")).not.toBeInTheDocument();
+    expect(screen.queryByText("Back")).not.toBeInTheDocument();
+    expect(screen.queryByText("Support Build")).not.toBeInTheDocument();
+    expect(screen.getByText("Overview")).toBeInTheDocument();
+    expect(screen.getByText("Team")).toBeInTheDocument();
+
+    rerender(
+      <ProjectTabNavigation activeTab="overview" setActiveTab={() => {}} role="sponsor" />
+    );
+    expect(screen.queryByText("Sponsor")).not.toBeInTheDocument();
+    expect(screen.queryByText("Back")).not.toBeInTheDocument();
+    expect(screen.queryByText("Support Build")).not.toBeInTheDocument();
+  });
+
+  test("EventModal does not render a sponsor or back tab", () => {
+    const dummyEvent: IEEEEvent = {
+      id: "event-1",
+      title: "STM32 Workshop",
+      slug: "stm32-workshop",
+      description: "Hands-on embedded workshop",
+      category: "Workshop",
+      location: "ENB 118",
+      startTime: "2026-03-01T17:00:00Z",
+      endTime: "2026-03-01T19:00:00Z",
+      active: true,
+      host: "IEEE USF",
+      pointsAwarded: 15,
+      tags: ["STM32", "C++"],
+      attendees: [],
+    };
+
+    render(<EventModal event={dummyEvent} onClose={() => {}} role="standard" />);
+    expect(screen.queryByText("Sponsor")).not.toBeInTheDocument();
+    expect(screen.queryByText("Back")).not.toBeInTheDocument();
+    expect(screen.getByText("Overview")).toBeInTheDocument();
+    expect(screen.getByText("Skills")).toBeInTheDocument();
   });
 });
