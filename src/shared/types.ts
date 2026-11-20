@@ -61,7 +61,7 @@ export interface StudentCandidate {
   projects: ProjectEntry[];
   workExperiences: WorkExperienceEntry[];
   clubs: ClubEntry[];
-  certifications: CertificationEntry[];
+  certifications?: any[];
   resumeLink?: string;
   major: string;
   degree: string;

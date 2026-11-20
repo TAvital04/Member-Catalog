@@ -277,16 +277,6 @@ export async function GET(request?: Request) {
               endDate: c.endDate,
               current: Boolean(c.isActive),
             })),
-          certifications: Array.isArray(row.certifications)
-            ? row.certifications.map((c: any) => ({
-                name: c.certificationName || c.name || "",
-                issuer: c.issuer || "",
-                issueDate: c.issueDate || "",
-                expirationDate: c.expirationDate,
-                credentialId: c.credentialId,
-                credentialUrl: c.credentialUrl,
-              }))
-            : [],
           events: candidateEvents,
           resumeLink: row.resumePdfUrl || undefined,
           major: row.memberMajor || primaryEdu.major || "Computer Science",

@@ -246,12 +246,13 @@ function SharedMemberProfileContent() {
 
           {/* Right Detailed Showcase Panel */}
           <div className="w-full md:w-3/5 p-6 flex flex-col bg-slate-50/70 overflow-hidden">
-            {/* ModalTabNavigation with hideContact=true */}
+            {/* ModalTabNavigation with hideContact=true and hasActionButtons=false */}
             <ModalTabNavigation
               activeTab={activeTab}
               setActiveTab={setActiveTab}
               role={role}
               hideContact={true}
+              hasActionButtons={false}
             />
 
             {/* Tab Views */}

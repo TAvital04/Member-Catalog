@@ -39,7 +39,7 @@ export interface Student {
   projects: ProjectEntry[];
   workExperiences: WorkExperienceEntry[];
   clubs: ClubEntry[];
-  certifications: CertificationEntry[];
+  certifications?: any[];
   events?: EventEntry[];
   resumeLink?: string;
   major: string;

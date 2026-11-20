@@ -3,18 +3,17 @@
 import React from "react";
 import Link from "next/link";
 import { Student } from "@/data/students";
-import CertificationCard from "../cards/CertificationCard";
 import { isLeadSkill } from "@/lib/rsoAffiliation";
 
 interface SkillsTabProps {
   student: Student;
-  formatDateStr: (dateStr: string) => string;
+  formatDateStr?: (dateStr: string) => string;
   onClose?: () => void;
   role?: "standard" | "sponsor" | "admin";
   canFilter?: boolean;
 }
 
-export default function SkillsTab({ student, formatDateStr, onClose, role, canFilter: explicitCanFilter }: SkillsTabProps) {
+export default function SkillsTab({ student, onClose, role, canFilter: explicitCanFilter }: SkillsTabProps) {
   const canFilter = explicitCanFilter ?? true;
   const leadSkillCount = student.skills.filter((s) => isLeadSkill(s, student)).length;
 
@@ -73,33 +72,6 @@ export default function SkillsTab({ student, formatDateStr, onClose, role, canFi
             );
           })}
         </div>
-      </div>
-
-      {/* Certifications and Credentials */}
-      <div className="flex flex-col gap-3 pt-2">
-        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-          <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider">
-            <span>Certifications & Credentials</span>
-            {student.certifications && student.certifications.length > 0 && (
-              <span className="bg-neutral-100 text-black border border-neutral-300 text-[10px] px-2 py-0.2 rounded-full font-bold">
-                {student.certifications.length}
-              </span>
-            )}
-          </div>
-          <span className="text-[11px] text-slate-500 font-medium">Accredited Achievements</span>
-        </div>
-
-        {student.certifications && student.certifications.length > 0 ? (
-          <div className="grid grid-cols-1 min-[1056px]:grid-cols-2 gap-3.5">
-            {student.certifications.map((cert, idx) => (
-              <CertificationCard key={idx} certification={cert} formatDateStr={formatDateStr} />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-10 bg-white rounded-2xl border border-dashed border-slate-200 p-6 shadow-2xs">
-            <p className="text-slate-500 text-xs">No certification credentials listed on this profile yet.</p>
-          </div>
-        )}
       </div>
     </div>
   );
