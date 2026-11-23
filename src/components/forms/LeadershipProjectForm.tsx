@@ -5,9 +5,10 @@ import { X, Loader2, AlertCircle, Plus, Users, GitBranch, Wrench, Calendar } fro
 import { IEEEProject, ProjectTool, ProjectMilestone, ProjectParticipant } from "@/data/projects";
 import { Student } from "@/data/students";
 import CustomDropdown from "@/components/common/CustomDropdown";
+import { UserRole } from "@/hooks/useRoleManager";
 
 export interface LeadershipProjectFormProps {
-  role: "standard" | "sponsor" | "admin";
+  role?: UserRole;
   onClose: () => void;
   onProjectCreated: (project: IEEEProject) => void;
   students?: Student[];
@@ -165,7 +166,7 @@ export default function LeadershipProjectForm({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-user-role": role,
+          "x-user-role": role || "admin",
         },
         body: JSON.stringify({
           title: cleanTitle,

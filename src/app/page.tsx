@@ -29,7 +29,7 @@ import ResumeBookModal from "@/components/modal/ResumeBookModal";
 import ResumeBookViewer from "@/components/resumebook/ResumeBookViewer";
 import ConfirmDialog from "@/components/dialogs/ConfirmDialog";
 import ToastNotification from "@/components/dialogs/ToastNotification";
-import { Shield, BookOpen } from "lucide-react";
+import { Shield, BookOpen, MapPin } from "lucide-react";
 import { useRoleManager, UserRole } from "@/hooks/useRoleManager";
 import { useRecruiterShortlist } from "@/hooks/useRecruiterShortlist";
 import { ResumeBookOptions } from "@/types/resumeBook";
@@ -72,6 +72,7 @@ function StudentDirectoryContent() {
   const interactingParam = searchParams.get("interacting");
   const shortlistParam = searchParams.get("shortlist");
   const resumeBookParam = searchParams.get("resumeBook");
+  const localParam = searchParams.get("local");
 
   // Recruiter shortlist management
   const isRecruiter = isSponsor || isAdmin;
@@ -84,6 +85,7 @@ function StudentDirectoryContent() {
   const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [onlyLeadersFilter, setOnlyLeadersFilter] = useState(false);
+  const [onlyLocalCoOp, setOnlyLocalCoOp] = useState(() => localParam === "true");
   const [filterByMyself, setFilterByMyself] = useState(() => myParam === "true");
   const [sponsorInteractingFilter, setSponsorInteractingFilter] = useState(() => interactingParam === "true");
   const [onlyShortlisted, setOnlyShortlisted] = useState(() => shortlistParam === "true");
@@ -316,6 +318,7 @@ function StudentDirectoryContent() {
     selectedProjects,
     selectedCompanies,
     onlyLeaders: onlyLeadersFilter,
+    onlyLocalCoOp,
     skillFilterMode,
     adminMode,
     sortBy,
@@ -541,18 +544,45 @@ function StudentDirectoryContent() {
         )}
 
         {isRecruiter && (
-          <button
-            type="button"
-            onClick={() => {
-              setResumeBookScope(onlyShortlisted ? "shortlist" : "filtered");
-              setIsResumeBookModalOpen(true);
-            }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-neutral-300 text-xs font-bold text-black hover:bg-neutral-50 transition-colors cursor-pointer shadow-2xs shrink-0"
-          >
-            <BookOpen size={13} className="text-black" />
-            <span className="hidden sm:inline">Export Resume Book</span>
-            <span className="sm:hidden">Resume Book</span>
-          </button>
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              onClick={() => {
+                const nextVal = !onlyLocalCoOp;
+                setOnlyLocalCoOp(nextVal);
+                const url = new URL(window.location.href);
+                if (nextVal) {
+                  url.searchParams.set("local", "true");
+                } else {
+                  url.searchParams.delete("local");
+                }
+                window.history.pushState(null, "", url.pathname + (url.search ? url.search : ""));
+              }}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-bold transition-all cursor-pointer shadow-2xs ${
+                onlyLocalCoOp
+                  ? "bg-black text-white border-black font-black"
+                  : "bg-white text-black border-neutral-300 hover:bg-neutral-50 font-semibold"
+              }`}
+              title="Filter for candidates seeking Tampa Bay part-time co-ops or local placement"
+            >
+              <MapPin size={13} className={onlyLocalCoOp ? "text-white" : "text-black"} />
+              <span className="hidden sm:inline">Local / Part-Time Co-Op</span>
+              <span className="sm:hidden">Local Co-Op</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                setResumeBookScope(onlyShortlisted ? "shortlist" : "filtered");
+                setIsResumeBookModalOpen(true);
+              }}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-neutral-300 text-xs font-bold text-black hover:bg-neutral-50 transition-colors cursor-pointer shadow-2xs shrink-0"
+            >
+              <BookOpen size={13} className="text-black" />
+              <span className="hidden sm:inline">Export Resume Book</span>
+              <span className="sm:hidden">Resume Book</span>
+            </button>
+          </div>
         )}
       </DirectoryStatsHeader>
 

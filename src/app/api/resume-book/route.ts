@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
-import { db, members, memberResumes } from "@/db";
-import { DENSE_CANDIDATES } from "@/db/seed";
-import { ResumeBookOptions, ResumeBookCandidate } from "@/types/resumeBook";
+import { ResumeBookOptions } from "@/types/resumeBook";
 import { compileResumeBookCandidates } from "@/lib/resumeBook";
 import { Student } from "@/data/students";
+import { getEnrichedMemberList } from "@/lib/candidates";
 
 export async function GET(request: Request) {
   try {
@@ -23,7 +22,7 @@ export async function GET(request: Request) {
       includeDirectResumeLinks: true,
     };
 
-    let students: Student[] = DENSE_CANDIDATES;
+    const students: Student[] = await getEnrichedMemberList("sponsor");
 
     const compiled = compileResumeBookCandidates(students, options);
 
@@ -49,7 +48,7 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { options = {}, candidateIds = [] } = body;
 
-    let students: Student[] = DENSE_CANDIDATES;
+    let students: Student[] = await getEnrichedMemberList("sponsor");
 
     if (Array.isArray(candidateIds) && candidateIds.length > 0) {
       const idSet = new Set(candidateIds.map((id: string) => String(id).toLowerCase()));

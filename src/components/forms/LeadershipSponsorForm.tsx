@@ -18,8 +18,10 @@ import { ChapterSponsor } from "@/data/sponsors";
 import CustomDropdown from "@/components/common/CustomDropdown";
 import Tooltip from "@/components/common/Tooltip";
 
+import { UserRole } from "@/hooks/useRoleManager";
+
 export interface LeadershipSponsorFormProps {
-  role: "standard" | "sponsor" | "admin";
+  role: UserRole;
   onClose: () => void;
   onSponsorCreated: (sponsor: ChapterSponsor) => void;
 }
@@ -30,7 +32,7 @@ export default function LeadershipSponsorForm({
   onSponsorCreated,
 }: LeadershipSponsorFormProps) {
   const [name, setName] = useState("");
-  const [tier, setTier] = useState<"Platinum" | "Gold" | "Silver">("Gold");
+  const [tier, setTier] = useState<"Platinum" | "Gold" | "Silver" | "Local Partner">("Gold");
   const [tagline, setTagline] = useState("");
   const [website, setWebsite] = useState("");
   const [careersUrl, setCareersUrl] = useState("");

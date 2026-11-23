@@ -5,11 +5,12 @@ import Link from "next/link";
 import { EventEntry } from "@/data/students";
 import { Tag } from "lucide-react";
 import { CARD_INTERACTIVE, CARD_TITLE_HOVER } from "@/lib/cardStyles";
+import { UserRole } from "@/hooks/useRoleManager";
 
 interface EventsTabProps {
   events?: EventEntry[];
   formatDateStr?: (dateStr: string) => string;
-  role?: "standard" | "sponsor" | "admin";
+  role?: UserRole;
   onClose?: () => void;
   onSelectEvent?: (event: EventEntry) => void;
 }

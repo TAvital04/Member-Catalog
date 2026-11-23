@@ -7,13 +7,14 @@ import { Student } from "@/data/students";
 import { studentHasSkill } from "@/lib/skillMatching";
 import { CARD_INTERACTIVE, CARD_BASE } from "@/lib/cardStyles";
 import Tooltip from "@/components/common/Tooltip";
+import { UserRole } from "@/hooks/useRoleManager";
 
 interface ProjectSkillsTabProps {
   skillsTaught?: string[];
   skills?: string[];
   students?: Student[];
   onClose?: () => void;
-  role?: "standard" | "sponsor" | "admin";
+  role?: UserRole;
   canFilter?: boolean;
 }
 

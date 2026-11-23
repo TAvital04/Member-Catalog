@@ -376,7 +376,7 @@ export default function SponsorJobPostingForm({
                           value={companyName}
                           onChange={(val) => setCompanyName(val)}
                           options={sponsorOptions}
-                          variant="filter"
+                          variant="default"
                           buttonClassName="text-[11px] py-1 px-2 border-neutral-300 bg-neutral-50"
                           aria-label="Select Onboarded Sponsor"
                         />

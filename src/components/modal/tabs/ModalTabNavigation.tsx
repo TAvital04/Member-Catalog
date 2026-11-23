@@ -3,12 +3,13 @@
 import React from "react";
 import { UserRole } from "@/hooks/useRoleManager";
 
-export type TabType = "about" | "projects" | "events" | "skills" | "shortlist";
+export type TabType = "about" | "projects" | "events" | "skills" | "shortlist" | "contact" | "experience";
 
 interface ModalTabNavigationProps {
   activeTab: TabType;
   setActiveTab: (tab: TabType) => void;
   role?: UserRole;
+  hideContact?: boolean;
   hasActionButtons?: boolean;
 }
 

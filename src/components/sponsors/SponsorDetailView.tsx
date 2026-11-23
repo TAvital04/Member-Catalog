@@ -15,6 +15,7 @@ import {
   Wrench,
   Mail,
   Lock,
+  BookOpen,
 } from "lucide-react";
 import { ChapterSponsor, SponsorDetailedRelations } from "@/data/sponsors";
 import { Student } from "@/data/students";
@@ -105,7 +106,7 @@ export default function SponsorDetailView({
 
   // Track active section on scroll to keep sticky tab highlighted
   React.useEffect(() => {
-    const sectionIds: SponsorSubTab[] = ["initiatives", "projects", "events", "jobs", "skills", "interactions"];
+    const sectionIds: SponsorSubTab[] = ["initiatives", "projects", "events", "skills", "interactions"];
     let ticking = false;
 
     const handleScroll = () => {
@@ -307,6 +308,40 @@ export default function SponsorDetailView({
         interactions={interactions}
         sponsorName={sponsor.name}
       />
+
+      {/* Target Talent & Skill Alignment Quick Action Bar */}
+      <div className="p-4 md:p-5 rounded-2xl bg-neutral-100 border border-neutral-300 shadow-2xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <Sparkles size={14} className="text-black" />
+            <h4 className="text-xs font-black uppercase tracking-wider text-black">
+              Target Talent & Skill Alignment ({sponsor.name})
+            </h4>
+          </div>
+          <p className="text-xs text-neutral-600">
+            {sponsor.tier === "Local Partner"
+              ? "Fast-track access to student builders matching your boutique firmware and hardware needs for local co-ops."
+              : `Direct access to active builders verified in ${sponsor.primaryFocus.slice(0, 2).join(" & ")}.`}
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2 shrink-0 flex-wrap">
+          <Link
+            href={`/?skills=${encodeURIComponent(sponsor.keySkills.slice(0, 2).join(","))}`}
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-neutral-300 text-xs font-bold text-black hover:bg-neutral-50 transition-colors shadow-2xs"
+          >
+            <span>Filter Candidates with {sponsor.logoText || sponsor.name} Skills</span>
+            <ExternalLink size={12} />
+          </Link>
+          <Link
+            href={`/?resumeBook=true&sponsor=${encodeURIComponent(sponsor.name)}`}
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-black text-white text-xs font-bold hover:bg-neutral-800 transition-colors shadow-2xs"
+          >
+            <BookOpen size={12} />
+            <span>Generate Resume Book</span>
+          </Link>
+        </div>
+      </div>
 
       {/* Sticky Quick-Jump Navigation Tabs */}
       <div className="sticky top-14 md:top-16 z-20 py-2.5 bg-white/95 backdrop-blur-md border-b border-neutral-200 overflow-x-auto scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">

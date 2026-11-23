@@ -100,8 +100,7 @@ function SharedMemberProfileContent() {
           theme={theme}
           toggleTheme={toggleTheme}
           role={role}
-          onRoleChange={setRole}
-          session={session}
+          handleRoleChange={setRole}
         />
         <div className="grow flex items-center justify-center p-4">
           <div className="p-8 rounded-2xl bg-white border border-neutral-300 shadow-2xs max-w-sm w-full text-center">
@@ -122,8 +121,7 @@ function SharedMemberProfileContent() {
           theme={theme}
           toggleTheme={toggleTheme}
           role={role}
-          onRoleChange={setRole}
-          session={session}
+          handleRoleChange={setRole}
         />
         <main className="grow flex items-center justify-center p-4">
           <div className="p-8 sm:p-10 rounded-2xl border border-neutral-300 bg-white flex flex-col items-center justify-between text-center relative overflow-hidden shadow-2xs max-w-md w-full">
@@ -162,8 +160,7 @@ function SharedMemberProfileContent() {
         theme={theme}
         toggleTheme={toggleTheme}
         role={role}
-        onRoleChange={setRole}
-        session={session}
+        handleRoleChange={setRole}
       />
 
       {/* Profile Verification Banner & Breadcrumb */}

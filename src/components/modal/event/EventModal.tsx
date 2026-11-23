@@ -18,7 +18,7 @@ import Avatar from "@/components/common/Avatar";
 import Tooltip from "@/components/common/Tooltip";
 import { CARD_INTERACTIVE, CARD_BASE, CARD_TITLE_HOVER } from "@/lib/cardStyles";
 import { Heading, Subheading, Badge } from "@/components/ui";
-import { useRoleManager } from "@/hooks/useRoleManager";
+import { useRoleManager, UserRole } from "@/hooks/useRoleManager";
 import { getStudentSlug } from "@/lib/studentSlug";
 
 interface EventModalProps {
@@ -26,7 +26,7 @@ interface EventModalProps {
   onClose: () => void;
   onSelectMember?: (memberId: string) => void;
   students?: Student[];
-  role?: "standard" | "sponsor" | "admin";
+  role?: UserRole;
   canFilter?: boolean;
 }
 

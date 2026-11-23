@@ -1,31 +1,35 @@
-# RSO USF Member Catalog — Role-Based Access & Sequential Form Implementation Plan (`ROLES.md`)
+# RSO USF Member Catalog — Role-Based Access & Permissions Matrix (`ROLES.md`)
 
-## 1. Classic Database Architecture: Standard PostgreSQL (`node-postgres`)
+## 1. Architecture: Standard PostgreSQL (`node-postgres` & Drizzle ORM)
 
-To support role authentication, candidate directory filtering, and structured creation forms across the platform, this project standardizes on **classic PostgreSQL** connected via the traditional **`node-postgres` (`pg.Pool`)** TCP driver and Drizzle ORM—without serverless HTTP wrappers or proprietary edge extensions.
+The platform standardizes on classic **PostgreSQL** connected via the standard `node-postgres` (`pg.Pool`) driver and Drizzle ORM.
 
-### Why Classic PostgreSQL Fits Best
-- **Battle-Tested & Universally Supported**: Originating in 1986 (and SQL-standardized in 1996), PostgreSQL is the gold standard of open-source relational databases, supported by every Linux server, Docker container, VM host, and classic SQL client (`psql`, `pgAdmin`, `DBeaver`).
-- **Strict Relational Integrity**: Enforces foreign keys (`ON DELETE CASCADE`), `UNIQUE` join constraints (`event_attendees`, `project_participants`, `job_applications`), and ACID transactions.
-- **Modern Ergonomics Without feeling Dated**: Native `JSONB` columns cleanly store structured form arrays (project milestone timelines, hardware tools, sponsorship initiatives, and job requirement bullet lists) alongside traditional `VARCHAR`, `TEXT`, `BOOLEAN`, and `TIMESTAMPTZ` columns.
+### Key Architectural Strengths:
+- **Battle-Tested Relational Integrity**: Enforces foreign keys (`ON DELETE CASCADE`), `UNIQUE` constraints (`event_attendees`, `project_participants`, `recruiter_shortlists`), and atomic transactions.
+- **Structured JSONB Metadata**: Stores flexible arrays (project milestones, workshop tools, sponsor initiatives, and candidate links) alongside relational keys.
+- **Deterministic Data Fallback**: When running offline or during testing, handlers seamlessly fall back to deterministic seed data without crashing.
 
 ---
 
 ## 2. Portal Roles & Permission Matrix
 
-The Member Catalog defines three authenticated roles accessible via [`/login`](../src/app/login/page.tsx), plus an unauthenticated guest tier for visitors who do not have an account:
+The Member Catalog supports three authenticated roles via [`/login`](../src/app/login/page.tsx), along with an unauthenticated public guest tier:
 
-| Role Identifier | Display Name | Who Uses It | Form & Management Permissions |
+| Role Identifier | Display Name | Who Uses It | Permissions & Platform Capabilities |
 | :--- | :--- | :--- | :--- |
-| `rso_leadership` *(maps to `admin`)* | **RSO Leadership** | RSO USF Executive Board, Project Leads, Workshop Directors | • **Form 1**: Onboard Chapter Sponsors & provision Sponsor logins<br>• **Form 2**: Create Events / Workshops & record Member Attendance<br>• **Form 3**: Create Chapter Projects & assign Project Team / Leads<br>• Full candidate directory access, list view, and profile deletion |
-| `sponsor` | **Corporate Sponsor** | Official Corporate Partners & University Recruiters | • **Form 4**: Create & manage Corporate Job Postings<br>• **Form 5**: Manage Company Sponsorship Initiatives & Partner Profile<br>• Direct candidate outreach & contact details<br>• Multi-parametric candidate filtering (Major, Skills, Graduation, Projects, Events)<br>• View FERPA-consented GPA & applicant analytics |
-| `student` | **Student Member** | Enrolled Engineering Candidates | • View personal verified profile default and filter by myself<br>• Full access to the engineering job board and 1-click applications |
-| `standard` | **Public Guest (No Account)** | Visitors without an account | • **Unauthenticated Public Browsing**: No account or sign-in required<br>• **Projects & Workshops Advertised**: Public access to project showcases, milestones, and technical workshop outcomes<br>• **Workshop & Project Team Privacy**: Shows verified attendance and contributor counts (e.g. *8 Engineering Contributors*, *42 Students Attended*) and designated project/session leads only; all regular attendee and contributor names are hidden<br>• **Sponsors Page Completely Private**: The entire `/sponsors` directory is hidden/locked for standard accounts (renders the Premium Blocker card (*"This is unavailable because you aren't one of the premium profiles"*))<br>• **Jobs Completely Private**: The entire `/jobs` board is hidden/locked for standard accounts (renders the Premium Blocker card)<br>• **No Candidate Filters**: Candidate directory filters locked with *"This is unavailable because you aren't one of the premium profiles"*<br>• **No Candidate Search (Anti-Scraping Protection)**: The candidate search input is suppressed for standard users to prevent fuzzing, targeted enumeration, and automated web scraping<br>• **Backend API Data Sanitization**: `/api/members` redacts personal emails, external links, and resume links for standard callers<br>• **Crawler Directives (`robots.txt`)**: Disallows search engine bots, query scrapers, and AI crawlers from indexing candidate catalogs<br>• **No Contact from the Website**: Recruiter messaging forms and email outreach on the website are omitted/disabled for standard views and shared portfolio views<br>• **Shareable Member Vanity URLs (`/u/[slug]`)**: Members can share their portfolio on resumes/LinkedIn displaying verified credentials, builds, and skills without exposing website contact forms |
+| `rso_leadership`<br>*(maps to `admin`)* | **RSO Leadership** | Executive Board Officers, Project Leads, Workshop Directors | • **Form 1**: Onboard Chapter Sponsors (including Local Partners) & provision logins<br>• **Form 2**: Create Events & Workshops with verified skill tagging & attendance rosters<br>• **Form 3**: Create Chapter Build Projects & assign project teams / leads<br>• Full candidate directory access, list view, and profile management<br>• Generate and export chapter Resume Books |
+| `sponsor` | **Corporate Sponsor & Local Partner** | Official Corporate Partners, Local Engineering Firms, & Technical Recruiters | • **Form 4**: Configure and export batch **Resume Books** (PDF/Print/Data)<br>• **Form 5**: Propose & manage Chapter Initiatives / Equipment Grants<br>• Save candidates to **Recruiter Shortlists** with private evaluation notes<br>• Multi-parametric filtering (Major, Skills, Graduation Date, Projects, Local Co-Op)<br>• Direct candidate contact via hosted resume PDF, LinkedIn, GitHub, and email<br>• View FERPA-consented GPAs for candidate evaluation |
+| `student` | **Student Member** | Enrolled Engineering Candidates | • Verified candidate profile with automated workshop and project affiliations<br>• "Only My Profile" directory quick-filter<br>• Verified skill credentials linked to official chapter workshop check-ins |
+| `standard` | **Public Guest (No Account)** | Prospective Students, Faculty, Community Visitors | • **Unauthenticated Public Browsing**: Browse engineering builds and workshops<br>• **Public Sponsorship Prospectus**: On `/sponsors`, views the interactive **Chapter Impact Report & Sponsorship Prospectus** (placement rates, equipment grants, tier guidelines) rather than a dead blocker wall<br>• **Attendee Privacy**: Regular attendee rosters and participant contact details are shielded<br>• **Candidate Search & Filter Protection**: Directory filters and search are locked to prevent automated web scraping and candidate enumeration<br>• **Backend Data Sanitization**: `/api/members` redacts personal emails, external links, and resume links for standard callers<br>• **Crawler Directives (`robots.txt`)**: Disallows search engine bots, query scrapers, and AI crawlers from harvesting candidate catalogs |
 
-### Supporting PostgreSQL Schema Additions (`src/db/schema.ts`)
+---
+
+## 3. Database Schema Overview (`src/db/schema.ts`)
+
+### 1. Authenticated Portal Users (`portal_users`)
+Stores credentials for RSO officers, corporate partners, and local engineering firms:
 
 ```sql
--- 1. Authenticated Portal Users (RSO Leadership & Corporate Sponsors)
 CREATE TABLE portal_users (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   email VARCHAR(255) NOT NULL UNIQUE,
@@ -33,18 +37,22 @@ CREATE TABLE portal_users (
   account_type VARCHAR(50) NOT NULL CHECK (account_type IN ('rso_leadership', 'sponsor')),
   display_name VARCHAR(150) NOT NULL,
   organization VARCHAR(255) NOT NULL,
-  sponsor_id VARCHAR(64), -- Links Sponsor users directly to their chapter_sponsors record
+  sponsor_id VARCHAR(64),
   active BOOLEAN NOT NULL DEFAULT TRUE,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+```
 
--- 2. Chapter Sponsors Table (Persisting /sponsors tab data in PostgreSQL)
+### 2. Chapter Sponsors (`chapter_sponsors`)
+Stores corporate partners and local engineering firms across 4 tiers:
+
+```sql
 CREATE TABLE chapter_sponsors (
-  id VARCHAR(64) PRIMARY KEY, -- e.g. 'lockheed-martin', 'texas-instruments'
+  id VARCHAR(64) PRIMARY KEY,
   name VARCHAR(255) NOT NULL UNIQUE,
   short_name VARCHAR(100) NOT NULL,
-  tier VARCHAR(50) NOT NULL DEFAULT 'Gold', -- 'Platinum' | 'Gold' | 'Silver'
+  tier VARCHAR(50) NOT NULL DEFAULT 'Gold', -- 'Platinum' | 'Gold' | 'Silver' | 'Local Partner'
   logo_text VARCHAR(16) NOT NULL,
   tagline VARCHAR(300) NOT NULL,
   description TEXT NOT NULL,
@@ -52,184 +60,57 @@ CREATE TABLE chapter_sponsors (
   careers_url VARCHAR(500) NOT NULL,
   partner_since VARCHAR(16) NOT NULL,
   location VARCHAR(255) NOT NULL,
-  primary_focus JSONB NOT NULL DEFAULT '[]'::jsonb, -- string[]
-  initiatives JSONB NOT NULL DEFAULT '[]'::jsonb,   -- SponsorInitiative[]
+  primary_focus JSONB NOT NULL DEFAULT '[]'::jsonb,
+  initiatives JSONB NOT NULL DEFAULT '[]'::jsonb,
   active BOOLEAN NOT NULL DEFAULT TRUE,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 ```
 
+### 3. Recruiter Shortlists (`recruiter_shortlists`)
+Stores recruiter candidate bookmarks, private evaluation notes, and talent tags:
+
+```sql
+CREATE TABLE recruiter_shortlists (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  recruiter_id VARCHAR(255) NOT NULL,
+  candidate_id VARCHAR(255) NOT NULL,
+  notes TEXT,
+  tags JSONB NOT NULL DEFAULT '[]'::jsonb,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  CONSTRAINT recruiter_candidate_unique UNIQUE (recruiter_id, candidate_id)
+);
+```
+
 ---
 
-## 3. Recommended Form Implementation Order (One by One)
+## 4. Sequential Form Order & Data Dependencies
 
-> **UI Standard for All Forms & Components**:
-> - Every dropdown/select field across Forms 1–5 (and the rest of the application) MUST use the themed [`CustomDropdown`](../src/components/common/CustomDropdown.tsx) component (`@/components/common/CustomDropdown`) instead of native browser `<select>` elements.
-> - Every mouse hover tooltip across Forms 1–5 (and the rest of the application) MUST use the themed [`Tooltip`](../src/components/common/Tooltip.tsx) component (`@/components/common/Tooltip`) instead of native HTML `title="..."` attributes or native browser validation tooltips (`required` / `type="email"` without `noValidate`). All forms must use `noValidate` and `aria-required="true"` (with React submit validation) so the browser never shows a `"Please fill out this field"` tooltip on hover. Do not show hover tooltips on form inputs, modal close (`X`) buttons, or skill chips/links.
-
-The five forms below are ordered by **data dependency**—so each form creates the foundational records and lookup options needed by the next form in the sequence:
+The administrative and sponsor workflows follow a strict dependency sequence:
 
 ```
 [Form 1: Sponsor Onboarding]
-       │  (creates partner organizations & sponsor accounts)
+       │  (creates partner organizations across Platinum, Gold, Silver & Local Partner tiers)
        ▼
-[Form 2: Event + Attendance Roster]
-       │  (awards verified skills & points to student profiles; links to sponsors)
+[Form 2: Event & Workshop Creation]
+       │  (records verified workshop attendances & automatically issues skill badges)
        ▼
-[Form 3: Project + Team Roster]
-       │  (assigns project leads/members & links sponsored hardware builds)
+[Form 3: Project & Team Roster Creation]
+       │  (creates official chapter engineering builds & assigns participant rosters)
        ▼
-[Form 4: Sponsor Job Posting]
-       │  (matches against student skills & projects populated in Forms 2 & 3)
+[Form 4: Resume Book Compilation & Export]
+       │  (assembles branded candidate resume books for corporate partners)
        ▼
-[Form 5: Sponsor Initiatives & Profile]
-          (self-service partner showcase & grant metrics on /sponsors)
+[Form 5: Sponsor Initiative Proposals]
+          (funds project hardware equipment, workshop micro-grants, & competition sponsorships)
 ```
 
 ---
 
-### Form 1 (Implement First): RSO Leadership — Onboard Chapter Sponsor Form
-**Role**: `rso_leadership` (`role === "admin"`)  
-**Where It Lives**: [`/sponsors`](../src/app/sponsors/page.tsx) (**"+ Add Chapter Sponsor"** button visible to RSO Leadership)  
-**Component Target**: `src/components/forms/LeadershipSponsorForm.tsx`
+## 5. Privacy, Anti-Scraping & Direct Contact Policy
 
-#### Why Implement This First
-Every other part of the catalog references corporate partners: **Events** have a `partner` host, **Projects** have `Current Sponsors`, and **Job Postings** belong to a Sponsor company. Onboarding Sponsors first establishes the canonical list of partner organizations in PostgreSQL and provisions their `sponsor` login credentials.
-
-#### Fields & Mapping (`chapter_sponsors` + `portal_users`)
-| Field Label | Input Type | Target Column | Validation Rules |
-| :--- | :--- | :--- | :--- |
-| **Company Name** | Text input | `chapter_sponsors.name` | Required, unique (e.g., *Raytheon Technologies*) |
-| **Partnership Tier** | Select (`Platinum`, `Gold`, `Silver`) | `tier` | Required |
-| **Short Engineering Tagline** | Text input | `tagline` | Required, 10–160 chars |
-| **Corporate Website URL** | URL input | `website` | Required, valid `https://` URL |
-| **Careers Portal URL** | URL input | `careers_url` | Required, valid `https://` URL |
-| **Sponsor Login Email & Temp Password** | Email + Password inputs | `portal_users.email`, `password_hash` | Creates linked `sponsor` login account |
-
-- **API Route**: `POST /api/sponsors` (requires `x-user-role: admin`). Runs a PostgreSQL transaction inserting into `chapter_sponsors` and `portal_users`.
-
----
-
-### Form 2 (Implement Second): RSO Leadership — Create Event & Attendance Roster Form
-**Role**: `rso_leadership` (`role === "admin"`)  
-**Where It Lives**: [`/events`](../src/app/events/page.tsx) (**"+ Create Event / Workshop"** button + **"Manage Attendance"** inside `EventModal`)  
-**Component Target**: `src/components/forms/LeadershipEventForm.tsx`
-
-#### Why Implement This Second
-A member's skills are updated **exclusively when they attend a workshop for that skill**—never from projects, manual entry, or non-workshop events (see [`src/app/api/members/route.ts`](../src/app/api/members/route.ts)). Implementing Workshop/Event creation alongside an **Attendance Roster selector** immediately allows RSO Leadership to credit attending members with workshop-verified skills and chapter points, while linking industry tech talks to the Sponsors created in Form 1.
-
-#### Fields & Mapping (`events` + `event_attendees`)
-| Field Label | Input Type | Target Column | Validation Rules |
-| :--- | :--- | :--- | :--- |
-| **Event Title** | Text input | `events.title` | Required, 5–150 chars |
-| **Category** | Select (`Technical Workshop`, `Industry Tech Talk`, `General Body Meeting`, `Competition & Hackathon`, `Career & Networking`, `Special Event & Tour`) | `events.category` | Required |
-| **Description & Abstract** | Textarea | `events.description` | Required, min 25 chars |
-| **Corporate Partner Host** | Select dropdown (populated from `chapter_sponsors`) | `events.partner` | Optional |
-| **Workshop Skills Awarded to Attendees** | Multi-tag skill input (applicable only when Category is `Technical Workshop`) | `events.skills` (`jsonb`) | Automatically added to member profiles when Category is `Technical Workshop` (attendance is automatic) |
-| **Requires Chapter Dues** | Checkbox | `requires_dues` | Optional |
-
-- **API Route**: `POST /api/events` (requires `x-user-role: admin`). Inserts the event with standard fixed chapter points (`15`), category, partner host, and workshop skills. Member attendance is logged automatically.
-
----
-
-### Form 3 (Implement Third): RSO Leadership — Create Project & Team Roster Form
-**Role**: `rso_leadership` (`role === "admin"`)  
-**Where It Lives**: [`/projects`](../src/app/projects/page.tsx) (**"+ New Chapter Project"** button)  
-**Component Target**: `src/components/forms/LeadershipProjectForm.tsx`
-
-#### Why Implement This Third
-Projects are the second major pillar of candidate portfolios and point calculations (`projectLeadPoints` and `universityProjectPoints`), though **projects never update a member's skills** (member skills come strictly from attending workshops in Form 2). Implementing this right after Form 2 lets you reuse the **Member Roster Selector** component (to assign `Project Lead` vs `Team Member` in `project_participants`) and the **Sponsor Selector** (from Form 1), while introducing structured `JSONB` list builders for project milestones and tools.
-
-#### Fields & Mapping (`ieee_projects` + `project_participants`)
-| Field Label | Input Type | Target Column | Validation Rules |
-| :--- | :--- | :--- | :--- |
-| **Project Title & Slug** | Text inputs (slug auto-generated) | `title`, `slug` | Required, unique slug |
-| **Category** | Select (`Robotics & Controls`, `Hardware & Silicon`, `Aerospace & Embedded`, `IoT & Infrastructure`) | `category` | Required |
-| **Status** | Select (`Active`, `In Development`, `Completed`) | `status` | Required, defaults to `Active` |
-| **Short Tagline** | Text input | `tagline` | Required, 10–200 chars |
-| **Technical Overview** | Textarea | `description` | Required, min 40 chars |
-| **GitHub Repo & Project Website** | URL inputs | `repository_url`, `demo_url` | Optional, valid `https://` URLs |
-| **Hardware & Software Tools** | Dynamic row builder (`name`, `category`) | `tools` (`jsonb`) | Optional array of tool objects displayed on the project page (does not modify member skills) |
-| **Milestone Timeline** | Dynamic row builder (`date`, `title`, `description`, `status`) | `timeline` (`jsonb`) | At least 1 milestone entry |
-| **Sponsorship Funding & Needs** | Number + text inputs (`fundingGoal`, `currentFunding`, `needsDescription`) | `sponsorship_info` (`jsonb`) | Optional |
-| **Project Team & Leads Roster** | Searchable member selector with role (`Project Lead` or `Team Member`) | `project_participants (project_id, member_id, role_title)` | Inserts team roster rows into `project_participants` |
-
-- **API Route**: `POST /api/projects` (requires `x-user-role: admin`). Inserts the project into `ieee_projects` and links selected students in `project_participants`.
-
----
-
-### Form 4 (Implement Fourth): Sponsor — Create Job Posting Form
-**Role**: `sponsor` (`role === "sponsor"`, also accessible to `rso_leadership`)  
-**Where It Lives**: [`/jobs`](../src/app/jobs/page.tsx) (Employer Portal **"+ Post New Opportunity"** button, upgrading [`QuickJobPostModal.tsx`](../src/components/modal/job/QuickJobPostModal.tsx))  
-**Component Target**: `src/components/forms/SponsorJobPostingForm.tsx`
-
-#### Why Implement This Fourth
-Once Sponsors are onboarded (Form 1) and Students have verified skills and project portfolios from Events (Form 2) and Projects (Form 3), Sponsors log in to post internships and full-time roles that match against those student skills. Because `QuickJobPostModal.tsx` and `POST /api/jobs` already exist as a foundation, upgrading this form is fast: we lock it to authenticated `sponsor` sessions, auto-fill the Sponsor's company name and recruiter email from `session`, and add clean bullet-list builders for `responsibilities`, `requirements`, and `benefits`.
-
-#### Fields & Mapping (`job_postings`)
-| Field Label | Input Type | Target Column | Validation Rules |
-| :--- | :--- | :--- | :--- |
-| **Job Title** | Text input | `title` | Required, 5–120 chars |
-| **Company Name** | Read-only / Pre-filled from Sponsor `session.organization` | `company_name` | Required |
-| **Department / Division** | Text input | `department` | Optional (e.g., *High Voltage Power Solutions*) |
-| **Location & Work Arrangement** | Text input + Select (`On-site`, `Hybrid`, `Remote`) | `location`, `location_type` | Required |
-| **Employment & Experience Level** | Selects (`Internship`, `Full-time`, `Co-op` / `Entry Level`, etc.) | `employment_type`, `experience_level` | Required |
-| **Compensation / Salary Range** | Text input | `salary_range` | Optional (e.g., *\$28 - \$34 / hr* or *\$88,000 - \$105,000 / yr*) |
-| **Role Overview** | Textarea | `description` | Required, min 30 chars |
-| **Key Responsibilities** | Dynamic bullet list builder | `responsibilities` (`jsonb`) | At least 1 bullet item |
-| **Qualifications & Requirements** | Dynamic bullet list builder | `requirements` (`jsonb`) | At least 1 bullet item |
-| **Benefits & Perks** | Dynamic bullet list builder | `benefits` (`jsonb`) | Optional bullet items |
-| **Required Technical Skills** | Multi-tag skill selector | `skills_required` (`jsonb`) | At least 1 skill tag (powers candidate skill-match scoring) |
-| **Recruiter Contact Email & Website** | Pre-filled email + URL input | `employer_email`, `employer_website` | Required valid email |
-
-- **API Route**: `POST /api/jobs` (requires `x-user-role: sponsor` or `admin`). Inserts the job into `job_postings` and links it to the Sponsor's company profile on `/sponsors`.
-
----
-
-### Form 5 (Implement Fifth): Sponsor — Request Chapter Initiative Form & Services Showcase
-**Role**: `sponsor` (`role === "sponsor"` strictly; hidden from `rso_leadership` and student members)  
-**Where It Lives**: [`/sponsors`](../src/app/sponsors/page.tsx) inside [`SponsorInitiativesBanner.tsx`](../src/components/sponsors/SponsorInitiativesBanner.tsx) (prominent wide-open showcase area on the main sponsor page) and [`SponsorInitiativesList.tsx`](../src/components/sponsors/SponsorInitiativesList.tsx) (**"+ Request Initiative"** button)  
-**Component Target**: `src/components/forms/SponsorInitiativeForm.tsx` & `src/components/sponsors/SponsorInitiativesBanner.tsx`
-
-#### Why Implement This Fifth
-**An initiative is the umbrella for everything a sponsor can sponsor**—whether funding a student engineering build project, hosting a hands-on technical workshop, providing hardware lab grants, or sponsoring a hackathon. The main sponsor page introduces corporate partners to initiative creation via a wide open welcoming banner that describes the 5 core chapter services we offer. Rather than forcing sponsors to choose from rigid category dropdowns, the form acts as a clean, frictionless email proposal sent directly to RSO USF Leadership (`leadership@rsousf.org`) to initiate a collaborative conversation.
-
-#### Fields & Mapping (`POST /api/sponsors/[id]/request-initiative`)
-| Field Label | Input Type | Target Column / Payload | Validation Rules |
-| :--- | :--- | :--- | :--- |
-| **Partner Organization** | Read-only context | `sponsorName` | Pre-filled with active sponsor name |
-| **Your Name / Role** | Text input | `requesterName` | Optional (e.g., *Alex Mercer, University Relations*) |
-| **Contact Email** | Email input | `requesterEmail` | Required, valid email (pre-filled with session or sponsor email) |
-| **Initiative Focus / Title** | Text input | `title` | Required (e.g., *Autonomous Rover Hardware Sponsorship* or *Radar Systems Workshop*) |
-| **Proposed Collaboration & Discussion Topics** | Textarea | `proposal` | Required, min 15 chars |
-
-- **API Route**: `POST /api/sponsors/[id]/request-initiative`. Dispatches the inquiry, records it in the inquiry registry, and provides a pre-formatted `mailto:` link to `leadership@rsousf.org` so both parties can immediately initiate an email conversation.
-
----
-
-## 4. Sequential Implementation Checklist
-
-- [x] **Step 0: Role Login & Session Foundation (Completed)**
-  - [x] `/login` page with **RSO Leadership** and **Sponsor** role selection ([`src/app/login/page.tsx`](../src/app/login/page.tsx)).
-  - [x] `POST /api/auth/login` credential validation route ([`src/app/api/auth/login/route.ts`](../src/app/api/auth/login/route.ts)).
-  - [x] Persistent `AuthSession` in [`src/hooks/useRoleManager.ts`](../src/hooks/useRoleManager.ts) and `Sign In` / `Sign Out` controls in [`src/components/directory/DirectoryNavbar.tsx`](../src/components/directory/DirectoryNavbar.tsx).
-- [ ] **Step 1: Database Schema Migration (`src/db/schema.ts`)**
-  - [ ] Add `portal_users` and `chapter_sponsors` tables; add `category`, `partner`, `skills`, and `points_awarded` columns to `events`.
-- [x] **Step 2: Form 1 — RSO Leadership Sponsor Onboarding Form (`/sponsors`) (Completed)**
-  - [x] Build [`LeadershipSponsorForm.tsx`](../src/components/forms/LeadershipSponsorForm.tsx) and `POST /api/sponsors` ([`src/app/api/sponsors/route.ts`](../src/app/api/sponsors/route.ts)).
-- [x] **Step 3: Form 2 — RSO Leadership Event & Attendance Roster Form (`/events`) (Completed)**
-  - [x] Build [`LeadershipEventForm.tsx`](../src/components/forms/LeadershipEventForm.tsx) with member attendance multi-select and `POST /api/events` ([`src/app/api/events/route.ts`](../src/app/api/events/route.ts)).
-- [x] **Step 4: Form 3 — RSO Leadership Project & Team Roster Form (`/projects`) (Completed)**
-  - [x] Build [`LeadershipProjectForm.tsx`](../src/components/forms/LeadershipProjectForm.tsx) with tool/milestone builders, team roster selector, and `POST /api/projects` ([`src/app/api/projects/route.ts`](../src/app/api/projects/route.ts)).
-- [x] **Step 5: Form 4 — Sponsor Job Posting Form (`/jobs`) (Completed)**
-  - [x] Build [`SponsorJobPostingForm.tsx`](../src/components/forms/SponsorJobPostingForm.tsx) with Sponsor session auto-fill, dynamic bullet list builders, and role guard on `POST /api/jobs` ([`src/app/api/jobs/route.ts`](../src/app/api/jobs/route.ts)).
-- [x] **Step 6: Form 5 — Sponsor Initiatives & Profile Form (`/sponsors`) (Completed)**
-  - [x] Build [`SponsorInitiativeForm.tsx`](../src/components/forms/SponsorInitiativeForm.tsx) and `PATCH /api/sponsors/[id]` ([`src/app/api/sponsors/[id]/route.ts`](../src/app/api/sponsors/[id]/route.ts)).
-- [x] **Step 7: Form 6 — Recruiter Direct Candidate Outreach Form (`Contact` Tab) (Completed)**
-  - [x] Build [`RecruiterContactForm.tsx`](../src/components/forms/RecruiterContactForm.tsx) with multi-card alignment, sponsor session auto-fill, and candidate inquiry dispatch.
-- [x] **Step 8: Form 7 — Member 1-Click Portfolio Job Application Form (`/jobs`) (Completed)**
-  - [x] Dedicated [`JobApplicationForm.tsx`](../src/components/forms/JobApplicationForm.tsx) extracting application workflow, snapshot verification, and cover note dispatch into `src/components/forms/`.
-- [x] **Step 9: Form 8 — Project Sponsorship Pledge & Equipment Grant Form (`/projects`) (Completed)**
-  - [x] Built standalone [`ProjectSponsorshipForm.tsx`](../src/components/forms/ProjectSponsorshipForm.tsx) adhering to multi-card alignment, strict monochrome aesthetics, and zero-hover design.
-  - [x] Integrated into [`ProjectSponsorTab.tsx`](../src/components/modal/project/tabs/ProjectSponsorTab.tsx) inside `ProjectModal`.
+1. **FERPA Protection**: Academic data (GPA) is strictly gated. GPAs are never exposed publicly or to standard callers; they are disclosed only to authenticated corporate partners when the student has signed FERPA authorization.
+2. **Anti-Scraping Defenses**: The candidate directory rejects automated fuzzing and mass scraping. Standard unauthenticated sessions receive sanitized payloads with redacted contact details.
+3. **No In-App Messaging Walls**: Hiring teams reach candidates directly using verified links on student profiles (`mailto:`, LinkedIn, GitHub, hosted resume PDF). There are no proprietary chat systems or job boards requiring recurring maintenance.

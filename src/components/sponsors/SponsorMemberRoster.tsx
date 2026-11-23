@@ -26,22 +26,16 @@ export default function SponsorMemberRoster({
   role,
 }: SponsorMemberRosterProps) {
   const isPremium = role !== "standard";
-  const [activeFilter, setActiveFilter] = useState<"All" | "Event Attendee" | "Job Applicant" | "Project Contributor">("All");
+  const [activeFilter, setActiveFilter] = useState<"All" | "Event Attendee" | "Project Contributor">("All");
 
-  // Private job applicant interactions must never be exposed to standard role
-  const visibleInteractions = interactions.filter((item) => {
-    if (!isPremium && item.interactionType === "Job Applicant") return false;
-    return true;
-  });
+  const visibleInteractions = interactions;
 
   const filteredInteractions = visibleInteractions.filter((item) => {
     if (activeFilter === "All") return true;
     return item.interactionType === activeFilter;
   });
 
-  const availableFilters = isPremium
-    ? (["All", "Event Attendee", "Job Applicant", "Project Contributor"] as const)
-    : (["All", "Event Attendee", "Project Contributor"] as const);
+  const availableFilters = ["All", "Event Attendee", "Project Contributor"] as const;
 
   const getInteractionBadge = (type: StudentInteraction["interactionType"]) => {
     switch (type) {
@@ -50,13 +44,6 @@ export default function SponsorMemberRoster({
           <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-neutral-100 text-black border border-neutral-300">
             <Calendar size={10} />
             <span>Workshop Attendee</span>
-          </span>
-        );
-      case "Job Applicant":
-        return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-neutral-100 text-black border border-neutral-300">
-            <Briefcase size={10} />
-            <span>Job Applicant</span>
           </span>
         );
       case "Project Contributor":

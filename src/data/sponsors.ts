@@ -18,7 +18,7 @@ export interface SponsorInitiative {
 export interface ChapterSponsor {
   id: string;
   name: string;
-  tier: "Platinum" | "Gold" | "Silver" | "Partner";
+  tier: "Platinum" | "Gold" | "Silver" | "Local Partner" | "Partner";
   tagline: string;
   description: string;
   logoText: string;
@@ -225,6 +225,172 @@ export const CURRENT_CHAPTER_SPONSORS: ChapterSponsor[] = [
     jobCompanyNames: ["Siemens EDA", "Siemens"],
     keySkills: ["Altium Designer", "PCB Layout", "Signal Integrity", "Soldering", "SMD Soldering", "Hardware Testing"],
   },
+  {
+    id: "tampa-bay-embedded-labs",
+    name: "Tampa Bay Embedded Labs",
+    tier: "Local Partner",
+    tagline: "IoT Firmware & Rapid Hardware Prototyping",
+    description:
+      "Boutique engineering consultancy based in Tampa specializing in low-power wireless sensor nodes, firmware architecture, and rapid SMD prototype assembly. Partners directly with USF student builders for semester co-ops and bench testing.",
+    logoText: "TBEL",
+    website: "https://tampabayembedded.com",
+    careersUrl: "https://tampabayembedded.com/careers",
+    contactEmail: "recruiting@tampabayembedded.com",
+    location: "Tampa, FL",
+    partnerSince: "2023",
+    primaryFocus: ["Low-Power IoT", "ESP32 Firmware", "FreeRTOS", "PCB Rapid Prototyping"],
+    initiatives: [
+      {
+        title: "Rapid Prototype Component Micro-Grant",
+        description: "Funds quick-turn PCB fabrication runs, test breakout boards, and passives kits for chapter sensor projects.",
+        category: "Lab & Hardware Grants",
+        metrics: "$500 hardware micro-grant",
+      },
+      {
+        title: "Hands-on ESP32 & FreeRTOS Firmware Teardown",
+        description: "Boutique senior firmware engineers lead code teardowns on power-saving sleep modes, task queues, and SPI bus debugging.",
+        category: "Technical Workshops",
+        metrics: "Semester workshop demo",
+      },
+      {
+        title: "Tampa Bay Semester Co-Op Fast-Track",
+        description: "Flexible 15-20 hr/week engineering co-ops during the academic semester for students living in the Tampa Bay area.",
+        category: "Recruiting & Careers",
+        metrics: "3 co-ops placed annually",
+      },
+    ],
+    sponsoredProjectSlugs: ["ieee-lora-mesh-environmental-sensor-network"],
+    sponsoredEventSlugs: ["ieee-hands-on-pcb-design-cadence"],
+    jobCompanyNames: ["Tampa Bay Embedded Labs"],
+    keySkills: ["ESP32", "FreeRTOS", "C", "Altium Designer", "PCB Layout", "IoT", "KiCad", "Hardware Testing"],
+  },
+  {
+    id: "circuitcraft-prototyping",
+    name: "CircuitCraft Prototyping",
+    tier: "Local Partner",
+    tagline: "Custom PCB Fabrication & Precision Assembly",
+    description:
+      "Regional electronics assembly, inspection, and rework facility in St. Petersburg, FL. CircuitCraft underwrites student soldering supplies, stencil printers, and provides direct Design for Manufacturing (DFM) reviews for student competition boards.",
+    logoText: "CC",
+    website: "https://circuitcraftproto.com",
+    careersUrl: "https://circuitcraftproto.com/careers",
+    contactEmail: "careers@circuitcraftproto.com",
+    location: "St. Petersburg, FL",
+    partnerSince: "2024",
+    primaryFocus: ["Surface Mount Technology (SMT)", "DFM Analysis", "Quick-Turn Assembly", "PCB Prototyping"],
+    initiatives: [
+      {
+        title: "Precision SMD Soldering Lab Micro-Grant",
+        description: "Provides solder paste, high-precision tweezers, hot air stations, and lead-free alloy consumables for student lab benches.",
+        category: "Lab & Hardware Grants",
+        metrics: "$400 consumable grant",
+      },
+      {
+        title: "Design for Manufacturing (DFM) Clinic",
+        description: "Pre-fabrication design reviews analyzing trace clearances, via aspect ratios, and thermal relief for student hardware.",
+        category: "Technical Workshops",
+        metrics: "Pre-competition board reviews",
+      },
+    ],
+    sponsoredProjectSlugs: ["ieee-sic-high-efficiency-power-inverter", "ieee-micromouse-autonomous-maze-solver"],
+    sponsoredEventSlugs: ["ipc-soldering-certification-bootcamp"],
+    jobCompanyNames: ["CircuitCraft Prototyping"],
+    keySkills: ["Soldering", "SMD Soldering", "Hardware Testing", "PCB Design", "Altium Designer", "DFM", "Assembly"],
+  },
+];
+
+export interface SponsorshipTierDefinition {
+  tier: "Platinum" | "Gold" | "Silver" | "Local Partner";
+  annualInvestment: string;
+  targetAudience: string;
+  tagline: string;
+  highlights: string[];
+  deliverables: string[];
+  resumeBookAccess: string;
+  badgeVariant?: string;
+}
+
+export const CHAPTER_IMPACT_METRICS = {
+  activeBuilders: 142,
+  hardwareGrantsFunded: "$38,500",
+  technicalWorkshopsHeld: 18,
+  verifiedStudentAttendees: 450,
+  averagePlacementRate: "94%",
+  projectsActive: 6,
+};
+
+export const SPONSORSHIP_TIERS_GUIDE: SponsorshipTierDefinition[] = [
+  {
+    tier: "Platinum",
+    annualInvestment: "$10,000+",
+    targetAudience: "Enterprise Aerospace, Defense & Tech Leaders",
+    tagline: "Premier Chapter Naming Rights & Direct Talent Pipeline",
+    highlights: [
+      "Full unrestricted Candidate Directory & 1-Click Resume Book Export (ATS / CSV / PDF)",
+      "Premier Lab Naming Rights & Hardware Project Title Sponsorship",
+      "2 Dedicated Hands-on Technical Workshops & Tech Talks",
+      "Pre-Career Fair Priority Shortlist & Private Interview Suites",
+    ],
+    deliverables: [
+      "Custom Filtered Candidate Books tailored to your tech stack",
+      "Executive Impact Report with Attendance & Placement Metrics",
+      "Logo on All Chapter Project Hardware & Competition Banners",
+      "Direct Email Outreach to Top-Ranked Student Builders",
+    ],
+    resumeBookAccess: "Full ATS/CSV + High-Res Letter PDF Dossiers (Unlimited Downloads)",
+  },
+  {
+    tier: "Gold",
+    annualInvestment: "$5,000",
+    targetAudience: "Regional Engineering & Systems Employers",
+    tagline: "Hardware Build Underwriting & Technical Showcase",
+    highlights: [
+      "Full Chapter Candidate Directory & Resume Book Access",
+      "1 Dedicated Technical Seminar or Career Panel",
+      "Sponsorship of 1 Major Hardware Build (e.g. Micromouse, Drone Swarm)",
+      "Direct Outreach to Project Contributor Rosters",
+    ],
+    deliverables: [
+      "Pre-Fair Chapter Resume Book",
+      "Project Showcase Placement & Workshop Analytics",
+      "Direct Contact with Verified Workshop Attendees",
+    ],
+    resumeBookAccess: "Full Candidate Directory + Pre-Fair Resume Book Download",
+  },
+  {
+    tier: "Silver",
+    annualInvestment: "$2,500",
+    targetAudience: "Industry Partners & Corporate Recruiters",
+    tagline: "Annual Talent Roster Access & Chapter Branding",
+    highlights: [
+      "Full Candidate Directory Access & Shortlisting Tools",
+      "Official Corporate Partner Badge on Chapter Website",
+      "Resume Book Export with Filterable Major & Grad Cohort Batches",
+    ],
+    deliverables: [
+      "Semi-Annual Resume Book Exports",
+      "Direct Student Portfolio Links (GitHub, LinkedIn, PDF Resumes)",
+    ],
+    resumeBookAccess: "Standard Filtered Resume Book & CSV Roster Export",
+  },
+  {
+    tier: "Local Partner",
+    annualInvestment: "$300 – $1,000",
+    targetAudience: "Local Startups, Boutiques & Regional Consultancies",
+    tagline: "Niche Skill Discovery, Micro-Grants & Local Co-Ops",
+    highlights: [
+      "10-Second Niche Skill & Tool Search (Find the 3 students who know Altium or STM32)",
+      "Targeted Micro-Grant Recognition (Underwrite a specific sensor, PCB run, or tool)",
+      "Access to Local Candidates seeking Tampa Bay / Florida part-time co-ops",
+      "15-Minute Technical Teardown or Demo at a Chapter Meeting",
+    ],
+    deliverables: [
+      "Direct Contact with Students Building Aligned Hardware",
+      "Named Micro-Grant Placement on Sponsored Hardware Project",
+      "1-Click Filtered Roster Export for Local Hiring",
+    ],
+    resumeBookAccess: "Targeted Candidate Roster & Direct Email Outreach",
+  },
 ];
 
 export interface StudentInteraction {
@@ -330,13 +496,6 @@ export function getSponsorRelatedData(
         (cleanEmail && s.email.toLowerCase() === cleanEmail)
     );
 
-    const appMatch = allApps.find(
-      (a) =>
-        (cleanId && a.memberId.toLowerCase() === cleanId) ||
-        (cleanName && a.portfolioSnapshot?.name?.toLowerCase() === cleanName) ||
-        (cleanEmail && a.portfolioSnapshot?.email?.toLowerCase() === cleanEmail)
-    );
-
     const attendedWorkshopSkills = [
       ...(workshopSkillsByStudent.get(cleanId) || []),
       ...(workshopSkillsByStudent.get(cleanName) || []),
@@ -354,7 +513,7 @@ export function getSponsorRelatedData(
     if (match) {
       return {
         ...match,
-        major: match.major || major || appMatch?.portfolioSnapshot?.major || "Engineering",
+        major: match.major || major || "Engineering",
         skills: mergedSkills,
       };
     }
@@ -363,12 +522,12 @@ export function getSponsorRelatedData(
       id: id || `cand-${cleanName.replace(/\s+/g, "-")}`,
       name,
       email,
-      major: major || appMatch?.portfolioSnapshot?.major || "Engineering",
+      major: major || "Engineering",
       degree: "B.S.",
-      gradDate: appMatch?.portfolioSnapshot?.gradDate || "May 2026",
+      gradDate: "May 2026",
       status: "Seeking Internship",
       flagged: false,
-      bio: appMatch?.portfolioSnapshot?.bio || "RSO USF student engineer.",
+      bio: "RSO USF student engineer.",
       skills: mergedSkills,
       links: [],
       education: [],

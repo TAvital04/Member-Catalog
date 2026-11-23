@@ -153,8 +153,8 @@ export const DENSE_CANDIDATES = [
     email: "mvance@usf.edu",
     major: "Electrical Engineering",
     graduationYear: "2026",
-    status: "Seeking Internship",
-    bio: "Electrical Engineering junior passionate about power electronics, RF circuit design, battery management systems, and analog signal conditioning for aerospace applications.",
+    status: "Seeking Co-op / Part-Time",
+    bio: "Electrical Engineering junior passionate about power electronics, RF circuit design, battery management systems, and analog signal conditioning. Seeking flexible semester co-op or part-time engineering roles in Tampa Bay.",
     resumePdfUrl: "https://drive.google.com/file/d/marcus-vance-resume/view",
     socialLinks: [
       { platformName: "LinkedIn", profileUrl: "https://linkedin.com/in/marcus-vance-ee" }

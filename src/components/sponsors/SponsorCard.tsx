@@ -40,7 +40,7 @@ export default function SponsorCard({
           icon={<Award size={11} className="shrink-0 text-black" />}
           className="shrink-0 whitespace-nowrap text-[10px] font-bold"
         >
-          {sponsor.tier} Partner
+          {sponsor.tier.endsWith("Partner") ? sponsor.tier : `${sponsor.tier} Partner`}
         </Badge>
       }
       title={sponsor.name}

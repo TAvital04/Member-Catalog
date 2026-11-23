@@ -7,9 +7,10 @@ import { Student } from "@/data/students";
 import { CURRENT_CHAPTER_SPONSORS } from "@/data/sponsors";
 import { canAwardSkills } from "@/lib/skills";
 import CustomDropdown from "@/components/common/CustomDropdown";
+import { UserRole } from "@/hooks/useRoleManager";
 
 export interface LeadershipEventFormProps {
-  role: "standard" | "sponsor" | "admin";
+  role?: UserRole;
   onClose: () => void;
   onEventCreated: (event: IEEEEvent) => void;
   students?: Student[];
@@ -135,7 +136,7 @@ export default function LeadershipEventForm({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-user-role": role,
+          "x-user-role": role || "admin",
         },
         body: JSON.stringify({
           title: cleanTitle,

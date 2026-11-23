@@ -29,6 +29,7 @@ import SponsorEngagementStats from "@/components/sponsors/SponsorEngagementStats
 import LeadershipSponsorForm from "@/components/forms/LeadershipSponsorForm";
 import SponsorInitiativeForm from "@/components/forms/SponsorInitiativeForm";
 import SponsorInitiativesBanner from "@/components/sponsors/SponsorInitiativesBanner";
+import SponsorshipProspectus from "@/components/sponsors/SponsorshipProspectus";
 import SearchInput from "@/components/common/SearchInput";
 import FilterPills from "@/components/common/FilterPills";
 import EmptyState from "@/components/common/EmptyState";
@@ -36,6 +37,11 @@ import ToastNotification from "@/components/dialogs/ToastNotification";
 import PortfolioModal from "@/components/modal/PortfolioModal";
 import ProjectModal from "@/components/modal/project/ProjectModal";
 import EventModal from "@/components/modal/event/EventModal";
+import ResumeBookModal from "@/components/modal/ResumeBookModal";
+import ResumeBookViewer from "@/components/resumebook/ResumeBookViewer";
+import { ResumeBookOptions } from "@/types/resumeBook";
+import { compileResumeBookCandidates } from "@/lib/resumeBook";
+import { useRecruiterShortlist } from "@/hooks/useRecruiterShortlist";
 import { ProjectTabType } from "@/components/modal/project/ProjectTabNavigation";
 import { getStudentSlug, findStudentBySlugOrId } from "@/lib/studentSlug";
 
@@ -49,6 +55,7 @@ function SponsorsPageContent() {
   const sponsorParam = searchParams.get("sponsor") || searchParams.get("company");
   const memberParam = searchParams.get("member") || searchParams.get("student");
   const viewParam = searchParams.get("view");
+  const tabParam = searchParams.get("tab");
   const tierParam = searchParams.get("tier");
   const qParam = searchParams.get("q") || searchParams.get("search");
   const myParam = searchParams.get("my");
@@ -56,11 +63,20 @@ function SponsorsPageContent() {
   const [sponsorsList, setSponsorsList] = useState<ChapterSponsor[]>(CURRENT_CHAPTER_SPONSORS);
   const [selectedSponsorId, setSelectedSponsorId] = useState<string | null>(sponsorParam);
   const [hasExplicitlyChosenAll, setHasExplicitlyChosenAll] = useState<boolean>(viewParam === "all");
+  const [pageView, setPageView] = useState<"prospectus" | "catalog">(
+    tabParam === "catalog" || sponsorParam ? "catalog" : "prospectus"
+  );
   const [selectedTier, setSelectedTier] = useState<string>(() => tierParam || "All");
   const [searchQuery, setSearchQuery] = useState<string>(() => qParam || "");
   const [isSponsorFormOpen, setIsSponsorFormOpen] = useState(false);
   const [isInitiativeFormOpen, setIsInitiativeFormOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [isResumeBookModalOpen, setIsResumeBookModalOpen] = useState(false);
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
+  const [activeResumeBookOptions, setActiveResumeBookOptions] = useState<ResumeBookOptions | null>(null);
+
+  const recruiterKey = session?.sponsorId || session?.organization || session?.email || "sponsor";
+  const shortlist = useRecruiterShortlist(recruiterKey);
 
   const [onlyMySponsors, setOnlyMySponsors] = useState(() => myParam === "true");
 
@@ -111,7 +127,7 @@ function SponsorsPageContent() {
   const studentSponsorIds = useMemo(() => {
     if (!isStudent || !loggedInStudent) return new Set<string>();
     const ids = new Set<string>();
-    const studentProjs = (loggedInStudent.projects || []).map((p) => (p.title || "").toLowerCase());
+    const studentProjs = (loggedInStudent.projects || []).map((p) => (p.name || "").toLowerCase());
     const studentEvents = (loggedInStudent.events || []).map((e) => (e.title || "").toLowerCase());
 
     sponsorsList.forEach((sp) => {
@@ -208,7 +224,7 @@ function SponsorsPageContent() {
     return null;
   }, [hasExplicitlyChosenAll, selectedSponsorId, role, userSponsor]);
 
-  const tiers = ["All", "Platinum", "Gold", "Silver"];
+  const tiers = ["All", "Platinum", "Gold", "Silver", "Local Partner"];
 
   // Filter sponsors by search, tier, and member interaction
   const filteredSponsors = useMemo(() => {
@@ -253,7 +269,7 @@ function SponsorsPageContent() {
       activeSponsor,
       SAMPLE_IEEE_PROJECTS,
       SAMPLE_IEEE_EVENTS,
-      SAMPLE_JOB_POSTINGS,
+      undefined,
       undefined,
       students
     );
@@ -265,7 +281,7 @@ function SponsorsPageContent() {
         sponsor,
         SAMPLE_IEEE_PROJECTS,
         SAMPLE_IEEE_EVENTS,
-        SAMPLE_JOB_POSTINGS,
+        undefined,
         undefined,
         students
       );
@@ -276,6 +292,7 @@ function SponsorsPageContent() {
   const handleSelectSponsor = (sponsor: ChapterSponsor) => {
     setSelectedSponsorId(sponsor.id);
     setHasExplicitlyChosenAll(false);
+    setPageView("catalog");
     const url = new URL(window.location.href);
     url.searchParams.set("sponsor", sponsor.id);
     url.searchParams.delete("view");
@@ -286,6 +303,7 @@ function SponsorsPageContent() {
   const handleBackToAll = () => {
     setSelectedSponsorId(null);
     setHasExplicitlyChosenAll(true);
+    setPageView("catalog");
     const url = new URL(window.location.href);
     url.searchParams.delete("sponsor");
     url.searchParams.delete("company");
@@ -297,6 +315,7 @@ function SponsorsPageContent() {
     if (!userSponsor) return;
     setSelectedSponsorId(userSponsor.id);
     setHasExplicitlyChosenAll(false);
+    setPageView("catalog");
     const url = new URL(window.location.href);
     url.searchParams.set("sponsor", userSponsor.id);
     url.searchParams.delete("view");
@@ -326,133 +345,81 @@ function SponsorsPageContent() {
       {/* Directory Page Header */}
       <DirectoryStatsHeader
         title={
-          !isPremium
-            ? "Corporate Sponsors & Industry Initiatives"
-            : role === "sponsor" && activeSponsor && activeSponsor.id === userSponsor?.id
+          role === "sponsor" && activeSponsor && activeSponsor.id === userSponsor?.id
             ? `${activeSponsor.name} Partner Portal`
             : "Corporate Sponsors & Industry Initiatives"
         }
         description={
-          !isPremium
-            ? "Official chapter industry partnerships and corporate sponsorship initiatives are private to premium profiles."
-            : role === "sponsor" && activeSponsor && activeSponsor.id === userSponsor?.id
-            ? `Welcome, ${session?.displayName || activeSponsor.name}. Review your sponsored build projects, technical workshops, active job postings, and student interactions.`
+          role === "sponsor" && activeSponsor && activeSponsor.id === userSponsor?.id
+            ? `Welcome, ${session?.displayName || activeSponsor.name}. Review your sponsored build projects, technical workshops, and student interactions.`
             : "Explore active corporate partners supporting RSO USF build projects, technical workshops, equipment grants, recruiting pipelines, and member engagement."
         }
-        badgeText={isPremium ? `${sponsorsList.length} Active Partners` : "Private Partner Network"}
-        badgeIcon={isPremium ? <Building2 size={13} className="text-black" /> : <Lock size={13} className="text-black" />}
-        theme={theme}
       >
-        {isPremium && (
-          <div className="flex items-center gap-2 flex-wrap">
-            {role === "sponsor" && userSponsor && (
-              <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
-                <button
-                  type="button"
-                  onClick={handleBackToAll}
-                  className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-                    !effectiveSponsorId
-                      ? "bg-white text-black shadow-2xs font-black"
-                      : "text-neutral-500 hover:text-black font-semibold"
-                  }`}
-                >
-                  All Sponsors
-                </button>
-                <button
-                  type="button"
-                  onClick={handleGoToMyHub}
-                  className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-                    effectiveSponsorId === userSponsor.id
-                      ? "bg-black text-white shadow-2xs font-black"
-                      : "text-neutral-500 hover:text-black font-semibold"
-                  }`}
-                >
-                  My Company Hub
-                </button>
-              </div>
-            )}
-
-            {isStudent && loggedInStudent && (
-              <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
-                <button
-                  type="button"
-                  onClick={() => handleToggleMySponsors(false)}
-                  className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-                    !onlyMySponsors
-                      ? "bg-white text-black shadow-2xs font-black"
-                      : "text-neutral-500 hover:text-black font-semibold"
-                  }`}
-                >
-                  All Sponsors
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleToggleMySponsors(true)}
-                  className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-                    onlyMySponsors
-                      ? "bg-black text-white shadow-2xs font-black"
-                      : "text-neutral-500 hover:text-black font-semibold"
-                  }`}
-                >
-                  My Project Sponsors
-                </button>
-              </div>
-            )}
-
-            {(role === "sponsor" || isAdmin) && (
-              <Link
-                href="/?resumeBook=true"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-neutral-300 text-xs font-bold text-black hover:bg-neutral-50 transition-colors shadow-2xs cursor-pointer shrink-0"
-              >
-                <BookOpen size={13} className="text-black" />
-                <span>Export Resume Book</span>
-              </Link>
-            )}
-
-            {isAdmin && (
-              <button
-                type="button"
-                onClick={() => setIsSponsorFormOpen(true)}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-black text-white font-bold text-xs cursor-pointer shrink-0"
-              >
-                <Plus size={14} />
-                <span>Onboard Chapter Sponsor</span>
-              </button>
-            )}
+        <div className="flex items-center gap-2 flex-wrap">
+          {/* View Mode Toggle: Prospectus vs Catalog */}
+          <div className="inline-flex p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-bold shrink-0">
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedSponsorId(null);
+                setPageView("prospectus");
+                updateSponsorUrl({ tab: "prospectus", sponsor: null, company: null });
+              }}
+              className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                pageView === "prospectus" && !activeSponsor
+                  ? "bg-white text-black shadow-2xs font-black"
+                  : "text-neutral-500 hover:text-black font-semibold"
+              }`}
+            >
+              Prospectus & Impact
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setPageView("catalog");
+                updateSponsorUrl({ tab: "catalog" });
+              }}
+              className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                pageView === "catalog" || activeSponsor
+                  ? "bg-white text-black shadow-2xs font-black"
+                  : "text-neutral-500 hover:text-black font-semibold"
+              }`}
+            >
+              Partners Catalog
+            </button>
           </div>
-        )}
+
+          <button
+            type="button"
+            onClick={() => setIsResumeBookModalOpen(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black text-white text-xs font-bold hover:bg-neutral-800 transition-colors shadow-2xs cursor-pointer shrink-0"
+          >
+            <BookOpen size={13} className="text-white" />
+            <span>Export Resume Book</span>
+          </button>
+
+          {isAdmin && (
+            <button
+              type="button"
+              onClick={() => setIsSponsorFormOpen(true)}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-neutral-300 text-black hover:bg-neutral-50 font-bold text-xs cursor-pointer shrink-0 shadow-2xs"
+            >
+              <Plus size={14} />
+              <span>Onboard Partner</span>
+            </button>
+          )}
+        </div>
       </DirectoryStatsHeader>
 
       <main className="max-w-7xl w-full mx-auto px-4 pb-8 flex flex-col gap-6">
-        {!isPremium ? (
-          <div className="flex flex-col gap-6 animate-fade-in pt-8 pb-16 w-full max-w-lg mx-auto">
-            <div className="p-8 sm:p-10 rounded-2xl border border-neutral-300 bg-white flex flex-col items-center justify-between text-center relative overflow-hidden shadow-2xs">
-              <div className="w-14 h-14 rounded-full bg-neutral-100 text-black border border-neutral-300 flex items-center justify-center shrink-0 mb-4">
-                <Lock size={22} className="text-black" />
-              </div>
-
-              <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-neutral-100 text-black border border-neutral-300 mb-2">
-                Private Partner Network
-              </span>
-
-              <h2 className="text-base sm:text-lg font-black text-black mb-2">
-                Sponsor Directory Unavailable
-              </h2>
-
-              <p className="text-xs text-neutral-600 leading-relaxed mb-6 max-w-sm font-sans">
-                This is unavailable because you aren&apos;t one of the premium profiles. Corporate sponsor showcases, partnership initiatives, and industry engagement metrics are completely private to premium profiles.
-              </p>
-
-              <div className="flex flex-col sm:flex-row items-center gap-2.5 w-full justify-center">
-                <Link
-                  href="/login"
-                  className="w-full sm:w-auto px-5 py-2.5 bg-black text-white font-bold rounded-xl text-xs cursor-pointer text-center"
-                >
-                  Sign In with Premium Profile
-                </Link>
-              </div>
-            </div>
-          </div>
+        {pageView === "prospectus" && !activeSponsor ? (
+          <SponsorshipProspectus
+            onOpenResumeBook={() => setIsResumeBookModalOpen(true)}
+            onViewActivePartners={() => {
+              setPageView("catalog");
+              updateSponsorUrl({ tab: "catalog" });
+            }}
+          />
         ) : (
           <>
             {/* If a sponsor is selected, display their comprehensive Hub */}
@@ -463,29 +430,20 @@ function SponsorsPageContent() {
                 onSelectStudent={(student) => {
                   setInspectedProject(null);
                   setInspectedEvent(null);
-                  setInspectedJob(null);
                   setInspectedStudent(student);
                 }}
                 onSelectProject={(project, tab) => {
                   setInspectedStudent(null);
                   setInspectedEvent(null);
-                  setInspectedJob(null);
                   setInspectedProject(project);
                   setProjectTab(tab || "overview");
                 }}
                 onSelectEvent={(event) => {
                   setInspectedStudent(null);
                   setInspectedProject(null);
-                  setInspectedJob(null);
                   setInspectedEvent(event);
                 }}
-                onSelectJob={(job) => {
-                  setInspectedStudent(null);
-                  setInspectedProject(null);
-                  setInspectedEvent(null);
-                  setInspectedJob(job);
-                }}
-                role={role}
+                role={role as any}
                 onRequestInitiative={role === "sponsor" ? () => setIsInitiativeFormOpen(true) : undefined}
               />
             ) : (
@@ -656,6 +614,43 @@ function SponsorsPageContent() {
               updateSponsorUrl({ member: getStudentSlug(match) });
             }
           }}
+        />
+      )}
+
+      {/* Resume Book Modal */}
+      {isResumeBookModalOpen && (
+        <ResumeBookModal
+          isOpen={isResumeBookModalOpen}
+          onClose={() => setIsResumeBookModalOpen(false)}
+          filteredStudents={students}
+          allStudents={students}
+          shortlistedCandidates={shortlist.shortlistedCandidates}
+          initialScope="all"
+          sponsorName={activeSponsor?.name || userSponsor?.name || "Corporate & Local Partners"}
+          onOpenViewer={(options) => {
+            setActiveResumeBookOptions(options);
+            setIsViewerOpen(true);
+          }}
+        />
+      )}
+
+      {/* Full-Page Print Resume Book Viewer */}
+      {isViewerOpen && activeResumeBookOptions && (
+        <ResumeBookViewer
+          options={activeResumeBookOptions}
+          candidates={compileResumeBookCandidates(
+            activeResumeBookOptions.sourceScope === "shortlist"
+              ? students.filter((s) => shortlist.isShortlisted(s.id))
+              : students,
+            activeResumeBookOptions,
+            Object.fromEntries(
+              shortlist.shortlistedCandidates.map((c) => [
+                c.candidateId.toLowerCase(),
+                { notes: c.notes, tags: c.tags },
+              ])
+            )
+          )}
+          onClose={() => setIsViewerOpen(false)}
         />
       )}
 

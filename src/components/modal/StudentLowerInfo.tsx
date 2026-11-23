@@ -27,6 +27,8 @@ import { useRouter } from "next/navigation";
 import { findMatchingIeeeProject, isLeadSkill } from "@/lib/rsoAffiliation";
 import Tooltip from "@/components/common/Tooltip";
 
+import { TabType } from "./tabs/ModalTabNavigation";
+
 interface StudentLowerInfoProps {
   student: Student;
   adminMode?: boolean;
@@ -34,7 +36,7 @@ interface StudentLowerInfoProps {
   onResolve?: (student: Student) => void;
   onSelectProject?: (projectSlugOrId: string) => void;
   onClose?: () => void;
-  onSelectTab?: (tab: "about" | "projects" | "events" | "contact" | "experience" | "skills") => void;
+  onSelectTab?: (tab: TabType) => void;
 }
 
 export default function StudentLowerInfo({

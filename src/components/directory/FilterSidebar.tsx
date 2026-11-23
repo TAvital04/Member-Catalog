@@ -10,6 +10,7 @@ import EventsFilter from "./filters/EventsFilter";
 import ProjectsFilter from "./filters/ProjectsFilter";
 import SponsorLockPanel from "./filters/SponsorLockPanel";
 import { isSkillMatch } from "@/lib/skillMatching";
+import { UserRole } from "@/hooks/useRoleManager";
 
 interface FilterSidebarProps {
   selectedMajors: string[];
@@ -38,7 +39,7 @@ interface FilterSidebarProps {
 
   // Layout choice
   layout?: "side" | "top";
-  role?: "standard" | "sponsor" | "admin";
+  role?: UserRole;
   onResetAll?: () => void;
 }
 

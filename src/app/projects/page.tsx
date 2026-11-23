@@ -205,9 +205,9 @@ function IEEEProjectsContent() {
         });
 
         const isAssociatedInStudent = (loggedInStudent.projects || []).some((sp) => {
-          const spTitle = sp.title?.toLowerCase() || "";
+          const spTitle = sp.name?.toLowerCase() || "";
           const projTitle = project.title.toLowerCase();
-          return spTitle.includes(projTitle) || projTitle.includes(spTitle) || sp.id === project.id;
+          return spTitle.includes(projTitle) || projTitle.includes(spTitle);
         });
 
         if (!isInParticipants && !isAssociatedInStudent) {

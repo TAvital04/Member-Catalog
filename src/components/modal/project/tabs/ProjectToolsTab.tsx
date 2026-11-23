@@ -6,13 +6,14 @@ import { ProjectTool } from "@/data/projects";
 import { Student } from "@/data/students";
 import { Wrench, Sparkles } from "lucide-react";
 import Tooltip from "@/components/common/Tooltip";
+import { UserRole } from "@/hooks/useRoleManager";
 
 interface ProjectToolsTabProps {
   tools: ProjectTool[];
   skills?: string[];
   students?: Student[];
   onClose?: () => void;
-  role?: "standard" | "sponsor" | "admin";
+  role?: UserRole;
   canFilter?: boolean;
 }
 

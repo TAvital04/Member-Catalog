@@ -45,9 +45,13 @@ export interface Student {
   major: string;
   degree: string;
   gradDate: string;
-  status: "Seeking Internship" | "Seeking Full-time" | "Employed";
+  status: "Seeking Internship" | "Seeking Full-time" | "Employed" | "Seeking Co-op / Part-Time";
+  locationPreference?: "Tampa Bay / Local FL" | "Open to Relocation" | "Any";
   mainProjectName?: string;
   email: string;
+  flagged?: boolean;
+  flagReason?: string;
+  duplicateGroup?: string;
   points?: number;
   recentPoints?: number;
   pointBreakdown?: PointBreakdown;

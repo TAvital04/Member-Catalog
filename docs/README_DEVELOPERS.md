@@ -1,6 +1,6 @@
-# UCF Member Catalog — Developer Documentation
+# RSO USF Member Catalog — Developer Documentation (`README_DEVELOPERS.md`)
 
-Welcome to the **UCF Member Catalog** developer guide. This document provides complete technical documentation for setup, architecture, data schemas, design tokens, component organization, state management, and testing workflows.
+Welcome to the **RSO USF Member Catalog** developer guide. This document provides complete technical documentation for system architecture, database integrations, component organization, state management, and resume book compilation workflows.
 
 ---
 
@@ -8,44 +8,53 @@ Welcome to the **UCF Member Catalog** developer guide. This document provides co
 
 | Layer | Technology | Purpose |
 | :--- | :--- | :--- |
-| **Framework** | [Next.js 16](https://nextjs.org/) (App Router) | Server-side rendering, routing, and search parameter synchronization |
-| **UI Library** | [React 19](https://react.dev/) | Modular UI component architecture |
-| **Language** | [TypeScript 5](https://www.typescriptlang.org/) | Strict type definitions across student profiles, filters, and moderation workflows |
-| **Styling & Design System** | [Tailwind CSS v4](https://tailwindcss.com/) & Vanilla CSS Tokens | Responsive layout grid and dark mode support |
-| **Database & ORM** | [Drizzle ORM](https://orm.drizzle.team/) & PostgreSQL | Neon Serverless / local PostgreSQL candidate profiles and event schemas |
-| **Icons** | [Lucide React](https://lucide.dev/) | Vector UI iconography |
-| **Testing** | [Jest](https://jestjs.io/) & [React Testing Library](https://testing-library.com/) | Automated unit and component integration testing |
+| **Framework** | [Next.js 16](https://nextjs.org/) (App Router & Turbopack) | Server-side rendering, API route handlers, and URL query state sync |
+| **UI Library** | [React 19](https://react.dev/) | Component architecture and streaming hydration |
+| **Language** | [TypeScript 5](https://www.typescriptlang.org/) | Strict end-to-end typing across candidate models, forms, and APIs |
+| **Styling & Design System** | Tailwind CSS v4 & Monochromatic Design Tokens | Clean black-and-white aesthetic (`#000000`, `#ffffff`, neutral borders) |
+| **Database & ORM** | [Drizzle ORM](https://orm.drizzle.team/) & PostgreSQL | Neon Serverless / local `pg.Pool` connection with automatic seed fallback |
+| **Icons** | [Lucide React](https://lucide.dev/) | Vector iconography without emoji clutter |
+| **Resume Book Compilation** | `@/lib/resumeBook.ts` & Print CSS | Dynamic multi-candidate Resume Book generation with print formatting |
 
 ---
 
-## 📁 Repository & Project Structure
+## 📁 Repository & Architecture Structure
 
 ```
 Member-Catalog/
-├── src/                         # Next.js App Router application
-│   ├── app/                     # Routes: /, /projects, /events, /api/*
-│   │   ├── colors.css           # Theme design tokens
-│   │   ├── globals.css          # Global styling, utility classes & animations
-│   │   ├── layout.tsx           # Root application layout wrapper
-│   │   └── page.tsx             # Primary directory entry point & controller
-│   ├── components/              # Modular UI components
-│   │   ├── common/              # Common UI controls (Role switcher, badge components)
-│   │   ├── dialogs/             # Moderation dialogs (FlagDialog, ResolveDialog)
-│   │   ├── directory/           # Directory controls (Control bar, FilterSidebar, Card/Row views)
-│   │   ├── modal/               # Student detail modal (PortfolioModal, StudentUpperInfo, StudentLowerInfo)
-│   │   └── timeline/            # Resume timeline renderers (Work experience, education, projects)
-│   ├── data/                    # Candidate profiles, events, projects, and sponsors datasets
-│   ├── db/                      # Drizzle ORM client, schemas, and database seed scripts
-│   ├── hooks/                   # Custom React hooks (filters, theme, roles, dialogs)
-│   ├── lib/                     # Utilities (styles, matching, scoring, email)
-│   └── shared/                  # Domain types, point scoring, and form validations
-├── public/                      # Static assets and SVG icons
-├── docs/                        # Architecture and developer documentation
-├── __tests__/                   # Jest unit test suite
-├── jest.config.ts               # Jest test runner configuration
-├── next.config.ts               # Next.js environment configuration
-├── package.json                 # Project dependencies & script runners
-└── tsconfig.json                # TypeScript configuration
+├── src/
+│   ├── app/                         # Next.js App Router routes & API endpoints
+│   │   ├── api/
+│   │   │   ├── auth/login/          # Session authentication handler
+│   │   │   ├── events/              # Event & workshop management
+│   │   │   ├── members/             # Enriched candidate directory endpoint
+│   │   │   ├── projects/            # Chapter build projects & rosters
+│   │   │   ├── resume-book/         # Batch Resume Book compilation API
+│   │   │   ├── shortlists/          # Recruiter bookmarks & private notes API
+│   │   │   └── sponsors/            # Chapter sponsor catalog & initiative proposals
+│   │   ├── events/                  # /events directory & deep-dive modals
+│   │   ├── login/                   # /login multi-role authentication page
+│   │   ├── projects/                # /projects showcase & milestone tracker
+│   │   ├── sponsors/                # /sponsors dual hub (Prospectus + Partners Catalog)
+│   │   ├── u/[slug]/                # Shareable public member vanity portfolio
+│   │   ├── globals.css              # Global styling tokens & print CSS rules
+│   │   └── page.tsx                 # Main candidate directory page
+│   ├── components/
+│   │   ├── common/                  # Reusable controls (CustomDropdown, Tooltip, Avatar)
+│   │   ├── directory/               # Directory controls (FilterSidebar, StudentCard, List views)
+│   │   ├── forms/                   # Administrative and sponsor forms (Forms 1–5)
+│   │   ├── modal/                   # PortfolioModal, StudentUpperInfo, StudentLowerInfo
+│   │   ├── resumebook/              # ResumeBookViewer & PDF print view
+│   │   └── sponsors/                # SponsorshipProspectus, SponsorDetailView, Roster
+│   ├── data/                        # Fallback datasets (sponsors, events, projects, students)
+│   ├── db/                          # Drizzle ORM client, schemas (`schema.ts`), and seed script
+│   ├── hooks/                       # Custom hooks (filters, theme, roles, shortlists)
+│   ├── lib/                         # Utilities (candidates, points, skills, resumeBook, studentSlug)
+│   ├── shared/                      # Shared domain types and interfaces
+│   └── types/                       # Resume book & recruiter shortlist types
+├── docs/                            # Architecture and project specifications
+├── package.json
+└── tsconfig.json
 ```
 
 ---
@@ -53,88 +62,77 @@ Member-Catalog/
 ## ⚡ Quick Start & Development Setup
 
 ### 1. Prerequisites
-- **Node.js**: `v18.0.0` or higher
-- **Package Manager**: `pnpm` (recommended), `npm`, or `yarn`
+- **Node.js**: `v20.0.0` or higher
+- **Package Manager**: `pnpm` (recommended) or `npm`
 
-### 2. Installation
+### 2. Installation & Running
 
 ```bash
 pnpm install
+pnpm dev
 ```
 
-### 3. NPM Scripts
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-| Command | Action |
-| :--- | :--- |
-| `pnpm dev` | Starts the Next.js local development server at `http://localhost:3001` |
-| `pnpm test` | Executes the Jest unit and integration test suite |
-| `pnpm build` | Compiles the production build |
-| `pnpm start` | Boots the optimized production server |
-| `pnpm db:seed` | Seeds database with candidate records |
+### 3. Production Build
+
+```bash
+pnpm build
+pnpm start
+```
 
 ---
 
 ## 📊 Core Data Schema & Models
 
-The data model powering candidate profiles is defined in `src/db/schema.ts` and `src/shared/types.ts`:
+The data model is defined in `src/db/schema.ts` and `src/shared/types.ts`:
 
-### Key Properties (`StudentCandidate`)
-- `id`: Unique identifier.
-- `name`: Student full name.
-- `email`: Contact email (hidden/redacted for standard directory views).
-- `status`: Career search status (`"Seeking Internship"` \| `"Seeking Full-time"` \| `"Employed"`).
-- `bio`: Brief summary / elevator pitch.
-- `resumeLink`: Direct link to hosted resume PDF.
-- `links`: List of platform links (`GitHub`, `LinkedIn`, `Portfolio`, etc.).
-- `education`: Array of degree entries.
-- `skills`: Flat array of technical skill strings (`React`, `Python`, `Altium Designer`, etc.), populated exclusively from chapter workshops that the member attended (never from manual entry or project participation).
-- `workExperiences`: Work experience timeline objects.
-- `projects`: Project entries with external repository/demo links.
-- `clubs`: Campus student organization participation.
-- `certifications`: Industry credentials and certificates.
-- `flagged`: Boolean flag for moderation filtering.
-- `flagReason`: Structured reason string if flagged for administrative review.
-
----
-
-## ⚙️ Architecture & Technical Standards
-
-### 1. State & URL Synchronization (`useDirectoryFilters`)
-Directory state (search query, major, graduation year, career status, and skill tags) is synchronized bidirectionally with browser URL search parameters (`useSearchParams`).
-- Enables deep-linking: Recruiters can bookmark or share specific search result URLs (`?q=React&status=Seeking+Full-time`).
-- Search queries feature a debounce buffer to eliminate re-render latency during typing.
-
-### 2. Visual Design System
-Theme colors and modern aesthetics are styled via Tailwind CSS v4 and CSS tokens:
-- Dark mode compatibility: Tailored background and border contrast variables.
-- Shimmer skeletons: `StudentCardSkeleton` and `FilterSidebarSkeleton` components render during async loading phases.
-
-### 3. Lightweight External Portfolio Modal (`PortfolioModal`)
-- Displays detailed student profiles without embedding heavy PDF binaries or making external company logo API requests.
-- All resume and project links render as safe external links (`target="_blank" rel="noopener noreferrer"`).
-- Displays clean, text-based experience and education timelines.
-
-### 4. Privacy & Email Access Control
-- Email addresses and direct mail actions are hidden/redacted when viewed under the `"standard"` user role.
-- Prevents unauthorized web scraping and candidate spam.
-
-### 5. Moderation Workflow (`FlagDialog`, `ResolveDialog`)
-- Administrative users can flag profiles with structured reason options (*Broken Link*, *Outdated Info*, *Inappropriate Content*, *AI Slop*).
-- Toggling flag status updates visibility filters while strictly preserving student schema integrity.
+### Key Student Entity (`Student`)
+- `id`: Unique candidate identifier.
+- `name`: Candidate's full name.
+- `email`: Contact email (protected by anti-scraping and privacy filters).
+- `status`: Career search status (`"Seeking Internship"` | `"Seeking Full-time"` | `"Employed"` | `"Seeking Co-op / Part-Time"`).
+- `locationPreference`: Regional preference (e.g., `"Tampa Bay / Local FL"`, `"Open to Relocation"`).
+- `bio`: Concise self-introduction.
+- `resumeLink`: Direct link to candidate's hosted PDF resume.
+- `links`: Array of verified social/portfolio links (`GitHub`, `LinkedIn`, personal website).
+- `education`: Degree, major, institution, and FERPA-consented GPA.
+- `skills`: Technical skill strings, **awarded exclusively through verified Technical Workshop attendances**.
+- `projects`: Verified chapter engineering builds with milestone timelines.
+- `clubs`: Campus engineering leadership roles.
+- `events`: Verified chapter event attendances with dates and categories.
+- `points`: Calculated activity score powering the default **"Most Active"** directory sort.
 
 ---
 
-## 🧪 Testing & Code Quality
+## 🎯 Key Architectural Pillars
 
-Automated tests are located in `__tests__/`.
+### 1. Automated Candidate Profile Enrichment (`src/lib/candidates.ts`)
+Rather than requiring students to manually keep profiles updated, candidate records are compiled by joining:
+1. Student base records and resume PDF links.
+2. Verified event attendance records (`event_attendees` joined to `events`).
+3. Verified project participant records (`project_participants` joined to `ieee_projects`).
+4. Automated activity points calculation (`src/lib/points.ts`).
 
-### Running Tests
-```bash
-pnpm test
-```
+### 2. Batch "Resume Book" Engine (`src/lib/resumeBook.ts`)
+Corporate sponsors can filter candidates and export customized resume compilations:
+- **Scope Options**: All candidates, current directory search results, or recruiter private shortlists.
+- **Custom Branding**: Output header displays the sponsor company name and chapter designation.
+- **Export Options**: Interactive print-ready Resume Book (`ResumeBookViewer`), JSON payload, and printable single-page candidate summaries with direct resume PDF links.
 
-### Test Coverage Highlights
-- **Directory Filtering**: Validates text query searching, skill tag toggles, and status filters.
-- **Privacy Controls**: Verifies email address hiding in `StudentCard`, `StudentRow`, and `PortfolioModal`.
-- **Link Integrity**: Verifies that external resume and project links include safe `target="_blank"` attributes.
-- **Moderation Flow**: Tests flagging and resolving candidate profiles.
+### 3. Recruiter Shortlist & Talent Bookmarks (`recruiter_shortlists`)
+Sponsors with active accounts can bookmark top talent directly from the candidate directory:
+- Saved candidates are synced to PostgreSQL (`recruiter_shortlists`).
+- Recruiters can attach private internal evaluation notes and tags (e.g., *"Interviewed at Fall Tech Talk — strong embedded C++ skills"*).
+- One-click export allows sponsors to download a Resume Book composed exclusively of their shortlisted talent.
+
+### 4. Sponsorship Dual-View Hub (`/sponsors`)
+The `/sponsors` route features a dual-mode interface:
+1. **Prospectus & Chapter Impact View**: Displays chapter placement rates, workshop equipment micro-grants, ROI proof, and tiered partnership guides (including the **Local Partner** tier at \$300–\$1,000).
+2. **Partners Catalog View**: Displays active sponsor profiles, company bios, funded chapter initiatives, and associated candidate rosters.
+
+### 5. Direct, Frictionless Candidate Contact
+All legacy job boards and gated in-app messaging forms have been retired. Corporate recruiters reach candidates directly via:
+- Hosted resume PDF link.
+- One-click `mailto:` link with pre-populated candidate subject lines.
+- Verified LinkedIn and GitHub profiles.

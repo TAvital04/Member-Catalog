@@ -26,13 +26,15 @@ import ProjectPeopleTab from "./tabs/ProjectPeopleTab";
 import ProjectSkillsTab from "./tabs/ProjectSkillsTab";
 import { X } from "lucide-react";
 
+import { UserRole } from "@/hooks/useRoleManager";
+
 interface ProjectModalProps {
   project: IEEEProject;
   onClose: () => void;
   onSelectMember?: (memberId: string, name?: string, email?: string) => void;
   initialTab?: ProjectTabType;
   students?: Student[];
-  role?: "standard" | "sponsor" | "admin";
+  role?: UserRole;
 }
 
 export default function ProjectModal({

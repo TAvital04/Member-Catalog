@@ -25,6 +25,7 @@ interface UseFilteredStudentsProps {
   selectedProjects?: string[];
   selectedCompanies?: string[];
   onlyLeaders?: boolean;
+  onlyLocalCoOp?: boolean;
   skillFilterMode: "AND" | "OR";
   adminMode?: boolean;
   sortBy: DirectorySortOption | string;
@@ -42,6 +43,7 @@ export function useFilteredStudents({
   selectedProjects = [],
   selectedCompanies = [],
   onlyLeaders = false,
+  onlyLocalCoOp = false,
   skillFilterMode,
   sortBy,
   hasFilterPermission = true,
@@ -147,6 +149,15 @@ export function useFilteredStudents({
 
           if (onlyLeaders && !getIeeeLeadershipRole(student)) {
             return false;
+          }
+
+          if (onlyLocalCoOp) {
+            const isLocal =
+              student.status === "Seeking Co-op / Part-Time" ||
+              student.locationPreference === "Tampa Bay / Local FL" ||
+              student.bio?.toLowerCase().includes("co-op") ||
+              student.bio?.toLowerCase().includes("tampa");
+            if (!isLocal) return false;
           }
         }
 

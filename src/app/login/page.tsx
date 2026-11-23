@@ -406,8 +406,6 @@ function LoginPageContent() {
                       ? "RSO Leadership Sign In"
                       : selectedRole === "sponsor"
                       ? "Corporate Sponsor Sign In"
-                      : selectedRole === "standard"
-                      ? "Standard Account Sign In"
                       : "Student Member Sign In"}
                   </h3>
                   <p className="text-xs text-slate-500">
@@ -415,8 +413,6 @@ function LoginPageContent() {
                       ? "Authenticate with your RSO USF officer credentials"
                       : selectedRole === "sponsor"
                       ? "Authenticate with your partner organization account"
-                      : selectedRole === "standard"
-                      ? "Authenticate with your standard USF community credentials"
                       : "Authenticate with your USF student credentials"}
                   </p>
                 </div>
@@ -432,8 +428,6 @@ function LoginPageContent() {
                     ? "Officer Email"
                     : selectedRole === "sponsor"
                     ? "Corporate Email"
-                    : selectedRole === "standard"
-                    ? "Account Email"
                     : "Student Email"}
                 </label>
                 <div className="relative flex items-center">
@@ -450,8 +444,6 @@ function LoginPageContent() {
                         ? "leadership@rsousf.org"
                         : selectedRole === "sponsor"
                         ? "recruiting@company.com"
-                        : selectedRole === "standard"
-                        ? "standard@usf.edu"
                         : "student@usf.edu"
                     }
                     className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm rounded-xl bg-neutral-50 border border-neutral-300 text-black focus:outline-none focus:ring-1 focus:ring-black"

@@ -4,12 +4,13 @@ import React from "react";
 import Link from "next/link";
 import { Student } from "@/data/students";
 import { isLeadSkill } from "@/lib/rsoAffiliation";
+import { UserRole } from "@/hooks/useRoleManager";
 
 interface SkillsTabProps {
   student: Student;
   formatDateStr?: (dateStr: string) => string;
   onClose?: () => void;
-  role?: "standard" | "sponsor" | "admin";
+  role?: UserRole;
   canFilter?: boolean;
 }
 
