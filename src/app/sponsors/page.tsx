@@ -22,7 +22,6 @@ import {
 } from "@/data/sponsors";
 import { IEEEProject, SAMPLE_IEEE_PROJECTS } from "@/data/projects";
 import { IEEEEvent, SAMPLE_IEEE_EVENTS } from "@/data/events";
-import { JobPosting, SAMPLE_JOB_POSTINGS } from "@/data/jobs";
 import { Student } from "@/data/students";
 import SponsorCard from "@/components/sponsors/SponsorCard";
 import SponsorDetailView from "@/components/sponsors/SponsorDetailView";
@@ -37,7 +36,6 @@ import ToastNotification from "@/components/dialogs/ToastNotification";
 import PortfolioModal from "@/components/modal/PortfolioModal";
 import ProjectModal from "@/components/modal/project/ProjectModal";
 import EventModal from "@/components/modal/event/EventModal";
-import JobDetailModal from "@/components/modal/job/JobDetailModal";
 import { ProjectTabType } from "@/components/modal/project/ProjectTabNavigation";
 import { getStudentSlug, findStudentBySlugOrId } from "@/lib/studentSlug";
 
@@ -135,7 +133,6 @@ function SponsorsPageContent() {
   const [inspectedProject, setInspectedProject] = useState<IEEEProject | null>(null);
   const [projectTab, setProjectTab] = useState<ProjectTabType>("overview");
   const [inspectedEvent, setInspectedEvent] = useState<IEEEEvent | null>(null);
-  const [inspectedJob, setInspectedJob] = useState<JobPosting | null>(null);
 
   // Identify the logged-in sponsor entity if authenticated as sponsor
   const userSponsor = useMemo(() => {
@@ -563,7 +560,7 @@ function SponsorsPageContent() {
                         sponsor,
                         SAMPLE_IEEE_PROJECTS,
                         SAMPLE_IEEE_EVENTS,
-                        SAMPLE_JOB_POSTINGS,
+                        undefined,
                         undefined,
                         students
                       );
@@ -573,7 +570,7 @@ function SponsorsPageContent() {
                           sponsor={sponsor}
                           projectCount={details.projects.length}
                           eventCount={details.events.length}
-                          jobCount={details.jobs.length}
+                          jobCount={0}
                           interactionCount={details.interactions.length}
                           onSelect={handleSelectSponsor}
                         />
@@ -659,16 +656,6 @@ function SponsorsPageContent() {
               updateSponsorUrl({ member: getStudentSlug(match) });
             }
           }}
-        />
-      )}
-
-      {/* Job Detail Modal (Private to Premium Profiles) */}
-      {isPremium && inspectedJob && students.length > 0 && (
-        <JobDetailModal
-          job={inspectedJob}
-          activeStudent={students[0]}
-          onClose={() => setInspectedJob(null)}
-          onApplySuccess={() => {}}
         />
       )}
 

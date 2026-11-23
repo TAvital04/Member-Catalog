@@ -11,7 +11,6 @@ import ModalTabNavigation, { TabType } from "./tabs/ModalTabNavigation";
 import ProjectsTab from "./tabs/ProjectsTab";
 import SkillsTab from "./tabs/SkillsTab";
 import EventsTab from "./tabs/EventsTab";
-import ContactTab from "./tabs/ContactTab";
 import ShortlistTab from "./tabs/ShortlistTab";
 import { IEEEEvent } from "@/data/events";
 import { findMatchingIeeeEvent } from "@/lib/rsoAffiliation";
@@ -267,11 +266,6 @@ export default function PortfolioModal({
                 />
               )}
 
-              {/* Recruiter Contact Panel (Private to Premium Recruiters & Sponsors) */}
-              {activeTab === "contact" && role !== "standard" && (
-                <ContactTab student={currentStudent} role={role} />
-              )}
-
               {/* Recruiter Shortlist & Evaluation Notes Panel */}
               {activeTab === "shortlist" && isRecruiter && (
                 <ShortlistTab
@@ -283,7 +277,6 @@ export default function PortfolioModal({
                   onUpdateNotes={(notes) => updateCandidateNotes(currentStudent.id, notes)}
                   onUpdateTags={(tags) => updateCandidateTags(currentStudent.id, tags)}
                   onUpdateListName={(listName) => updateCandidateListName(currentStudent.id, listName)}
-                  onSwitchToContact={() => setActiveTab("contact")}
                 />
               )}
             </div>

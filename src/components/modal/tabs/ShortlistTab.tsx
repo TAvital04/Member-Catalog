@@ -278,17 +278,16 @@ export default function ShortlistTab({
             </form>
           </div>
 
-          {/* Quick Action to Contact */}
-          {onSwitchToContact && (
+          {/* Quick Direct Email Outreach */}
+          {student.email && (
             <div className="flex justify-end pt-1">
-              <button
-                type="button"
-                onClick={onSwitchToContact}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-neutral-100 border border-neutral-300 text-black text-xs font-bold hover:bg-neutral-200 transition-colors cursor-pointer shadow-2xs"
+              <a
+                href={`mailto:${student.email}?subject=${encodeURIComponent("Inquiry regarding your Member Profile")}`}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-black text-white text-xs font-bold hover:bg-neutral-800 transition-colors cursor-pointer shadow-2xs"
               >
-                <Mail size={13} />
-                <span>Send Candidate Inquiry</span>
-              </button>
+                <Mail size={13} className="text-white" />
+                <span>Email Candidate Directly ({student.email})</span>
+              </a>
             </div>
           )}
         </>

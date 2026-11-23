@@ -8,7 +8,6 @@ import {
   FolderGit2,
   Users,
   Calendar,
-  Briefcase,
   Shield,
   Award,
   GraduationCap,
@@ -63,11 +62,6 @@ export default function DirectoryNavbar({
       href: "/events",
       label: "Events",
       icon: Calendar,
-    },
-    {
-      href: "/jobs",
-      label: "Jobs",
-      icon: Briefcase,
     },
     {
       href: "/sponsors",

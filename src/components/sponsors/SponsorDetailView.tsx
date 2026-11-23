@@ -20,10 +20,8 @@ import { ChapterSponsor, SponsorDetailedRelations } from "@/data/sponsors";
 import { Student } from "@/data/students";
 import { IEEEProject } from "@/data/projects";
 import { IEEEEvent } from "@/data/events";
-import { JobPosting } from "@/data/jobs";
 import ProjectCard from "@/components/projects/ProjectCard";
 import EventCard from "@/components/events/EventCard";
-import JobCard from "@/components/jobs/JobCard";
 import SponsorInitiativesList from "./SponsorInitiativesList";
 import SponsorInitiativesBanner from "./SponsorInitiativesBanner";
 import SponsorMemberRoster from "./SponsorMemberRoster";
@@ -39,12 +37,12 @@ export interface SponsorDetailViewProps {
   onSelectStudent: (student: Student) => void;
   onSelectProject: (project: IEEEProject, tab?: ProjectTabType) => void;
   onSelectEvent: (event: IEEEEvent) => void;
-  onSelectJob: (job: JobPosting) => void;
+  onSelectJob?: (job: any) => void;
   onRequestInitiative?: () => void;
   role?: "standard" | "sponsor" | "admin" | "student";
 }
 
-export type SponsorSubTab = "initiatives" | "projects" | "events" | "jobs" | "skills" | "interactions";
+export type SponsorSubTab = "initiatives" | "projects" | "events" | "skills" | "interactions";
 
 /**
  * SponsorDetailView — Full-featured initiative & engagement hub for an individual sponsor
@@ -55,11 +53,10 @@ export default function SponsorDetailView({
   onSelectStudent,
   onSelectProject,
   onSelectEvent,
-  onSelectJob,
   onRequestInitiative,
   role,
 }: SponsorDetailViewProps) {
-  const { sponsor, projects, events, jobs, skills, interactions } = relations;
+  const { sponsor, projects, events, skills, interactions } = relations;
   const isPremium = role !== "standard";
   const [activeTab, setActiveTab] = useState<SponsorSubTab>("initiatives");
 
@@ -69,7 +66,6 @@ export default function SponsorDetailView({
     { value: "initiatives" as const, label: `Initiatives (${sponsor.initiatives.length})` },
     { value: "projects" as const, label: `Projects (${projects.length})` },
     { value: "events" as const, label: `Workshops & Talks (${events.length})` },
-    { value: "jobs" as const, label: `Careers (${jobs.length})` },
     { value: "skills" as const, label: `Skills & Tools (${skills.length})` },
     { value: "interactions" as const, label: `Interactions (${interactions.length})` },
   ];
@@ -265,19 +261,6 @@ export default function SponsorDetailView({
 
           <button
             type="button"
-            onClick={() => handleTabChange("jobs")}
-            className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-center cursor-pointer group"
-          >
-            <span className="block text-base font-black text-slate-900">
-              {jobs.length}
-            </span>
-            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mt-0.5">
-              Open Roles
-            </span>
-          </button>
-
-          <button
-            type="button"
             onClick={() => handleTabChange("skills")}
             className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-center cursor-pointer group"
           >
@@ -411,38 +394,7 @@ export default function SponsorDetailView({
           )}
         </section>
 
-        {/* 4. Career Opportunities */}
-        <section id="sponsor-section-jobs" className="scroll-mt-32 flex flex-col gap-4">
-          <div className="flex items-center justify-between pb-1 border-b border-slate-200/70">
-            <h3 className="section-title">
-              <span>Corporate Job Opportunities & Internships</span>
-              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
-                {jobs.length} Positions
-              </span>
-            </h3>
-          </div>
-
-          {jobs.length === 0 ? (
-            <EmptyState
-              icon={<Briefcase size={32} />}
-              headline="No active positions listed"
-              subtext="This partner currently does not have active postings on the RSO USF jobs board."
-            />
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {jobs.map((job) => (
-                <JobCard
-                  key={job.id}
-                  job={job}
-                  hasApplied={false}
-                  onSelectJob={onSelectJob}
-                />
-              ))}
-            </div>
-          )}
-        </section>
-
-        {/* 5. Key Skills & Tools */}
+        {/* 4. Key Skills & Tools */}
         <section id="sponsor-section-skills" className="scroll-mt-32 flex flex-col gap-4">
           <div className="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-4">
             <div>

@@ -140,16 +140,15 @@ export default function StudentLowerInfo({
           <Calendar size={12} className="text-neutral-500 shrink-0" />
           <span>Grad: {student.gradDate}</span>
         </span>
-        {role === "standard" ? (
-          <span className="bg-neutral-100 border border-neutral-200 text-neutral-500 px-3 py-1.5 rounded-full flex items-center justify-center gap-1.5 shadow-2xs font-semibold grow min-w-0 select-none">
-            <Lock size={12} className="text-neutral-400 shrink-0" />
-            <span className="truncate">Contact: Premium Only</span>
-          </span>
-        ) : (
-          <span className="bg-neutral-100 border border-neutral-200 text-black px-3 py-1.5 rounded-full flex items-center justify-center gap-1.5 shadow-2xs font-semibold grow min-w-0">
-            <Mail size={12} className="text-neutral-500 shrink-0" />
+        {student.email && (
+          <a
+            href={`mailto:${student.email}?subject=${encodeURIComponent("Inquiry regarding your Member Profile")}`}
+            className="bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 text-black px-3 py-1.5 rounded-full flex items-center justify-center gap-1.5 shadow-2xs font-semibold grow min-w-0 transition-colors"
+            title={`Send email to ${student.email}`}
+          >
+            <Mail size={12} className="text-black shrink-0" />
             <span className="truncate">{student.email}</span>
-          </span>
+          </a>
         )}
       </div>
 
@@ -215,55 +214,41 @@ export default function StudentLowerInfo({
       {/* External Profile Links & Actions */}
       <div className="flex flex-col gap-3 shrink-0">
         {student.links && student.links.length > 0 && (
-          role === "standard" ? (
-            <div className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-neutral-100 border border-neutral-300 text-xs font-semibold text-neutral-500 select-none shadow-2xs">
-              <Lock size={13} className="text-neutral-400" />
-              <span>External Profiles (Premium Sponsor Only)</span>
-            </div>
-          ) : (
-            <div className="flex flex-wrap items-center gap-2 w-full links-stack">
-              {student.links.map((link, idx) => {
-                const lowerName = link.name.toLowerCase();
-                const isGithub = lowerName.includes("github");
-                const isLinkedin = lowerName.includes("linkedin");
+          <div className="flex flex-wrap items-center gap-2 w-full links-stack">
+            {student.links.map((link, idx) => {
+              const lowerName = link.name.toLowerCase();
+              const isGithub = lowerName.includes("github");
+              const isLinkedin = lowerName.includes("linkedin");
 
-                const safeLinkUrl = getSafeUrl(link.text) || "#";
-                return (
-                  <a
-                    key={idx}
-                    href={safeLinkUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-white border border-neutral-300 text-xs font-semibold text-black cursor-pointer grow shadow-2xs"
-                  >
-                    {isGithub && <Github size={13} className="text-black" />}
-                    {isLinkedin && <Linkedin size={13} className="text-black" />}
-                    {!isGithub && !isLinkedin && <Globe size={13} className="text-black" />}
-                    <span>{link.name}</span>
-                  </a>
-                );
-              })}
-            </div>
-          )
+              const safeLinkUrl = getSafeUrl(link.text) || "#";
+              return (
+                <a
+                  key={idx}
+                  href={safeLinkUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-white border border-neutral-300 text-xs font-semibold text-black cursor-pointer grow shadow-2xs hover:bg-neutral-50 transition-colors"
+                >
+                  {isGithub && <Github size={13} className="text-black" />}
+                  {isLinkedin && <Linkedin size={13} className="text-black" />}
+                  {!isGithub && !isLinkedin && <Globe size={13} className="text-black" />}
+                  <span>{link.name}</span>
+                </a>
+              );
+            })}
+          </div>
         )}
 
         {/* View Resume PDF Button */}
-        {role === "standard" ? (
-          <div className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-neutral-100 border border-neutral-300 text-neutral-500 font-bold text-xs select-none">
-            <Lock size={14} className="text-neutral-400" />
-            <span>Resume PDF (Premium Only)</span>
-          </div>
-        ) : (
-          <a
-            href={getSafeUrl(resumeUrl) || "#"}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-black text-white font-bold text-xs cursor-pointer group/resume"
-          >
-            <FileText size={14} className="text-white" />
-            <span>View Resume PDF</span>
-          </a>
-        )}
+        <a
+          href={getSafeUrl(resumeUrl) || "#"}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-black text-white font-bold text-xs cursor-pointer group/resume hover:bg-neutral-800 transition-colors"
+        >
+          <FileText size={14} className="text-white" />
+          <span>View Resume PDF</span>
+        </a>
       </div>
     </div>
   );

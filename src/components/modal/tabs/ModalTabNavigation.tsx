@@ -3,13 +3,12 @@
 import React from "react";
 import { UserRole } from "@/hooks/useRoleManager";
 
-export type TabType = "about" | "projects" | "events" | "contact" | "experience" | "skills" | "shortlist";
+export type TabType = "about" | "projects" | "events" | "skills" | "shortlist";
 
 interface ModalTabNavigationProps {
   activeTab: TabType;
   setActiveTab: (tab: TabType) => void;
   role?: UserRole;
-  hideContact?: boolean;
   hasActionButtons?: boolean;
 }
 
@@ -17,16 +16,11 @@ export default function ModalTabNavigation({
   activeTab,
   setActiveTab,
   role,
-  hideContact = false,
   hasActionButtons = true,
 }: ModalTabNavigationProps) {
-  const isStandard = role === "standard";
   const isRecruiter = role === "sponsor" || role === "admin";
-  const shouldHideContact = hideContact || isStandard;
 
-  let tabsList: TabType[] = shouldHideContact
-    ? ["projects", "skills", "events"]
-    : ["projects", "skills", "events", "contact"];
+  let tabsList: TabType[] = ["projects", "skills", "events"];
 
   if (isRecruiter) {
     tabsList = [...tabsList, "shortlist"];
@@ -65,7 +59,6 @@ export default function ModalTabNavigation({
         if (tab === "projects") label = "Projects";
         if (tab === "skills") label = "Skills";
         if (tab === "events") label = "Events";
-        if (tab === "contact") label = "Contact";
         if (tab === "shortlist") label = "Shortlist";
 
         return (

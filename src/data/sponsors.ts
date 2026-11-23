@@ -6,7 +6,6 @@
 
 import { IEEEProject, SAMPLE_IEEE_PROJECTS } from "./projects";
 import { IEEEEvent, SAMPLE_IEEE_EVENTS } from "./events";
-import { JobPosting, JobApplication, SAMPLE_JOB_POSTINGS, SAMPLE_JOB_APPLICATIONS } from "./jobs";
 import { Student, INITIAL_STUDENTS } from "./students";
 
 export interface SponsorInitiative {
@@ -230,7 +229,7 @@ export const CURRENT_CHAPTER_SPONSORS: ChapterSponsor[] = [
 
 export interface StudentInteraction {
   student: Student;
-  interactionType: "Event Attendee" | "Job Applicant" | "Project Contributor";
+  interactionType: "Event Attendee" | "Project Contributor";
   context: string;
   date?: string;
 }
@@ -239,20 +238,20 @@ export interface SponsorDetailedRelations {
   sponsor: ChapterSponsor;
   projects: IEEEProject[];
   events: IEEEEvent[];
-  jobs: JobPosting[];
+  jobs: any[];
   skills: string[];
   interactions: StudentInteraction[];
 }
 
 /**
- * Computes all related projects, workshops, jobs, skills, and student interactions for a given sponsor.
+ * Computes all related projects, workshops, skills, and student interactions for a given sponsor.
  */
 export function getSponsorRelatedData(
   sponsor: ChapterSponsor,
   allProjects: IEEEProject[] = SAMPLE_IEEE_PROJECTS,
   allEvents: IEEEEvent[] = SAMPLE_IEEE_EVENTS,
-  allJobs: JobPosting[] = SAMPLE_JOB_POSTINGS,
-  allApps: JobApplication[] = SAMPLE_JOB_APPLICATIONS,
+  _unusedJobs?: any[],
+  _unusedApps?: any[],
   allStudents: Student[] = INITIAL_STUDENTS
 ): SponsorDetailedRelations {
   // 1. Related Projects
@@ -277,15 +276,7 @@ export function getSponsorRelatedData(
     return false;
   });
 
-  // 3. Related Jobs
-  const jobs = allJobs.filter((j) => {
-    return (
-      sponsor.jobCompanyNames.some((c) => j.companyName.toLowerCase().includes(c.toLowerCase())) ||
-      j.companyName.toLowerCase().includes(sponsor.name.toLowerCase())
-    );
-  });
-
-  // 4. Key Skills
+  // 3. Key Skills
   const skillsSet = new Set<string>(sponsor.keySkills);
   projects.forEach((p) => {
     (p.tools || []).forEach((t) => skillsSet.add(t.name));
@@ -293,9 +284,6 @@ export function getSponsorRelatedData(
   });
   events.forEach((e) => {
     (e.skills || []).forEach((s) => skillsSet.add(s));
-  });
-  jobs.forEach((j) => {
-    (j.skillsRequired || []).forEach((s) => skillsSet.add(s));
   });
 
   // Precompute workshop-earned skills per student from SAMPLE_IEEE_EVENTS (Technical Workshops only)
@@ -412,30 +400,7 @@ export function getSponsorRelatedData(
     });
   });
 
-  // B. Job Applicants (Do not merge manual portfolioSnapshot.skills; only workshop-verified skills apply)
-  jobs.forEach((job) => {
-    const jobApps = allApps.filter((a) => a.jobId === job.id);
-    jobApps.forEach((app) => {
-      const student = resolveStudent(
-        app.memberId,
-        app.portfolioSnapshot?.name || "Candidate",
-        app.portfolioSnapshot?.email || "candidate@usf.edu",
-        app.portfolioSnapshot?.major || "Engineering",
-        []
-      );
-      const key = getStudentKey(student);
-      if (!interactionsMap.has(key)) {
-        interactionsMap.set(key, {
-          student,
-          interactionType: "Job Applicant",
-          context: `Applied for ${job.title} (${app.status})`,
-          date: app.appliedAt,
-        });
-      }
-    });
-  });
-
-  // C. Project Leads & Contributors (Projects do NOT update a member's skills; pass [] for workshopSkills)
+  // B. Project Leads & Contributors (Projects do NOT update a member's skills; pass [] for workshopSkills)
   projects.forEach((prj) => {
     (prj.participants || []).forEach((part) => {
       const student = resolveStudent(part.memberId, part.name, part.email, part.major, []);
@@ -454,7 +419,7 @@ export function getSponsorRelatedData(
     sponsor,
     projects,
     events,
-    jobs,
+    jobs: [],
     skills: Array.from(skillsSet),
     interactions: Array.from(interactionsMap.values()),
   };
